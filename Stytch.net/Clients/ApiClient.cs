@@ -10,46 +10,40 @@ namespace Stytch.net.Clients
 {
     public class ClientConfig
     {
-        public string ProjectId { get; set; }
-        public string Secret { get; set; }
+        public required string ProjectId { get; set; }
+        public required string ProjectSecret { get; set; }
         public string? Environment { get; set; } // Optional property
         public int Timeout { get; set; } = 10 * 60 * 1000; // Default timeout (10 minutes)
-        public HttpClientHandler? HttpClientHandler { get; set; }
     }
-
-    // private void SetEnvironment()
-    // {
-    //     const string liveEnv = "live";
-    //     const string testEnv = "test";
-
-    //     if (string.IsNullOrEmpty(Environment))
-    //     {
-    //         if (ProjectId.StartsWith("project-live-", StringComparison.OrdinalIgnoreCase))
-    //         {
-    //             Environment = liveEnv;
-    //         }
-    //         else
-    //         {
-    //             Environment = testEnv;
-    //         }
-    //     }
-    // }
-
+    
     public class ApiClient
     {
         private readonly HttpClient _httpClient;
-        private static readonly string sdkVersion = GetSdkVersion();
+        private static readonly string SdkVersion = GetSdkVersion();
 
         public ApiClient(ClientConfig config)
         {
+            
+            if (string.IsNullOrEmpty(config.Environment))
+            {
+                if (config.ProjectId.StartsWith("project-live-"))
+                {
+                    config.Environment = "https://api.stytch.com";
+                }
+                else
+                {
+                    config.Environment = "https://test.stytch.com";
+                }
+            }
+            
             _httpClient = new HttpClient { BaseAddress = new Uri(config.Environment) };
 
-            var authValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{config.ProjectId}:{config.Secret}"));
+            var authValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{config.ProjectId}:{config.ProjectSecret}"));
 
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authValue);
 
             // Set User-Agent header
-            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"Stytch-dotnet/{sdkVersion}");
+            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"stytch-dotnet/{SdkVersion}");
         }
 
         private static string GetSdkVersion()
