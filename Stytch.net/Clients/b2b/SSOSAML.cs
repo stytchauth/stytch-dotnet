@@ -36,7 +36,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSSOSAMLCreateConnectionResponse> createConnection(
+    public async Task<B2BSSOSAMLCreateConnectionResponse> CreateConnection(
         B2BSSOSAMLCreateConnectionRequest request)
     {
         // Serialize the request model to JSON
@@ -81,7 +81,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSSOSAMLUpdateConnectionResponse> updateConnection(
+    public async Task<B2BSSOSAMLUpdateConnectionResponse> UpdateConnection(
         B2BSSOSAMLUpdateConnectionRequest request)
     {
         // Serialize the request model to JSON
@@ -126,7 +126,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSSOSAMLUpdateByURLResponse> updateByURL(
+    public async Task<B2BSSOSAMLUpdateByURLResponse> UpdateByURL(
         B2BSSOSAMLUpdateByURLRequest request)
     {
         // Serialize the request model to JSON
@@ -168,7 +168,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSSOSAMLDeleteVerificationCertificateResponse> deleteVerificationCertificate(
+    public async Task<B2BSSOSAMLDeleteVerificationCertificateResponse> DeleteVerificationCertificate(
         B2BSSOSAMLDeleteVerificationCertificateRequest request)
     {
         // Serialize the request model to JSON

@@ -59,7 +59,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<OTPsWhatsappSendResponse> send(
+    public async Task<OTPsWhatsappSendResponse> Send(
         OTPsWhatsappSendRequest request)
     {
         // Serialize the request model to JSON
@@ -109,7 +109,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<OTPsWhatsappLoginOrCreateResponse> loginOrCreate(
+    public async Task<OTPsWhatsappLoginOrCreateResponse> LoginOrCreate(
         OTPsWhatsappLoginOrCreateRequest request)
     {
         // Serialize the request model to JSON

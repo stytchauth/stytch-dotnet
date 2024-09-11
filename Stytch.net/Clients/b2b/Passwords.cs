@@ -62,7 +62,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BPasswordsStrengthCheckResponse> strengthCheck(
+    public async Task<B2BPasswordsStrengthCheckResponse> StrengthCheck(
         B2BPasswordsStrengthCheckRequest request)
     {
         // Serialize the request model to JSON
@@ -104,7 +104,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BPasswordsMigrateResponse> migrate(
+    public async Task<B2BPasswordsMigrateResponse> Migrate(
         B2BPasswordsMigrateRequest request)
     {
         // Serialize the request model to JSON
@@ -160,7 +160,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BPasswordsAuthenticateResponse> authenticate(
+    public async Task<B2BPasswordsAuthenticateResponse> Authenticate(
         B2BPasswordsAuthenticateRequest request)
     {
         // Serialize the request model to JSON

@@ -37,7 +37,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<M2MClientsGetResponse> get(
+    public async Task<M2MClientsGetResponse> Get(
         M2MClientsGetRequest request)
     {
         // Serialize the request model to JSON
@@ -81,7 +81,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<M2MClientsSearchResponse> search(
+    public async Task<M2MClientsSearchResponse> Search(
         M2MClientsSearchRequest request)
     {
         // Serialize the request model to JSON
@@ -126,7 +126,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<M2MClientsUpdateResponse> update(
+    public async Task<M2MClientsUpdateResponse> Update(
         M2MClientsUpdateRequest request)
     {
         // Serialize the request model to JSON
@@ -169,7 +169,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<M2MClientsDeleteResponse> delete(
+    public async Task<M2MClientsDeleteResponse> Delete(
         M2MClientsDeleteRequest request)
     {
         // Serialize the request model to JSON
@@ -215,7 +215,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<M2MClientsCreateResponse> create(
+    public async Task<M2MClientsCreateResponse> Create(
         M2MClientsCreateRequest request)
     {
         // Serialize the request model to JSON

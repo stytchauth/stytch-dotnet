@@ -36,7 +36,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<SessionsGetResponse> get(
+    public async Task<SessionsGetResponse> Get(
         SessionsGetRequest request)
     {
         // Serialize the request model to JSON
@@ -83,7 +83,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<SessionsAuthenticateResponse> authenticate(
+    public async Task<SessionsAuthenticateResponse> Authenticate(
         SessionsAuthenticateRequest request)
     {
         // Serialize the request model to JSON
@@ -123,7 +123,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<SessionsRevokeResponse> revoke(
+    public async Task<SessionsRevokeResponse> Revoke(
         SessionsRevokeRequest request)
     {
         // Serialize the request model to JSON
@@ -165,7 +165,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<SessionsMigrateResponse> migrate(
+    public async Task<SessionsMigrateResponse> Migrate(
         SessionsMigrateRequest request)
     {
         // Serialize the request model to JSON
@@ -220,7 +220,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<SessionsGetJWKSResponse> getJWKS(
+    public async Task<SessionsGetJWKSResponse> GetJWKS(
         SessionsGetJWKSRequest request)
     {
         // Serialize the request model to JSON

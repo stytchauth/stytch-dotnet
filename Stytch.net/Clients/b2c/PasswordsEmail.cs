@@ -36,7 +36,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<PasswordsEmailResetStartResponse> resetStart(
+    public async Task<PasswordsEmailResetStartResponse> ResetStart(
         PasswordsEmailResetStartRequest request)
     {
         // Serialize the request model to JSON
@@ -82,7 +82,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<PasswordsEmailResetResponse> reset(
+    public async Task<PasswordsEmailResetResponse> Reset(
         PasswordsEmailResetRequest request)
     {
         // Serialize the request model to JSON

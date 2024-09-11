@@ -38,7 +38,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersUpdateResponse> update(
+    public async Task<B2BOrganizationsMembersUpdateResponse> Update(
         B2BOrganizationsMembersUpdateRequest request)
     {
         // Serialize the request model to JSON
@@ -77,7 +77,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersDeleteResponse> delete(
+    public async Task<B2BOrganizationsMembersDeleteResponse> Delete(
         B2BOrganizationsMembersDeleteRequest request)
     {
         // Serialize the request model to JSON
@@ -117,7 +117,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersReactivateResponse> reactivate(
+    public async Task<B2BOrganizationsMembersReactivateResponse> Reactivate(
         B2BOrganizationsMembersReactivateRequest request)
     {
         // Serialize the request model to JSON
@@ -165,7 +165,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersDeleteMFAPhoneNumberResponse> deleteMFAPhoneNumber(
+    public async Task<B2BOrganizationsMembersDeleteMFAPhoneNumberResponse> DeleteMFAPhoneNumber(
         B2BOrganizationsMembersDeleteMFAPhoneNumberRequest request)
     {
         // Serialize the request model to JSON
@@ -210,7 +210,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersDeleteTOTPResponse> deleteTOTP(
+    public async Task<B2BOrganizationsMembersDeleteTOTPResponse> DeleteTOTP(
         B2BOrganizationsMembersDeleteTOTPRequest request)
     {
         // Serialize the request model to JSON
@@ -252,7 +252,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersSearchResponse> search(
+    public async Task<B2BOrganizationsMembersSearchResponse> Search(
         B2BOrganizationsMembersSearchRequest request)
     {
         // Serialize the request model to JSON
@@ -291,7 +291,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersDeletePasswordResponse> deletePassword(
+    public async Task<B2BOrganizationsMembersDeletePasswordResponse> DeletePassword(
         B2BOrganizationsMembersDeletePasswordRequest request)
     {
         // Serialize the request model to JSON
@@ -332,7 +332,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersGetResponse> dangerouslyGet(
+    public async Task<B2BOrganizationsMembersGetResponse> DangerouslyGet(
         B2BOrganizationsMembersDangerouslyGetRequest request)
     {
         // Serialize the request model to JSON
@@ -389,7 +389,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersUnlinkRetiredEmailResponse> unlinkRetiredEmail(
+    public async Task<B2BOrganizationsMembersUnlinkRetiredEmailResponse> UnlinkRetiredEmail(
         B2BOrganizationsMembersUnlinkRetiredEmailRequest request)
     {
         // Serialize the request model to JSON
@@ -428,7 +428,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersCreateResponse> create(
+    public async Task<B2BOrganizationsMembersCreateResponse> Create(
         B2BOrganizationsMembersCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -466,7 +466,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersGetResponse> get(
+    public async Task<B2BOrganizationsMembersGetResponse> Get(
         B2BOrganizationsMembersGetRequest request)
     {
         // Serialize the request model to JSON

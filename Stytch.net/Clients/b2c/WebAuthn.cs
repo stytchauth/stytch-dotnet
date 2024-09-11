@@ -50,7 +50,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<WebAuthnRegisterStartResponse> registerStart(
+    public async Task<WebAuthnRegisterStartResponse> RegisterStart(
         WebAuthnRegisterStartRequest request)
     {
         // Serialize the request model to JSON
@@ -97,7 +97,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<WebAuthnRegisterResponse> register(
+    public async Task<WebAuthnRegisterResponse> Register(
         WebAuthnRegisterRequest request)
     {
         // Serialize the request model to JSON
@@ -147,7 +147,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<WebAuthnAuthenticateStartResponse> authenticateStart(
+    public async Task<WebAuthnAuthenticateStartResponse> AuthenticateStart(
         WebAuthnAuthenticateStartRequest request)
     {
         // Serialize the request model to JSON
@@ -193,7 +193,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<WebAuthnAuthenticateResponse> authenticate(
+    public async Task<WebAuthnAuthenticateResponse> Authenticate(
         WebAuthnAuthenticateRequest request)
     {
         // Serialize the request model to JSON
@@ -231,7 +231,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<WebAuthnUpdateResponse> update(
+    public async Task<WebAuthnUpdateResponse> Update(
         WebAuthnUpdateRequest request)
     {
         // Serialize the request model to JSON

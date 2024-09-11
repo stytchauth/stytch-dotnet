@@ -36,7 +36,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<TOTPsCreateResponse> create(
+    public async Task<TOTPsCreateResponse> Create(
         TOTPsCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -74,7 +74,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<TOTPsAuthenticateResponse> authenticate(
+    public async Task<TOTPsAuthenticateResponse> Authenticate(
         TOTPsAuthenticateRequest request)
     {
         // Serialize the request model to JSON
@@ -112,7 +112,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<TOTPsRecoveryCodesResponse> recoveryCodes(
+    public async Task<TOTPsRecoveryCodesResponse> RecoveryCodes(
         TOTPsRecoveryCodesRequest request)
     {
         // Serialize the request model to JSON
@@ -150,7 +150,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<TOTPsRecoverResponse> recover(
+    public async Task<TOTPsRecoverResponse> Recover(
         TOTPsRecoverRequest request)
     {
         // Serialize the request model to JSON

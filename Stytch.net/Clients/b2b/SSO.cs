@@ -40,7 +40,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSSOGetConnectionsResponse> getConnections(
+    public async Task<B2BSSOGetConnectionsResponse> GetConnections(
         B2BSSOGetConnectionsRequest request)
     {
         // Serialize the request model to JSON
@@ -79,7 +79,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSSODeleteConnectionResponse> deleteConnection(
+    public async Task<B2BSSODeleteConnectionResponse> DeleteConnection(
         B2BSSODeleteConnectionRequest request)
     {
         // Serialize the request model to JSON
@@ -136,7 +136,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSSOAuthenticateResponse> authenticate(
+    public async Task<B2BSSOAuthenticateResponse> Authenticate(
         B2BSSOAuthenticateRequest request)
     {
         // Serialize the request model to JSON

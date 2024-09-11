@@ -16,12 +16,12 @@ namespace Stytch.net.Clients
         public int Timeout { get; set; } = 10 * 60 * 1000; // Default timeout (10 minutes)
     }
     
-    public class ApiClient
+    public class BaseClient
     {
-        private readonly HttpClient _httpClient;
-        private static readonly string SdkVersion = GetSdkVersion();
+        protected readonly HttpClient _httpClient;
+        protected static readonly string SdkVersion = GetSdkVersion();
 
-        public ApiClient(ClientConfig config)
+        public BaseClient(ClientConfig config)
         {
             
             if (string.IsNullOrEmpty(config.Environment))
@@ -52,37 +52,5 @@ namespace Stytch.net.Clients
             var version = Assembly.GetExecutingAssembly().GetName().Version;
             return version?.ToString() ?? "1.0.0";
         }
-        
-        public async Task<MagicLinkResponse> SendMagicLinkAsync(MagicLinkRequest request)
-        {
-            // Serialize the request model to JSON
-            var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/magic_links/email/send", content);
-
-    // Read the response body (even if the response is not successful)
-    var responseBody = await response.Content.ReadAsStringAsync();
-
-  if (response.IsSuccessStatusCode)
-    {
-        // If the response is successful, deserialize and return the response
-        var magicLinkResponse = JsonConvert.DeserializeObject<MagicLinkResponse>(responseBody);
-        return magicLinkResponse;
-    }
-    else
-    {
-        // If the response is not successful, log the error details
-        Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-        // Optionally, throw an exception or return null or an error object
-        throw new HttpRequestException($"Request failed with status code {response.StatusCode}: {responseBody}");
-    }
-
-}
-
     }
 }

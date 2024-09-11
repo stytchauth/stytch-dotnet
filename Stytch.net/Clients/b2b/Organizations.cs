@@ -45,7 +45,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsCreateResponse> create(
+    public async Task<B2BOrganizationsCreateResponse> Create(
         B2BOrganizationsCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -83,7 +83,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsGetResponse> get(
+    public async Task<B2BOrganizationsGetResponse> Get(
         B2BOrganizationsGetRequest request)
     {
         // Serialize the request model to JSON
@@ -127,7 +127,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsUpdateResponse> update(
+    public async Task<B2BOrganizationsUpdateResponse> Update(
         B2BOrganizationsUpdateRequest request)
     {
         // Serialize the request model to JSON
@@ -167,7 +167,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsDeleteResponse> delete(
+    public async Task<B2BOrganizationsDeleteResponse> Delete(
         B2BOrganizationsDeleteRequest request)
     {
         // Serialize the request model to JSON
@@ -207,7 +207,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsSearchResponse> search(
+    public async Task<B2BOrganizationsSearchResponse> Search(
         B2BOrganizationsSearchRequest request)
     {
         // Serialize the request model to JSON
@@ -244,7 +244,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMetricsResponse> metrics(
+    public async Task<B2BOrganizationsMetricsResponse> Metrics(
         B2BOrganizationsMetricsRequest request)
     {
         // Serialize the request model to JSON

@@ -57,7 +57,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BDiscoveryOrganizationsCreateResponse> create(
+    public async Task<B2BDiscoveryOrganizationsCreateResponse> Create(
         B2BDiscoveryOrganizationsCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -113,7 +113,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BDiscoveryOrganizationsListResponse> list(
+    public async Task<B2BDiscoveryOrganizationsListResponse> List(
         B2BDiscoveryOrganizationsListRequest request)
     {
         // Serialize the request model to JSON

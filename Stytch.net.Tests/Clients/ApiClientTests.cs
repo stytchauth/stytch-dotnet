@@ -6,6 +6,7 @@ using Stytch.net.Clients;
 using Stytch.net.Models;
 using System.Reflection;
 using System.Net.Http.Headers;
+using Stytch.net.Models.Consumer;
 
 public class ApiClientTests
 {
@@ -13,7 +14,7 @@ public class ApiClientTests
     public void ApiClient_Sets_BasicAuthHeader_Correctly()
     {
         // Arrange
-        var client = new ApiClient(new ClientConfig
+        var client = new ConsumerClient(new ClientConfig
         {
             ProjectId = "project-test-b96dabb3-fc64-41f0-a064-e23df86ffe2a",
             ProjectSecret = "shhhh",
@@ -29,7 +30,7 @@ public class ApiClientTests
         var expectedBaseAddress = $"https://api.example.com/";
 
         // Act
-        var httpClient = (HttpClient)typeof(ApiClient)
+        var httpClient = (HttpClient)typeof(ConsumerClient)
             .GetField("_httpClient", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
             ?.GetValue(client)!;
 
@@ -52,19 +53,19 @@ public class ApiClientTests
     public async Task SendMagicLink_ShouldReturnSuccessResponse()
     {
         // Arrange
-        var client = new ApiClient(new ClientConfig
+        var client = new ConsumerClient(new ClientConfig
         {
             ProjectId = "project-test-27c9b831-3414-44b4-a1ca-cb507478ffe3",
             ProjectSecret = "secret-test-9BvxyAdbrTCvySEPHEW6inledt8VxkNUTz8=",
         });
 
-        var request = new MagicLinkRequest
+        var request = new MagicLinksEmailSendRequest()
         {
             Email = "sandbox@stytch.com",
         };
 
         // Act
-        var response = await client.SendMagicLinkAsync(request);
+        var response = await client.MagicLinks.Email.Send(request);
 
         // Assert
         Assert.NotNull(response);

@@ -39,7 +39,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BTOTPsCreateResponse> create(
+    public async Task<B2BTOTPsCreateResponse> Create(
         B2BTOTPsCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -77,7 +77,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BTOTPsAuthenticateResponse> authenticate(
+    public async Task<B2BTOTPsAuthenticateResponse> Authenticate(
         B2BTOTPsAuthenticateRequest request)
     {
         // Serialize the request model to JSON
@@ -116,7 +116,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BTOTPsMigrateResponse> migrate(
+    public async Task<B2BTOTPsMigrateResponse> Migrate(
         B2BTOTPsMigrateRequest request)
     {
         // Serialize the request model to JSON

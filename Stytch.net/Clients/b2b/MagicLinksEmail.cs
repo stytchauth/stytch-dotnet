@@ -41,7 +41,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BMagicLinksEmailLoginOrSignupResponse> loginOrSignup(
+    public async Task<B2BMagicLinksEmailLoginOrSignupResponse> LoginOrSignup(
         B2BMagicLinksEmailLoginOrSignupRequest request)
     {
         // Serialize the request model to JSON
@@ -84,7 +84,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BMagicLinksEmailInviteResponse> invite(
+    public async Task<B2BMagicLinksEmailInviteResponse> Invite(
         B2BMagicLinksEmailInviteRequest request)
     {
         // Serialize the request model to JSON

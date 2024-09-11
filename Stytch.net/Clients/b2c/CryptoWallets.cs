@@ -43,7 +43,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<CryptoWalletsAuthenticateStartResponse> authenticateStart(
+    public async Task<CryptoWalletsAuthenticateStartResponse> AuthenticateStart(
         CryptoWalletsAuthenticateStartRequest request)
     {
         // Serialize the request model to JSON
@@ -81,7 +81,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<CryptoWalletsAuthenticateResponse> authenticate(
+    public async Task<CryptoWalletsAuthenticateResponse> Authenticate(
         CryptoWalletsAuthenticateRequest request)
     {
         // Serialize the request model to JSON

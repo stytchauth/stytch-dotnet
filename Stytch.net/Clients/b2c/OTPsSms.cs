@@ -66,7 +66,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<OTPsSmsSendResponse> send(
+    public async Task<OTPsSmsSendResponse> Send(
         OTPsSmsSendRequest request)
     {
         // Serialize the request model to JSON
@@ -123,7 +123,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<OTPsSmsLoginOrCreateResponse> loginOrCreate(
+    public async Task<OTPsSmsLoginOrCreateResponse> LoginOrCreate(
         OTPsSmsLoginOrCreateRequest request)
     {
         // Serialize the request model to JSON

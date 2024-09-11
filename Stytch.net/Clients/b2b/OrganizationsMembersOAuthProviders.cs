@@ -46,7 +46,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersOAuthProvidersGoogleResponse> google(
+    public async Task<B2BOrganizationsMembersOAuthProvidersGoogleResponse> Google(
         B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
     {
         // Serialize the request model to JSON
@@ -88,7 +88,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse> microsoft(
+    public async Task<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse> Microsoft(
         B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
     {
         // Serialize the request model to JSON

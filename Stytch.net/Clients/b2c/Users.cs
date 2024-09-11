@@ -36,7 +36,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersCreateResponse> create(
+    public async Task<UsersCreateResponse> Create(
         UsersCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -74,7 +74,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersGetResponse> get(
+    public async Task<UsersGetResponse> Get(
         UsersGetRequest request)
     {
         // Serialize the request model to JSON
@@ -112,7 +112,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersSearchResponse> search(
+    public async Task<UsersSearchResponse> Search(
         UsersSearchRequest request)
     {
         // Serialize the request model to JSON
@@ -159,7 +159,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersUpdateResponse> update(
+    public async Task<UsersUpdateResponse> Update(
         UsersUpdateRequest request)
     {
         // Serialize the request model to JSON
@@ -204,7 +204,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersExchangePrimaryFactorResponse> exchangePrimaryFactor(
+    public async Task<UsersExchangePrimaryFactorResponse> ExchangePrimaryFactor(
         UsersExchangePrimaryFactorRequest request)
     {
         // Serialize the request model to JSON
@@ -242,7 +242,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeleteResponse> delete(
+    public async Task<UsersDeleteResponse> Delete(
         UsersDeleteRequest request)
     {
         // Serialize the request model to JSON
@@ -280,7 +280,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeleteEmailResponse> deleteEmail(
+    public async Task<UsersDeleteEmailResponse> DeleteEmail(
         UsersDeleteEmailRequest request)
     {
         // Serialize the request model to JSON
@@ -318,7 +318,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeletePhoneNumberResponse> deletePhoneNumber(
+    public async Task<UsersDeletePhoneNumberResponse> DeletePhoneNumber(
         UsersDeletePhoneNumberRequest request)
     {
         // Serialize the request model to JSON
@@ -356,7 +356,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeleteWebAuthnRegistrationResponse> deleteWebAuthnRegistration(
+    public async Task<UsersDeleteWebAuthnRegistrationResponse> DeleteWebAuthnRegistration(
         UsersDeleteWebAuthnRegistrationRequest request)
     {
         // Serialize the request model to JSON
@@ -394,7 +394,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeleteBiometricRegistrationResponse> deleteBiometricRegistration(
+    public async Task<UsersDeleteBiometricRegistrationResponse> DeleteBiometricRegistration(
         UsersDeleteBiometricRegistrationRequest request)
     {
         // Serialize the request model to JSON
@@ -432,7 +432,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeleteTOTPResponse> deleteTOTP(
+    public async Task<UsersDeleteTOTPResponse> DeleteTOTP(
         UsersDeleteTOTPRequest request)
     {
         // Serialize the request model to JSON
@@ -470,7 +470,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeleteCryptoWalletResponse> deleteCryptoWallet(
+    public async Task<UsersDeleteCryptoWalletResponse> DeleteCryptoWallet(
         UsersDeleteCryptoWalletRequest request)
     {
         // Serialize the request model to JSON
@@ -508,7 +508,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeletePasswordResponse> deletePassword(
+    public async Task<UsersDeletePasswordResponse> DeletePassword(
         UsersDeletePasswordRequest request)
     {
         // Serialize the request model to JSON
@@ -546,7 +546,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<UsersDeleteOAuthRegistrationResponse> deleteOAuthRegistration(
+    public async Task<UsersDeleteOAuthRegistrationResponse> DeleteOAuthRegistration(
         UsersDeleteOAuthRegistrationRequest request)
     {
         // Serialize the request model to JSON

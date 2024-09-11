@@ -36,7 +36,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionUpdateResponse> update(
+    public async Task<B2BSCIMConnectionUpdateResponse> Update(
         B2BSCIMConnectionUpdateRequest request)
     {
         // Serialize the request model to JSON
@@ -75,7 +75,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionDeleteResponse> delete(
+    public async Task<B2BSCIMConnectionDeleteResponse> Delete(
         B2BSCIMConnectionDeleteRequest request)
     {
         // Serialize the request model to JSON
@@ -114,7 +114,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionRotateStartResponse> rotateStart(
+    public async Task<B2BSCIMConnectionRotateStartResponse> RotateStart(
         B2BSCIMConnectionRotateStartRequest request)
     {
         // Serialize the request model to JSON
@@ -155,7 +155,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionRotateCompleteResponse> rotateComplete(
+    public async Task<B2BSCIMConnectionRotateCompleteResponse> RotateComplete(
         B2BSCIMConnectionRotateCompleteRequest request)
     {
         // Serialize the request model to JSON
@@ -195,7 +195,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionRotateCancelResponse> rotateCancel(
+    public async Task<B2BSCIMConnectionRotateCancelResponse> RotateCancel(
         B2BSCIMConnectionRotateCancelRequest request)
     {
         // Serialize the request model to JSON
@@ -234,7 +234,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionGetGroupsResponse> getGroups(
+    public async Task<B2BSCIMConnectionGetGroupsResponse> GetGroups(
         B2BSCIMConnectionGetGroupsRequest request)
     {
         // Serialize the request model to JSON
@@ -273,7 +273,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionCreateResponse> create(
+    public async Task<B2BSCIMConnectionCreateResponse> Create(
         B2BSCIMConnectionCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -312,7 +312,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSCIMConnectionGetResponse> get(
+    public async Task<B2BSCIMConnectionGetResponse> Get(
         B2BSCIMConnectionGetRequest request)
     {
         // Serialize the request model to JSON

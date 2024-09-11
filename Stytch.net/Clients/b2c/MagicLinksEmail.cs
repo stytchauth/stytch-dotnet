@@ -52,7 +52,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<MagicLinksEmailSendResponse> send(
+    public async Task<MagicLinksEmailSendResponse> Send(
         MagicLinksEmailSendRequest request)
     {
         // Serialize the request model to JSON
@@ -100,7 +100,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<MagicLinksEmailLoginOrCreateResponse> loginOrCreate(
+    public async Task<MagicLinksEmailLoginOrCreateResponse> LoginOrCreate(
         MagicLinksEmailLoginOrCreateRequest request)
     {
         // Serialize the request model to JSON
@@ -146,7 +146,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<MagicLinksEmailInviteResponse> invite(
+    public async Task<MagicLinksEmailInviteResponse> Invite(
         MagicLinksEmailInviteRequest request)
     {
         // Serialize the request model to JSON
@@ -184,7 +184,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<MagicLinksEmailRevokeInviteResponse> revokeInvite(
+    public async Task<MagicLinksEmailRevokeInviteResponse> RevokeInvite(
         MagicLinksEmailRevokeInviteRequest request)
     {
         // Serialize the request model to JSON

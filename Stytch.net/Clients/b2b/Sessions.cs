@@ -35,7 +35,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSessionsGetResponse> get(
+    public async Task<B2BSessionsGetResponse> Get(
         B2BSessionsGetRequest request)
     {
         // Serialize the request model to JSON
@@ -93,7 +93,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSessionsAuthenticateResponse> authenticate(
+    public async Task<B2BSessionsAuthenticateResponse> Authenticate(
         B2BSessionsAuthenticateRequest request)
     {
         // Serialize the request model to JSON
@@ -134,7 +134,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSessionsRevokeResponse> revoke(
+    public async Task<B2BSessionsRevokeResponse> Revoke(
         B2BSessionsRevokeRequest request)
     {
         // Serialize the request model to JSON
@@ -194,7 +194,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSessionsExchangeResponse> exchange(
+    public async Task<B2BSessionsExchangeResponse> Exchange(
         B2BSessionsExchangeRequest request)
     {
         // Serialize the request model to JSON
@@ -236,7 +236,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSessionsMigrateResponse> migrate(
+    public async Task<B2BSessionsMigrateResponse> Migrate(
         B2BSessionsMigrateRequest request)
     {
         // Serialize the request model to JSON
@@ -292,7 +292,7 @@ namespace Stytch.net.Clients.b2b
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<B2BSessionsGetJWKSResponse> getJWKS(
+    public async Task<B2BSessionsGetJWKSResponse> GetJWKS(
         B2BSessionsGetJWKSRequest request)
     {
         // Serialize the request model to JSON

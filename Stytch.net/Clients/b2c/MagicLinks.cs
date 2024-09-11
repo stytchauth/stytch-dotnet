@@ -39,7 +39,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<MagicLinksAuthenticateResponse> authenticate(
+    public async Task<MagicLinksAuthenticateResponse> Authenticate(
         MagicLinksAuthenticateRequest request)
     {
         // Serialize the request model to JSON
@@ -84,7 +84,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<MagicLinksCreateResponse> create(
+    public async Task<MagicLinksCreateResponse> Create(
         MagicLinksCreateRequest request)
     {
         // Serialize the request model to JSON

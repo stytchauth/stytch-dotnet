@@ -3,9 +3,8 @@ using Stytch.net.Clients.b2c;
 namespace Stytch.net.Clients
 {
 
-  public class ConsumerClient
+  public class ConsumerClient: BaseClient
   {
-    private readonly HttpClient _httpClient;
     public readonly CryptoWallets CryptoWallets;
     public readonly M2M M2M;
     public readonly MagicLinks MagicLinks;
@@ -18,9 +17,8 @@ namespace Stytch.net.Clients
     public readonly Users Users;
     public readonly WebAuthn WebAuthn;
 
-    public ConsumerClient(HttpClient client)
+    public ConsumerClient(ClientConfig config) : base(config)
     {
-      _httpClient = client;
       CryptoWallets = new CryptoWallets(_httpClient);
       M2M = new M2M(_httpClient);
       MagicLinks = new MagicLinks(_httpClient);

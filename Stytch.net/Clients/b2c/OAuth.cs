@@ -44,7 +44,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<OAuthAttachResponse> attach(
+    public async Task<OAuthAttachResponse> Attach(
         OAuthAttachRequest request)
     {
         // Serialize the request model to JSON
@@ -85,7 +85,7 @@ namespace Stytch.net.Clients.b2c
     * @throws A {@link StytchError} on a non-2xx response from the Stytch API
     * @throws A {@link RequestError} when the Stytch API cannot be reached
     */
-    public async Task<OAuthAuthenticateResponse> authenticate(
+    public async Task<OAuthAuthenticateResponse> Authenticate(
         OAuthAuthenticateRequest request)
     {
         // Serialize the request model to JSON
