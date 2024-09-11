@@ -239,7 +239,7 @@ namespace Stytch.net.Models.Consumer
         /// assignment.
         /// </summary>
         [JsonProperty("saml_connection_implicit_role_assignments")]
-        public SAMLConnectionImplicitRoleAssignment? SAMLConnectionImplicitRoleAssignments { get; set; }
+        public List<SAMLConnectionImplicitRoleAssignment>? SAMLConnectionImplicitRoleAssignments { get; set; }
         /// <summary>
         /// Defines the names of the SAML groups
         ///  that grant specific role assignments. For each group-Role pair, if a Member logs in with this SAML
@@ -253,7 +253,7 @@ namespace Stytch.net.Models.Consumer
         /// information.
         /// </summary>
         [JsonProperty("saml_group_implicit_role_assignments")]
-        public SAMLGroupImplicitRoleAssignment? SAMLGroupImplicitRoleAssignments { get; set; }
+        public List<SAMLGroupImplicitRoleAssignment>? SAMLGroupImplicitRoleAssignments { get; set; }
         /// <summary>
         /// An alternative URL to use for the Audience Restriction. This value can be used when you wish to migrate
         /// an existing SAML integration to Stytch with zero downtime.

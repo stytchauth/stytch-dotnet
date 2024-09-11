@@ -58,7 +58,7 @@ namespace Stytch.net.Models.Consumer
         /// password.
         /// </summary>
         [JsonProperty("suggestions")]
-        public required string Suggestions { get; set; }
+        public required List<string> Suggestions { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Authenticate"/>..
@@ -309,7 +309,7 @@ namespace Stytch.net.Models.Consumer
         ///    `preserve_existing_sessions` parameter with a value of `true`.
         /// </summary>
         [JsonProperty("roles")]
-        public string? Roles { get; set; }
+        public List<string>? Roles { get; set; }
         /// <summary>
         /// Whether to preserve existing sessions when explicit Roles that are revoked are also implicitly assigned
         ///   by SSO connection or SSO group. Defaults to `false` - that is, existing Member Sessions that contain

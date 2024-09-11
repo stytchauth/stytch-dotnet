@@ -107,7 +107,7 @@ namespace Stytch.net.Models.Consumer
         /// query.
         /// </summary>
         [JsonProperty("operands")]
-        public required SearchUsersQueryOperand Operands { get; set; }
+        public required List<SearchUsersQueryOperand> Operands { get; set; }
     }
     public class TOTP
     {
@@ -134,7 +134,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of email objects for the User.
         /// </summary>
         [JsonProperty("emails")]
-        public required UsersEmail Emails { get; set; }
+        public required List<UsersEmail> Emails { get; set; }
         /// <summary>
         /// The status of the User. The possible values are `pending` and `active`.
         /// </summary>
@@ -144,33 +144,33 @@ namespace Stytch.net.Models.Consumer
         /// An array of phone number objects linked to the User.
         /// </summary>
         [JsonProperty("phone_numbers")]
-        public required UsersPhoneNumber PhoneNumbers { get; set; }
+        public required List<UsersPhoneNumber> PhoneNumbers { get; set; }
         /// <summary>
         /// An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch
         /// API.
         /// </summary>
         [JsonProperty("webauthn_registrations")]
-        public required WebAuthnRegistration WebAuthnRegistrations { get; set; }
+        public required List<WebAuthnRegistration> WebAuthnRegistrations { get; set; }
         /// <summary>
         /// An array of OAuth `provider` objects linked to the User.
         /// </summary>
         [JsonProperty("providers")]
-        public required OAuthProvider Providers { get; set; }
+        public required List<OAuthProvider> Providers { get; set; }
         /// <summary>
         /// An array containing a list of all TOTP instances for a given User in the Stytch API.
         /// </summary>
         [JsonProperty("totps")]
-        public required TOTP TOTPs { get; set; }
+        public required List<TOTP> TOTPs { get; set; }
         /// <summary>
         /// An array contains a list of all crypto wallets for a given User in the Stytch API.
         /// </summary>
         [JsonProperty("crypto_wallets")]
-        public required CryptoWallet CryptoWallets { get; set; }
+        public required List<CryptoWallet> CryptoWallets { get; set; }
         /// <summary>
         /// An array that contains a list of all biometric registrations for a given User in the Stytch API.
         /// </summary>
         [JsonProperty("biometric_registrations")]
-        public required BiometricRegistration BiometricRegistrations { get; set; }
+        public required List<BiometricRegistration> BiometricRegistrations { get; set; }
         /// <summary>
         /// The name of the User. Each field in the `name` object is optional.
         /// </summary>
@@ -839,7 +839,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of email objects for the User.
         /// </summary>
         [JsonProperty("emails")]
-        public required UsersEmail Emails { get; set; }
+        public required List<UsersEmail> Emails { get; set; }
         /// <summary>
         /// The status of the User. The possible values are `pending` and `active`.
         /// </summary>
@@ -849,33 +849,33 @@ namespace Stytch.net.Models.Consumer
         /// An array of phone number objects linked to the User.
         /// </summary>
         [JsonProperty("phone_numbers")]
-        public required UsersPhoneNumber PhoneNumbers { get; set; }
+        public required List<UsersPhoneNumber> PhoneNumbers { get; set; }
         /// <summary>
         /// An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch
         /// API.
         /// </summary>
         [JsonProperty("webauthn_registrations")]
-        public required WebAuthnRegistration WebAuthnRegistrations { get; set; }
+        public required List<WebAuthnRegistration> WebAuthnRegistrations { get; set; }
         /// <summary>
         /// An array of OAuth `provider` objects linked to the User.
         /// </summary>
         [JsonProperty("providers")]
-        public required OAuthProvider Providers { get; set; }
+        public required List<OAuthProvider> Providers { get; set; }
         /// <summary>
         /// An array containing a list of all TOTP instances for a given User in the Stytch API.
         /// </summary>
         [JsonProperty("totps")]
-        public required TOTP TOTPs { get; set; }
+        public required List<TOTP> TOTPs { get; set; }
         /// <summary>
         /// An array contains a list of all crypto wallets for a given User in the Stytch API.
         /// </summary>
         [JsonProperty("crypto_wallets")]
-        public required CryptoWallet CryptoWallets { get; set; }
+        public required List<CryptoWallet> CryptoWallets { get; set; }
         /// <summary>
         /// An array that contains a list of all biometric registrations for a given User in the Stytch API.
         /// </summary>
         [JsonProperty("biometric_registrations")]
-        public required BiometricRegistration BiometricRegistrations { get; set; }
+        public required List<BiometricRegistration> BiometricRegistrations { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
@@ -957,7 +957,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of results that match your search query.
         /// </summary>
         [JsonProperty("results")]
-        public required User Results { get; set; }
+        public required List<User> Results { get; set; }
         /// <summary>
         /// The search `results_metadata` object contains metadata relevant to your specific query like total and
         /// `next_cursor`.
@@ -1026,17 +1026,17 @@ namespace Stytch.net.Models.Consumer
         /// An array of email objects for the User.
         /// </summary>
         [JsonProperty("emails")]
-        public required UsersEmail Emails { get; set; }
+        public required List<UsersEmail> Emails { get; set; }
         /// <summary>
         /// An array of phone number objects linked to the User.
         /// </summary>
         [JsonProperty("phone_numbers")]
-        public required UsersPhoneNumber PhoneNumbers { get; set; }
+        public required List<UsersPhoneNumber> PhoneNumbers { get; set; }
         /// <summary>
         /// An array contains a list of all crypto wallets for a given User in the Stytch API.
         /// </summary>
         [JsonProperty("crypto_wallets")]
-        public required CryptoWallet CryptoWallets { get; set; }
+        public required List<CryptoWallet> CryptoWallets { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.

@@ -25,7 +25,7 @@ namespace Stytch.net.Models.Consumer
         /// The recovery codes used to authenticate the user without an authenticator app.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required string RecoveryCodes { get; set; }
+        public required List<string> RecoveryCodes { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.TOTPs.Authenticate"/>..
@@ -180,7 +180,7 @@ namespace Stytch.net.Models.Consumer
         /// The recovery codes used to authenticate the user without an authenticator app.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required string RecoveryCodes { get; set; }
+        public required List<string> RecoveryCodes { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
@@ -337,7 +337,7 @@ namespace Stytch.net.Models.Consumer
         /// the Stytch API.
         /// </summary>
         [JsonProperty("totps")]
-        public required TOTPWithRecoveryCodes TOTPs { get; set; }
+        public required List<TOTPWithRecoveryCodes> TOTPs { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

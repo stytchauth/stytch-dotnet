@@ -34,7 +34,7 @@ namespace Stytch.net.Models.Consumer
         /// are included by default and how to add custom scopes.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in
         /// UTC, e.g. `2021-12-29T12:33:09Z`.

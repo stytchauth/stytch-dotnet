@@ -46,7 +46,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("authorized")]
         public required bool Authorized { get; set; }
         [JsonProperty("granting_roles")]
-        public required string GrantingRoles { get; set; }
+        public required List<string> GrantingRoles { get; set; }
     }
     public class B2BSessionsRevokeRequestOptions
     {
@@ -92,7 +92,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of different authentication factors that comprise a Session.
         /// </summary>
         [JsonProperty("authentication_factors")]
-        public required AuthenticationFactor AuthenticationFactors { get; set; }
+        public required List<AuthenticationFactor> AuthenticationFactors { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value.
@@ -100,7 +100,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("organization_id")]
         public required string OrganizationId { get; set; }
         [JsonProperty("roles")]
-        public required string Roles { get; set; }
+        public required List<string> Roles { get; set; }
         /// <summary>
         /// The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate
         /// call.
@@ -118,7 +118,7 @@ namespace Stytch.net.Models.Consumer
         /// factors can be transferred between Organizations.
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public required string AllowedAuthMethods { get; set; }
+        public required List<string> AllowedAuthMethods { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Sessions.Authenticate"/>..
@@ -403,7 +403,7 @@ namespace Stytch.net.Models.Consumer
         /// The JWK
         /// </summary>
         [JsonProperty("keys")]
-        public required JWK Keys { get; set; }
+        public required List<JWK> Keys { get; set; }
         /// <summary>
         /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
@@ -450,7 +450,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of [Session objects](https://stytch.com/docs/b2b/api/session-object).
         /// </summary>
         [JsonProperty("member_sessions")]
-        public required MemberSession MemberSessions { get; set; }
+        public required List<MemberSession> MemberSessions { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

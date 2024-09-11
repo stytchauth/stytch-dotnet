@@ -73,7 +73,7 @@ namespace Stytch.net.Models.Consumer
         /// domain as the end user (to prevent phishing attacks).
         /// </summary>
         [JsonProperty("discovered_organizations")]
-        public required DiscoveredOrganization DiscoveredOrganizations { get; set; }
+        public required List<DiscoveredOrganization> DiscoveredOrganizations { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
