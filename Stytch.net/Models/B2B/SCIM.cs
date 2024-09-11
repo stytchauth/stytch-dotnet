@@ -241,27 +241,37 @@ public class SCIMConnectionWithToken {
       public string? BearerTokenExpiresAt { get; set; }
     }
 public class SCIMGroup {
-      // Globally unique UUID that identifies a specific SCIM Group.
+      /// <summary>
+    /// Globally unique UUID that identifies a specific SCIM Group.
+    /// </summary>
       [JsonProperty("group_id")]
       public required string GroupId { get; set; }
-      // The name of the SCIM group.
+      /// <summary>
+    /// The name of the SCIM group.
+    /// </summary>
       [JsonProperty("group_name")]
       public required string GroupName { get; set; }
-      /**
-    * Globally unique UUID that identifies a specific Organization. The organization_id is critical to perform
-    * operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The organization_id is critical to perform
+    /// operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SCIM connection.
+      /// <summary>
+    /// The ID of the SCIM connection.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
     }
 public class SCIMGroupImplicitRoleAssignments {
-      // The ID of the role.
+      /// <summary>
+    /// The ID of the role.
+    /// </summary>
       [JsonProperty("role_id")]
       public required string RoleId { get; set; }
-      // The ID of the group.
+      /// <summary>
+    /// The ID of the group.
+    /// </summary>
       [JsonProperty("group_id")]
       public required string GroupId { get; set; }
       [JsonProperty("group_name")]

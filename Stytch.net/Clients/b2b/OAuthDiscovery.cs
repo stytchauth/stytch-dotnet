@@ -27,15 +27,10 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Authenticates the Discovery OAuth token and exchanges it for an Intermediate Session Token. Intermediate
-    * Session Tokens can be used for various Discovery login flows and are valid for 10 minutes.
-    * @param data {@link B2BOAuthDiscoveryAuthenticateRequest}
-    * @returns {@link B2BOAuthDiscoveryAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Authenticates the Discovery OAuth token and exchanges it for an Intermediate Session Token. Intermediate
+    /// Session Tokens can be used for various Discovery login flows and are valid for 10 minutes.
+    /// </summary>
     public async Task<B2BOAuthDiscoveryAuthenticateResponse> Authenticate(
         B2BOAuthDiscoveryAuthenticateRequest request)
     {

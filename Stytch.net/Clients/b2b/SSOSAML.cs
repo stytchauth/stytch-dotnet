@@ -27,15 +27,9 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Create a new SAML Connection.
-    * @param data {@link B2BSSOSAMLCreateConnectionRequest}
-    * @param options {@link B2BSSOSAMLCreateConnectionRequestOptions}
-    * @returns {@link B2BSSOSAMLCreateConnectionResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Create a new SAML Connection.
+    /// </summary>
     public async Task<B2BSSOSAMLCreateConnectionResponse> CreateConnection(
         B2BSSOSAMLCreateConnectionRequest request)
     {
@@ -66,21 +60,15 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Updates an existing SAML connection.
-    * 
-    * Note that a newly created connection will not become active until all of the following are provided:
-    * * `idp_sso_url`
-    * * `attribute_mapping`
-    * * `idp_entity_id`
-    * * `x509_certificate`
-    * @param data {@link B2BSSOSAMLUpdateConnectionRequest}
-    * @param options {@link B2BSSOSAMLUpdateConnectionRequestOptions}
-    * @returns {@link B2BSSOSAMLUpdateConnectionResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Updates an existing SAML connection.
+    /// 
+    /// Note that a newly created connection will not become active until all of the following are provided:
+    /// * `idp_sso_url`
+    /// * `attribute_mapping`
+    /// * `idp_entity_id`
+    /// * `x509_certificate`
+    /// </summary>
     public async Task<B2BSSOSAMLUpdateConnectionResponse> UpdateConnection(
         B2BSSOSAMLUpdateConnectionRequest request)
     {
@@ -111,21 +99,15 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Used to update an existing SAML connection using an IDP metadata URL.
-    * 
-    * A newly created connection will not become active until all the following are provided:
-    * * `idp_sso_url`
-    * * `idp_entity_id`
-    * * `x509_certificate`
-    * * `attribute_mapping` (must be supplied using [Update SAML Connection](update-saml-connection))
-    * @param data {@link B2BSSOSAMLUpdateByURLRequest}
-    * @param options {@link B2BSSOSAMLUpdateByURLRequestOptions}
-    * @returns {@link B2BSSOSAMLUpdateByURLResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Used to update an existing SAML connection using an IDP metadata URL.
+    /// 
+    /// A newly created connection will not become active until all the following are provided:
+    /// * `idp_sso_url`
+    /// * `idp_entity_id`
+    /// * `x509_certificate`
+    /// * `attribute_mapping` (must be supplied using [Update SAML Connection](update-saml-connection))
+    /// </summary>
     public async Task<B2BSSOSAMLUpdateByURLResponse> UpdateByURL(
         B2BSSOSAMLUpdateByURLRequest request)
     {
@@ -156,18 +138,12 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a SAML verification certificate.
-    * 
-    * You may need to do this when rotating certificates from your IdP, since Stytch allows a maximum of 5
-    * certificates per connection. There must always be at least one certificate per active connection.
-    * @param data {@link B2BSSOSAMLDeleteVerificationCertificateRequest}
-    * @param options {@link B2BSSOSAMLDeleteVerificationCertificateRequestOptions}
-    * @returns {@link B2BSSOSAMLDeleteVerificationCertificateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a SAML verification certificate.
+    /// 
+    /// You may need to do this when rotating certificates from your IdP, since Stytch allows a maximum of 5
+    /// certificates per connection. There must always be at least one certificate per active connection.
+    /// </summary>
     public async Task<B2BSSOSAMLDeleteVerificationCertificateResponse> DeleteVerificationCertificate(
         B2BSSOSAMLDeleteVerificationCertificateRequest request)
     {

@@ -27,22 +27,17 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Initiate the authentication of a crypto wallet. After calling this endpoint, the user will need to sign
-    * a message containing the returned `challenge` field.
-    * 
-    * For Ethereum crypto wallets, you can optionally use the Sign In With Ethereum (SIWE) protocol for the
-    * message by passing in the `siwe_params`. The only required fields are `domain` and `uri`.
-    * If the crypto wallet detects that the domain in the message does not match the website's domain, it will
-    * display a warning to the user.
-    * 
-    * If not using the SIWE protocol, the message will simply consist of the project name and a random string.
-    * @param data {@link CryptoWalletsAuthenticateStartRequest}
-    * @returns {@link CryptoWalletsAuthenticateStartResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Initiate the authentication of a crypto wallet. After calling this endpoint, the user will need to sign
+    /// a message containing the returned `challenge` field.
+    /// 
+    /// For Ethereum crypto wallets, you can optionally use the Sign In With Ethereum (SIWE) protocol for the
+    /// message by passing in the `siwe_params`. The only required fields are `domain` and `uri`.
+    /// If the crypto wallet detects that the domain in the message does not match the website's domain, it will
+    /// display a warning to the user.
+    /// 
+    /// If not using the SIWE protocol, the message will simply consist of the project name and a random string.
+    /// </summary>
     public async Task<CryptoWalletsAuthenticateStartResponse> AuthenticateStart(
         CryptoWalletsAuthenticateStartRequest request)
     {
@@ -73,14 +68,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Complete the authentication of a crypto wallet by passing the signature.
-    * @param data {@link CryptoWalletsAuthenticateRequest}
-    * @returns {@link CryptoWalletsAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Complete the authentication of a crypto wallet by passing the signature.
+    /// </summary>
     public async Task<CryptoWalletsAuthenticateResponse> Authenticate(
         CryptoWalletsAuthenticateRequest request)
     {

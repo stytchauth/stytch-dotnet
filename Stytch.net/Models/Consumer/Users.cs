@@ -9,792 +9,1004 @@ using System.Runtime.Serialization;
 namespace Stytch.net.Models.Consumer
 {
 public class BiometricRegistration {
-      // The unique ID for a biometric registration.
+      /// <summary>
+    /// The unique ID for a biometric registration.
+    /// </summary>
       [JsonProperty("biometric_registration_id")]
       public required string BiometricRegistrationId { get; set; }
-      /**
-    * The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
-    * has been successfully authenticated by the User.
-    */
+      /// <summary>
+    /// The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
+    /// has been successfully authenticated by the User.
+    /// </summary>
       [JsonProperty("verified")]
       public required bool Verified { get; set; }
     }
 public class CryptoWallet {
-      // The unique ID for a crypto wallet
+      /// <summary>
+    /// The unique ID for a crypto wallet
+    /// </summary>
       [JsonProperty("crypto_wallet_id")]
       public required string CryptoWalletId { get; set; }
-      // The actual blockchain address of the User's crypto wallet.
+      /// <summary>
+    /// The actual blockchain address of the User's crypto wallet.
+    /// </summary>
       [JsonProperty("crypto_wallet_address")]
       public required string CryptoWalletAddress { get; set; }
-      // The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+      /// <summary>
+    /// The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+    /// </summary>
       [JsonProperty("crypto_wallet_type")]
       public required string CryptoWalletType { get; set; }
-      /**
-    * The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
-    * has been successfully authenticated by the User.
-    */
+      /// <summary>
+    /// The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
+    /// has been successfully authenticated by the User.
+    /// </summary>
       [JsonProperty("verified")]
       public required bool Verified { get; set; }
     }
 public class OAuthProvider {
-      /**
-    * Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub
-    * etc.
-    */
+      /// <summary>
+    /// Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub
+    /// etc.
+    /// </summary>
       [JsonProperty("provider_type")]
       public required string ProviderType { get; set; }
-      /**
-    * The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or
-    * "Subject field" in OAuth protocols.
-    */
+      /// <summary>
+    /// The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or
+    /// "Subject field" in OAuth protocols.
+    /// </summary>
       [JsonProperty("provider_subject")]
       public required string ProviderSubject { get; set; }
-      /**
-    * If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the
-    * provider that the User has authenticated with, e.g. Facebook profile picture.
-    */
+      /// <summary>
+    /// If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the
+    /// provider that the User has authenticated with, e.g. Facebook profile picture.
+    /// </summary>
       [JsonProperty("profile_picture_url")]
       public required string ProfilePictureURL { get; set; }
-      /**
-    * If available, the `locale` is the User's locale set in the OAuth identity provider that the user has
-    * authenticated with.
-    */
+      /// <summary>
+    /// If available, the `locale` is the User's locale set in the OAuth identity provider that the user has
+    /// authenticated with.
+    /// </summary>
       [JsonProperty("locale")]
       public required string Locale { get; set; }
-      // The unique ID for an OAuth registration.
+      /// <summary>
+    /// The unique ID for an OAuth registration.
+    /// </summary>
       [JsonProperty("oauth_user_registration_id")]
       public required string OAuthUserRegistrationId { get; set; }
     }
 public class Password {
-      // The unique ID of a specific password
+      /// <summary>
+    /// The unique ID of a specific password
+    /// </summary>
       [JsonProperty("password_id")]
       public required string PasswordId { get; set; }
-      // Indicates whether this password requires a password reset
+      /// <summary>
+    /// Indicates whether this password requires a password reset
+    /// </summary>
       [JsonProperty("requires_reset")]
       public required bool RequiresReset { get; set; }
     }
 public class SearchUsersQuery {
-      /**
-    * The action to perform on the operands. The accepted value are:
-    * 
-    *   `AND` – all the operand values provided must match.
-    *   
-    *   `OR` – the operator will return any matches to at least one of the operand values you supply.
-    */
+      /// <summary>
+    /// The action to perform on the operands. The accepted value are:
+    /// 
+    ///   `AND` – all the operand values provided must match.
+    ///   
+    ///   `OR` – the operator will return any matches to at least one of the operand values you supply.
+    /// </summary>
       [JsonProperty("operator")]
       public required SearchUsersQueryOperator Operator { get; set; }
-      /**
-    * An array of operand objects that contains all of the filters and values to apply to your search search
-    * query.
-    */
+      /// <summary>
+    /// An array of operand objects that contains all of the filters and values to apply to your search search
+    /// query.
+    /// </summary>
       [JsonProperty("operands")]
       public required SearchUsersQueryOperand Operands { get; set; }
     }
 public class TOTP {
-      // The unique ID for a TOTP instance.
+      /// <summary>
+    /// The unique ID for a TOTP instance.
+    /// </summary>
       [JsonProperty("totp_id")]
       public required string TOTPId { get; set; }
-      /**
-    * The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
-    * has been successfully authenticated by the User.
-    */
+      /// <summary>
+    /// The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
+    /// has been successfully authenticated by the User.
+    /// </summary>
       [JsonProperty("verified")]
       public required bool Verified { get; set; }
     }
 public class User {
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // An array of email objects for the User.
+      /// <summary>
+    /// An array of email objects for the User.
+    /// </summary>
       [JsonProperty("emails")]
       public required UsersEmail Emails { get; set; }
-      // The status of the User. The possible values are `pending` and `active`.
+      /// <summary>
+    /// The status of the User. The possible values are `pending` and `active`.
+    /// </summary>
       [JsonProperty("status")]
       public required string Status { get; set; }
-      // An array of phone number objects linked to the User.
+      /// <summary>
+    /// An array of phone number objects linked to the User.
+    /// </summary>
       [JsonProperty("phone_numbers")]
       public required UsersPhoneNumber PhoneNumbers { get; set; }
-      /**
-    * An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch
-    * API.
-    */
+      /// <summary>
+    /// An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch
+    /// API.
+    /// </summary>
       [JsonProperty("webauthn_registrations")]
       public required WebAuthnRegistration WebAuthnRegistrations { get; set; }
-      // An array of OAuth `provider` objects linked to the User.
+      /// <summary>
+    /// An array of OAuth `provider` objects linked to the User.
+    /// </summary>
       [JsonProperty("providers")]
       public required OAuthProvider Providers { get; set; }
-      // An array containing a list of all TOTP instances for a given User in the Stytch API.
+      /// <summary>
+    /// An array containing a list of all TOTP instances for a given User in the Stytch API.
+    /// </summary>
       [JsonProperty("totps")]
       public required TOTP TOTPs { get; set; }
-      // An array contains a list of all crypto wallets for a given User in the Stytch API.
+      /// <summary>
+    /// An array contains a list of all crypto wallets for a given User in the Stytch API.
+    /// </summary>
       [JsonProperty("crypto_wallets")]
       public required CryptoWallet CryptoWallets { get; set; }
-      // An array that contains a list of all biometric registrations for a given User in the Stytch API.
+      /// <summary>
+    /// An array that contains a list of all biometric registrations for a given User in the Stytch API.
+    /// </summary>
       [JsonProperty("biometric_registrations")]
       public required BiometricRegistration BiometricRegistrations { get; set; }
-      // The name of the User. Each field in the `name` object is optional.
+      /// <summary>
+    /// The name of the User. Each field in the `name` object is optional.
+    /// </summary>
       [JsonProperty("name")]
       public UsersName? Name { get; set; }
-      /**
-    * The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC,
-    * e.g. `2021-12-29T12:33:09Z`.
-    */
+      /// <summary>
+    /// The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC,
+    /// e.g. `2021-12-29T12:33:09Z`.
+    /// </summary>
       [JsonProperty("created_at")]
       public string? CreatedAt { get; set; }
-      // The password object is returned for users with a password.
+      /// <summary>
+    /// The password object is returned for users with a password.
+    /// </summary>
       [JsonProperty("password")]
       public Password? Password { get; set; }
-      /**
-    * The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
-    * [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-    */
+      /// <summary>
+    /// The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
+    /// [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+    /// </summary>
       [JsonProperty("trusted_metadata")]
       public object? TrustedMetadata { get; set; }
-      /**
-    * The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
-    * metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
-    * information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
-    * behavior details.
-    */
+      /// <summary>
+    /// The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
+    /// metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
+    /// information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
+    /// behavior details.
+    /// </summary>
       [JsonProperty("untrusted_metadata")]
       public object? UntrustedMetadata { get; set; }
     }
 public class UsersEmail {
-      // The unique ID of a specific email address.
+      /// <summary>
+    /// The unique ID of a specific email address.
+    /// </summary>
       [JsonProperty("email_id")]
       public required string EmailId { get; set; }
-      // The email address.
+      /// <summary>
+    /// The email address.
+    /// </summary>
       [JsonProperty("email")]
       public required string Email { get; set; }
-      /**
-    * The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
-    * has been successfully authenticated by the User.
-    */
+      /// <summary>
+    /// The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
+    /// has been successfully authenticated by the User.
+    /// </summary>
       [JsonProperty("verified")]
       public required bool Verified { get; set; }
     }
 public class UsersName {
-      // The first name of the user.
+      /// <summary>
+    /// The first name of the user.
+    /// </summary>
       [JsonProperty("first_name")]
       public string? FirstName { get; set; }
-      // The middle name(s) of the user.
+      /// <summary>
+    /// The middle name(s) of the user.
+    /// </summary>
       [JsonProperty("middle_name")]
       public string? MiddleName { get; set; }
-      // The last name of the user.
+      /// <summary>
+    /// The last name of the user.
+    /// </summary>
       [JsonProperty("last_name")]
       public string? LastName { get; set; }
     }
 public class UsersPhoneNumber {
-      // The unique ID for the phone number.
+      /// <summary>
+    /// The unique ID for the phone number.
+    /// </summary>
       [JsonProperty("phone_id")]
       public required string PhoneId { get; set; }
-      // The phone number.
+      /// <summary>
+    /// The phone number.
+    /// </summary>
       [JsonProperty("phone_number")]
       public required string PhoneNumber { get; set; }
-      /**
-    * The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
-    * has been successfully authenticated by the User.
-    */
+      /// <summary>
+    /// The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
+    /// has been successfully authenticated by the User.
+    /// </summary>
       [JsonProperty("verified")]
       public required bool Verified { get; set; }
     }
 public class UsersResultsMetadata {
-      // The total number of results returned by your search query.
+      /// <summary>
+    /// The total number of results returned by your search query.
+    /// </summary>
       [JsonProperty("total")]
       public required int Total { get; set; }
-      /**
-    * The `next_cursor` string is returned when your search result contains more than one page of results.
-    * This value is passed into your next search call in the `cursor` field.
-    */
+      /// <summary>
+    /// The `next_cursor` string is returned when your search result contains more than one page of results.
+    /// This value is passed into your next search call in the `cursor` field.
+    /// </summary>
       [JsonProperty("next_cursor")]
       public string? NextCursor { get; set; }
     }
 public class WebAuthnRegistration {
-      // The unique ID for the Passkey or WebAuthn registration.
+      /// <summary>
+    /// The unique ID for the Passkey or WebAuthn registration.
+    /// </summary>
       [JsonProperty("webauthn_registration_id")]
       public required string WebAuthnRegistrationId { get; set; }
-      // The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
+      /// <summary>
+    /// The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
+    /// </summary>
       [JsonProperty("domain")]
       public required string Domain { get; set; }
-      // The user agent of the User.
+      /// <summary>
+    /// The user agent of the User.
+    /// </summary>
       [JsonProperty("user_agent")]
       public required string UserAgent { get; set; }
-      /**
-    * The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
-    * has been successfully authenticated by the User.
-    */
+      /// <summary>
+    /// The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc.,
+    /// has been successfully authenticated by the User.
+    /// </summary>
       [JsonProperty("verified")]
       public required bool Verified { get; set; }
-      /**
-    * The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn
-    * device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or
-    * WebAuthn device was created without an authenticator type preference.
-    */
+      /// <summary>
+    /// The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn
+    /// device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or
+    /// WebAuthn device was created without an authenticator type preference.
+    /// </summary>
       [JsonProperty("authenticator_type")]
       public required string AuthenticatorType { get; set; }
-      // The `name` of the Passkey or WebAuthn registration.
+      /// <summary>
+    /// The `name` of the Passkey or WebAuthn registration.
+    /// </summary>
       [JsonProperty("name")]
       public required string Name { get; set; }
     }
-// Request type for `users.create`.
+/// <summary>
+    /// Request type for `users.create`.
+    /// </summary>
     public class UsersCreateRequest {
-      // The email address of the end user.
+      /// <summary>
+    /// The email address of the end user.
+    /// </summary>
       [JsonProperty("email")]
       public string? Email { get; set; }
-      // The name of the user. Each field in the name object is optional.
+      /// <summary>
+    /// The name of the user. Each field in the name object is optional.
+    /// </summary>
       [JsonProperty("name")]
       public UsersName? Name { get; set; }
-      // Provided attributes help with fraud detection.
+      /// <summary>
+    /// Provided attributes help with fraud detection.
+    /// </summary>
       [JsonProperty("attributes")]
       public Attributes? Attributes { get; set; }
-      /**
-    * The phone number to use for one-time passcodes. The phone number should be in E.164 format (i.e.
-    * +1XXXXXXXXXX). You may use +10000000000 to test this endpoint, see
-    * [Testing](https://stytch.com/docs/home#resources_testing) for more detail.
-    */
+      /// <summary>
+    /// The phone number to use for one-time passcodes. The phone number should be in E.164 format (i.e.
+    /// +1XXXXXXXXXX). You may use +10000000000 to test this endpoint, see
+    /// [Testing](https://stytch.com/docs/home#resources_testing) for more detail.
+    /// </summary>
       [JsonProperty("phone_number")]
       public string? PhoneNumber { get; set; }
-      /**
-    * Flag for whether or not to save a user as pending vs active in Stytch. Defaults to false.
-    *         If true, users will be saved with status pending in Stytch's backend until authenticated.
-    *         If false, users will be created as active. An example usage of
-    *         a true flag would be to require users to verify their phone by entering the OTP code before
-    * creating
-    *         an account for them.
-    */
+      /// <summary>
+    /// Flag for whether or not to save a user as pending vs active in Stytch. Defaults to false.
+    ///         If true, users will be saved with status pending in Stytch's backend until authenticated.
+    ///         If false, users will be created as active. An example usage of
+    ///         a true flag would be to require users to verify their phone by entering the OTP code before
+    /// creating
+    ///         an account for them.
+    /// </summary>
       [JsonProperty("create_user_as_pending")]
       public bool? CreateUserAsPending { get; set; }
-      /**
-    * The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
-    * [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-    */
+      /// <summary>
+    /// The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
+    /// [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+    /// </summary>
       [JsonProperty("trusted_metadata")]
       public object? TrustedMetadata { get; set; }
-      /**
-    * The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
-    * metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
-    * information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
-    * behavior details.
-    */
+      /// <summary>
+    /// The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
+    /// metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
+    /// information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
+    /// behavior details.
+    /// </summary>
       [JsonProperty("untrusted_metadata")]
       public object? UntrustedMetadata { get; set; }
     }
-// Response type for `users.create`.
+/// <summary>
+    /// Response type for `users.create`.
+    /// </summary>
     public class UsersCreateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // The unique ID of a specific email address.
+      /// <summary>
+    /// The unique ID of a specific email address.
+    /// </summary>
       [JsonProperty("email_id")]
       public required string EmailId { get; set; }
-      // The status of the User. The possible values are `pending` and `active`.
+      /// <summary>
+    /// The status of the User. The possible values are `pending` and `active`.
+    /// </summary>
       [JsonProperty("status")]
       public required string Status { get; set; }
-      // The unique ID for the phone number.
+      /// <summary>
+    /// The unique ID for the phone number.
+    /// </summary>
       [JsonProperty("phone_id")]
       public required string PhoneId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deleteBiometricRegistration`.
+/// <summary>
+    /// Request type for `users.deleteBiometricRegistration`.
+    /// </summary>
     public class UsersDeleteBiometricRegistrationRequest {
-      // The `biometric_registration_id` to be deleted.
+      /// <summary>
+    /// The `biometric_registration_id` to be deleted.
+    /// </summary>
       [JsonProperty("biometric_registration_id")]
       public required string BiometricRegistrationId { get; set; }
     }
-// Response type for `users.deleteBiometricRegistration`.
+/// <summary>
+    /// Response type for `users.deleteBiometricRegistration`.
+    /// </summary>
     public class UsersDeleteBiometricRegistrationResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deleteCryptoWallet`.
+/// <summary>
+    /// Request type for `users.deleteCryptoWallet`.
+    /// </summary>
     public class UsersDeleteCryptoWalletRequest {
-      // The `crypto_wallet_id` to be deleted.
+      /// <summary>
+    /// The `crypto_wallet_id` to be deleted.
+    /// </summary>
       [JsonProperty("crypto_wallet_id")]
       public required string CryptoWalletId { get; set; }
     }
-// Response type for `users.deleteCryptoWallet`.
+/// <summary>
+    /// Response type for `users.deleteCryptoWallet`.
+    /// </summary>
     public class UsersDeleteCryptoWalletResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deleteEmail`.
+/// <summary>
+    /// Request type for `users.deleteEmail`.
+    /// </summary>
     public class UsersDeleteEmailRequest {
-      // The `email_id` to be deleted.
+      /// <summary>
+    /// The `email_id` to be deleted.
+    /// </summary>
       [JsonProperty("email_id")]
       public required string EmailId { get; set; }
     }
-// Response type for `users.deleteEmail`.
+/// <summary>
+    /// Response type for `users.deleteEmail`.
+    /// </summary>
     public class UsersDeleteEmailResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deleteOAuthRegistration`.
+/// <summary>
+    /// Request type for `users.deleteOAuthRegistration`.
+    /// </summary>
     public class UsersDeleteOAuthRegistrationRequest {
-      // The `oauth_user_registration_id` to be deleted.
+      /// <summary>
+    /// The `oauth_user_registration_id` to be deleted.
+    /// </summary>
       [JsonProperty("oauth_user_registration_id")]
       public required string OAuthUserRegistrationId { get; set; }
     }
-// Response type for `users.deleteOAuthRegistration`.
+/// <summary>
+    /// Response type for `users.deleteOAuthRegistration`.
+    /// </summary>
     public class UsersDeleteOAuthRegistrationResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deletePassword`.
+/// <summary>
+    /// Request type for `users.deletePassword`.
+    /// </summary>
     public class UsersDeletePasswordRequest {
-      // The `password_id` to be deleted.
+      /// <summary>
+    /// The `password_id` to be deleted.
+    /// </summary>
       [JsonProperty("password_id")]
       public required string PasswordId { get; set; }
     }
-// Response type for `users.deletePassword`.
+/// <summary>
+    /// Response type for `users.deletePassword`.
+    /// </summary>
     public class UsersDeletePasswordResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deletePhoneNumber`.
+/// <summary>
+    /// Request type for `users.deletePhoneNumber`.
+    /// </summary>
     public class UsersDeletePhoneNumberRequest {
-      // The `phone_id` to be deleted.
+      /// <summary>
+    /// The `phone_id` to be deleted.
+    /// </summary>
       [JsonProperty("phone_id")]
       public required string PhoneId { get; set; }
     }
-// Response type for `users.deletePhoneNumber`.
+/// <summary>
+    /// Response type for `users.deletePhoneNumber`.
+    /// </summary>
     public class UsersDeletePhoneNumberResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.delete`.
+/// <summary>
+    /// Request type for `users.delete`.
+    /// </summary>
     public class UsersDeleteRequest {
-      // The unique ID of a specific User.
+      /// <summary>
+    /// The unique ID of a specific User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
     }
-// Response type for `users.delete`.
+/// <summary>
+    /// Response type for `users.delete`.
+    /// </summary>
     public class UsersDeleteResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the deleted User.
+      /// <summary>
+    /// The unique ID of the deleted User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deleteTOTP`.
+/// <summary>
+    /// Request type for `users.deleteTOTP`.
+    /// </summary>
     public class UsersDeleteTOTPRequest {
-      // The `totp_id` to be deleted.
+      /// <summary>
+    /// The `totp_id` to be deleted.
+    /// </summary>
       [JsonProperty("totp_id")]
       public required string TOTPId { get; set; }
     }
-// Response type for `users.deleteTOTP`.
+/// <summary>
+    /// Response type for `users.deleteTOTP`.
+    /// </summary>
     public class UsersDeleteTOTPResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.deleteWebAuthnRegistration`.
+/// <summary>
+    /// Request type for `users.deleteWebAuthnRegistration`.
+    /// </summary>
     public class UsersDeleteWebAuthnRegistrationRequest {
-      // The `webauthn_registration_id` to be deleted.
+      /// <summary>
+    /// The `webauthn_registration_id` to be deleted.
+    /// </summary>
       [JsonProperty("webauthn_registration_id")]
       public required string WebAuthnRegistrationId { get; set; }
     }
-// Response type for `users.deleteWebAuthnRegistration`.
+/// <summary>
+    /// Response type for `users.deleteWebAuthnRegistration`.
+    /// </summary>
     public class UsersDeleteWebAuthnRegistrationResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.exchangePrimaryFactor`.
+/// <summary>
+    /// Request type for `users.exchangePrimaryFactor`.
+    /// </summary>
     public class UsersExchangePrimaryFactorRequest {
-      // The unique ID of a specific User.
+      /// <summary>
+    /// The unique ID of a specific User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // The email address to exchange to.
+      /// <summary>
+    /// The email address to exchange to.
+    /// </summary>
       [JsonProperty("email_address")]
       public string? EmailAddress { get; set; }
-      // The phone number to exchange to. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX).
+      /// <summary>
+    /// The phone number to exchange to. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX).
+    /// </summary>
       [JsonProperty("phone_number")]
       public string? PhoneNumber { get; set; }
     }
-// Response type for `users.exchangePrimaryFactor`.
+/// <summary>
+    /// Response type for `users.exchangePrimaryFactor`.
+    /// </summary>
     public class UsersExchangePrimaryFactorResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.get`.
+/// <summary>
+    /// Request type for `users.get`.
+    /// </summary>
     public class UsersGetRequest {
-      // The unique ID of a specific User.
+      /// <summary>
+    /// The unique ID of a specific User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
     }
-// Response type for `users.get`.
+/// <summary>
+    /// Response type for `users.get`.
+    /// </summary>
     public class UsersGetResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the returned User.
+      /// <summary>
+    /// The unique ID of the returned User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // An array of email objects for the User.
+      /// <summary>
+    /// An array of email objects for the User.
+    /// </summary>
       [JsonProperty("emails")]
       public required UsersEmail Emails { get; set; }
-      // The status of the User. The possible values are `pending` and `active`.
+      /// <summary>
+    /// The status of the User. The possible values are `pending` and `active`.
+    /// </summary>
       [JsonProperty("status")]
       public required string Status { get; set; }
-      // An array of phone number objects linked to the User.
+      /// <summary>
+    /// An array of phone number objects linked to the User.
+    /// </summary>
       [JsonProperty("phone_numbers")]
       public required UsersPhoneNumber PhoneNumbers { get; set; }
-      /**
-    * An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch
-    * API.
-    */
+      /// <summary>
+    /// An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch
+    /// API.
+    /// </summary>
       [JsonProperty("webauthn_registrations")]
       public required WebAuthnRegistration WebAuthnRegistrations { get; set; }
-      // An array of OAuth `provider` objects linked to the User.
+      /// <summary>
+    /// An array of OAuth `provider` objects linked to the User.
+    /// </summary>
       [JsonProperty("providers")]
       public required OAuthProvider Providers { get; set; }
-      // An array containing a list of all TOTP instances for a given User in the Stytch API.
+      /// <summary>
+    /// An array containing a list of all TOTP instances for a given User in the Stytch API.
+    /// </summary>
       [JsonProperty("totps")]
       public required TOTP TOTPs { get; set; }
-      // An array contains a list of all crypto wallets for a given User in the Stytch API.
+      /// <summary>
+    /// An array contains a list of all crypto wallets for a given User in the Stytch API.
+    /// </summary>
       [JsonProperty("crypto_wallets")]
       public required CryptoWallet CryptoWallets { get; set; }
-      // An array that contains a list of all biometric registrations for a given User in the Stytch API.
+      /// <summary>
+    /// An array that contains a list of all biometric registrations for a given User in the Stytch API.
+    /// </summary>
       [JsonProperty("biometric_registrations")]
       public required BiometricRegistration BiometricRegistrations { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      // The name of the User. Each field in the `name` object is optional.
+      /// <summary>
+    /// The name of the User. Each field in the `name` object is optional.
+    /// </summary>
       [JsonProperty("name")]
       public UsersName? Name { get; set; }
-      /**
-    * The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC,
-    * e.g. `2021-12-29T12:33:09Z`.
-    */
+      /// <summary>
+    /// The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC,
+    /// e.g. `2021-12-29T12:33:09Z`.
+    /// </summary>
       [JsonProperty("created_at")]
       public string? CreatedAt { get; set; }
-      // The password object is returned for users with a password.
+      /// <summary>
+    /// The password object is returned for users with a password.
+    /// </summary>
       [JsonProperty("password")]
       public Password? Password { get; set; }
-      /**
-    * The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
-    * [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-    */
+      /// <summary>
+    /// The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
+    /// [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+    /// </summary>
       [JsonProperty("trusted_metadata")]
       public object? TrustedMetadata { get; set; }
-      /**
-    * The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
-    * metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
-    * information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
-    * behavior details.
-    */
+      /// <summary>
+    /// The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
+    /// metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
+    /// information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
+    /// behavior details.
+    /// </summary>
       [JsonProperty("untrusted_metadata")]
       public object? UntrustedMetadata { get; set; }
     }
-// Request type for `users.search`.
+/// <summary>
+    /// Request type for `users.search`.
+    /// </summary>
     public class UsersSearchRequest {
-      /**
-    * The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
-    * results. If your query returns more than 1000 results, you will need to paginate the responses using the
-    * `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata`
-    * object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the
-    * next page of results. Continue to make search calls until the `next_cursor` in the response is null.
-    */
+      /// <summary>
+    /// The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
+    /// results. If your query returns more than 1000 results, you will need to paginate the responses using the
+    /// `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata`
+    /// object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the
+    /// next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+    /// </summary>
       [JsonProperty("cursor")]
       public string? Cursor { get; set; }
-      /**
-    * The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
-    * be returned by a single search request. If the total size of your result set is greater than one page
-    * size, you must paginate the response. See the `cursor` field.
-    */
+      /// <summary>
+    /// The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
+    /// be returned by a single search request. If the total size of your result set is greater than one page
+    /// size, you must paginate the response. See the `cursor` field.
+    /// </summary>
       [JsonProperty("limit")]
       public uint? Limit { get; set; }
-      /**
-    * The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter
-    * your results. Only an operator is required. If you include no operands, no filtering will be applied. If
-    * you include no query object, it will return all results with no filtering applied.
-    */
+      /// <summary>
+    /// The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter
+    /// your results. Only an operator is required. If you include no operands, no filtering will be applied. If
+    /// you include no query object, it will return all results with no filtering applied.
+    /// </summary>
       [JsonProperty("query")]
       public SearchUsersQuery? Query { get; set; }
     }
-// Response type for `users.search`.
+/// <summary>
+    /// Response type for `users.search`.
+    /// </summary>
     public class UsersSearchResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // An array of results that match your search query.
+      /// <summary>
+    /// An array of results that match your search query.
+    /// </summary>
       [JsonProperty("results")]
       public required User Results { get; set; }
-      /**
-    * The search `results_metadata` object contains metadata relevant to your specific query like total and
-    * `next_cursor`.
-    */
+      /// <summary>
+    /// The search `results_metadata` object contains metadata relevant to your specific query like total and
+    /// `next_cursor`.
+    /// </summary>
       [JsonProperty("results_metadata")]
       public required UsersResultsMetadata ResultsMetadata { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `users.update`.
+/// <summary>
+    /// Request type for `users.update`.
+    /// </summary>
     public class UsersUpdateRequest {
-      // The unique ID of a specific User.
+      /// <summary>
+    /// The unique ID of a specific User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // The name of the user. Each field in the name object is optional.
+      /// <summary>
+    /// The name of the user. Each field in the name object is optional.
+    /// </summary>
       [JsonProperty("name")]
       public UsersName? Name { get; set; }
-      // Provided attributes help with fraud detection.
+      /// <summary>
+    /// Provided attributes help with fraud detection.
+    /// </summary>
       [JsonProperty("attributes")]
       public Attributes? Attributes { get; set; }
-      /**
-    * The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
-    * [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-    */
+      /// <summary>
+    /// The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
+    /// [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+    /// </summary>
       [JsonProperty("trusted_metadata")]
       public object? TrustedMetadata { get; set; }
-      /**
-    * The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
-    * metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
-    * information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
-    * behavior details.
-    */
+      /// <summary>
+    /// The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted
+    /// metadata can be edited by end users directly via the SDK, and **cannot be used to store critical
+    /// information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field
+    /// behavior details.
+    /// </summary>
       [JsonProperty("untrusted_metadata")]
       public object? UntrustedMetadata { get; set; }
     }
-// Response type for `users.update`.
+/// <summary>
+    /// Response type for `users.update`.
+    /// </summary>
     public class UsersUpdateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the updated User.
+      /// <summary>
+    /// The unique ID of the updated User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // An array of email objects for the User.
+      /// <summary>
+    /// An array of email objects for the User.
+    /// </summary>
       [JsonProperty("emails")]
       public required UsersEmail Emails { get; set; }
-      // An array of phone number objects linked to the User.
+      /// <summary>
+    /// An array of phone number objects linked to the User.
+    /// </summary>
       [JsonProperty("phone_numbers")]
       public required UsersPhoneNumber PhoneNumbers { get; set; }
-      // An array contains a list of all crypto wallets for a given User in the Stytch API.
+      /// <summary>
+    /// An array contains a list of all crypto wallets for a given User in the Stytch API.
+    /// </summary>
       [JsonProperty("crypto_wallets")]
       public required CryptoWallet CryptoWallets { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
@@ -849,7 +1061,7 @@ public enum SearchUsersQueryOperator
         public override string FilterName => "user_id";
         public List<string> FilterValue { get; set; }
     }
-    
+
     public class PhoneNumberFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "phone_number";

@@ -27,15 +27,10 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Add a User to Stytch. A `user_id` is returned in the response that can then be used to perform other
-    * operations within Stytch. An `email` or a `phone_number` is required.
-    * @param data {@link UsersCreateRequest}
-    * @returns {@link UsersCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Add a User to Stytch. A `user_id` is returned in the response that can then be used to perform other
+    /// operations within Stytch. An `email` or a `phone_number` is required.
+    /// </summary>
     public async Task<UsersCreateResponse> Create(
         UsersCreateRequest request)
     {
@@ -66,14 +61,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Get information about a specific User.
-    * @param params {@link UsersGetRequest}
-    * @returns {@link UsersGetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Get information about a specific User.
+    /// </summary>
     public async Task<UsersGetResponse> Get(
         UsersGetRequest request)
     {
@@ -104,14 +94,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Search for Users within your Stytch Project. Submit an empty `query` in the request to return all Users.
-    * @param data {@link UsersSearchRequest}
-    * @returns {@link UsersSearchResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Search for Users within your Stytch Project. Submit an empty `query` in the request to return all Users.
+    /// </summary>
     public async Task<UsersSearchResponse> Search(
         UsersSearchRequest request)
     {
@@ -142,23 +127,18 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Update a User's attributes.
-    * 
-    * **Note:** In order to add a new email address or phone number to an existing User object, pass the new
-    * email address or phone number into the respective `/send` endpoint for the authentication method of your
-    * choice. If you specify the existing User's `user_id` while calling the `/send` endpoint, the new,
-    * unverified email address or phone number will be added to the existing User object. If the user
-    * successfully authenticates within 5 minutes of the `/send` request, the new email address or phone
-    * number will be marked as verified and remain permanently on the existing Stytch User. Otherwise, it will
-    * be removed from the User object, and any subsequent login requests using that phone number will create a
-    * new User. We require this process to guard against an account takeover vulnerability.
-    * @param data {@link UsersUpdateRequest}
-    * @returns {@link UsersUpdateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Update a User's attributes.
+    /// 
+    /// **Note:** In order to add a new email address or phone number to an existing User object, pass the new
+    /// email address or phone number into the respective `/send` endpoint for the authentication method of your
+    /// choice. If you specify the existing User's `user_id` while calling the `/send` endpoint, the new,
+    /// unverified email address or phone number will be added to the existing User object. If the user
+    /// successfully authenticates within 5 minutes of the `/send` request, the new email address or phone
+    /// number will be marked as verified and remain permanently on the existing Stytch User. Otherwise, it will
+    /// be removed from the User object, and any subsequent login requests using that phone number will create a
+    /// new User. We require this process to guard against an account takeover vulnerability.
+    /// </summary>
     public async Task<UsersUpdateResponse> Update(
         UsersUpdateRequest request)
     {
@@ -189,21 +169,16 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Exchange a user's email address or phone number for another.
-    * 
-    * Must pass either an `email_address` or a `phone_number`.
-    * 
-    * This endpoint only works if the user has exactly one factor. You are able to exchange the type of factor
-    * for another as well, i.e. exchange an `email_address` for a `phone_number`.
-    * 
-    * Use this endpoint with caution as it performs an admin level action.
-    * @param data {@link UsersExchangePrimaryFactorRequest}
-    * @returns {@link UsersExchangePrimaryFactorResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Exchange a user's email address or phone number for another.
+    /// 
+    /// Must pass either an `email_address` or a `phone_number`.
+    /// 
+    /// This endpoint only works if the user has exactly one factor. You are able to exchange the type of factor
+    /// for another as well, i.e. exchange an `email_address` for a `phone_number`.
+    /// 
+    /// Use this endpoint with caution as it performs an admin level action.
+    /// </summary>
     public async Task<UsersExchangePrimaryFactorResponse> ExchangePrimaryFactor(
         UsersExchangePrimaryFactorRequest request)
     {
@@ -234,14 +209,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a User from Stytch.
-    * @param data {@link UsersDeleteRequest}
-    * @returns {@link UsersDeleteResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a User from Stytch.
+    /// </summary>
     public async Task<UsersDeleteResponse> Delete(
         UsersDeleteRequest request)
     {
@@ -272,14 +242,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete an email from a User.
-    * @param data {@link UsersDeleteEmailRequest}
-    * @returns {@link UsersDeleteEmailResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete an email from a User.
+    /// </summary>
     public async Task<UsersDeleteEmailResponse> DeleteEmail(
         UsersDeleteEmailRequest request)
     {
@@ -310,14 +275,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a phone number from a User.
-    * @param data {@link UsersDeletePhoneNumberRequest}
-    * @returns {@link UsersDeletePhoneNumberResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a phone number from a User.
+    /// </summary>
     public async Task<UsersDeletePhoneNumberResponse> DeletePhoneNumber(
         UsersDeletePhoneNumberRequest request)
     {
@@ -348,14 +308,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a WebAuthn registration from a User.
-    * @param data {@link UsersDeleteWebAuthnRegistrationRequest}
-    * @returns {@link UsersDeleteWebAuthnRegistrationResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a WebAuthn registration from a User.
+    /// </summary>
     public async Task<UsersDeleteWebAuthnRegistrationResponse> DeleteWebAuthnRegistration(
         UsersDeleteWebAuthnRegistrationRequest request)
     {
@@ -386,14 +341,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a biometric registration from a User.
-    * @param data {@link UsersDeleteBiometricRegistrationRequest}
-    * @returns {@link UsersDeleteBiometricRegistrationResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a biometric registration from a User.
+    /// </summary>
     public async Task<UsersDeleteBiometricRegistrationResponse> DeleteBiometricRegistration(
         UsersDeleteBiometricRegistrationRequest request)
     {
@@ -424,14 +374,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a TOTP from a User.
-    * @param data {@link UsersDeleteTOTPRequest}
-    * @returns {@link UsersDeleteTOTPResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a TOTP from a User.
+    /// </summary>
     public async Task<UsersDeleteTOTPResponse> DeleteTOTP(
         UsersDeleteTOTPRequest request)
     {
@@ -462,14 +407,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a crypto wallet from a User.
-    * @param data {@link UsersDeleteCryptoWalletRequest}
-    * @returns {@link UsersDeleteCryptoWalletResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a crypto wallet from a User.
+    /// </summary>
     public async Task<UsersDeleteCryptoWalletResponse> DeleteCryptoWallet(
         UsersDeleteCryptoWalletRequest request)
     {
@@ -500,14 +440,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a password from a User.
-    * @param data {@link UsersDeletePasswordRequest}
-    * @returns {@link UsersDeletePasswordResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a password from a User.
+    /// </summary>
     public async Task<UsersDeletePasswordResponse> DeletePassword(
         UsersDeletePasswordRequest request)
     {
@@ -538,14 +473,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete an OAuth registration from a User.
-    * @param data {@link UsersDeleteOAuthRegistrationRequest}
-    * @returns {@link UsersDeleteOAuthRegistrationResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete an OAuth registration from a User.
+    /// </summary>
     public async Task<UsersDeleteOAuthRegistrationResponse> DeleteOAuthRegistration(
         UsersDeleteOAuthRegistrationRequest request)
     {

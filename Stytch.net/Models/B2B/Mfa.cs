@@ -9,23 +9,29 @@ using System.Runtime.Serialization;
 namespace Stytch.net.Models.Consumer
 {
 public class MemberOptions {
-      // The Member's MFA phone number.
+      /// <summary>
+    /// The Member's MFA phone number.
+    /// </summary>
       [JsonProperty("mfa_phone_number")]
       public required string MfaPhoneNumber { get; set; }
-      // The Member's MFA TOTP registration ID.
+      /// <summary>
+    /// The Member's MFA TOTP registration ID.
+    /// </summary>
       [JsonProperty("totp_registration_id")]
       public required string TOTPRegistrationId { get; set; }
     }
 public class MfaRequired {
-      // Information about the Member's options for completing MFA.
+      /// <summary>
+    /// Information about the Member's options for completing MFA.
+    /// </summary>
       [JsonProperty("member_options")]
       public MemberOptions? MemberOptions { get; set; }
-      /**
-    * If null, indicates that no secondary authentication has been initiated. If equal to "sms_otp", indicates
-    * that the Member has a phone number, and a one time passcode has been sent to the Member's phone number.
-    * No secondary authentication will be initiated during calls to the discovery authenticate or list
-    * organizations endpoints, even if the Member has a phone number.
-    */
+      /// <summary>
+    /// If null, indicates that no secondary authentication has been initiated. If equal to "sms_otp", indicates
+    /// that the Member has a phone number, and a one time passcode has been sent to the Member's phone number.
+    /// No secondary authentication will be initiated during calls to the discovery authenticate or list
+    /// organizations endpoints, even if the Member has a phone number.
+    /// </summary>
       [JsonProperty("secondary_auth_initiated")]
       public string? SecondaryAuthInitiated { get; set; }
     }

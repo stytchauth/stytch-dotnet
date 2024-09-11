@@ -27,25 +27,20 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Retrieve the saved Google access token and ID token for a member. After a successful OAuth login, Stytch
-    * will save the 
-    * issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
-    * will refresh the 
-    * access token automatically.
-    * 
-    * Google One Tap does not return access tokens. If the member has only authenticated through Google One
-    * Tap and not through a regular Google OAuth flow, this endpoint will not return any tokens.
-    * 
-    * __Note:__ Google does not issue a refresh token on every login, and refresh tokens may expire if unused.
-    * To force a refresh token to be issued, pass the `?provider_prompt=consent` query param into the
-    * [Start Google OAuth flow](https://stytch.com/docs/b2b/api/oauth-google-start) endpoint.
-    * @param params {@link B2BOrganizationsMembersOAuthProvidersProviderInformationRequest}
-    * @returns {@link B2BOrganizationsMembersOAuthProvidersGoogleResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Retrieve the saved Google access token and ID token for a member. After a successful OAuth login, Stytch
+    /// will save the 
+    /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
+    /// will refresh the 
+    /// access token automatically.
+    /// 
+    /// Google One Tap does not return access tokens. If the member has only authenticated through Google One
+    /// Tap and not through a regular Google OAuth flow, this endpoint will not return any tokens.
+    /// 
+    /// __Note:__ Google does not issue a refresh token on every login, and refresh tokens may expire if unused.
+    /// To force a refresh token to be issued, pass the `?provider_prompt=consent` query param into the
+    /// [Start Google OAuth flow](https://stytch.com/docs/b2b/api/oauth-google-start) endpoint.
+    /// </summary>
     public async Task<B2BOrganizationsMembersOAuthProvidersGoogleResponse> Google(
         B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
     {
@@ -76,18 +71,13 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Retrieve the saved Microsoft access token and ID token for a member. After a successful OAuth login,
-    * Stytch will save the
-    * issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
-    * will refresh the
-    * access token automatically.
-    * @param params {@link B2BOrganizationsMembersOAuthProvidersProviderInformationRequest}
-    * @returns {@link B2BOrganizationsMembersOAuthProvidersMicrosoftResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Retrieve the saved Microsoft access token and ID token for a member. After a successful OAuth login,
+    /// Stytch will save the
+    /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
+    /// will refresh the
+    /// access token automatically.
+    /// </summary>
     public async Task<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse> Microsoft(
         B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
     {

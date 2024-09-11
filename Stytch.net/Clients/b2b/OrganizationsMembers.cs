@@ -29,15 +29,9 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Updates a Member specified by `organization_id` and `member_id`.
-    * @param data {@link B2BOrganizationsMembersUpdateRequest}
-    * @param options {@link B2BOrganizationsMembersUpdateRequestOptions}
-    * @returns {@link B2BOrganizationsMembersUpdateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Updates a Member specified by `organization_id` and `member_id`.
+    /// </summary>
     public async Task<B2BOrganizationsMembersUpdateResponse> Update(
         B2BOrganizationsMembersUpdateRequest request)
     {
@@ -68,15 +62,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Deletes a Member specified by `organization_id` and `member_id`.
-    * @param data {@link B2BOrganizationsMembersDeleteRequest}
-    * @param options {@link B2BOrganizationsMembersDeleteRequestOptions}
-    * @returns {@link B2BOrganizationsMembersDeleteResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Deletes a Member specified by `organization_id` and `member_id`.
+    /// </summary>
     public async Task<B2BOrganizationsMembersDeleteResponse> Delete(
         B2BOrganizationsMembersDeleteRequest request)
     {
@@ -107,16 +95,10 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Reactivates a deleted Member's status and its associated email status (if applicable) to active,
-    * specified by `organization_id` and `member_id`.
-    * @param data {@link B2BOrganizationsMembersReactivateRequest}
-    * @param options {@link B2BOrganizationsMembersReactivateRequestOptions}
-    * @returns {@link B2BOrganizationsMembersReactivateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Reactivates a deleted Member's status and its associated email status (if applicable) to active,
+    /// specified by `organization_id` and `member_id`.
+    /// </summary>
     public async Task<B2BOrganizationsMembersReactivateResponse> Reactivate(
         B2BOrganizationsMembersReactivateRequest request)
     {
@@ -147,24 +129,18 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a Member's MFA phone number. 
-    * 
-    * To change a Member's phone number, you must first call this endpoint to delete the existing phone number.
-    * 
-    * Existing Member Sessions that include a phone number authentication factor will not be revoked if the
-    * phone number is deleted, and MFA will not be enforced until the Member logs in again.
-    * If you wish to enforce MFA immediately after a phone number is deleted, you can do so by prompting the
-    * Member to enter a new phone number
-    * and calling the [OTP SMS send](https://stytch.com/docs/b2b/api/otp-sms-send) endpoint, then calling the
-    * [OTP SMS Authenticate](https://stytch.com/docs/b2b/api/authenticate-otp-sms) endpoint.
-    * @param data {@link B2BOrganizationsMembersDeleteMFAPhoneNumberRequest}
-    * @param options {@link B2BOrganizationsMembersDeleteMFAPhoneNumberRequestOptions}
-    * @returns {@link B2BOrganizationsMembersDeleteMFAPhoneNumberResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a Member's MFA phone number. 
+    /// 
+    /// To change a Member's phone number, you must first call this endpoint to delete the existing phone number.
+    /// 
+    /// Existing Member Sessions that include a phone number authentication factor will not be revoked if the
+    /// phone number is deleted, and MFA will not be enforced until the Member logs in again.
+    /// If you wish to enforce MFA immediately after a phone number is deleted, you can do so by prompting the
+    /// Member to enter a new phone number
+    /// and calling the [OTP SMS send](https://stytch.com/docs/b2b/api/otp-sms-send) endpoint, then calling the
+    /// [OTP SMS Authenticate](https://stytch.com/docs/b2b/api/authenticate-otp-sms) endpoint.
+    /// </summary>
     public async Task<B2BOrganizationsMembersDeleteMFAPhoneNumberResponse> DeleteMFAPhoneNumber(
         B2BOrganizationsMembersDeleteMFAPhoneNumberRequest request)
     {
@@ -195,21 +171,15 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a Member's MFA TOTP registration.
-    * 
-    * To mint a new registration for a Member, you must first call this endpoint to delete the existing
-    * registration.
-    * 
-    * Existing Member Sessions that include the TOTP authentication factor will not be revoked if the
-    * registration is deleted, and MFA will not be enforced until the Member logs in again.
-    * @param data {@link B2BOrganizationsMembersDeleteTOTPRequest}
-    * @param options {@link B2BOrganizationsMembersDeleteTOTPRequestOptions}
-    * @returns {@link B2BOrganizationsMembersDeleteTOTPResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a Member's MFA TOTP registration.
+    /// 
+    /// To mint a new registration for a Member, you must first call this endpoint to delete the existing
+    /// registration.
+    /// 
+    /// Existing Member Sessions that include the TOTP authentication factor will not be revoked if the
+    /// registration is deleted, and MFA will not be enforced until the Member logs in again.
+    /// </summary>
     public async Task<B2BOrganizationsMembersDeleteTOTPResponse> DeleteTOTP(
         B2BOrganizationsMembersDeleteTOTPRequest request)
     {
@@ -240,18 +210,12 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Search for Members within specified Organizations. An array with at least one `organization_id` is
-    * required. Submitting an empty `query` returns all non-deleted Members within the specified Organizations.
-    * 
-    * *All fuzzy search filters require a minimum of three characters.
-    * @param data {@link B2BOrganizationsMembersSearchRequest}
-    * @param options {@link B2BOrganizationsMembersSearchRequestOptions}
-    * @returns {@link B2BOrganizationsMembersSearchResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Search for Members within specified Organizations. An array with at least one `organization_id` is
+    /// required. Submitting an empty `query` returns all non-deleted Members within the specified Organizations.
+    /// 
+    /// *All fuzzy search filters require a minimum of three characters.
+    /// </summary>
     public async Task<B2BOrganizationsMembersSearchResponse> Search(
         B2BOrganizationsMembersSearchRequest request)
     {
@@ -282,15 +246,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete a Member's password.
-    * @param data {@link B2BOrganizationsMembersDeletePasswordRequest}
-    * @param options {@link B2BOrganizationsMembersDeletePasswordRequestOptions}
-    * @returns {@link B2BOrganizationsMembersDeletePasswordResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete a Member's password.
+    /// </summary>
     public async Task<B2BOrganizationsMembersDeletePasswordResponse> DeletePassword(
         B2BOrganizationsMembersDeletePasswordRequest request)
     {
@@ -321,17 +279,12 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Get a Member by `member_id`. This endpoint does not require an `organization_id`, enabling you to get
-    * members across organizations. This is a dangerous operation. Incorrect use may open you up to indirect
-    * object reference (IDOR) attacks. We recommend using the
-    * [Get Member](https://stytch.com/docs/b2b/api/get-member) API instead.
-    * @param params {@link B2BOrganizationsMembersDangerouslyGetRequest}
-    * @returns {@link B2BOrganizationsMembersGetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Get a Member by `member_id`. This endpoint does not require an `organization_id`, enabling you to get
+    /// members across organizations. This is a dangerous operation. Incorrect use may open you up to indirect
+    /// object reference (IDOR) attacks. We recommend using the
+    /// [Get Member](https://stytch.com/docs/b2b/api/get-member) API instead.
+    /// </summary>
     public async Task<B2BOrganizationsMembersGetResponse> DangerouslyGet(
         B2BOrganizationsMembersDangerouslyGetRequest request)
     {
@@ -362,33 +315,27 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Unlinks a retired email address from a Member specified by their `organization_id` and `member_id`. The
-    * email address
-    * to be retired can be identified in the request body by either its `email_id`, its `email_address`, or
-    * both. If using
-    * both identifiers they must refer to the same email.
-    * 
-    * A previously active email address can be marked as retired in one of two ways:
-    * 
-    * - It's replaced with a new primary email address during an explicit Member update.
-    * - A new email address is surfaced by an OAuth, SAML or OIDC provider. In this case the new email address
-    * becomes the
-    *   Member's primary email address and the old primary email address is retired.
-    * 
-    * A retired email address cannot be used by other Members in the same Organization. However, unlinking
-    * retired email
-    * addresses allows them to be subsequently re-used by other Organization Members. Retired email addresses
-    * can be viewed
-    * on the [Member object](https://stytch.com/docs/b2b/api/member-object).
-    *  %}
-    * @param data {@link B2BOrganizationsMembersUnlinkRetiredEmailRequest}
-    * @param options {@link B2BOrganizationsMembersUnlinkRetiredEmailRequestOptions}
-    * @returns {@link B2BOrganizationsMembersUnlinkRetiredEmailResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Unlinks a retired email address from a Member specified by their `organization_id` and `member_id`. The
+    /// email address
+    /// to be retired can be identified in the request body by either its `email_id`, its `email_address`, or
+    /// both. If using
+    /// both identifiers they must refer to the same email.
+    /// 
+    /// A previously active email address can be marked as retired in one of two ways:
+    /// 
+    /// - It's replaced with a new primary email address during an explicit Member update.
+    /// - A new email address is surfaced by an OAuth, SAML or OIDC provider. In this case the new email address
+    /// becomes the
+    ///   Member's primary email address and the old primary email address is retired.
+    /// 
+    /// A retired email address cannot be used by other Members in the same Organization. However, unlinking
+    /// retired email
+    /// addresses allows them to be subsequently re-used by other Organization Members. Retired email addresses
+    /// can be viewed
+    /// on the [Member object](https://stytch.com/docs/b2b/api/member-object).
+    ///  %}
+    /// </summary>
     public async Task<B2BOrganizationsMembersUnlinkRetiredEmailResponse> UnlinkRetiredEmail(
         B2BOrganizationsMembersUnlinkRetiredEmailRequest request)
     {
@@ -419,15 +366,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Creates a Member. An `organization_id` and `email_address` are required.
-    * @param data {@link B2BOrganizationsMembersCreateRequest}
-    * @param options {@link B2BOrganizationsMembersCreateRequestOptions}
-    * @returns {@link B2BOrganizationsMembersCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Creates a Member. An `organization_id` and `email_address` are required.
+    /// </summary>
     public async Task<B2BOrganizationsMembersCreateResponse> Create(
         B2BOrganizationsMembersCreateRequest request)
     {
@@ -458,14 +399,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Get a Member by `member_id` or `email_address`.
-    * @param params {@link B2BOrganizationsMembersGetRequest}
-    * @returns {@link B2BOrganizationsMembersGetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Get a Member by `member_id` or `email_address`.
+    /// </summary>
     public async Task<B2BOrganizationsMembersGetResponse> Get(
         B2BOrganizationsMembersGetRequest request)
     {

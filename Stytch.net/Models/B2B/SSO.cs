@@ -9,20 +9,20 @@ using System.Runtime.Serialization;
 namespace Stytch.net.Models.Consumer
 {
 public class B2BSSODeleteConnectionRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSSOGetConnectionsRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
@@ -115,39 +115,41 @@ public class SAMLConnection {
       public object? AttributeMapping { get; set; }
     }
 public class SAMLConnectionImplicitRoleAssignment {
-      /**
-    * The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.  
-    *   
-    *   Reserved `role_id`s that are predefined by Stytch include: 
-    *   
-    *   * `stytch_member`
-    *   * `stytch_admin`
-    *   
-    *   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
-    * for a more detailed explanation.
-    * 
-    *   
-    */
+      /// <summary>
+    /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.  
+    ///   
+    ///   Reserved `role_id`s that are predefined by Stytch include: 
+    ///   
+    ///   * `stytch_member`
+    ///   * `stytch_admin`
+    ///   
+    ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
+    /// for a more detailed explanation.
+    /// 
+    ///   
+    /// </summary>
       [JsonProperty("role_id")]
       public required string RoleId { get; set; }
     }
 public class SAMLGroupImplicitRoleAssignment {
-      /**
-    * The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.  
-    *   
-    *   Reserved `role_id`s that are predefined by Stytch include: 
-    *   
-    *   * `stytch_member`
-    *   * `stytch_admin`
-    *   
-    *   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
-    * for a more detailed explanation.
-    * 
-    *   
-    */
+      /// <summary>
+    /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.  
+    ///   
+    ///   Reserved `role_id`s that are predefined by Stytch include: 
+    ///   
+    ///   * `stytch_member`
+    ///   * `stytch_admin`
+    ///   
+    ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
+    /// for a more detailed explanation.
+    /// 
+    ///   
+    /// </summary>
       [JsonProperty("role_id")]
       public required string RoleId { get; set; }
-      // The name of the SAML group that grants the specified role assignment.
+      /// <summary>
+    /// The name of the SAML group that grants the specified role assignment.
+    /// </summary>
       [JsonProperty("group")]
       public required string Group { get; set; }
     }
@@ -163,205 +165,245 @@ public class X509Certificate {
       [JsonProperty("expires_at")]
       public string? ExpiresAt { get; set; }
     }
-// Request type for `sso.authenticate`.
+/// <summary>
+    /// Request type for `sso.authenticate`.
+    /// </summary>
     public class B2BSSOAuthenticateRequest {
-      // The token to authenticate.
+      /// <summary>
+    /// The token to authenticate.
+    /// </summary>
       [JsonProperty("sso_token")]
       public required string SSOToken { get; set; }
-      // A base64url encoded one time secret used to validate that the request starts and ends on the same device.
+      /// <summary>
+    /// A base64url encoded one time secret used to validate that the request starts and ends on the same device.
+    /// </summary>
       [JsonProperty("pkce_code_verifier")]
       public string? PkceCodeVerifier { get; set; }
-      // The `session_token` belonging to the member that you wish to associate the email with.
+      /// <summary>
+    /// The `session_token` belonging to the member that you wish to associate the email with.
+    /// </summary>
       [JsonProperty("session_token")]
       public string? SessionToken { get; set; }
-      // The `session_jwt` belonging to the member that you wish to associate the email with.
+      /// <summary>
+    /// The `session_jwt` belonging to the member that you wish to associate the email with.
+    /// </summary>
       [JsonProperty("session_jwt")]
       public string? SessionJwt { get; set; }
-      /**
-    * Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-    * already exist, 
-    *   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
-    * `session_jwt` will have a fixed lifetime of
-    *   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
-    * 
-    *   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-    *   
-    *   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
-    * extend the session this many minutes.
-    *   
-    *   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
-    * 60 minute duration. If you don't want
-    *   to use the Stytch session product, you can ignore the session fields in the response.
-    */
+      /// <summary>
+    /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
+    /// already exist, 
+    ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
+    /// `session_jwt` will have a fixed lifetime of
+    ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
+    /// 
+    ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
+    ///   
+    ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
+    /// extend the session this many minutes.
+    ///   
+    ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
+    /// 60 minute duration. If you don't want
+    ///   to use the Stytch session product, you can ignore the session fields in the response.
+    /// </summary>
       [JsonProperty("session_duration_minutes")]
       public int? SessionDurationMinutes { get; set; }
-      /**
-    * Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
-    * initialized by providing a value in
-    *   `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a
-    * key in an existing Session, supply a new value. To
-    *   delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`,
-    * `exp`, `nbf`, `iat`, `jti`) will be ignored.
-    *   Total custom claims size cannot exceed four kilobytes.
-    */
+      /// <summary>
+    /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
+    /// initialized by providing a value in
+    ///   `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a
+    /// key in an existing Session, supply a new value. To
+    ///   delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`,
+    /// `exp`, `nbf`, `iat`, `jti`) will be ignored.
+    ///   Total custom claims size cannot exceed four kilobytes.
+    /// </summary>
       [JsonProperty("session_custom_claims")]
       public object? SessionCustomClaims { get; set; }
-      /**
-    * If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
-    * pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
-    * used to determine which language to use when sending the passcode.
-    * 
-    * Parameter is a [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/),
-    * e.g. `"en"`.
-    * 
-    * Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-    * (`"pt-br"`); if no value is provided, the copy defaults to English.
-    * 
-    * Request support for additional languages
-    * [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
-    * 
-    */
+      /// <summary>
+    /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
+    /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
+    /// used to determine which language to use when sending the passcode.
+    /// 
+    /// Parameter is a [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/),
+    /// e.g. `"en"`.
+    /// 
+    /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
+    /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+    /// 
+    /// Request support for additional languages
+    /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+    /// 
+    /// </summary>
       [JsonProperty("locale")]
       public B2BSSOAuthenticateRequestLocale? Locale { get; set; }
-      /**
-    * Adds this primary authentication factor to the intermediate session token. If the resulting set of
-    * factors satisfies the organization's primary authentication requirements and MFA requirements, the
-    * intermediate session token will be consumed and converted to a member session. If not, the same
-    * intermediate session token will be returned.
-    */
+      /// <summary>
+    /// Adds this primary authentication factor to the intermediate session token. If the resulting set of
+    /// factors satisfies the organization's primary authentication requirements and MFA requirements, the
+    /// intermediate session token will be consumed and converted to a member session. If not, the same
+    /// intermediate session token will be returned.
+    /// </summary>
       [JsonProperty("intermediate_session_token")]
       public string? IntermediateSessionToken { get; set; }
     }
-// Response type for `sso.authenticate`.
+/// <summary>
+    /// Response type for `sso.authenticate`.
+    /// </summary>
     public class B2BSSOAuthenticateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // Globally unique UUID that identifies a specific Member.
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Member.
+    /// </summary>
       [JsonProperty("member_id")]
       public required string MemberId { get; set; }
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The [Member object](https://stytch.com/docs/b2b/api/member-object)
+      /// <summary>
+    /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
+    /// </summary>
       [JsonProperty("member")]
       public required Member Member { get; set; }
-      // A secret token for a given Stytch Session.
+      /// <summary>
+    /// A secret token for a given Stytch Session.
+    /// </summary>
       [JsonProperty("session_token")]
       public required string SessionToken { get; set; }
-      // The JSON Web Token (JWT) for a given Stytch Session.
+      /// <summary>
+    /// The JSON Web Token (JWT) for a given Stytch Session.
+    /// </summary>
       [JsonProperty("session_jwt")]
       public required string SessionJwt { get; set; }
-      /**
-    * Indicates if all Sessions linked to the Member need to be reset. You should check this field if you
-    * aren't using
-    *     Stytch's Session product. If you are using Stytch's Session product, we revoke the Member’s other
-    * Sessions for you.
-    */
+      /// <summary>
+    /// Indicates if all Sessions linked to the Member need to be reset. You should check this field if you
+    /// aren't using
+    ///     Stytch's Session product. If you are using Stytch's Session product, we revoke the Member’s other
+    /// Sessions for you.
+    /// </summary>
       [JsonProperty("reset_session")]
       public required bool ResetSession { get; set; }
-      // The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+      /// <summary>
+    /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+    /// </summary>
       [JsonProperty("organization")]
       public required Organization Organization { get; set; }
-      /**
-    * The returned Intermediate Session Token contains an SSO factor associated with the Member. If this value
-    * is non-empty, the member must complete an MFA step to finish logging in to the Organization. The token
-    * can be used with the
-    * [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
-    * [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
-    * [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-    * MFA flow and log in to the Organization. SSO factors are not transferable between Organizations, so the
-    * intermediate session token is not valid for use with discovery endpoints.
-    */
+      /// <summary>
+    /// The returned Intermediate Session Token contains an SSO factor associated with the Member. If this value
+    /// is non-empty, the member must complete an MFA step to finish logging in to the Organization. The token
+    /// can be used with the
+    /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
+    /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
+    /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
+    /// MFA flow and log in to the Organization. SSO factors are not transferable between Organizations, so the
+    /// intermediate session token is not valid for use with discovery endpoints.
+    /// </summary>
       [JsonProperty("intermediate_session_token")]
       public required string IntermediateSessionToken { get; set; }
-      /**
-    * Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step
-    * to log in to the Organization.
-    */
+      /// <summary>
+    /// Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step
+    /// to log in to the Organization.
+    /// </summary>
       [JsonProperty("member_authenticated")]
       public required bool MemberAuthenticated { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      // The [Session object](https://stytch.com/docs/b2b/api/session-object).
+      /// <summary>
+    /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
+    /// </summary>
       [JsonProperty("member_session")]
       public MemberSession? MemberSession { get; set; }
-      // Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
+      /// <summary>
+    /// Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
+    /// </summary>
       [JsonProperty("mfa_required")]
       public MfaRequired? MfaRequired { get; set; }
     }
-// Request type for `sso.deleteConnection`.
+/// <summary>
+    /// Request type for `sso.deleteConnection`.
+    /// </summary>
     public class B2BSSODeleteConnectionRequest {
-      // The organization ID that the SSO connection belongs to.
+      /// <summary>
+    /// The organization ID that the SSO connection belongs to.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SSO connection. Both SAML and OIDC connection IDs can be provided.
+      /// <summary>
+    /// The ID of the SSO connection. Both SAML and OIDC connection IDs can be provided.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
     }
-// Response type for `sso.deleteConnection`.
+/// <summary>
+    /// Response type for `sso.deleteConnection`.
+    /// </summary>
     public class B2BSSODeleteConnectionResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The `connection_id` that was deleted as part of the delete request.
+      /// <summary>
+    /// The `connection_id` that was deleted as part of the delete request.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `sso.getConnections`.
+/// <summary>
+    /// Request type for `sso.getConnections`.
+    /// </summary>
     public class B2BSSOGetConnectionsRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
     }
-// Response type for `sso.getConnections`.
+/// <summary>
+    /// Response type for `sso.getConnections`.
+    /// </summary>
     public class B2BSSOGetConnectionsResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The list of [SAML Connections](https://stytch.com/docs/b2b/api/saml-connection-object) owned by this
-    * organization.
-    */
+      /// <summary>
+    /// The list of [SAML Connections](https://stytch.com/docs/b2b/api/saml-connection-object) owned by this
+    /// organization.
+    /// </summary>
       [JsonProperty("saml_connections")]
       public required SAMLConnection SAMLConnections { get; set; }
-      /**
-    * The list of [OIDC Connections](https://stytch.com/docs/b2b/api/oidc-connection-object) owned by this
-    * organization.
-    */
+      /// <summary>
+    /// The list of [OIDC Connections](https://stytch.com/docs/b2b/api/oidc-connection-object) owned by this
+    /// organization.
+    /// </summary>
       [JsonProperty("oidc_connections")]
       public required OIDCConnection OIDCConnections { get; set; }
       [JsonProperty("external_connections")]
       public required Connection ExternalConnections { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }

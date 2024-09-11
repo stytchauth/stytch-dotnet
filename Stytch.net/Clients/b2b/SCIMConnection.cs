@@ -27,15 +27,9 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Update a SCIM Connection.
-    * @param data {@link B2BSCIMConnectionUpdateRequest}
-    * @param options {@link B2BSCIMConnectionUpdateRequestOptions}
-    * @returns {@link B2BSCIMConnectionUpdateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Update a SCIM Connection.
+    /// </summary>
     public async Task<B2BSCIMConnectionUpdateResponse> Update(
         B2BSCIMConnectionUpdateRequest request)
     {
@@ -66,15 +60,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Deletes a SCIM Connection.
-    * @param data {@link B2BSCIMConnectionDeleteRequest}
-    * @param options {@link B2BSCIMConnectionDeleteRequestOptions}
-    * @returns {@link B2BSCIMConnectionDeleteResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Deletes a SCIM Connection.
+    /// </summary>
     public async Task<B2BSCIMConnectionDeleteResponse> Delete(
         B2BSCIMConnectionDeleteRequest request)
     {
@@ -105,15 +93,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Start a SCIM token rotation.
-    * @param data {@link B2BSCIMConnectionRotateStartRequest}
-    * @param options {@link B2BSCIMConnectionRotateStartRequestOptions}
-    * @returns {@link B2BSCIMConnectionRotateStartResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Start a SCIM token rotation.
+    /// </summary>
     public async Task<B2BSCIMConnectionRotateStartResponse> RotateStart(
         B2BSCIMConnectionRotateStartRequest request)
     {
@@ -144,17 +126,11 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Completes a SCIM token rotation. This will complete the current token rotation process and update the
-    * active token to be the new token supplied in the
-    * [start SCIM token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start) response.
-    * @param data {@link B2BSCIMConnectionRotateCompleteRequest}
-    * @param options {@link B2BSCIMConnectionRotateCompleteRequestOptions}
-    * @returns {@link B2BSCIMConnectionRotateCompleteResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Completes a SCIM token rotation. This will complete the current token rotation process and update the
+    /// active token to be the new token supplied in the
+    /// [start SCIM token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start) response.
+    /// </summary>
     public async Task<B2BSCIMConnectionRotateCompleteResponse> RotateComplete(
         B2BSCIMConnectionRotateCompleteRequest request)
     {
@@ -185,16 +161,10 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Cancel a SCIM token rotation. This will cancel the current token rotation process, keeping the original
-    * token active.
-    * @param data {@link B2BSCIMConnectionRotateCancelRequest}
-    * @param options {@link B2BSCIMConnectionRotateCancelRequestOptions}
-    * @returns {@link B2BSCIMConnectionRotateCancelResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Cancel a SCIM token rotation. This will cancel the current token rotation process, keeping the original
+    /// token active.
+    /// </summary>
     public async Task<B2BSCIMConnectionRotateCancelResponse> RotateCancel(
         B2BSCIMConnectionRotateCancelRequest request)
     {
@@ -225,15 +195,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Gets a paginated list of all SCIM Groups associated with a given Connection.
-    * @param params {@link B2BSCIMConnectionGetGroupsRequest}
-    * @param options {@link B2BSCIMConnectionGetGroupsRequestOptions}
-    * @returns {@link B2BSCIMConnectionGetGroupsResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Gets a paginated list of all SCIM Groups associated with a given Connection.
+    /// </summary>
     public async Task<B2BSCIMConnectionGetGroupsResponse> GetGroups(
         B2BSCIMConnectionGetGroupsRequest request)
     {
@@ -264,15 +228,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Create a new SCIM Connection.
-    * @param data {@link B2BSCIMConnectionCreateRequest}
-    * @param options {@link B2BSCIMConnectionCreateRequestOptions}
-    * @returns {@link B2BSCIMConnectionCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Create a new SCIM Connection.
+    /// </summary>
     public async Task<B2BSCIMConnectionCreateResponse> Create(
         B2BSCIMConnectionCreateRequest request)
     {
@@ -303,15 +261,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Get SCIM Connection.
-    * @param params {@link B2BSCIMConnectionGetRequest}
-    * @param options {@link B2BSCIMConnectionGetRequestOptions}
-    * @returns {@link B2BSCIMConnectionGetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Get SCIM Connection.
+    /// </summary>
     public async Task<B2BSCIMConnectionGetResponse> Get(
         B2BSCIMConnectionGetRequest request)
     {

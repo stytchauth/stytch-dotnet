@@ -8,295 +8,347 @@ using System.Runtime.Serialization;
 
 namespace Stytch.net.Models.Consumer
 {
-// Request type for `magicLinks.email.invite`.
+/// <summary>
+    /// Request type for `magicLinks.email.invite`.
+    /// </summary>
     public class MagicLinksEmailInviteRequest {
-      // The email address of the User to send the invite Magic Link to.
+      /// <summary>
+    /// The email address of the User to send the invite Magic Link to.
+    /// </summary>
       [JsonProperty("email")]
       public required string Email { get; set; }
-      /**
-    * Use a custom template for invite emails. By default, it will use your default email template. The
-    * template must be a template using our built-in customizations or a custom HTML email for Magic links -
-    * Invite.
-    */
+      /// <summary>
+    /// Use a custom template for invite emails. By default, it will use your default email template. The
+    /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
+    /// Invite.
+    /// </summary>
       [JsonProperty("invite_template_id")]
       public string? InviteTemplateId { get; set; }
-      // Provided attributes help with fraud detection.
+      /// <summary>
+    /// Provided attributes help with fraud detection.
+    /// </summary>
       [JsonProperty("attributes")]
       public Attributes? Attributes { get; set; }
-      // The name of the user. Each field in the name object is optional.
+      /// <summary>
+    /// The name of the user. Each field in the name object is optional.
+    /// </summary>
       [JsonProperty("name")]
       public UsersName? Name { get; set; }
-      /**
-    * The URL the end user clicks from the Email Magic Link. This should be a URL that your app receives and
-    * parses and subsequently sends an API request to authenticate the Magic Link and log in the User. If this
-    * value is not passed, the default invite redirect URL that you set in your Dashboard is used. If you have
-    * not set a default sign-up redirect URL, an error is returned.
-    */
+      /// <summary>
+    /// The URL the end user clicks from the Email Magic Link. This should be a URL that your app receives and
+    /// parses and subsequently sends an API request to authenticate the Magic Link and log in the User. If this
+    /// value is not passed, the default invite redirect URL that you set in your Dashboard is used. If you have
+    /// not set a default sign-up redirect URL, an error is returned.
+    /// </summary>
       [JsonProperty("invite_magic_link_url")]
       public string? InviteMagicLinkURL { get; set; }
-      /**
-    * Set the expiration for the email magic link, in minutes. By default, it expires in 1 hour. The minimum
-    * expiration is 5 minutes and the maximum is 7 days (10080 mins).
-    */
+      /// <summary>
+    /// Set the expiration for the email magic link, in minutes. By default, it expires in 1 hour. The minimum
+    /// expiration is 5 minutes and the maximum is 7 days (10080 mins).
+    /// </summary>
       [JsonProperty("invite_expiration_minutes")]
       public int? InviteExpirationMinutes { get; set; }
-      /**
-    * Used to determine which language to use when sending the user this delivery method. Parameter is a
-    * [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
-    * 
-    * Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-    * (`"pt-br"`); if no value is provided, the copy defaults to English.
-    * 
-    * Request support for additional languages
-    * [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
-    * 
-    */
+      /// <summary>
+    /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+    /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
+    /// 
+    /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
+    /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+    /// 
+    /// Request support for additional languages
+    /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+    /// 
+    /// </summary>
       [JsonProperty("locale")]
       public MagicLinksEmailInviteRequestLocale? Locale { get; set; }
     }
-// Response type for `magicLinks.email.invite`.
+/// <summary>
+    /// Response type for `magicLinks.email.invite`.
+    /// </summary>
     public class MagicLinksEmailInviteResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // The unique ID of a specific email address.
+      /// <summary>
+    /// The unique ID of a specific email address.
+    /// </summary>
       [JsonProperty("email_id")]
       public required string EmailId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `magicLinks.email.loginOrCreate`.
+/// <summary>
+    /// Request type for `magicLinks.email.loginOrCreate`.
+    /// </summary>
     public class MagicLinksEmailLoginOrCreateRequest {
-      // The email address of the end user.
+      /// <summary>
+    /// The email address of the end user.
+    /// </summary>
       [JsonProperty("email")]
       public required string Email { get; set; }
-      /**
-    * The URL the end user clicks from the login Email Magic Link. This should be a URL that your app receives
-    * and parses and subsequently send an API request to authenticate the Magic Link and log in the User. If
-    * this value is not passed, the default login redirect URL that you set in your Dashboard is used. If you
-    * have not set a default login redirect URL, an error is returned.
-    */
+      /// <summary>
+    /// The URL the end user clicks from the login Email Magic Link. This should be a URL that your app receives
+    /// and parses and subsequently send an API request to authenticate the Magic Link and log in the User. If
+    /// this value is not passed, the default login redirect URL that you set in your Dashboard is used. If you
+    /// have not set a default login redirect URL, an error is returned.
+    /// </summary>
       [JsonProperty("login_magic_link_url")]
       public string? LoginMagicLinkURL { get; set; }
-      /**
-    * The URL the end user clicks from the sign-up Email Magic Link. This should be a URL that your app
-    * receives and parses and subsequently send an API request to authenticate the Magic Link and sign-up the
-    * User. If this value is not passed, the default sign-up redirect URL that you set in your Dashboard is
-    * used. If you have not set a default sign-up redirect URL, an error is returned.
-    */
+      /// <summary>
+    /// The URL the end user clicks from the sign-up Email Magic Link. This should be a URL that your app
+    /// receives and parses and subsequently send an API request to authenticate the Magic Link and sign-up the
+    /// User. If this value is not passed, the default sign-up redirect URL that you set in your Dashboard is
+    /// used. If you have not set a default sign-up redirect URL, an error is returned.
+    /// </summary>
       [JsonProperty("signup_magic_link_url")]
       public string? SignupMagicLinkURL { get; set; }
-      /**
-    * Set the expiration for the login email magic link, in minutes. By default, it expires in 1 hour. The
-    * minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
-    */
+      /// <summary>
+    /// Set the expiration for the login email magic link, in minutes. By default, it expires in 1 hour. The
+    /// minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
+    /// </summary>
       [JsonProperty("login_expiration_minutes")]
       public int? LoginExpirationMinutes { get; set; }
-      /**
-    * Set the expiration for the sign-up email magic link, in minutes. By default, it expires in 1 week. The
-    * minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
-    */
+      /// <summary>
+    /// Set the expiration for the sign-up email magic link, in minutes. By default, it expires in 1 week. The
+    /// minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
+    /// </summary>
       [JsonProperty("signup_expiration_minutes")]
       public int? SignupExpirationMinutes { get; set; }
-      /**
-    * Use a custom template for login emails. By default, it will use your default email template. The
-    * template must be a template using our built-in customizations or a custom HTML email for Magic links -
-    * Login.
-    */
+      /// <summary>
+    /// Use a custom template for login emails. By default, it will use your default email template. The
+    /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
+    /// Login.
+    /// </summary>
       [JsonProperty("login_template_id")]
       public string? LoginTemplateId { get; set; }
-      /**
-    * Use a custom template for sign-up emails. By default, it will use your default email template. The
-    * template must be a template using our built-in customizations or a custom HTML email for Magic links -
-    * Sign-up.
-    */
+      /// <summary>
+    /// Use a custom template for sign-up emails. By default, it will use your default email template. The
+    /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
+    /// Sign-up.
+    /// </summary>
       [JsonProperty("signup_template_id")]
       public string? SignupTemplateId { get; set; }
-      // Provided attributes help with fraud detection.
+      /// <summary>
+    /// Provided attributes help with fraud detection.
+    /// </summary>
       [JsonProperty("attributes")]
       public Attributes? Attributes { get; set; }
-      /**
-    * Flag for whether or not to save a user as pending vs active in Stytch. Defaults to false.
-    *         If true, users will be saved with status pending in Stytch's backend until authenticated.
-    *         If false, users will be created as active. An example usage of
-    *         a true flag would be to require users to verify their phone by entering the OTP code before
-    * creating
-    *         an account for them.
-    */
+      /// <summary>
+    /// Flag for whether or not to save a user as pending vs active in Stytch. Defaults to false.
+    ///         If true, users will be saved with status pending in Stytch's backend until authenticated.
+    ///         If false, users will be created as active. An example usage of
+    ///         a true flag would be to require users to verify their phone by entering the OTP code before
+    /// creating
+    ///         an account for them.
+    /// </summary>
       [JsonProperty("create_user_as_pending")]
       public bool? CreateUserAsPending { get; set; }
-      /**
-    * A base64url encoded SHA256 hash of a one time secret used to validate that the request starts and ends
-    * on the same device.
-    */
+      /// <summary>
+    /// A base64url encoded SHA256 hash of a one time secret used to validate that the request starts and ends
+    /// on the same device.
+    /// </summary>
       [JsonProperty("code_challenge")]
       public string? CodeChallenge { get; set; }
-      /**
-    * Used to determine which language to use when sending the user this delivery method. Parameter is a
-    * [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
-    * 
-    * Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-    * (`"pt-br"`); if no value is provided, the copy defaults to English.
-    * 
-    * Request support for additional languages
-    * [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
-    * 
-    */
+      /// <summary>
+    /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+    /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
+    /// 
+    /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
+    /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+    /// 
+    /// Request support for additional languages
+    /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+    /// 
+    /// </summary>
       [JsonProperty("locale")]
       public MagicLinksEmailLoginOrCreateRequestLocale? Locale { get; set; }
     }
-// Response type for `magicLinks.email.loginOrCreate`.
+/// <summary>
+    /// Response type for `magicLinks.email.loginOrCreate`.
+    /// </summary>
     public class MagicLinksEmailLoginOrCreateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // The unique ID of a specific email address.
+      /// <summary>
+    /// The unique ID of a specific email address.
+    /// </summary>
       [JsonProperty("email_id")]
       public required string EmailId { get; set; }
-      // In `login_or_create` endpoints, this field indicates whether or not a User was just created.
+      /// <summary>
+    /// In `login_or_create` endpoints, this field indicates whether or not a User was just created.
+    /// </summary>
       [JsonProperty("user_created")]
       public required bool UserCreated { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `magicLinks.email.revokeInvite`.
+/// <summary>
+    /// Request type for `magicLinks.email.revokeInvite`.
+    /// </summary>
     public class MagicLinksEmailRevokeInviteRequest {
-      // The email of the user.
+      /// <summary>
+    /// The email of the user.
+    /// </summary>
       [JsonProperty("email")]
       public required string Email { get; set; }
     }
-// Response type for `magicLinks.email.revokeInvite`.
+/// <summary>
+    /// Response type for `magicLinks.email.revokeInvite`.
+    /// </summary>
     public class MagicLinksEmailRevokeInviteResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `magicLinks.email.send`.
+/// <summary>
+    /// Request type for `magicLinks.email.send`.
+    /// </summary>
     public class MagicLinksEmailSendRequest {
-      // The email address of the User to send the Magic Link to.
+      /// <summary>
+    /// The email address of the User to send the Magic Link to.
+    /// </summary>
       [JsonProperty("email")]
       public required string Email { get; set; }
-      /**
-    * Use a custom template for login emails. By default, it will use your default email template. The
-    * template must be a template using our built-in customizations or a custom HTML email for Magic links -
-    * Login.
-    */
+      /// <summary>
+    /// Use a custom template for login emails. By default, it will use your default email template. The
+    /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
+    /// Login.
+    /// </summary>
       [JsonProperty("login_template_id")]
       public string? LoginTemplateId { get; set; }
-      // Provided attributes help with fraud detection.
+      /// <summary>
+    /// Provided attributes help with fraud detection.
+    /// </summary>
       [JsonProperty("attributes")]
       public Attributes? Attributes { get; set; }
-      /**
-    * The URL the end user clicks from the login Email Magic Link. This should be a URL that your app receives
-    * and parses and subsequently send an API request to authenticate the Magic Link and log in the User. If
-    * this value is not passed, the default login redirect URL that you set in your Dashboard is used. If you
-    * have not set a default login redirect URL, an error is returned.
-    */
+      /// <summary>
+    /// The URL the end user clicks from the login Email Magic Link. This should be a URL that your app receives
+    /// and parses and subsequently send an API request to authenticate the Magic Link and log in the User. If
+    /// this value is not passed, the default login redirect URL that you set in your Dashboard is used. If you
+    /// have not set a default login redirect URL, an error is returned.
+    /// </summary>
       [JsonProperty("login_magic_link_url")]
       public string? LoginMagicLinkURL { get; set; }
-      /**
-    * The URL the end user clicks from the sign-up Email Magic Link. This should be a URL that your app
-    * receives and parses and subsequently send an API request to authenticate the Magic Link and sign-up the
-    * User. If this value is not passed, the default sign-up redirect URL that you set in your Dashboard is
-    * used. If you have not set a default sign-up redirect URL, an error is returned.
-    */
+      /// <summary>
+    /// The URL the end user clicks from the sign-up Email Magic Link. This should be a URL that your app
+    /// receives and parses and subsequently send an API request to authenticate the Magic Link and sign-up the
+    /// User. If this value is not passed, the default sign-up redirect URL that you set in your Dashboard is
+    /// used. If you have not set a default sign-up redirect URL, an error is returned.
+    /// </summary>
       [JsonProperty("signup_magic_link_url")]
       public string? SignupMagicLinkURL { get; set; }
-      /**
-    * Set the expiration for the login email magic link, in minutes. By default, it expires in 1 hour. The
-    * minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
-    */
+      /// <summary>
+    /// Set the expiration for the login email magic link, in minutes. By default, it expires in 1 hour. The
+    /// minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
+    /// </summary>
       [JsonProperty("login_expiration_minutes")]
       public int? LoginExpirationMinutes { get; set; }
-      /**
-    * Set the expiration for the sign-up email magic link, in minutes. By default, it expires in 1 week. The
-    * minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
-    */
+      /// <summary>
+    /// Set the expiration for the sign-up email magic link, in minutes. By default, it expires in 1 week. The
+    /// minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
+    /// </summary>
       [JsonProperty("signup_expiration_minutes")]
       public int? SignupExpirationMinutes { get; set; }
-      /**
-    * A base64url encoded SHA256 hash of a one time secret used to validate that the request starts and ends
-    * on the same device.
-    */
+      /// <summary>
+    /// A base64url encoded SHA256 hash of a one time secret used to validate that the request starts and ends
+    /// on the same device.
+    /// </summary>
       [JsonProperty("code_challenge")]
       public string? CodeChallenge { get; set; }
-      // The unique ID of a specific User.
+      /// <summary>
+    /// The unique ID of a specific User.
+    /// </summary>
       [JsonProperty("user_id")]
       public string? UserId { get; set; }
-      // The `session_token` of the user to associate the email with.
+      /// <summary>
+    /// The `session_token` of the user to associate the email with.
+    /// </summary>
       [JsonProperty("session_token")]
       public string? SessionToken { get; set; }
-      // The `session_jwt` of the user to associate the email with.
+      /// <summary>
+    /// The `session_jwt` of the user to associate the email with.
+    /// </summary>
       [JsonProperty("session_jwt")]
       public string? SessionJwt { get; set; }
-      /**
-    * Used to determine which language to use when sending the user this delivery method. Parameter is a
-    * [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
-    * 
-    * Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-    * (`"pt-br"`); if no value is provided, the copy defaults to English.
-    * 
-    * Request support for additional languages
-    * [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
-    * 
-    */
+      /// <summary>
+    /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+    /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
+    /// 
+    /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
+    /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+    /// 
+    /// Request support for additional languages
+    /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+    /// 
+    /// </summary>
       [JsonProperty("locale")]
       public MagicLinksEmailSendRequestLocale? Locale { get; set; }
-      /**
-    * Use a custom template for sign-up emails. By default, it will use your default email template. The
-    * template must be a template using our built-in customizations or a custom HTML email for Magic links -
-    * Sign-up.
-    */
+      /// <summary>
+    /// Use a custom template for sign-up emails. By default, it will use your default email template. The
+    /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
+    /// Sign-up.
+    /// </summary>
       [JsonProperty("signup_template_id")]
       public string? SignupTemplateId { get; set; }
     }
-// Response type for `magicLinks.email.send`.
+/// <summary>
+    /// Response type for `magicLinks.email.send`.
+    /// </summary>
     public class MagicLinksEmailSendResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // The unique ID of a specific email address.
+      /// <summary>
+    /// The unique ID of a specific email address.
+    /// </summary>
       [JsonProperty("email_id")]
       public required string EmailId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }

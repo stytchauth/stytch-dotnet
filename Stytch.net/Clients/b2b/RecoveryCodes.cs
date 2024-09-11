@@ -27,15 +27,10 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Allows a Member to complete an MFA flow by consuming a recovery code. This consumes the recovery code
-    * and returns a session token that can be used to authenticate the Member.
-    * @param data {@link B2BRecoveryCodesRecoverRequest}
-    * @returns {@link B2BRecoveryCodesRecoverResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Allows a Member to complete an MFA flow by consuming a recovery code. This consumes the recovery code
+    /// and returns a session token that can be used to authenticate the Member.
+    /// </summary>
     public async Task<B2BRecoveryCodesRecoverResponse> Recover(
         B2BRecoveryCodesRecoverRequest request)
     {
@@ -66,14 +61,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Returns a Member's full set of active recovery codes.
-    * @param params {@link B2BRecoveryCodesGetRequest}
-    * @returns {@link B2BRecoveryCodesGetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Returns a Member's full set of active recovery codes.
+    /// </summary>
     public async Task<B2BRecoveryCodesGetResponse> Get(
         B2BRecoveryCodesGetRequest request)
     {
@@ -104,15 +94,10 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Rotate a Member's recovery codes. This invalidates all existing recovery codes and generates a new set
-    * of recovery codes.
-    * @param data {@link B2BRecoveryCodesRotateRequest}
-    * @returns {@link B2BRecoveryCodesRotateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Rotate a Member's recovery codes. This invalidates all existing recovery codes and generates a new set
+    /// of recovery codes.
+    /// </summary>
     public async Task<B2BRecoveryCodesRotateResponse> Rotate(
         B2BRecoveryCodesRotateRequest request)
     {

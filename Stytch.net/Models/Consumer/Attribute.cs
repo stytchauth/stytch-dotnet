@@ -9,10 +9,14 @@ using System.Runtime.Serialization;
 namespace Stytch.net.Models.Consumer
 {
 public class Attributes {
-      // The IP address of the user.
+      /// <summary>
+    /// The IP address of the user.
+    /// </summary>
       [JsonProperty("ip_address")]
       public string? IpAddress { get; set; }
-      // The user agent of the User.
+      /// <summary>
+    /// The user agent of the User.
+    /// </summary>
       [JsonProperty("user_agent")]
       public string? UserAgent { get; set; }
     }

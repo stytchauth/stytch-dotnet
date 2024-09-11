@@ -27,13 +27,9 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * @param params {@link ProjectMetricsRequest}
-    * @returns {@link ProjectMetricsResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// 
+    /// </summary>
     public async Task<ProjectMetricsResponse> Metrics(
         ProjectMetricsRequest request)
     {

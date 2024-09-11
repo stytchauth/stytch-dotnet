@@ -29,16 +29,11 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Authenticate a User given a Magic Link. This endpoint verifies that the Magic Link token is valid,
-    * hasn't expired or been previously used, and any optional security settings such as IP match or user
-    * agent match are satisfied.
-    * @param data {@link MagicLinksAuthenticateRequest}
-    * @returns {@link MagicLinksAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Authenticate a User given a Magic Link. This endpoint verifies that the Magic Link token is valid,
+    /// hasn't expired or been previously used, and any optional security settings such as IP match or user
+    /// agent match are satisfied.
+    /// </summary>
     public async Task<MagicLinksAuthenticateResponse> Authenticate(
         MagicLinksAuthenticateRequest request)
     {
@@ -69,21 +64,16 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Create an embeddable Magic Link token for a User. Access to this endpoint is restricted. To enable it,
-    * please send us a note at support@stytch.com.
-    * 
-    * ### Next steps
-    * Send the returned `token` value to the end user in a link which directs to your application. When the
-    * end user follows your link, collect the token, and call
-    * [Authenticate Magic Link](https://stytch.com/docs/api/authenticate-magic-link) to complete
-    * authentication.
-    * @param data {@link MagicLinksCreateRequest}
-    * @returns {@link MagicLinksCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Create an embeddable Magic Link token for a User. Access to this endpoint is restricted. To enable it,
+    /// please send us a note at support@stytch.com.
+    /// 
+    /// ### Next steps
+    /// Send the returned `token` value to the end user in a link which directs to your application. When the
+    /// end user follows your link, collect the token, and call
+    /// [Authenticate Magic Link](https://stytch.com/docs/api/authenticate-magic-link) to complete
+    /// authentication.
+    /// </summary>
     public async Task<MagicLinksCreateResponse> Create(
         MagicLinksCreateRequest request)
     {

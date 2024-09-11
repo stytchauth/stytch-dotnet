@@ -31,15 +31,9 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Get all SSO Connections owned by the organization.
-    * @param params {@link B2BSSOGetConnectionsRequest}
-    * @param options {@link B2BSSOGetConnectionsRequestOptions}
-    * @returns {@link B2BSSOGetConnectionsResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Get all SSO Connections owned by the organization.
+    /// </summary>
     public async Task<B2BSSOGetConnectionsResponse> GetConnections(
         B2BSSOGetConnectionsRequest request)
     {
@@ -70,15 +64,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Delete an existing SSO connection.
-    * @param data {@link B2BSSODeleteConnectionRequest}
-    * @param options {@link B2BSSODeleteConnectionRequestOptions}
-    * @returns {@link B2BSSODeleteConnectionResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Delete an existing SSO connection.
+    /// </summary>
     public async Task<B2BSSODeleteConnectionResponse> DeleteConnection(
         B2BSSODeleteConnectionRequest request)
     {
@@ -109,33 +97,28 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Authenticate a user given a token. 
-    * This endpoint verifies that the user completed the SSO Authentication flow by verifying that the token
-    * is valid and hasn't expired.
-    * Provide the `session_duration_minutes` parameter to set the lifetime of the session. 
-    * If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60
-    * minute duration.
-    * To link this authentication event to an existing Stytch session, include either the `session_token` or
-    * `session_jwt` param.
-    * 
-    * If the Member is required to complete MFA to log in to the Organization, the returned value of
-    * `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
-    * The `intermediate_session_token` can be passed into the
-    * [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
-    * [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp),
-    * or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete
-    * the MFA step and acquire a full member session.
-    * The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
-    * 
-    * If a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an
-    * MFA step.
-    * @param data {@link B2BSSOAuthenticateRequest}
-    * @returns {@link B2BSSOAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Authenticate a user given a token. 
+    /// This endpoint verifies that the user completed the SSO Authentication flow by verifying that the token
+    /// is valid and hasn't expired.
+    /// Provide the `session_duration_minutes` parameter to set the lifetime of the session. 
+    /// If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60
+    /// minute duration.
+    /// To link this authentication event to an existing Stytch session, include either the `session_token` or
+    /// `session_jwt` param.
+    /// 
+    /// If the Member is required to complete MFA to log in to the Organization, the returned value of
+    /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+    /// The `intermediate_session_token` can be passed into the
+    /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
+    /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp),
+    /// or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete
+    /// the MFA step and acquire a full member session.
+    /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
+    /// 
+    /// If a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an
+    /// MFA step.
+    /// </summary>
     public async Task<B2BSSOAuthenticateResponse> Authenticate(
         B2BSSOAuthenticateRequest request)
     {

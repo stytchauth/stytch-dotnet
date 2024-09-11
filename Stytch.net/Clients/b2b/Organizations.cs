@@ -29,22 +29,17 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Creates an Organization. An `organization_name` and a unique `organization_slug` are required.
-    * 
-    * By default, `email_invites` and `sso_jit_provisioning` will be set to `ALL_ALLOWED`, and `mfa_policy`
-    * will be set to `OPTIONAL` if no Organization authentication settings are explicitly defined in the
-    * request.
-    * 
-    * *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings)
-    * resource to learn more about fields like `email_jit_provisioning`, `email_invites`,
-    * `sso_jit_provisioning`, etc., and their behaviors.
-    * @param data {@link B2BOrganizationsCreateRequest}
-    * @returns {@link B2BOrganizationsCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Creates an Organization. An `organization_name` and a unique `organization_slug` are required.
+    /// 
+    /// By default, `email_invites` and `sso_jit_provisioning` will be set to `ALL_ALLOWED`, and `mfa_policy`
+    /// will be set to `OPTIONAL` if no Organization authentication settings are explicitly defined in the
+    /// request.
+    /// 
+    /// *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings)
+    /// resource to learn more about fields like `email_jit_provisioning`, `email_invites`,
+    /// `sso_jit_provisioning`, etc., and their behaviors.
+    /// </summary>
     public async Task<B2BOrganizationsCreateResponse> Create(
         B2BOrganizationsCreateRequest request)
     {
@@ -75,14 +70,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Returns an Organization specified by `organization_id`.
-    * @param params {@link B2BOrganizationsGetRequest}
-    * @returns {@link B2BOrganizationsGetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Returns an Organization specified by `organization_id`.
+    /// </summary>
     public async Task<B2BOrganizationsGetResponse> Get(
         B2BOrganizationsGetRequest request)
     {
@@ -113,20 +103,14 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Updates an Organization specified by `organization_id`. An Organization must always have at least one
-    * auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
-    * 
-    * *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings)
-    * resource to learn more about fields like `email_jit_provisioning`, `email_invites`,
-    * `sso_jit_provisioning`, etc., and their behaviors.
-    * @param data {@link B2BOrganizationsUpdateRequest}
-    * @param options {@link B2BOrganizationsUpdateRequestOptions}
-    * @returns {@link B2BOrganizationsUpdateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Updates an Organization specified by `organization_id`. An Organization must always have at least one
+    /// auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
+    /// 
+    /// *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings)
+    /// resource to learn more about fields like `email_jit_provisioning`, `email_invites`,
+    /// `sso_jit_provisioning`, etc., and their behaviors.
+    /// </summary>
     public async Task<B2BOrganizationsUpdateResponse> Update(
         B2BOrganizationsUpdateRequest request)
     {
@@ -157,16 +141,10 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Deletes an Organization specified by `organization_id`. All Members of the Organization will also be
-    * deleted.
-    * @param data {@link B2BOrganizationsDeleteRequest}
-    * @param options {@link B2BOrganizationsDeleteRequestOptions}
-    * @returns {@link B2BOrganizationsDeleteResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Deletes an Organization specified by `organization_id`. All Members of the Organization will also be
+    /// deleted.
+    /// </summary>
     public async Task<B2BOrganizationsDeleteResponse> Delete(
         B2BOrganizationsDeleteRequest request)
     {
@@ -197,16 +175,11 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Search for Organizations. If you send a request with no body params, no filtering will be applied and
-    * the endpoint will return all Organizations. All fuzzy search filters require a minimum of three
-    * characters.
-    * @param data {@link B2BOrganizationsSearchRequest}
-    * @returns {@link B2BOrganizationsSearchResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Search for Organizations. If you send a request with no body params, no filtering will be applied and
+    /// the endpoint will return all Organizations. All fuzzy search filters require a minimum of three
+    /// characters.
+    /// </summary>
     public async Task<B2BOrganizationsSearchResponse> Search(
         B2BOrganizationsSearchRequest request)
     {
@@ -237,13 +210,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * @param params {@link B2BOrganizationsMetricsRequest}
-    * @returns {@link B2BOrganizationsMetricsResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// 
+    /// </summary>
     public async Task<B2BOrganizationsMetricsResponse> Metrics(
         B2BOrganizationsMetricsRequest request)
     {

@@ -25,54 +25,70 @@ public class AppleOAuthFactor {
       public string? EmailId { get; set; }
     }
 public class AuthenticationFactor {
-      /**
-    * The type of authentication factor. The possible values are: `magic_link`, `otp`,
-    *        `oauth`, `password`, or `sso`.
-    */
+      /// <summary>
+    /// The type of authentication factor. The possible values are: `magic_link`, `otp`,
+    ///        `oauth`, `password`, or `sso`.
+    /// </summary>
       [JsonProperty("type")]
       public required AuthenticationFactorType Type { get; set; }
-      /**
-    * The method that was used to deliver the authentication factor. The possible values depend on the `type`: 
-    *      
-    *       `magic_link` – Only `email`.
-    *      
-    *       `otp` – Only `sms`.
-    *      
-    *       `oauth` – Either `oauth_google` or `oauth_microsoft`.
-    *      
-    *       `password` – Only `knowledge`.
-    *      
-    *       `sso` – Either `sso_saml` or `sso_oidc`.
-    *       
-    */
+      /// <summary>
+    /// The method that was used to deliver the authentication factor. The possible values depend on the `type`: 
+    ///      
+    ///       `magic_link` – Only `email`.
+    ///      
+    ///       `otp` – Only `sms`.
+    ///      
+    ///       `oauth` – Either `oauth_google` or `oauth_microsoft`.
+    ///      
+    ///       `password` – Only `knowledge`.
+    ///      
+    ///       `sso` – Either `sso_saml` or `sso_oidc`.
+    ///       
+    /// </summary>
       [JsonProperty("delivery_method")]
       public required AuthenticationFactorDeliveryMethod DeliveryMethod { get; set; }
-      // The timestamp when the factor was last authenticated.
+      /// <summary>
+    /// The timestamp when the factor was last authenticated.
+    /// </summary>
       [JsonProperty("last_authenticated_at")]
       public string? LastAuthenticatedAt { get; set; }
-      // The timestamp when the factor was initially authenticated.
+      /// <summary>
+    /// The timestamp when the factor was initially authenticated.
+    /// </summary>
       [JsonProperty("created_at")]
       public string? CreatedAt { get; set; }
-      // The timestamp when the factor was last updated.
+      /// <summary>
+    /// The timestamp when the factor was last updated.
+    /// </summary>
       [JsonProperty("updated_at")]
       public string? UpdatedAt { get; set; }
-      // Information about the email factor, if one is present.
+      /// <summary>
+    /// Information about the email factor, if one is present.
+    /// </summary>
       [JsonProperty("email_factor")]
       public EmailFactor? EmailFactor { get; set; }
-      // Information about the phone number factor, if one is present.
+      /// <summary>
+    /// Information about the phone number factor, if one is present.
+    /// </summary>
       [JsonProperty("phone_number_factor")]
       public PhoneNumberFactor? PhoneNumberFactor { get; set; }
-      // Information about the Google OAuth factor, if one is present.
+      /// <summary>
+    /// Information about the Google OAuth factor, if one is present.
+    /// </summary>
       [JsonProperty("google_oauth_factor")]
       public GoogleOAuthFactor? GoogleOAuthFactor { get; set; }
-      // Information about the Microsoft OAuth factor, if one is present.
+      /// <summary>
+    /// Information about the Microsoft OAuth factor, if one is present.
+    /// </summary>
       [JsonProperty("microsoft_oauth_factor")]
       public MicrosoftOAuthFactor? MicrosoftOAuthFactor { get; set; }
       [JsonProperty("apple_oauth_factor")]
       public AppleOAuthFactor? AppleOAuthFactor { get; set; }
       [JsonProperty("webauthn_factor")]
       public WebAuthnFactor? WebAuthnFactor { get; set; }
-      // Information about the TOTP-backed Authenticator App factor, if one is present.
+      /// <summary>
+    /// Information about the TOTP-backed Authenticator App factor, if one is present.
+    /// </summary>
       [JsonProperty("authenticator_app_factor")]
       public AuthenticatorAppFactor? AuthenticatorAppFactor { get; set; }
       [JsonProperty("github_oauth_factor")]
@@ -119,10 +135,14 @@ public class AuthenticationFactor {
       public EmbeddableMagicLinkFactor? EmbeddableMagicLinkFactor { get; set; }
       [JsonProperty("biometric_factor")]
       public BiometricFactor? BiometricFactor { get; set; }
-      // Information about the SAML SSO factor, if one is present.
+      /// <summary>
+    /// Information about the SAML SSO factor, if one is present.
+    /// </summary>
       [JsonProperty("saml_sso_factor")]
       public SAMLSSOFactor? SAMLSSOFactor { get; set; }
-      // Information about the OIDC SSO factor, if one is present.
+      /// <summary>
+    /// Information about the OIDC SSO factor, if one is present.
+    /// </summary>
       [JsonProperty("oidc_sso_factor")]
       public OIDCSSOFactor? OIDCSSOFactor { get; set; }
       [JsonProperty("salesforce_oauth_factor")]
@@ -139,7 +159,9 @@ public class AuthenticationFactor {
       public StravaOAuthFactor? StravaOAuthFactor { get; set; }
     }
 public class AuthenticatorAppFactor {
-      // Globally unique UUID that identifies a TOTP instance.
+      /// <summary>
+    /// Globally unique UUID that identifies a TOTP instance.
+    /// </summary>
       [JsonProperty("totp_id")]
       public required string TOTPId { get; set; }
     }
@@ -180,10 +202,14 @@ public class DiscordOAuthFactor {
       public string? EmailId { get; set; }
     }
 public class EmailFactor {
-      // The globally unique UUID of the Member's email.
+      /// <summary>
+    /// The globally unique UUID of the Member's email.
+    /// </summary>
       [JsonProperty("email_id")]
       public required string EmailId { get; set; }
-      // The email address of the Member.
+      /// <summary>
+    /// The email address of the Member.
+    /// </summary>
       [JsonProperty("email_address")]
       public required string EmailAddress { get; set; }
     }
@@ -224,16 +250,20 @@ public class GithubOAuthFactor {
       public string? EmailId { get; set; }
     }
 public class GoogleOAuthFactor {
-      // The unique ID of an OAuth registration.
+      /// <summary>
+    /// The unique ID of an OAuth registration.
+    /// </summary>
       [JsonProperty("id")]
       public required string Id { get; set; }
-      /**
-    * The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
-    * "Subject field" in OAuth protocols.
-    */
+      /// <summary>
+    /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
+    /// "Subject field" in OAuth protocols.
+    /// </summary>
       [JsonProperty("provider_subject")]
       public required string ProviderSubject { get; set; }
-      // The globally unique UUID of the Member's email.
+      /// <summary>
+    /// The globally unique UUID of the Member's email.
+    /// </summary>
       [JsonProperty("email_id")]
       public string? EmailId { get; set; }
     }
@@ -286,35 +316,49 @@ public class LinkedInOAuthFactor {
       public string? EmailId { get; set; }
     }
 public class MicrosoftOAuthFactor {
-      // The unique ID of an OAuth registration.
+      /// <summary>
+    /// The unique ID of an OAuth registration.
+    /// </summary>
       [JsonProperty("id")]
       public required string Id { get; set; }
-      /**
-    * The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
-    * "Subject field" in OAuth protocols.
-    */
+      /// <summary>
+    /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
+    /// "Subject field" in OAuth protocols.
+    /// </summary>
       [JsonProperty("provider_subject")]
       public required string ProviderSubject { get; set; }
-      // The globally unique UUID of the Member's email.
+      /// <summary>
+    /// The globally unique UUID of the Member's email.
+    /// </summary>
       [JsonProperty("email_id")]
       public string? EmailId { get; set; }
     }
 public class OIDCSSOFactor {
-      // The unique ID of an SSO Registration.
+      /// <summary>
+    /// The unique ID of an SSO Registration.
+    /// </summary>
       [JsonProperty("id")]
       public required string Id { get; set; }
-      // Globally unique UUID that identifies a specific OIDC Connection.
+      /// <summary>
+    /// Globally unique UUID that identifies a specific OIDC Connection.
+    /// </summary>
       [JsonProperty("provider_id")]
       public required string ProviderId { get; set; }
-      // The ID of the member given by the identity provider.
+      /// <summary>
+    /// The ID of the member given by the identity provider.
+    /// </summary>
       [JsonProperty("external_id")]
       public required string ExternalId { get; set; }
     }
 public class PhoneNumberFactor {
-      // The globally unique UUID of the Member's phone number.
+      /// <summary>
+    /// The globally unique UUID of the Member's phone number.
+    /// </summary>
       [JsonProperty("phone_id")]
       public required string PhoneId { get; set; }
-      // The phone number of the Member.
+      /// <summary>
+    /// The phone number of the Member.
+    /// </summary>
       [JsonProperty("phone_number")]
       public required string PhoneNumber { get; set; }
     }
@@ -323,13 +367,19 @@ public class RecoveryCodeFactor {
       public required string TOTPRecoveryCodeId { get; set; }
     }
 public class SAMLSSOFactor {
-      // The unique ID of an SSO Registration.
+      /// <summary>
+    /// The unique ID of an SSO Registration.
+    /// </summary>
       [JsonProperty("id")]
       public required string Id { get; set; }
-      // Globally unique UUID that identifies a specific SAML Connection.
+      /// <summary>
+    /// Globally unique UUID that identifies a specific SAML Connection.
+    /// </summary>
       [JsonProperty("provider_id")]
       public required string ProviderId { get; set; }
-      // The ID of the member given by the identity provider.
+      /// <summary>
+    /// The ID of the member given by the identity provider.
+    /// </summary>
       [JsonProperty("external_id")]
       public required string ExternalId { get; set; }
     }
@@ -342,40 +392,48 @@ public class SalesforceOAuthFactor {
       public string? EmailId { get; set; }
     }
 public class Session {
-      // A unique identifier for a specific Session.
+      /// <summary>
+    /// A unique identifier for a specific Session.
+    /// </summary>
       [JsonProperty("session_id")]
       public required string SessionId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // An array of different authentication factors that comprise a Session.
+      /// <summary>
+    /// An array of different authentication factors that comprise a Session.
+    /// </summary>
       [JsonProperty("authentication_factors")]
       public required AuthenticationFactor AuthenticationFactors { get; set; }
-      /**
-    * The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in
-    * UTC, e.g. `2021-12-29T12:33:09Z`.
-    */
+      /// <summary>
+    /// The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in
+    /// UTC, e.g. `2021-12-29T12:33:09Z`.
+    /// </summary>
       [JsonProperty("started_at")]
       public string? StartedAt { get; set; }
-      /**
-    * The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are
-    * expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-    */
+      /// <summary>
+    /// The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are
+    /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+    /// </summary>
       [JsonProperty("last_accessed_at")]
       public string? LastAccessedAt { get; set; }
-      /**
-    * The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in
-    * UTC, e.g. `2021-12-29T12:33:09Z`.
-    */
+      /// <summary>
+    /// The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in
+    /// UTC, e.g. `2021-12-29T12:33:09Z`.
+    /// </summary>
       [JsonProperty("expires_at")]
       public string? ExpiresAt { get; set; }
-      // Provided attributes help with fraud detection.
+      /// <summary>
+    /// Provided attributes help with fraud detection.
+    /// </summary>
       [JsonProperty("attributes")]
       public Attributes? Attributes { get; set; }
-      /**
-    * The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate
-    * call.
-    */
+      /// <summary>
+    /// The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate
+    /// call.
+    /// </summary>
       [JsonProperty("custom_claims")]
       public object? CustomClaims { get; set; }
     }
@@ -471,212 +529,260 @@ public class YahooOAuthFactor {
       [JsonProperty("email_id")]
       public string? EmailId { get; set; }
     }
-// Request type for `sessions.authenticate`.
+/// <summary>
+    /// Request type for `sessions.authenticate`.
+    /// </summary>
     public class SessionsAuthenticateRequest {
-      // The session token to authenticate.
+      /// <summary>
+    /// The session token to authenticate.
+    /// </summary>
       [JsonProperty("session_token")]
       public string? SessionToken { get; set; }
-      /**
-    * Set the session lifetime to be this many minutes from now; minimum of 5 and a maximum of 527040 minutes
-    * (366 days). Note that a successful authentication will continue to extend the session this many minutes.
-    */
+      /// <summary>
+    /// Set the session lifetime to be this many minutes from now; minimum of 5 and a maximum of 527040 minutes
+    /// (366 days). Note that a successful authentication will continue to extend the session this many minutes.
+    /// </summary>
       [JsonProperty("session_duration_minutes")]
       public int? SessionDurationMinutes { get; set; }
-      /**
-    * The JWT to authenticate. You may provide a JWT that has expired according to its `exp` claim and needs
-    * to be refreshed. If the signature is valid and the underlying session is still active then Stytch will
-    * return a new JWT.
-    */
+      /// <summary>
+    /// The JWT to authenticate. You may provide a JWT that has expired according to its `exp` claim and needs
+    /// to be refreshed. If the signature is valid and the underlying session is still active then Stytch will
+    /// return a new JWT.
+    /// </summary>
       [JsonProperty("session_jwt")]
       public string? SessionJwt { get; set; }
-      /**
-    * Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
-    * initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
-    * object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key,
-    * supply a null value.
-    * 
-    *   Custom claims made with reserved claims ("iss", "sub", "aud", "exp", "nbf", "iat", "jti") will be
-    * ignored. Total custom claims size cannot exceed four kilobytes.
-    */
+      /// <summary>
+    /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
+    /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
+    /// object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key,
+    /// supply a null value.
+    /// 
+    ///   Custom claims made with reserved claims ("iss", "sub", "aud", "exp", "nbf", "iat", "jti") will be
+    /// ignored. Total custom claims size cannot exceed four kilobytes.
+    /// </summary>
       [JsonProperty("session_custom_claims")]
       public object? SessionCustomClaims { get; set; }
     }
-// Response type for `sessions.authenticate`.
+/// <summary>
+    /// Response type for `sessions.authenticate`.
+    /// </summary>
     public class SessionsAuthenticateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
-    * receive a full Session object in the response.
-    * 
-    *   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
-    *   
-    */
+      /// <summary>
+    /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
+    /// receive a full Session object in the response.
+    /// 
+    ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+    ///   
+    /// </summary>
       [JsonProperty("session")]
       public required Session Session { get; set; }
-      // A secret token for a given Stytch Session.
+      /// <summary>
+    /// A secret token for a given Stytch Session.
+    /// </summary>
       [JsonProperty("session_token")]
       public required string SessionToken { get; set; }
-      // The JSON Web Token (JWT) for a given Stytch Session.
+      /// <summary>
+    /// The JSON Web Token (JWT) for a given Stytch Session.
+    /// </summary>
       [JsonProperty("session_jwt")]
       public required string SessionJwt { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `sessions.getJWKS`.
+/// <summary>
+    /// Request type for `sessions.getJWKS`.
+    /// </summary>
     public class SessionsGetJWKSRequest {
-      // The `project_id` to get the JWKS for.
+      /// <summary>
+    /// The `project_id` to get the JWKS for.
+    /// </summary>
       [JsonProperty("project_id")]
       public required string ProjectId { get; set; }
     }
-// Response type for `sessions.getJWKS`.
+/// <summary>
+    /// Response type for `sessions.getJWKS`.
+    /// </summary>
     public class SessionsGetJWKSResponse {
-      // The JWK
+      /// <summary>
+    /// The JWK
+    /// </summary>
       [JsonProperty("keys")]
       public required JWK Keys { get; set; }
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `sessions.get`.
+/// <summary>
+    /// Request type for `sessions.get`.
+    /// </summary>
     public class SessionsGetRequest {
-      // The `user_id` to get active Sessions for.
+      /// <summary>
+    /// The `user_id` to get active Sessions for.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
     }
-// Response type for `sessions.get`.
+/// <summary>
+    /// Response type for `sessions.get`.
+    /// </summary>
     public class SessionsGetResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // An array of Session objects.
+      /// <summary>
+    /// An array of Session objects.
+    /// </summary>
       [JsonProperty("sessions")]
       public required Session Sessions { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `sessions.migrate`.
+/// <summary>
+    /// Request type for `sessions.migrate`.
+    /// </summary>
     public class SessionsMigrateRequest {
-      // The `session_token` associated with a User's existing Session.
+      /// <summary>
+    /// The `session_token` associated with a User's existing Session.
+    /// </summary>
       [JsonProperty("session_token")]
       public required string SessionToken { get; set; }
-      /**
-    * Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-    * already exist, 
-    *   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
-    * `session_jwt` will have a fixed lifetime of
-    *   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
-    * 
-    *   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-    *   
-    *   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
-    * extend the session this many minutes.
-    *   
-    *   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
-    */
+      /// <summary>
+    /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
+    /// already exist, 
+    ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
+    /// `session_jwt` will have a fixed lifetime of
+    ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
+    /// 
+    ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
+    ///   
+    ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
+    /// extend the session this many minutes.
+    ///   
+    ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
+    /// </summary>
       [JsonProperty("session_duration_minutes")]
       public int? SessionDurationMinutes { get; set; }
-      /**
-    * Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
-    * initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
-    * object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key,
-    * supply a null value.
-    * 
-    *   Custom claims made with reserved claims ("iss", "sub", "aud", "exp", "nbf", "iat", "jti") will be
-    * ignored. Total custom claims size cannot exceed four kilobytes.
-    */
+      /// <summary>
+    /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
+    /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
+    /// object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key,
+    /// supply a null value.
+    /// 
+    ///   Custom claims made with reserved claims ("iss", "sub", "aud", "exp", "nbf", "iat", "jti") will be
+    /// ignored. Total custom claims size cannot exceed four kilobytes.
+    /// </summary>
       [JsonProperty("session_custom_claims")]
       public object? SessionCustomClaims { get; set; }
     }
-// Response type for `sessions.migrate`.
+/// <summary>
+    /// Response type for `sessions.migrate`.
+    /// </summary>
     public class SessionsMigrateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The unique ID of the affected User.
+      /// <summary>
+    /// The unique ID of the affected User.
+    /// </summary>
       [JsonProperty("user_id")]
       public required string UserId { get; set; }
-      // A secret token for a given Stytch Session.
+      /// <summary>
+    /// A secret token for a given Stytch Session.
+    /// </summary>
       [JsonProperty("session_token")]
       public required string SessionToken { get; set; }
-      // The JSON Web Token (JWT) for a given Stytch Session.
+      /// <summary>
+    /// The JSON Web Token (JWT) for a given Stytch Session.
+    /// </summary>
       [JsonProperty("session_jwt")]
       public required string SessionJwt { get; set; }
-      /**
-    * The `user` object affected by this API call. See the
-    * [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-    */
+      /// <summary>
+    /// The `user` object affected by this API call. See the
+    /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+    /// </summary>
       [JsonProperty("user")]
       public required User User { get; set; }
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      /**
-    * If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
-    * receive a full Session object in the response.
-    * 
-    *   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
-    *   
-    */
+      /// <summary>
+    /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
+    /// receive a full Session object in the response.
+    /// 
+    ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+    ///   
+    /// </summary>
       [JsonProperty("session")]
       public Session? Session { get; set; }
     }
-// Request type for `sessions.revoke`.
+/// <summary>
+    /// Request type for `sessions.revoke`.
+    /// </summary>
     public class SessionsRevokeRequest {
-      // The `session_id` to revoke.
+      /// <summary>
+    /// The `session_id` to revoke.
+    /// </summary>
       [JsonProperty("session_id")]
       public string? SessionId { get; set; }
-      // The session token to revoke.
+      /// <summary>
+    /// The session token to revoke.
+    /// </summary>
       [JsonProperty("session_token")]
       public string? SessionToken { get; set; }
-      // A JWT for the session to revoke.
+      /// <summary>
+    /// A JWT for the session to revoke.
+    /// </summary>
       [JsonProperty("session_jwt")]
       public string? SessionJwt { get; set; }
     }
-// Response type for `sessions.revoke`.
+/// <summary>
+    /// Response type for `sessions.revoke`.
+    /// </summary>
     public class SessionsRevokeResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }

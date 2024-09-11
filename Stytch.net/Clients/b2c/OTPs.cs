@@ -33,18 +33,13 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Authenticate a User given a `method_id` (the associated `email_id` or `phone_id`) and a `code`. This
-    * endpoint verifies that the code is valid, hasn't expired or been previously used, and any optional
-    * security settings such as IP match or user agent match are satisfied. A given `method_id` may only have
-    * a single active OTP code at any given time, if a User requests another OTP code before the first one has
-    * expired, the first one will be invalidated.
-    * @param data {@link OTPsAuthenticateRequest}
-    * @returns {@link OTPsAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Authenticate a User given a `method_id` (the associated `email_id` or `phone_id`) and a `code`. This
+    /// endpoint verifies that the code is valid, hasn't expired or been previously used, and any optional
+    /// security settings such as IP match or user agent match are satisfied. A given `method_id` may only have
+    /// a single active OTP code at any given time, if a User requests another OTP code before the first one has
+    /// expired, the first one will be invalidated.
+    /// </summary>
     public async Task<OTPsAuthenticateResponse> Authenticate(
         OTPsAuthenticateRequest request)
     {

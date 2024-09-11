@@ -9,355 +9,407 @@ using System.Runtime.Serialization;
 namespace Stytch.net.Models.Consumer
 {
 public class B2BSCIMConnectionCreateRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSCIMConnectionDeleteRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSCIMConnectionGetGroupsRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSCIMConnectionGetRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSCIMConnectionRotateCancelRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSCIMConnectionRotateCompleteRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSCIMConnectionRotateStartRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
 public class B2BSCIMConnectionUpdateRequestOptions {
-      /**
-    * Optional authorization object.
-    * Pass in an active Stytch Member session token or session JWT and the request
-    * will be run using that member's permissions.
-    */
+      /// <summary>
+    /// Optional authorization object.
+    /// Pass in an active Stytch Member session token or session JWT and the request
+    /// will be run using that member's permissions.
+    /// </summary>
       [JsonProperty("authorization")]
       public Authorization? Authorization { get; set; }
     }
-// Request type for `scim.connection.create`.
+/// <summary>
+    /// Request type for `scim.connection.create`.
+    /// </summary>
     public class B2BSCIMConnectionCreateRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // A human-readable display name for the connection.
+      /// <summary>
+    /// A human-readable display name for the connection.
+    /// </summary>
       [JsonProperty("display_name")]
       public string? DisplayName { get; set; }
       [JsonProperty("identity_provider")]
       public CreateRequestIdentityProvider? IdentityProvider { get; set; }
     }
-// Response type for `scim.connection.create`.
+/// <summary>
+    /// Response type for `scim.connection.create`.
+    /// </summary>
     public class B2BSCIMConnectionCreateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      /**
-    * The `SCIM Connection` object affected by this API call. See the
-    * [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-    * field details.
-    */
+      /// <summary>
+    /// The `SCIM Connection` object affected by this API call. See the
+    /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
+    /// field details.
+    /// </summary>
       [JsonProperty("connection")]
       public SCIMConnectionWithToken? Connection { get; set; }
     }
-// Request type for `scim.connection.delete`.
+/// <summary>
+    /// Request type for `scim.connection.delete`.
+    /// </summary>
     public class B2BSCIMConnectionDeleteRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SCIM connection.
+      /// <summary>
+    /// The ID of the SCIM connection.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
     }
-// Response type for `scim.connection.delete`.
+/// <summary>
+    /// Response type for `scim.connection.delete`.
+    /// </summary>
     public class B2BSCIMConnectionDeleteResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      // The `connection_id` that was deleted as part of the delete request.
+      /// <summary>
+    /// The `connection_id` that was deleted as part of the delete request.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
-// Request type for `scim.connection.getGroups`.
+/// <summary>
+    /// Request type for `scim.connection.getGroups`.
+    /// </summary>
     public class B2BSCIMConnectionGetGroupsRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SCIM connection.
+      /// <summary>
+    /// The ID of the SCIM connection.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
-      /**
-    * The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
-    * results. If your query returns more than 1000 results, you will need to paginate the responses using the
-    * `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata`
-    * object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the
-    * next page of results. Continue to make search calls until the `next_cursor` in the response is null.
-    */
+      /// <summary>
+    /// The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
+    /// results. If your query returns more than 1000 results, you will need to paginate the responses using the
+    /// `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata`
+    /// object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the
+    /// next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+    /// </summary>
       [JsonProperty("cursor")]
       public string? Cursor { get; set; }
-      /**
-    * The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
-    * be returned by a single search request. If the total size of your result set is greater than one page
-    * size, you must paginate the response. See the `cursor` field.
-    */
+      /// <summary>
+    /// The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
+    /// be returned by a single search request. If the total size of your result set is greater than one page
+    /// size, you must paginate the response. See the `cursor` field.
+    /// </summary>
       [JsonProperty("limit")]
       public uint? Limit { get; set; }
     }
-// Response type for `scim.connection.getGroups`.
+/// <summary>
+    /// Response type for `scim.connection.getGroups`.
+    /// </summary>
     public class B2BSCIMConnectionGetGroupsResponse {
-      // A list of SCIM Connection Groups belonging to the connection.
+      /// <summary>
+    /// A list of SCIM Connection Groups belonging to the connection.
+    /// </summary>
       [JsonProperty("scim_groups")]
       public required SCIMGroup SCIMGroups { get; set; }
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      /**
-    * The `next_cursor` string is returned when your search result contains more than one page of results.
-    * This value is passed into your next search call in the `cursor` field.
-    */
+      /// <summary>
+    /// The `next_cursor` string is returned when your search result contains more than one page of results.
+    /// This value is passed into your next search call in the `cursor` field.
+    /// </summary>
       [JsonProperty("next_cursor")]
       public string? NextCursor { get; set; }
     }
-// Request type for `scim.connection.get`.
+/// <summary>
+    /// Request type for `scim.connection.get`.
+    /// </summary>
     public class B2BSCIMConnectionGetRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
     }
-// Response type for `scim.connection.get`.
+/// <summary>
+    /// Response type for `scim.connection.get`.
+    /// </summary>
     public class B2BSCIMConnectionGetResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
       [JsonProperty("connection")]
       public SCIMConnection? Connection { get; set; }
     }
-// Request type for `scim.connection.rotateCancel`.
+/// <summary>
+    /// Request type for `scim.connection.rotateCancel`.
+    /// </summary>
     public class B2BSCIMConnectionRotateCancelRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SCIM connection.
+      /// <summary>
+    /// The ID of the SCIM connection.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
     }
-// Response type for `scim.connection.rotateCancel`.
+/// <summary>
+    /// Response type for `scim.connection.rotateCancel`.
+    /// </summary>
     public class B2BSCIMConnectionRotateCancelResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      /**
-    * The `SCIM Connection` object affected by this API call. See the
-    * [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-    * field details.
-    */
+      /// <summary>
+    /// The `SCIM Connection` object affected by this API call. See the
+    /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
+    /// field details.
+    /// </summary>
       [JsonProperty("connection")]
       public SCIMConnection? Connection { get; set; }
     }
-// Request type for `scim.connection.rotateComplete`.
+/// <summary>
+    /// Request type for `scim.connection.rotateComplete`.
+    /// </summary>
     public class B2BSCIMConnectionRotateCompleteRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SCIM connection.
+      /// <summary>
+    /// The ID of the SCIM connection.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
     }
-// Response type for `scim.connection.rotateComplete`.
+/// <summary>
+    /// Response type for `scim.connection.rotateComplete`.
+    /// </summary>
     public class B2BSCIMConnectionRotateCompleteResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      /**
-    * The `SCIM Connection` object affected by this API call. See the
-    * [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-    * field details.
-    */
+      /// <summary>
+    /// The `SCIM Connection` object affected by this API call. See the
+    /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
+    /// field details.
+    /// </summary>
       [JsonProperty("connection")]
       public SCIMConnection? Connection { get; set; }
     }
-// Request type for `scim.connection.rotateStart`.
+/// <summary>
+    /// Request type for `scim.connection.rotateStart`.
+    /// </summary>
     public class B2BSCIMConnectionRotateStartRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SCIM connection.
+      /// <summary>
+    /// The ID of the SCIM connection.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
     }
-// Response type for `scim.connection.rotateStart`.
+/// <summary>
+    /// Response type for `scim.connection.rotateStart`.
+    /// </summary>
     public class B2BSCIMConnectionRotateStartResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      /**
-    * The `SCIM Connection` object affected by this API call. See the
-    * [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-    * field details.
-    */
+      /// <summary>
+    /// The `SCIM Connection` object affected by this API call. See the
+    /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
+    /// field details.
+    /// </summary>
       [JsonProperty("connection")]
       public SCIMConnectionWithNextToken? Connection { get; set; }
     }
-// Request type for `scim.connection.update`.
+/// <summary>
+    /// Request type for `scim.connection.update`.
+    /// </summary>
     public class B2BSCIMConnectionUpdateRequest {
-      /**
-    * Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-    * perform operations on an Organization, so be sure to preserve this value.
-    */
+      /// <summary>
+    /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+    /// perform operations on an Organization, so be sure to preserve this value.
+    /// </summary>
       [JsonProperty("organization_id")]
       public required string OrganizationId { get; set; }
-      // The ID of the SCIM connection.
+      /// <summary>
+    /// The ID of the SCIM connection.
+    /// </summary>
       [JsonProperty("connection_id")]
       public required string ConnectionId { get; set; }
-      // A human-readable display name for the connection.
+      /// <summary>
+    /// A human-readable display name for the connection.
+    /// </summary>
       [JsonProperty("display_name")]
       public string? DisplayName { get; set; }
       [JsonProperty("identity_provider")]
       public UpdateRequestIdentityProvider? IdentityProvider { get; set; }
-      /**
-    * An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and
-    * a `role_id`.
-    */
+      /// <summary>
+    /// An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and
+    /// a `role_id`.
+    /// </summary>
       [JsonProperty("scim_group_implicit_role_assignments")]
       public SCIMGroupImplicitRoleAssignments? SCIMGroupImplicitRoleAssignments { get; set; }
     }
-// Response type for `scim.connection.update`.
+/// <summary>
+    /// Response type for `scim.connection.update`.
+    /// </summary>
     public class B2BSCIMConnectionUpdateResponse {
-      /**
-    * Globally unique UUID that is returned with every API call. This value is important to log for debugging
-    * purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-    */
+      /// <summary>
+    /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+    /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+    /// </summary>
       [JsonProperty("request_id")]
       public required string RequestId { get; set; }
-      /**
-    * The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-    * 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-    */
+      /// <summary>
+    /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+    /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+    /// </summary>
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
-      /**
-    * The `SAML Connection` object affected by this API call. See the
-    * [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object) for complete response
-    * field details.
-    */
+      /// <summary>
+    /// The `SAML Connection` object affected by this API call. See the
+    /// [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object) for complete response
+    /// field details.
+    /// </summary>
       [JsonProperty("connection")]
       public SCIMConnection? Connection { get; set; }
     }

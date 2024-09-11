@@ -27,29 +27,24 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Initiate the process of creating a new Passkey or WebAuthn registration. 
-    * 
-    * To optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.
-    * 
-    * After calling this endpoint, the browser will need to call
-    * [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) with the data
-    * from
-    * [public_key_credential_creation_options](https://w3c.github.io/webauthn/#dictionary-makecredentialoptions)
-    * passed to the [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential)
-    * request via the public key argument. We recommend using the `create()` wrapper provided by the
-    * webauthn-json library. 
-    * 
-    * If you are not using the [webauthn-json](https://github.com/github/webauthn-json) library, the
-    * `public_key_credential_creation_options` will need to be converted to a suitable public key by
-    * unmarshalling the JSON, base64 decoding the user ID field, and converting user ID and the challenge
-    * fields into an array buffer.
-    * @param data {@link WebAuthnRegisterStartRequest}
-    * @returns {@link WebAuthnRegisterStartResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Initiate the process of creating a new Passkey or WebAuthn registration. 
+    /// 
+    /// To optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.
+    /// 
+    /// After calling this endpoint, the browser will need to call
+    /// [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) with the data
+    /// from
+    /// [public_key_credential_creation_options](https://w3c.github.io/webauthn/#dictionary-makecredentialoptions)
+    /// passed to the [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential)
+    /// request via the public key argument. We recommend using the `create()` wrapper provided by the
+    /// webauthn-json library. 
+    /// 
+    /// If you are not using the [webauthn-json](https://github.com/github/webauthn-json) library, the
+    /// `public_key_credential_creation_options` will need to be converted to a suitable public key by
+    /// unmarshalling the JSON, base64 decoding the user ID field, and converting user ID and the challenge
+    /// fields into an array buffer.
+    /// </summary>
     public async Task<WebAuthnRegisterStartResponse> RegisterStart(
         WebAuthnRegisterStartRequest request)
     {
@@ -80,23 +75,18 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Complete the creation of a WebAuthn registration by passing the response from the
-    * [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) request to
-    * this endpoint as the `public_key_credential` parameter. 
-    * 
-    * If the [webauthn-json](https://github.com/github/webauthn-json) library's `create()` method was used,
-    * the response can be passed directly to the
-    * [register endpoint](https://stytch.com/docs/api/webauthn-register). If not, some fields (the client data
-    * and the attestation object) from the
-    * [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) response will
-    * need to be converted from array buffers to strings and marshalled into JSON.
-    * @param data {@link WebAuthnRegisterRequest}
-    * @returns {@link WebAuthnRegisterResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Complete the creation of a WebAuthn registration by passing the response from the
+    /// [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) request to
+    /// this endpoint as the `public_key_credential` parameter. 
+    /// 
+    /// If the [webauthn-json](https://github.com/github/webauthn-json) library's `create()` method was used,
+    /// the response can be passed directly to the
+    /// [register endpoint](https://stytch.com/docs/api/webauthn-register). If not, some fields (the client data
+    /// and the attestation object) from the
+    /// [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) response will
+    /// need to be converted from array buffers to strings and marshalled into JSON.
+    /// </summary>
     public async Task<WebAuthnRegisterResponse> Register(
         WebAuthnRegisterRequest request)
     {
@@ -127,26 +117,21 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Initiate the authentication of a Passkey or WebAuthn registration. 
-    * 
-    * To optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.
-    * 
-    * After calling this endpoint, the browser will need to call
-    * [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) with the data from
-    * `public_key_credential_request_options` passed to the
-    * [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request via the
-    * public key argument. We recommend using the `get()` wrapper provided by the webauthn-json library. 
-    * 
-    * If you are not using the [webauthn-json](https://github.com/github/webauthn-json) library, `the
-    * public_key_credential_request_options` will need to be converted to a suitable public key by
-    * unmarshalling the JSON and converting some the fields to array buffers.
-    * @param data {@link WebAuthnAuthenticateStartRequest}
-    * @returns {@link WebAuthnAuthenticateStartResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Initiate the authentication of a Passkey or WebAuthn registration. 
+    /// 
+    /// To optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.
+    /// 
+    /// After calling this endpoint, the browser will need to call
+    /// [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) with the data from
+    /// `public_key_credential_request_options` passed to the
+    /// [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request via the
+    /// public key argument. We recommend using the `get()` wrapper provided by the webauthn-json library. 
+    /// 
+    /// If you are not using the [webauthn-json](https://github.com/github/webauthn-json) library, `the
+    /// public_key_credential_request_options` will need to be converted to a suitable public key by
+    /// unmarshalling the JSON and converting some the fields to array buffers.
+    /// </summary>
     public async Task<WebAuthnAuthenticateStartResponse> AuthenticateStart(
         WebAuthnAuthenticateStartRequest request)
     {
@@ -177,22 +162,17 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Complete the authentication of a Passkey or WebAuthn registration by passing the response from the
-    * [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request to the
-    * authenticate endpoint. 
-    * 
-    * If the [webauthn-json](https://github.com/github/webauthn-json) library's `get()` method was used, the
-    * response can be passed directly to the
-    * [authenticate endpoint](https://stytch.com/docs/api/webauthn-authenticate). If not some fields from the
-    * [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) response will need to
-    * be converted from array buffers to strings and marshalled into JSON.
-    * @param data {@link WebAuthnAuthenticateRequest}
-    * @returns {@link WebAuthnAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Complete the authentication of a Passkey or WebAuthn registration by passing the response from the
+    /// [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request to the
+    /// authenticate endpoint. 
+    /// 
+    /// If the [webauthn-json](https://github.com/github/webauthn-json) library's `get()` method was used, the
+    /// response can be passed directly to the
+    /// [authenticate endpoint](https://stytch.com/docs/api/webauthn-authenticate). If not some fields from the
+    /// [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) response will need to
+    /// be converted from array buffers to strings and marshalled into JSON.
+    /// </summary>
     public async Task<WebAuthnAuthenticateResponse> Authenticate(
         WebAuthnAuthenticateRequest request)
     {
@@ -223,14 +203,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Updates a Passkey or WebAuthn registration.
-    * @param data {@link WebAuthnUpdateRequest}
-    * @returns {@link WebAuthnUpdateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Updates a Passkey or WebAuthn registration.
+    /// </summary>
     public async Task<WebAuthnUpdateResponse> Update(
         WebAuthnUpdateRequest request)
     {

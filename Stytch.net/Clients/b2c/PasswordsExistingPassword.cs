@@ -27,17 +27,12 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Reset the User’s password using their existing password.
-    * 
-    * Note that a successful password reset via an existing password will revoke all active sessions for the
-    * `user_id`.
-    * @param data {@link PasswordsExistingPasswordResetRequest}
-    * @returns {@link PasswordsExistingPasswordResetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Reset the User’s password using their existing password.
+    /// 
+    /// Note that a successful password reset via an existing password will revoke all active sessions for the
+    /// `user_id`.
+    /// </summary>
     public async Task<PasswordsExistingPasswordResetResponse> Reset(
         PasswordsExistingPasswordResetRequest request)
     {

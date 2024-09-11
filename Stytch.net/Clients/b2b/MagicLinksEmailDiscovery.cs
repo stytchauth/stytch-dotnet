@@ -27,14 +27,9 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Send a discovery magic link to an email address. The magic link is valid for 60 minutes.
-    * @param data {@link B2BMagicLinksEmailDiscoverySendRequest}
-    * @returns {@link B2BMagicLinksEmailDiscoverySendResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Send a discovery magic link to an email address. The magic link is valid for 60 minutes.
+    /// </summary>
     public async Task<B2BMagicLinksEmailDiscoverySendResponse> Send(
         B2BMagicLinksEmailDiscoverySendRequest request)
     {

@@ -27,15 +27,10 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Initiates a password reset for the email address provided. This will trigger an email to be sent to the
-    * address, containing a magic link that will allow them to set a new password and authenticate.
-    * @param data {@link PasswordsEmailResetStartRequest}
-    * @returns {@link PasswordsEmailResetStartResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Initiates a password reset for the email address provided. This will trigger an email to be sent to the
+    /// address, containing a magic link that will allow them to set a new password and authenticate.
+    /// </summary>
     public async Task<PasswordsEmailResetStartResponse> ResetStart(
         PasswordsEmailResetStartRequest request)
     {
@@ -66,22 +61,17 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Reset the user’s password and authenticate them. This endpoint checks that the magic link `token` is
-    * valid, hasn’t expired, or already been used – and can optionally require additional security settings,
-    * such as the IP address and user agent matching the initial reset request.
-    * 
-    * The provided password needs to meet our password strength requirements, which can be checked in advance
-    * with the password strength endpoint. If the token and password are accepted, the password is securely
-    * stored for future authentication and the user is authenticated.
-    * 
-    * Note that a successful password reset by email will revoke all active sessions for the `user_id`.
-    * @param data {@link PasswordsEmailResetRequest}
-    * @returns {@link PasswordsEmailResetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Reset the user’s password and authenticate them. This endpoint checks that the magic link `token` is
+    /// valid, hasn’t expired, or already been used – and can optionally require additional security settings,
+    /// such as the IP address and user agent matching the initial reset request.
+    /// 
+    /// The provided password needs to meet our password strength requirements, which can be checked in advance
+    /// with the password strength endpoint. If the token and password are accepted, the password is securely
+    /// stored for future authentication and the user is authenticated.
+    /// 
+    /// Note that a successful password reset by email will revoke all active sessions for the `user_id`.
+    /// </summary>
     public async Task<PasswordsEmailResetResponse> Reset(
         PasswordsEmailResetRequest request)
     {

@@ -27,15 +27,10 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Create a new TOTP instance for a user. The user can use the authenticator application of their choice to
-    * scan the QR code or enter the secret.
-    * @param data {@link TOTPsCreateRequest}
-    * @returns {@link TOTPsCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Create a new TOTP instance for a user. The user can use the authenticator application of their choice to
+    /// scan the QR code or enter the secret.
+    /// </summary>
     public async Task<TOTPsCreateResponse> Create(
         TOTPsCreateRequest request)
     {
@@ -66,14 +61,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Authenticate a TOTP code entered by a user.
-    * @param data {@link TOTPsAuthenticateRequest}
-    * @returns {@link TOTPsAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Authenticate a TOTP code entered by a user.
+    /// </summary>
     public async Task<TOTPsAuthenticateResponse> Authenticate(
         TOTPsAuthenticateRequest request)
     {
@@ -104,14 +94,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Retrieve the recovery codes for a TOTP instance tied to a User.
-    * @param data {@link TOTPsRecoveryCodesRequest}
-    * @returns {@link TOTPsRecoveryCodesResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Retrieve the recovery codes for a TOTP instance tied to a User.
+    /// </summary>
     public async Task<TOTPsRecoveryCodesResponse> RecoveryCodes(
         TOTPsRecoveryCodesRequest request)
     {
@@ -142,14 +127,9 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Authenticate a recovery code for a TOTP instance.
-    * @param data {@link TOTPsRecoverRequest}
-    * @returns {@link TOTPsRecoverResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Authenticate a recovery code for a TOTP instance.
+    /// </summary>
     public async Task<TOTPsRecoverResponse> Recover(
         TOTPsRecoverRequest request)
     {

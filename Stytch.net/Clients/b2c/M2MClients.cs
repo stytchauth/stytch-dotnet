@@ -29,14 +29,9 @@ namespace Stytch.net.Clients.b2c
 
 
 
-    /**
-    * Gets information about an existing M2M Client.
-    * @param params {@link M2MClientsGetRequest}
-    * @returns {@link M2MClientsGetResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Gets information about an existing M2M Client.
+    /// </summary>
     public async Task<M2MClientsGetResponse> Get(
         M2MClientsGetRequest request)
     {
@@ -67,20 +62,15 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Search for M2M Clients within your Stytch Project. Submit an empty `query` in the request to return all
-    * M2M Clients.
-    * 
-    * The following search filters are supported today:
-    * - `client_id`: Pass in a list of client IDs to get many clients in a single request
-    * - `client_name`: Search for clients by exact match on client name
-    * - `scopes`: Search for clients assigned a specific scope
-    * @param data {@link M2MClientsSearchRequest}
-    * @returns {@link M2MClientsSearchResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Search for M2M Clients within your Stytch Project. Submit an empty `query` in the request to return all
+    /// M2M Clients.
+    /// 
+    /// The following search filters are supported today:
+    /// - `client_id`: Pass in a list of client IDs to get many clients in a single request
+    /// - `client_name`: Search for clients by exact match on client name
+    /// - `scopes`: Search for clients assigned a specific scope
+    /// </summary>
     public async Task<M2MClientsSearchResponse> Search(
         M2MClientsSearchRequest request)
     {
@@ -111,21 +101,16 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Updates an existing M2M Client. You can use this endpoint to activate or deactivate a M2M Client by
-    * changing its `status`. A deactivated M2M Client will not be allowed to perform future token exchange
-    * flows until it is reactivated.
-    * 
-    * **Important:** Deactivating a M2M Client will not invalidate any existing JWTs issued to the client,
-    * only prevent it from receiving new ones.
-    * To protect more-sensitive routes, pass a lower `max_token_age` value
-    * when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).
-    * @param data {@link M2MClientsUpdateRequest}
-    * @returns {@link M2MClientsUpdateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Updates an existing M2M Client. You can use this endpoint to activate or deactivate a M2M Client by
+    /// changing its `status`. A deactivated M2M Client will not be allowed to perform future token exchange
+    /// flows until it is reactivated.
+    /// 
+    /// **Important:** Deactivating a M2M Client will not invalidate any existing JWTs issued to the client,
+    /// only prevent it from receiving new ones.
+    /// To protect more-sensitive routes, pass a lower `max_token_age` value
+    /// when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).
+    /// </summary>
     public async Task<M2MClientsUpdateResponse> Update(
         M2MClientsUpdateRequest request)
     {
@@ -156,19 +141,14 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Deletes the M2M Client.
-    * 
-    * **Important:** Deleting a M2M Client will not invalidate any existing JWTs issued to the client, only
-    * prevent it from receiving new ones.
-    * To protect more-sensitive routes, pass a lower `max_token_age` value
-    * when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).
-    * @param data {@link M2MClientsDeleteRequest}
-    * @returns {@link M2MClientsDeleteResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Deletes the M2M Client.
+    /// 
+    /// **Important:** Deleting a M2M Client will not invalidate any existing JWTs issued to the client, only
+    /// prevent it from receiving new ones.
+    /// To protect more-sensitive routes, pass a lower `max_token_age` value
+    /// when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).
+    /// </summary>
     public async Task<M2MClientsDeleteResponse> Delete(
         M2MClientsDeleteRequest request)
     {
@@ -199,22 +179,17 @@ namespace Stytch.net.Clients.b2c
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Creates a new M2M Client. On initial client creation, you may pass in a custom `client_id` or
-    * `client_secret` to import an existing M2M client. If you do not pass in a custom `client_id` or
-    * `client_secret`, one will be generated automatically. The `client_id` must be unique among all clients
-    * in your project.
-    * 
-    * **Important:** This is the only time you will be able to view the generated `client_secret` in the API
-    * response. Stytch stores a hash of the `client_secret` and cannot recover the value if lost. Be sure to
-    * persist the `client_secret` in a secure location. If the `client_secret` is lost, you will need to
-    * trigger a secret rotation flow to receive another one.
-    * @param data {@link M2MClientsCreateRequest}
-    * @returns {@link M2MClientsCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Creates a new M2M Client. On initial client creation, you may pass in a custom `client_id` or
+    /// `client_secret` to import an existing M2M client. If you do not pass in a custom `client_id` or
+    /// `client_secret`, one will be generated automatically. The `client_id` must be unique among all clients
+    /// in your project.
+    /// 
+    /// **Important:** This is the only time you will be able to view the generated `client_secret` in the API
+    /// response. Stytch stores a hash of the `client_secret` and cannot recover the value if lost. Be sure to
+    /// persist the `client_secret` in a secure location. If the `client_secret` is lost, you will need to
+    /// trigger a secret rotation flow to receive another one.
+    /// </summary>
     public async Task<M2MClientsCreateResponse> Create(
         M2MClientsCreateRequest request)
     {

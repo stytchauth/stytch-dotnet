@@ -27,15 +27,9 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Create a new OIDC Connection.
-    * @param data {@link B2BSSOOIDCCreateConnectionRequest}
-    * @param options {@link B2BSSOOIDCCreateConnectionRequestOptions}
-    * @returns {@link B2BSSOOIDCCreateConnectionResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Create a new OIDC Connection.
+    /// </summary>
     public async Task<B2BSSOOIDCCreateConnectionResponse> CreateConnection(
         B2BSSOOIDCCreateConnectionRequest request)
     {
@@ -66,40 +60,34 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Updates an existing OIDC connection.
-    * 
-    * When the value of `issuer` changes, Stytch will attempt to retrieve the
-    * [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata)
-    * document found at `$/.well-known/openid-configuration`.
-    * If the metadata document can be retrieved successfully, Stytch will use it to infer the values of
-    * `authorization_url`, `token_url`, `jwks_url`, and `userinfo_url`.
-    * The `client_id` and `client_secret` values cannot be inferred from the metadata document, and *must* be
-    * passed in explicitly.
-    * 
-    * If the metadata document cannot be retrieved, Stytch will still update the connection using values from
-    * the request body.
-    * 
-    * If the metadata document can be retrieved, and values are passed in the request body, the explicit
-    * values passed in from the request body will take precedence over the values inferred from the metadata
-    * document. 
-    * 
-    * Note that a newly created connection will not become active until all of the following fields are
-    * provided:
-    * * `issuer`
-    * * `client_id`
-    * * `client_secret`
-    * * `authorization_url`
-    * * `token_url`
-    * * `userinfo_url`
-    * * `jwks_url`
-    * @param data {@link B2BSSOOIDCUpdateConnectionRequest}
-    * @param options {@link B2BSSOOIDCUpdateConnectionRequestOptions}
-    * @returns {@link B2BSSOOIDCUpdateConnectionResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Updates an existing OIDC connection.
+    /// 
+    /// When the value of `issuer` changes, Stytch will attempt to retrieve the
+    /// [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata)
+    /// document found at `$/.well-known/openid-configuration`.
+    /// If the metadata document can be retrieved successfully, Stytch will use it to infer the values of
+    /// `authorization_url`, `token_url`, `jwks_url`, and `userinfo_url`.
+    /// The `client_id` and `client_secret` values cannot be inferred from the metadata document, and *must* be
+    /// passed in explicitly.
+    /// 
+    /// If the metadata document cannot be retrieved, Stytch will still update the connection using values from
+    /// the request body.
+    /// 
+    /// If the metadata document can be retrieved, and values are passed in the request body, the explicit
+    /// values passed in from the request body will take precedence over the values inferred from the metadata
+    /// document. 
+    /// 
+    /// Note that a newly created connection will not become active until all of the following fields are
+    /// provided:
+    /// * `issuer`
+    /// * `client_id`
+    /// * `client_secret`
+    /// * `authorization_url`
+    /// * `token_url`
+    /// * `userinfo_url`
+    /// * `jwks_url`
+    /// </summary>
     public async Task<B2BSSOOIDCUpdateConnectionResponse> UpdateConnection(
         B2BSSOOIDCUpdateConnectionRequest request)
     {

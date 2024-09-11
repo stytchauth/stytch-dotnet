@@ -27,18 +27,13 @@ namespace Stytch.net.Clients.b2b
 
 
 
-    /**
-    * Create a new TOTP instance for a Member. The Member can use the authenticator application of their
-    * choice to scan the QR code or enter the secret. 
-    * 
-    * Passing an intermediate session token, session token, or session JWT is not required, but if passed must
-    * match the Member ID passed.
-    * @param data {@link B2BTOTPsCreateRequest}
-    * @returns {@link B2BTOTPsCreateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Create a new TOTP instance for a Member. The Member can use the authenticator application of their
+    /// choice to scan the QR code or enter the secret. 
+    /// 
+    /// Passing an intermediate session token, session token, or session JWT is not required, but if passed must
+    /// match the Member ID passed.
+    /// </summary>
     public async Task<B2BTOTPsCreateResponse> Create(
         B2BTOTPsCreateRequest request)
     {
@@ -69,14 +64,9 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Authenticate a Member provided TOTP.
-    * @param data {@link B2BTOTPsAuthenticateRequest}
-    * @returns {@link B2BTOTPsAuthenticateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Authenticate a Member provided TOTP.
+    /// </summary>
     public async Task<B2BTOTPsAuthenticateResponse> Authenticate(
         B2BTOTPsAuthenticateRequest request)
     {
@@ -107,15 +97,10 @@ namespace Stytch.net.Clients.b2b
                 $"Request failed with status code {response.StatusCode}: {responseBody}");
         }
     }
-    /**
-    * Migrate an existing TOTP instance for a Member. Recovery codes are not required and will be minted for
-    * the Member if not provided.
-    * @param data {@link B2BTOTPsMigrateRequest}
-    * @returns {@link B2BTOTPsMigrateResponse}
-    * @async
-    * @throws A {@link StytchError} on a non-2xx response from the Stytch API
-    * @throws A {@link RequestError} when the Stytch API cannot be reached
-    */
+    /// <summary>
+    /// Migrate an existing TOTP instance for a Member. Recovery codes are not required and will be minted for
+    /// the Member if not provided.
+    /// </summary>
     public async Task<B2BTOTPsMigrateResponse> Migrate(
         B2BTOTPsMigrateRequest request)
     {
