@@ -52,24 +52,7 @@ namespace Stytch.net.Clients
             var version = Assembly.GetExecutingAssembly().GetName().Version;
             return version?.ToString() ?? "1.0.0";
         }
-        public async Task<T> GetAsync<T>(string endpoint)
-        {
-            var response = await _httpClient.GetAsync(endpoint);
-            response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(json);
-        }
-
-        public async Task<T> PostAsync<T>(string endpoint, object body)
-        {
-            var jsonBody = JsonConvert.SerializeObject(body);
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync(endpoint, content);
-            response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(json);
-        }
-
+        
         public async Task<MagicLinkResponse> SendMagicLinkAsync(MagicLinkRequest request)
         {
             // Serialize the request model to JSON
