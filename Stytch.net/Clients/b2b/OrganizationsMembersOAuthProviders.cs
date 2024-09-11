@@ -11,105 +11,105 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class OrganizationsMembersOAuthProviders
-  {
-    private readonly HttpClient _httpClient;
-    public OrganizationsMembersOAuthProviders(HttpClient client)
+    public class OrganizationsMembersOAuthProviders
     {
-      _httpClient = client;
+        private readonly HttpClient _httpClient;
+        public OrganizationsMembersOAuthProviders(HttpClient client)
+        {
+            _httpClient = client;
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// Retrieve the saved Google access token and ID token for a member. After a successful OAuth login, Stytch
+        /// will save the 
+        /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
+        /// will refresh the 
+        /// access token automatically.
+        /// 
+        /// Google One Tap does not return access tokens. If the member has only authenticated through Google One
+        /// Tap and not through a regular Google OAuth flow, this endpoint will not return any tokens.
+        /// 
+        /// __Note:__ Google does not issue a refresh token on every login, and refresh tokens may expire if unused.
+        /// To force a refresh token to be issued, pass the `?provider_prompt=consent` query param into the
+        /// [Start Google OAuth flow](https://stytch.com/docs/b2b/api/oauth-google-start) endpoint.
+        /// </summary>
+        public async Task<B2BOrganizationsMembersOAuthProvidersGoogleResponse> Google(
+            B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/organizations/${params.organization_id}/members/${params.member_id}/oauth_providers/google", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersGoogleResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Retrieve the saved Microsoft access token and ID token for a member. After a successful OAuth login,
+        /// Stytch will save the
+        /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
+        /// will refresh the
+        /// access token automatically.
+        /// </summary>
+        public async Task<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse> Microsoft(
+            B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/organizations/${params.organization_id}/members/${params.member_id}/oauth_providers/microsoft", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+
     }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Retrieve the saved Google access token and ID token for a member. After a successful OAuth login, Stytch
-    /// will save the 
-    /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
-    /// will refresh the 
-    /// access token automatically.
-    /// 
-    /// Google One Tap does not return access tokens. If the member has only authenticated through Google One
-    /// Tap and not through a regular Google OAuth flow, this endpoint will not return any tokens.
-    /// 
-    /// __Note:__ Google does not issue a refresh token on every login, and refresh tokens may expire if unused.
-    /// To force a refresh token to be issued, pass the `?provider_prompt=consent` query param into the
-    /// [Start Google OAuth flow](https://stytch.com/docs/b2b/api/oauth-google-start) endpoint.
-    /// </summary>
-    public async Task<B2BOrganizationsMembersOAuthProvidersGoogleResponse> Google(
-        B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/organizations/${params.organization_id}/members/${params.member_id}/oauth_providers/google", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersGoogleResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Retrieve the saved Microsoft access token and ID token for a member. After a successful OAuth login,
-    /// Stytch will save the
-    /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
-    /// will refresh the
-    /// access token automatically.
-    /// </summary>
-    public async Task<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse> Microsoft(
-        B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/organizations/${params.organization_id}/members/${params.member_id}/oauth_providers/microsoft", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-
-  }
 
 }
 

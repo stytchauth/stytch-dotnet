@@ -11,130 +11,130 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class DiscoveryOrganizations
-  {
-    private readonly HttpClient _httpClient;
-    public DiscoveryOrganizations(HttpClient client)
+    public class DiscoveryOrganizations
     {
-      _httpClient = client;
+        private readonly HttpClient _httpClient;
+        public DiscoveryOrganizations(HttpClient client)
+        {
+            _httpClient = client;
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// If an end user does not want to join any already-existing Organization, or has no possible Organizations
+        /// to join, this endpoint can be used to create a new
+        /// [Organization](https://stytch.com/docs/b2b/api/organization-object) and
+        /// [Member](https://stytch.com/docs/b2b/api/member-object).
+        /// 
+        /// This operation consumes the Intermediate Session.
+        /// 
+        /// This endpoint will also create an initial Member Session for the newly created Member.
+        /// 
+        /// The Member created by this endpoint will automatically be granted the `stytch_admin` Role. See the 
+        /// [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for more details on this Role.
+        /// 
+        /// If the new Organization is created with a `mfa_policy` of `REQUIRED_FOR_ALL`, the newly created Member
+        /// will need to complete an MFA step to log in to the Organization.
+        /// The `intermediate_session_token` will not be consumed and instead will be returned in the response.
+        /// The `intermediate_session_token` can be passed into the
+        /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
+        /// MFA step and acquire a full member session.
+        /// The `intermediate_session_token` can also be used with the
+        /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
+        /// or the
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to join a different Organization or create a new one.
+        /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
+        /// </summary>
+        public async Task<B2BDiscoveryOrganizationsCreateResponse> Create(
+            B2BDiscoveryOrganizationsCreateRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/discovery/organizations/create", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BDiscoveryOrganizationsCreateResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// List all possible organization relationships connected to a
+        /// [Member Session](https://stytch.com/docs/b2b/api/session-object) or Intermediate Session.
+        /// 
+        /// When a Member Session is passed in, relationships with a type of `active_member`, `pending_member`, or
+        /// `invited_member`
+        /// will be returned, and any membership can be assumed by calling the
+        /// [Exchange Session](https://stytch.com/docs/b2b/api/exchange-session) endpoint.
+        /// 
+        /// When an Intermediate Session is passed in, all relationship types - `active_member`, `pending_member`,
+        /// `invited_member`, 
+        /// and `eligible_to_join_by_email_domain` - will be returned, 
+        /// and any membership can be assumed by calling the
+        /// [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) endpoint. 
+        /// 
+        /// This endpoint requires either an `intermediate_session_token`, `session_jwt` or `session_token` be
+        /// included in the request.
+        /// It will return an error if multiple are present.
+        /// 
+        /// This operation does not consume the Intermediate Session or Session Token passed in.
+        /// </summary>
+        public async Task<B2BDiscoveryOrganizationsListResponse> List(
+            B2BDiscoveryOrganizationsListRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/discovery/organizations", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BDiscoveryOrganizationsListResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+
     }
-
-
-
-
-
-
-
-    /// <summary>
-    /// If an end user does not want to join any already-existing Organization, or has no possible Organizations
-    /// to join, this endpoint can be used to create a new
-    /// [Organization](https://stytch.com/docs/b2b/api/organization-object) and
-    /// [Member](https://stytch.com/docs/b2b/api/member-object).
-    /// 
-    /// This operation consumes the Intermediate Session.
-    /// 
-    /// This endpoint will also create an initial Member Session for the newly created Member.
-    /// 
-    /// The Member created by this endpoint will automatically be granted the `stytch_admin` Role. See the 
-    /// [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for more details on this Role.
-    /// 
-    /// If the new Organization is created with a `mfa_policy` of `REQUIRED_FOR_ALL`, the newly created Member
-    /// will need to complete an MFA step to log in to the Organization.
-    /// The `intermediate_session_token` will not be consumed and instead will be returned in the response.
-    /// The `intermediate_session_token` can be passed into the
-    /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
-    /// MFA step and acquire a full member session.
-    /// The `intermediate_session_token` can also be used with the
-    /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
-    /// or the
-    /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to join a different Organization or create a new one.
-    /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
-    /// </summary>
-    public async Task<B2BDiscoveryOrganizationsCreateResponse> Create(
-        B2BDiscoveryOrganizationsCreateRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/discovery/organizations/create", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BDiscoveryOrganizationsCreateResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// List all possible organization relationships connected to a
-    /// [Member Session](https://stytch.com/docs/b2b/api/session-object) or Intermediate Session.
-    /// 
-    /// When a Member Session is passed in, relationships with a type of `active_member`, `pending_member`, or
-    /// `invited_member`
-    /// will be returned, and any membership can be assumed by calling the
-    /// [Exchange Session](https://stytch.com/docs/b2b/api/exchange-session) endpoint.
-    /// 
-    /// When an Intermediate Session is passed in, all relationship types - `active_member`, `pending_member`,
-    /// `invited_member`, 
-    /// and `eligible_to_join_by_email_domain` - will be returned, 
-    /// and any membership can be assumed by calling the
-    /// [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) endpoint. 
-    /// 
-    /// This endpoint requires either an `intermediate_session_token`, `session_jwt` or `session_token` be
-    /// included in the request.
-    /// It will return an error if multiple are present.
-    /// 
-    /// This operation does not consume the Intermediate Session or Session Token passed in.
-    /// </summary>
-    public async Task<B2BDiscoveryOrganizationsListResponse> List(
-        B2BDiscoveryOrganizationsListRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/discovery/organizations", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BDiscoveryOrganizationsListResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-
-  }
 
 }
 

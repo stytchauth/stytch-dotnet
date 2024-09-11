@@ -8,274 +8,292 @@ using System.Runtime.Serialization;
 
 namespace Stytch.net.Models.Consumer
 {
-public class Address {
-      [JsonProperty("formatted")]
-      public required string Formatted { get; set; }
-      [JsonProperty("street_address")]
-      public required string StreetAddress { get; set; }
-      [JsonProperty("locality")]
-      public required string Locality { get; set; }
-      [JsonProperty("region")]
-      public required string Region { get; set; }
-      [JsonProperty("postal_code")]
-      public required string PostalCode { get; set; }
-      [JsonProperty("country")]
-      public required string Country { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class Address
+    {
+        [JsonProperty("formatted")]
+        public required string Formatted { get; set; }
+        [JsonProperty("street_address")]
+        public required string StreetAddress { get; set; }
+        [JsonProperty("locality")]
+        public required string Locality { get; set; }
+        [JsonProperty("region")]
+        public required string Region { get; set; }
+        [JsonProperty("postal_code")]
+        public required string PostalCode { get; set; }
+        [JsonProperty("country")]
+        public required string Country { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class B2BSCIMEmail {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class B2BSCIMEmail
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class B2BSCIMName {
-      [JsonProperty("formatted")]
-      public required string Formatted { get; set; }
-      [JsonProperty("family_name")]
-      public required string FamilyName { get; set; }
-      [JsonProperty("given_name")]
-      public required string GivenName { get; set; }
-      [JsonProperty("middle_name")]
-      public required string MiddleName { get; set; }
-      [JsonProperty("honorific_prefix")]
-      public required string HonorificPrefix { get; set; }
-      [JsonProperty("honorific_suffix")]
-      public required string HonorificSuffix { get; set; }
+    public class B2BSCIMName
+    {
+        [JsonProperty("formatted")]
+        public required string Formatted { get; set; }
+        [JsonProperty("family_name")]
+        public required string FamilyName { get; set; }
+        [JsonProperty("given_name")]
+        public required string GivenName { get; set; }
+        [JsonProperty("middle_name")]
+        public required string MiddleName { get; set; }
+        [JsonProperty("honorific_prefix")]
+        public required string HonorificPrefix { get; set; }
+        [JsonProperty("honorific_suffix")]
+        public required string HonorificSuffix { get; set; }
     }
-public class B2BSCIMPhoneNumber {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class B2BSCIMPhoneNumber
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class B2BSCIMX509Certificate {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class B2BSCIMX509Certificate
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class EnterpriseExtension {
-      [JsonProperty("employee_number")]
-      public required string EmployeeNumber { get; set; }
-      [JsonProperty("cost_center")]
-      public required string CostCenter { get; set; }
-      [JsonProperty("division")]
-      public required string Division { get; set; }
-      [JsonProperty("department")]
-      public required string Department { get; set; }
-      [JsonProperty("organization")]
-      public required string Organization { get; set; }
-      [JsonProperty("manager")]
-      public Manager? Manager { get; set; }
+    public class EnterpriseExtension
+    {
+        [JsonProperty("employee_number")]
+        public required string EmployeeNumber { get; set; }
+        [JsonProperty("cost_center")]
+        public required string CostCenter { get; set; }
+        [JsonProperty("division")]
+        public required string Division { get; set; }
+        [JsonProperty("department")]
+        public required string Department { get; set; }
+        [JsonProperty("organization")]
+        public required string Organization { get; set; }
+        [JsonProperty("manager")]
+        public Manager? Manager { get; set; }
     }
-public class Entitlement {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class Entitlement
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class Group {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("display")]
-      public required string Display { get; set; }
+    public class Group
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("display")]
+        public required string Display { get; set; }
     }
-public class IMs {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class IMs
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class Manager {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("ref")]
-      public required string Ref { get; set; }
-      [JsonProperty("display_name")]
-      public required string DisplayName { get; set; }
+    public class Manager
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("ref")]
+        public required string Ref { get; set; }
+        [JsonProperty("display_name")]
+        public required string DisplayName { get; set; }
     }
-public class Photo {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class Photo
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class Role {
-      [JsonProperty("value")]
-      public required string Value { get; set; }
-      [JsonProperty("type")]
-      public required string Type { get; set; }
-      [JsonProperty("primary")]
-      public required bool Primary { get; set; }
+    public class Role
+    {
+        [JsonProperty("value")]
+        public required string Value { get; set; }
+        [JsonProperty("type")]
+        public required string Type { get; set; }
+        [JsonProperty("primary")]
+        public required bool Primary { get; set; }
     }
-public class SCIMAttributes {
-      [JsonProperty("user_name")]
-      public required string UserName { get; set; }
-      [JsonProperty("id")]
-      public required string Id { get; set; }
-      [JsonProperty("external_id")]
-      public required string ExternalId { get; set; }
-      [JsonProperty("active")]
-      public required bool Active { get; set; }
-      [JsonProperty("groups")]
-      public required Group Groups { get; set; }
-      [JsonProperty("display_name")]
-      public required string DisplayName { get; set; }
-      [JsonProperty("nick_name")]
-      public required string NickName { get; set; }
-      [JsonProperty("profile_url")]
-      public required string ProfileURL { get; set; }
-      [JsonProperty("user_type")]
-      public required string UserType { get; set; }
-      [JsonProperty("title")]
-      public required string Title { get; set; }
-      [JsonProperty("preferred_language")]
-      public required string PreferredLanguage { get; set; }
-      [JsonProperty("locale")]
-      public required string Locale { get; set; }
-      [JsonProperty("timezone")]
-      public required string Timezone { get; set; }
-      [JsonProperty("emails")]
-      public required B2BSCIMEmail Emails { get; set; }
-      [JsonProperty("phone_numbers")]
-      public required B2BSCIMPhoneNumber PhoneNumbers { get; set; }
-      [JsonProperty("addresses")]
-      public required Address Addresses { get; set; }
-      [JsonProperty("ims")]
-      public required IMs Ims { get; set; }
-      [JsonProperty("photos")]
-      public required Photo Photos { get; set; }
-      [JsonProperty("entitlements")]
-      public required Entitlement Entitlements { get; set; }
-      [JsonProperty("roles")]
-      public required Role Roles { get; set; }
-      [JsonProperty("x509certificates")]
-      public required B2BSCIMX509Certificate X509Certificates { get; set; }
-      [JsonProperty("name")]
-      public B2BSCIMName? Name { get; set; }
-      [JsonProperty("enterprise_extension")]
-      public EnterpriseExtension? EnterpriseExtension { get; set; }
+    public class SCIMAttributes
+    {
+        [JsonProperty("user_name")]
+        public required string UserName { get; set; }
+        [JsonProperty("id")]
+        public required string Id { get; set; }
+        [JsonProperty("external_id")]
+        public required string ExternalId { get; set; }
+        [JsonProperty("active")]
+        public required bool Active { get; set; }
+        [JsonProperty("groups")]
+        public required Group Groups { get; set; }
+        [JsonProperty("display_name")]
+        public required string DisplayName { get; set; }
+        [JsonProperty("nick_name")]
+        public required string NickName { get; set; }
+        [JsonProperty("profile_url")]
+        public required string ProfileURL { get; set; }
+        [JsonProperty("user_type")]
+        public required string UserType { get; set; }
+        [JsonProperty("title")]
+        public required string Title { get; set; }
+        [JsonProperty("preferred_language")]
+        public required string PreferredLanguage { get; set; }
+        [JsonProperty("locale")]
+        public required string Locale { get; set; }
+        [JsonProperty("timezone")]
+        public required string Timezone { get; set; }
+        [JsonProperty("emails")]
+        public required B2BSCIMEmail Emails { get; set; }
+        [JsonProperty("phone_numbers")]
+        public required B2BSCIMPhoneNumber PhoneNumbers { get; set; }
+        [JsonProperty("addresses")]
+        public required Address Addresses { get; set; }
+        [JsonProperty("ims")]
+        public required IMs Ims { get; set; }
+        [JsonProperty("photos")]
+        public required Photo Photos { get; set; }
+        [JsonProperty("entitlements")]
+        public required Entitlement Entitlements { get; set; }
+        [JsonProperty("roles")]
+        public required Role Roles { get; set; }
+        [JsonProperty("x509certificates")]
+        public required B2BSCIMX509Certificate X509Certificates { get; set; }
+        [JsonProperty("name")]
+        public B2BSCIMName? Name { get; set; }
+        [JsonProperty("enterprise_extension")]
+        public EnterpriseExtension? EnterpriseExtension { get; set; }
     }
-public class SCIMConnection {
-      [JsonProperty("organization_id")]
-      public required string OrganizationId { get; set; }
-      [JsonProperty("connection_id")]
-      public required string ConnectionId { get; set; }
-      [JsonProperty("status")]
-      public required string Status { get; set; }
-      [JsonProperty("display_name")]
-      public required string DisplayName { get; set; }
-      [JsonProperty("identity_provider")]
-      public required string IdentityProvider { get; set; }
-      [JsonProperty("base_url")]
-      public required string BaseURL { get; set; }
-      [JsonProperty("bearer_token_last_four")]
-      public required string BearerTokenLastFour { get; set; }
-      [JsonProperty("scim_group_implicit_role_assignments")]
-      public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
-      [JsonProperty("next_bearer_token_last_four")]
-      public required string NextBearerTokenLastFour { get; set; }
-      [JsonProperty("bearer_token_expires_at")]
-      public string? BearerTokenExpiresAt { get; set; }
-      [JsonProperty("next_bearer_token_expires_at")]
-      public string? NextBearerTokenExpiresAt { get; set; }
+    public class SCIMConnection
+    {
+        [JsonProperty("organization_id")]
+        public required string OrganizationId { get; set; }
+        [JsonProperty("connection_id")]
+        public required string ConnectionId { get; set; }
+        [JsonProperty("status")]
+        public required string Status { get; set; }
+        [JsonProperty("display_name")]
+        public required string DisplayName { get; set; }
+        [JsonProperty("identity_provider")]
+        public required string IdentityProvider { get; set; }
+        [JsonProperty("base_url")]
+        public required string BaseURL { get; set; }
+        [JsonProperty("bearer_token_last_four")]
+        public required string BearerTokenLastFour { get; set; }
+        [JsonProperty("scim_group_implicit_role_assignments")]
+        public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
+        [JsonProperty("next_bearer_token_last_four")]
+        public required string NextBearerTokenLastFour { get; set; }
+        [JsonProperty("bearer_token_expires_at")]
+        public string? BearerTokenExpiresAt { get; set; }
+        [JsonProperty("next_bearer_token_expires_at")]
+        public string? NextBearerTokenExpiresAt { get; set; }
     }
-public class SCIMConnectionWithNextToken {
-      [JsonProperty("organization_id")]
-      public required string OrganizationId { get; set; }
-      [JsonProperty("connection_id")]
-      public required string ConnectionId { get; set; }
-      [JsonProperty("status")]
-      public required string Status { get; set; }
-      [JsonProperty("display_name")]
-      public required string DisplayName { get; set; }
-      [JsonProperty("base_url")]
-      public required string BaseURL { get; set; }
-      [JsonProperty("identity_provider")]
-      public required string IdentityProvider { get; set; }
-      [JsonProperty("bearer_token_last_four")]
-      public required string BearerTokenLastFour { get; set; }
-      [JsonProperty("next_bearer_token")]
-      public required string NextBearerToken { get; set; }
-      [JsonProperty("scim_group_implicit_role_assignments")]
-      public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
-      [JsonProperty("bearer_token_expires_at")]
-      public string? BearerTokenExpiresAt { get; set; }
-      [JsonProperty("next_bearer_token_expires_at")]
-      public string? NextBearerTokenExpiresAt { get; set; }
+    public class SCIMConnectionWithNextToken
+    {
+        [JsonProperty("organization_id")]
+        public required string OrganizationId { get; set; }
+        [JsonProperty("connection_id")]
+        public required string ConnectionId { get; set; }
+        [JsonProperty("status")]
+        public required string Status { get; set; }
+        [JsonProperty("display_name")]
+        public required string DisplayName { get; set; }
+        [JsonProperty("base_url")]
+        public required string BaseURL { get; set; }
+        [JsonProperty("identity_provider")]
+        public required string IdentityProvider { get; set; }
+        [JsonProperty("bearer_token_last_four")]
+        public required string BearerTokenLastFour { get; set; }
+        [JsonProperty("next_bearer_token")]
+        public required string NextBearerToken { get; set; }
+        [JsonProperty("scim_group_implicit_role_assignments")]
+        public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
+        [JsonProperty("bearer_token_expires_at")]
+        public string? BearerTokenExpiresAt { get; set; }
+        [JsonProperty("next_bearer_token_expires_at")]
+        public string? NextBearerTokenExpiresAt { get; set; }
     }
-public class SCIMConnectionWithToken {
-      [JsonProperty("organization_id")]
-      public required string OrganizationId { get; set; }
-      [JsonProperty("connection_id")]
-      public required string ConnectionId { get; set; }
-      [JsonProperty("status")]
-      public required string Status { get; set; }
-      [JsonProperty("display_name")]
-      public required string DisplayName { get; set; }
-      [JsonProperty("identity_provider")]
-      public required string IdentityProvider { get; set; }
-      [JsonProperty("base_url")]
-      public required string BaseURL { get; set; }
-      [JsonProperty("bearer_token")]
-      public required string BearerToken { get; set; }
-      [JsonProperty("scim_group_implicit_role_assignments")]
-      public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
-      [JsonProperty("bearer_token_expires_at")]
-      public string? BearerTokenExpiresAt { get; set; }
+    public class SCIMConnectionWithToken
+    {
+        [JsonProperty("organization_id")]
+        public required string OrganizationId { get; set; }
+        [JsonProperty("connection_id")]
+        public required string ConnectionId { get; set; }
+        [JsonProperty("status")]
+        public required string Status { get; set; }
+        [JsonProperty("display_name")]
+        public required string DisplayName { get; set; }
+        [JsonProperty("identity_provider")]
+        public required string IdentityProvider { get; set; }
+        [JsonProperty("base_url")]
+        public required string BaseURL { get; set; }
+        [JsonProperty("bearer_token")]
+        public required string BearerToken { get; set; }
+        [JsonProperty("scim_group_implicit_role_assignments")]
+        public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
+        [JsonProperty("bearer_token_expires_at")]
+        public string? BearerTokenExpiresAt { get; set; }
     }
-public class SCIMGroup {
-      /// <summary>
-    /// Globally unique UUID that identifies a specific SCIM Group.
-    /// </summary>
-      [JsonProperty("group_id")]
-      public required string GroupId { get; set; }
-      /// <summary>
-    /// The name of the SCIM group.
-    /// </summary>
-      [JsonProperty("group_name")]
-      public required string GroupName { get; set; }
-      /// <summary>
-    /// Globally unique UUID that identifies a specific Organization. The organization_id is critical to perform
-    /// operations on an Organization, so be sure to preserve this value.
-    /// </summary>
-      [JsonProperty("organization_id")]
-      public required string OrganizationId { get; set; }
-      /// <summary>
-    /// The ID of the SCIM connection.
-    /// </summary>
-      [JsonProperty("connection_id")]
-      public required string ConnectionId { get; set; }
+    public class SCIMGroup
+    {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific SCIM Group.
+        /// </summary>
+        [JsonProperty("group_id")]
+        public required string GroupId { get; set; }
+        /// <summary>
+        /// The name of the SCIM group.
+        /// </summary>
+        [JsonProperty("group_name")]
+        public required string GroupName { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The organization_id is critical to perform
+        /// operations on an Organization, so be sure to preserve this value.
+        /// </summary>
+        [JsonProperty("organization_id")]
+        public required string OrganizationId { get; set; }
+        /// <summary>
+        /// The ID of the SCIM connection.
+        /// </summary>
+        [JsonProperty("connection_id")]
+        public required string ConnectionId { get; set; }
     }
-public class SCIMGroupImplicitRoleAssignments {
-      /// <summary>
-    /// The ID of the role.
-    /// </summary>
-      [JsonProperty("role_id")]
-      public required string RoleId { get; set; }
-      /// <summary>
-    /// The ID of the group.
-    /// </summary>
-      [JsonProperty("group_id")]
-      public required string GroupId { get; set; }
-      [JsonProperty("group_name")]
-      public required string GroupName { get; set; }
+    public class SCIMGroupImplicitRoleAssignments
+    {
+        /// <summary>
+        /// The ID of the role.
+        /// </summary>
+        [JsonProperty("role_id")]
+        public required string RoleId { get; set; }
+        /// <summary>
+        /// The ID of the group.
+        /// </summary>
+        [JsonProperty("group_id")]
+        public required string GroupId { get; set; }
+        [JsonProperty("group_name")]
+        public required string GroupName { get; set; }
     }
 
 }

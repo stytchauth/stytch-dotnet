@@ -11,26 +11,26 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class SCIM
-  {
-    private readonly HttpClient _httpClient;
-    public readonly SCIMConnection Connection;
-    public SCIM(HttpClient client)
+    public class SCIM
     {
-      _httpClient = client;
-        Connection = new SCIMConnection(_httpClient);
+        private readonly HttpClient _httpClient;
+        public readonly SCIMConnection Connection;
+        public SCIM(HttpClient client)
+        {
+            _httpClient = client;
+            Connection = new SCIMConnection(_httpClient);
+        }
+
+
+
+
+
+
+
+
     }
-
-
-
-
-
-
-
-
-  }
 
 }
 

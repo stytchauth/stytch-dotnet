@@ -11,79 +11,79 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class PasswordsExistingPassword
-  {
-    private readonly HttpClient _httpClient;
-    public PasswordsExistingPassword(HttpClient client)
+    public class PasswordsExistingPassword
     {
-      _httpClient = client;
-    }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Reset the member’s password using their existing password.
-    /// 
-    /// This endpoint adapts to your Project's password strength configuration.
-    /// If you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your
-    /// passwords are considered valid
-    /// if the strength score is >= 3. If you're using
-    /// [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are
-    /// considered valid if they meet the requirements that you've set with Stytch.
-    /// You may update your password strength configuration in the
-    /// [stytch dashboard](https://stytch.com/dashboard/password-strength-config).
-    /// 
-    /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-    /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
-    /// The `intermediate_session_token` can be passed into the
-    /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
-    /// MFA step and acquire a full member session.
-    /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
-    /// 
-    /// If a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an
-    /// MFA step.
-    /// 
-    /// Note that a successful password reset via an existing password will revoke all active sessions for the
-    /// `member_id`.
-    /// </summary>
-    public async Task<B2BPasswordsExistingPasswordResetResponse> Reset(
-        B2BPasswordsExistingPasswordResetRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/passwords/existing_password/reset", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
+        private readonly HttpClient _httpClient;
+        public PasswordsExistingPassword(HttpClient client)
         {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BPasswordsExistingPasswordResetResponse>(responseBody);
+            _httpClient = client;
         }
-        else
+
+
+
+
+
+
+
+        /// <summary>
+        /// Reset the member’s password using their existing password.
+        /// 
+        /// This endpoint adapts to your Project's password strength configuration.
+        /// If you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your
+        /// passwords are considered valid
+        /// if the strength score is >= 3. If you're using
+        /// [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are
+        /// considered valid if they meet the requirements that you've set with Stytch.
+        /// You may update your password strength configuration in the
+        /// [stytch dashboard](https://stytch.com/dashboard/password-strength-config).
+        /// 
+        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
+        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+        /// The `intermediate_session_token` can be passed into the
+        /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
+        /// MFA step and acquire a full member session.
+        /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
+        /// 
+        /// If a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an
+        /// MFA step.
+        /// 
+        /// Note that a successful password reset via an existing password will revoke all active sessions for the
+        /// `member_id`.
+        /// </summary>
+        public async Task<B2BPasswordsExistingPasswordResetResponse> Reset(
+            B2BPasswordsExistingPasswordResetRequest request)
         {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
 
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/passwords/existing_password/reset", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BPasswordsExistingPasswordResetResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
         }
-    }
 
-  }
+    }
 
 }
 

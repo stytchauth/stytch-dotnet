@@ -11,115 +11,115 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class SSOOIDC
-  {
-    private readonly HttpClient _httpClient;
-    public SSOOIDC(HttpClient client)
+    public class SSOOIDC
     {
-      _httpClient = client;
+        private readonly HttpClient _httpClient;
+        public SSOOIDC(HttpClient client)
+        {
+            _httpClient = client;
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// Create a new OIDC Connection.
+        /// </summary>
+        public async Task<B2BSSOOIDCCreateConnectionResponse> CreateConnection(
+            B2BSSOOIDCCreateConnectionRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/sso/oidc/${data.organization_id}", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BSSOOIDCCreateConnectionResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Updates an existing OIDC connection.
+        /// 
+        /// When the value of `issuer` changes, Stytch will attempt to retrieve the
+        /// [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata)
+        /// document found at `$/.well-known/openid-configuration`.
+        /// If the metadata document can be retrieved successfully, Stytch will use it to infer the values of
+        /// `authorization_url`, `token_url`, `jwks_url`, and `userinfo_url`.
+        /// The `client_id` and `client_secret` values cannot be inferred from the metadata document, and *must* be
+        /// passed in explicitly.
+        /// 
+        /// If the metadata document cannot be retrieved, Stytch will still update the connection using values from
+        /// the request body.
+        /// 
+        /// If the metadata document can be retrieved, and values are passed in the request body, the explicit
+        /// values passed in from the request body will take precedence over the values inferred from the metadata
+        /// document. 
+        /// 
+        /// Note that a newly created connection will not become active until all of the following fields are
+        /// provided:
+        /// * `issuer`
+        /// * `client_id`
+        /// * `client_secret`
+        /// * `authorization_url`
+        /// * `token_url`
+        /// * `userinfo_url`
+        /// * `jwks_url`
+        /// </summary>
+        public async Task<B2BSSOOIDCUpdateConnectionResponse> UpdateConnection(
+            B2BSSOOIDCUpdateConnectionRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/sso/oidc/${data.organization_id}/connections/${data.connection_id}", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BSSOOIDCUpdateConnectionResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+
     }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Create a new OIDC Connection.
-    /// </summary>
-    public async Task<B2BSSOOIDCCreateConnectionResponse> CreateConnection(
-        B2BSSOOIDCCreateConnectionRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/sso/oidc/${data.organization_id}", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BSSOOIDCCreateConnectionResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Updates an existing OIDC connection.
-    /// 
-    /// When the value of `issuer` changes, Stytch will attempt to retrieve the
-    /// [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata)
-    /// document found at `$/.well-known/openid-configuration`.
-    /// If the metadata document can be retrieved successfully, Stytch will use it to infer the values of
-    /// `authorization_url`, `token_url`, `jwks_url`, and `userinfo_url`.
-    /// The `client_id` and `client_secret` values cannot be inferred from the metadata document, and *must* be
-    /// passed in explicitly.
-    /// 
-    /// If the metadata document cannot be retrieved, Stytch will still update the connection using values from
-    /// the request body.
-    /// 
-    /// If the metadata document can be retrieved, and values are passed in the request body, the explicit
-    /// values passed in from the request body will take precedence over the values inferred from the metadata
-    /// document. 
-    /// 
-    /// Note that a newly created connection will not become active until all of the following fields are
-    /// provided:
-    /// * `issuer`
-    /// * `client_id`
-    /// * `client_secret`
-    /// * `authorization_url`
-    /// * `token_url`
-    /// * `userinfo_url`
-    /// * `jwks_url`
-    /// </summary>
-    public async Task<B2BSSOOIDCUpdateConnectionResponse> UpdateConnection(
-        B2BSSOOIDCUpdateConnectionRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/sso/oidc/${data.organization_id}/connections/${data.connection_id}", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BSSOOIDCUpdateConnectionResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-
-  }
 
 }
 

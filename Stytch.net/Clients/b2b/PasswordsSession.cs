@@ -11,62 +11,62 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class PasswordsSessions
-  {
-    private readonly HttpClient _httpClient;
-    public PasswordsSessions(HttpClient client)
+    public class PasswordsSessions
     {
-      _httpClient = client;
-    }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Reset the Member's password using their existing session. The endpoint will error if the session does
-    /// not contain an authentication factor that has been issued within the last 5 minutes. Either
-    /// `session_token` or `session_jwt` should be provided.
-    /// 
-    /// Note that a successful password reset via an existing session will revoke all active sessions for the
-    /// `member_id`, except for the one used during the reset flow.
-    /// </summary>
-    public async Task<B2BPasswordsSessionResetResponse> Reset(
-        B2BPasswordsSessionResetRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/passwords/session/reset", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
+        private readonly HttpClient _httpClient;
+        public PasswordsSessions(HttpClient client)
         {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BPasswordsSessionResetResponse>(responseBody);
+            _httpClient = client;
         }
-        else
+
+
+
+
+
+
+
+        /// <summary>
+        /// Reset the Member's password using their existing session. The endpoint will error if the session does
+        /// not contain an authentication factor that has been issued within the last 5 minutes. Either
+        /// `session_token` or `session_jwt` should be provided.
+        /// 
+        /// Note that a successful password reset via an existing session will revoke all active sessions for the
+        /// `member_id`, except for the one used during the reset flow.
+        /// </summary>
+        public async Task<B2BPasswordsSessionResetResponse> Reset(
+            B2BPasswordsSessionResetRequest request)
         {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
 
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/passwords/session/reset", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BPasswordsSessionResetResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
         }
-    }
 
-  }
+    }
 
 }
 

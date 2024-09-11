@@ -15,7 +15,7 @@ namespace Stytch.net.Clients
         public string? Environment { get; set; } // Optional property
         public int Timeout { get; set; } = 10 * 60 * 1000; // Default timeout (10 minutes)
     }
-    
+
     public class BaseClient
     {
         protected readonly HttpClient _httpClient;
@@ -23,7 +23,7 @@ namespace Stytch.net.Clients
 
         public BaseClient(ClientConfig config)
         {
-            
+
             if (string.IsNullOrEmpty(config.Environment))
             {
                 if (config.ProjectId.StartsWith("project-live-"))
@@ -35,7 +35,7 @@ namespace Stytch.net.Clients
                     config.Environment = "https://test.stytch.com";
                 }
             }
-            
+
             _httpClient = new HttpClient { BaseAddress = new Uri(config.Environment) };
 
             var authValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{config.ProjectId}:{config.ProjectSecret}"));

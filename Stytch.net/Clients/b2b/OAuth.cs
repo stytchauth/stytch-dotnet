@@ -11,80 +11,80 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class OAuth
-  {
-    private readonly HttpClient _httpClient;
-    public readonly OAuthDiscovery Discovery;
-    public OAuth(HttpClient client)
+    public class OAuth
     {
-      _httpClient = client;
-        Discovery = new OAuthDiscovery(_httpClient);
-    }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Authenticate a Member given a `token`. This endpoint verifies that the member completed the OAuth flow
-    /// by verifying that the token is valid and hasn't expired.  Provide the `session_duration_minutes`
-    /// parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not
-    /// specified, a Stytch session will be created with a 60 minute duration.
-    /// 
-    /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-    /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
-    /// The `intermediate_session_token` can be passed into the
-    /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
-    /// MFA step and acquire a full member session.
-    /// The `intermediate_session_token` can also be used with the
-    /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
-    /// or the
-    /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to join a different Organization or create a new one.
-    /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
-    /// 
-    /// If a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an
-    /// MFA step.
-    /// 
-    /// We’re actively accepting requests for new OAuth providers! Please [email us](mailto:support@stytch.com)
-    /// or [post in our community](https://stytch.com/docs/b2b/resources) if you are looking for an OAuth
-    /// provider that is not currently supported.
-    /// </summary>
-    public async Task<B2BOAuthAuthenticateResponse> Authenticate(
-        B2BOAuthAuthenticateRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/oauth/authenticate", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
+        private readonly HttpClient _httpClient;
+        public readonly OAuthDiscovery Discovery;
+        public OAuth(HttpClient client)
         {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BOAuthAuthenticateResponse>(responseBody);
+            _httpClient = client;
+            Discovery = new OAuthDiscovery(_httpClient);
         }
-        else
+
+
+
+
+
+
+
+        /// <summary>
+        /// Authenticate a Member given a `token`. This endpoint verifies that the member completed the OAuth flow
+        /// by verifying that the token is valid and hasn't expired.  Provide the `session_duration_minutes`
+        /// parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not
+        /// specified, a Stytch session will be created with a 60 minute duration.
+        /// 
+        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
+        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+        /// The `intermediate_session_token` can be passed into the
+        /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
+        /// MFA step and acquire a full member session.
+        /// The `intermediate_session_token` can also be used with the
+        /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
+        /// or the
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to join a different Organization or create a new one.
+        /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
+        /// 
+        /// If a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an
+        /// MFA step.
+        /// 
+        /// We’re actively accepting requests for new OAuth providers! Please [email us](mailto:support@stytch.com)
+        /// or [post in our community](https://stytch.com/docs/b2b/resources) if you are looking for an OAuth
+        /// provider that is not currently supported.
+        /// </summary>
+        public async Task<B2BOAuthAuthenticateResponse> Authenticate(
+            B2BOAuthAuthenticateRequest request)
         {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
 
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/oauth/authenticate", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BOAuthAuthenticateResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
         }
-    }
 
-  }
+    }
 
 }
 

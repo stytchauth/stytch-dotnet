@@ -11,58 +11,58 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class MagicLinksDiscovery
-  {
-    private readonly HttpClient _httpClient;
-    public MagicLinksDiscovery(HttpClient client)
+    public class MagicLinksDiscovery
     {
-      _httpClient = client;
-    }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Authenticates the Discovery Magic Link token and exchanges it for an Intermediate Session Token.
-    /// Intermediate Session Tokens can be used for various Discovery login flows and are valid for 10 minutes.
-    /// </summary>
-    public async Task<B2BMagicLinksDiscoveryAuthenticateResponse> Authenticate(
-        B2BMagicLinksDiscoveryAuthenticateRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/magic_links/discovery/authenticate", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
+        private readonly HttpClient _httpClient;
+        public MagicLinksDiscovery(HttpClient client)
         {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BMagicLinksDiscoveryAuthenticateResponse>(responseBody);
+            _httpClient = client;
         }
-        else
+
+
+
+
+
+
+
+        /// <summary>
+        /// Authenticates the Discovery Magic Link token and exchanges it for an Intermediate Session Token.
+        /// Intermediate Session Tokens can be used for various Discovery login flows and are valid for 10 minutes.
+        /// </summary>
+        public async Task<B2BMagicLinksDiscoveryAuthenticateResponse> Authenticate(
+            B2BMagicLinksDiscoveryAuthenticateRequest request)
         {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
 
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/magic_links/discovery/authenticate", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BMagicLinksDiscoveryAuthenticateResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
         }
-    }
 
-  }
+    }
 
 }
 

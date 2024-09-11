@@ -11,100 +11,100 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class MagicLinksEmail
-  {
-    private readonly HttpClient _httpClient;
-    public readonly MagicLinksEmailDiscovery Discovery;
-    public MagicLinksEmail(HttpClient client)
+    public class MagicLinksEmail
     {
-      _httpClient = client;
-        Discovery = new MagicLinksEmailDiscovery(_httpClient);
+        private readonly HttpClient _httpClient;
+        public readonly MagicLinksEmailDiscovery Discovery;
+        public MagicLinksEmail(HttpClient client)
+        {
+            _httpClient = client;
+            Discovery = new MagicLinksEmailDiscovery(_httpClient);
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// Send either a login or signup magic link to a Member. A new, pending, or invited Member will receive a
+        /// signup Email Magic Link. Members will have a `pending` status until they successfully authenticate. An
+        /// active Member will receive a login Email Magic Link.
+        /// 
+        /// The magic link is valid for 60 minutes.
+        /// </summary>
+        public async Task<B2BMagicLinksEmailLoginOrSignupResponse> LoginOrSignup(
+            B2BMagicLinksEmailLoginOrSignupRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/magic_links/email/login_or_signup", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BMagicLinksEmailLoginOrSignupResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Send an invite email to a new Member to join an Organization. The Member will be created with an
+        /// `invited` status until they successfully authenticate. Sending invites to `pending` Members will update
+        /// their status to `invited`. Sending invites to already `active` Members will return an error.
+        /// 
+        /// The magic link invite will be valid for 1 week.
+        /// </summary>
+        public async Task<B2BMagicLinksEmailInviteResponse> Invite(
+            B2BMagicLinksEmailInviteRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/magic_links/email/invite", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BMagicLinksEmailInviteResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+
     }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Send either a login or signup magic link to a Member. A new, pending, or invited Member will receive a
-    /// signup Email Magic Link. Members will have a `pending` status until they successfully authenticate. An
-    /// active Member will receive a login Email Magic Link.
-    /// 
-    /// The magic link is valid for 60 minutes.
-    /// </summary>
-    public async Task<B2BMagicLinksEmailLoginOrSignupResponse> LoginOrSignup(
-        B2BMagicLinksEmailLoginOrSignupRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/magic_links/email/login_or_signup", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BMagicLinksEmailLoginOrSignupResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Send an invite email to a new Member to join an Organization. The Member will be created with an
-    /// `invited` status until they successfully authenticate. Sending invites to `pending` Members will update
-    /// their status to `invited`. Sending invites to already `active` Members will return an error.
-    /// 
-    /// The magic link invite will be valid for 1 week.
-    /// </summary>
-    public async Task<B2BMagicLinksEmailInviteResponse> Invite(
-        B2BMagicLinksEmailInviteRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/magic_links/email/invite", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BMagicLinksEmailInviteResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-
-  }
 
 }
 

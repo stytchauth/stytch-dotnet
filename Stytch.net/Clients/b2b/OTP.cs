@@ -11,26 +11,26 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class OTPs
-  {
-    private readonly HttpClient _httpClient;
-    public readonly OTPsSms Sms;
-    public OTPs(HttpClient client)
+    public class OTPs
     {
-      _httpClient = client;
-        Sms = new OTPsSms(_httpClient);
+        private readonly HttpClient _httpClient;
+        public readonly OTPsSms Sms;
+        public OTPs(HttpClient client)
+        {
+            _httpClient = client;
+            Sms = new OTPsSms(_httpClient);
+        }
+
+
+
+
+
+
+
+
     }
-
-
-
-
-
-
-
-
-  }
 
 }
 

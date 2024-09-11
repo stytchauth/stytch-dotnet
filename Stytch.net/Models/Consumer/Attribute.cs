@@ -8,17 +8,18 @@ using System.Runtime.Serialization;
 
 namespace Stytch.net.Models.Consumer
 {
-public class Attributes {
-      /// <summary>
-    /// The IP address of the user.
-    /// </summary>
-      [JsonProperty("ip_address")]
-      public string? IpAddress { get; set; }
-      /// <summary>
-    /// The user agent of the User.
-    /// </summary>
-      [JsonProperty("user_agent")]
-      public string? UserAgent { get; set; }
+    public class Attributes
+    {
+        /// <summary>
+        /// The IP address of the user.
+        /// </summary>
+        [JsonProperty("ip_address")]
+        public string? IpAddress { get; set; }
+        /// <summary>
+        /// The user agent of the User.
+        /// </summary>
+        [JsonProperty("user_agent")]
+        public string? UserAgent { get; set; }
     }
 
 }

@@ -11,125 +11,125 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class RecoveryCodes
-  {
-    private readonly HttpClient _httpClient;
-    public RecoveryCodes(HttpClient client)
+    public class RecoveryCodes
     {
-      _httpClient = client;
+        private readonly HttpClient _httpClient;
+        public RecoveryCodes(HttpClient client)
+        {
+            _httpClient = client;
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// Allows a Member to complete an MFA flow by consuming a recovery code. This consumes the recovery code
+        /// and returns a session token that can be used to authenticate the Member.
+        /// </summary>
+        public async Task<B2BRecoveryCodesRecoverResponse> Recover(
+            B2BRecoveryCodesRecoverRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/recover", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesRecoverResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Returns a Member's full set of active recovery codes.
+        /// </summary>
+        public async Task<B2BRecoveryCodesGetResponse> Get(
+            B2BRecoveryCodesGetRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/${params.organization_id}/${params.member_id}", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesGetResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Rotate a Member's recovery codes. This invalidates all existing recovery codes and generates a new set
+        /// of recovery codes.
+        /// </summary>
+        public async Task<B2BRecoveryCodesRotateResponse> Rotate(
+            B2BRecoveryCodesRotateRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/rotate", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesRotateResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+
     }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Allows a Member to complete an MFA flow by consuming a recovery code. This consumes the recovery code
-    /// and returns a session token that can be used to authenticate the Member.
-    /// </summary>
-    public async Task<B2BRecoveryCodesRecoverResponse> Recover(
-        B2BRecoveryCodesRecoverRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/recover", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BRecoveryCodesRecoverResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Returns a Member's full set of active recovery codes.
-    /// </summary>
-    public async Task<B2BRecoveryCodesGetResponse> Get(
-        B2BRecoveryCodesGetRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/${params.organization_id}/${params.member_id}", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BRecoveryCodesGetResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Rotate a Member's recovery codes. This invalidates all existing recovery codes and generates a new set
-    /// of recovery codes.
-    /// </summary>
-    public async Task<B2BRecoveryCodesRotateResponse> Rotate(
-        B2BRecoveryCodesRotateRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/rotate", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BRecoveryCodesRotateResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-
-  }
 
 }
 

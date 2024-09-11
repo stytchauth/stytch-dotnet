@@ -11,171 +11,171 @@ using System.Text;
 
 
 
-namespace Stytch.net.Clients.b2b
+namespace Stytch.net.Clients.B2B
 {
-  public class SSOSAML
-  {
-    private readonly HttpClient _httpClient;
-    public SSOSAML(HttpClient client)
+    public class SSOSAML
     {
-      _httpClient = client;
+        private readonly HttpClient _httpClient;
+        public SSOSAML(HttpClient client)
+        {
+            _httpClient = client;
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// Create a new SAML Connection.
+        /// </summary>
+        public async Task<B2BSSOSAMLCreateConnectionResponse> CreateConnection(
+            B2BSSOSAMLCreateConnectionRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BSSOSAMLCreateConnectionResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Updates an existing SAML connection.
+        /// 
+        /// Note that a newly created connection will not become active until all of the following are provided:
+        /// * `idp_sso_url`
+        /// * `attribute_mapping`
+        /// * `idp_entity_id`
+        /// * `x509_certificate`
+        /// </summary>
+        public async Task<B2BSSOSAMLUpdateConnectionResponse> UpdateConnection(
+            B2BSSOSAMLUpdateConnectionRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateConnectionResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Used to update an existing SAML connection using an IDP metadata URL.
+        /// 
+        /// A newly created connection will not become active until all the following are provided:
+        /// * `idp_sso_url`
+        /// * `idp_entity_id`
+        /// * `x509_certificate`
+        /// * `attribute_mapping` (must be supplied using [Update SAML Connection](update-saml-connection))
+        /// </summary>
+        public async Task<B2BSSOSAMLUpdateByURLResponse> UpdateByURL(
+            B2BSSOSAMLUpdateByURLRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}/url", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateByURLResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+        /// <summary>
+        /// Delete a SAML verification certificate.
+        /// 
+        /// You may need to do this when rotating certificates from your IdP, since Stytch allows a maximum of 5
+        /// certificates per connection. There must always be at least one certificate per active connection.
+        /// </summary>
+        public async Task<B2BSSOSAMLDeleteVerificationCertificateResponse> DeleteVerificationCertificate(
+            B2BSSOSAMLDeleteVerificationCertificateRequest request)
+        {
+            // Serialize the request model to JSON
+            var jsonBody = JsonConvert.SerializeObject(request);
+
+            // Create the content with the right content type
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            // Send the POST request to the specified URL
+            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}/verification_certificates/${data.certificate_id}", content);
+
+            // Read the response body (even if the response is not successful)
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                // If the response is successful, deserialize and return the response
+                return JsonConvert.DeserializeObject<B2BSSOSAMLDeleteVerificationCertificateResponse>(responseBody);
+            }
+            else
+            {
+                // If the response is not successful, log the error details
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
+
+                // Optionally, throw an exception or return null or an error object
+                throw new HttpRequestException(
+                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+            }
+        }
+
     }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Create a new SAML Connection.
-    /// </summary>
-    public async Task<B2BSSOSAMLCreateConnectionResponse> CreateConnection(
-        B2BSSOSAMLCreateConnectionRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BSSOSAMLCreateConnectionResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Updates an existing SAML connection.
-    /// 
-    /// Note that a newly created connection will not become active until all of the following are provided:
-    /// * `idp_sso_url`
-    /// * `attribute_mapping`
-    /// * `idp_entity_id`
-    /// * `x509_certificate`
-    /// </summary>
-    public async Task<B2BSSOSAMLUpdateConnectionResponse> UpdateConnection(
-        B2BSSOSAMLUpdateConnectionRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateConnectionResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Used to update an existing SAML connection using an IDP metadata URL.
-    /// 
-    /// A newly created connection will not become active until all the following are provided:
-    /// * `idp_sso_url`
-    /// * `idp_entity_id`
-    /// * `x509_certificate`
-    /// * `attribute_mapping` (must be supplied using [Update SAML Connection](update-saml-connection))
-    /// </summary>
-    public async Task<B2BSSOSAMLUpdateByURLResponse> UpdateByURL(
-        B2BSSOSAMLUpdateByURLRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}/url", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateByURLResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-    /// <summary>
-    /// Delete a SAML verification certificate.
-    /// 
-    /// You may need to do this when rotating certificates from your IdP, since Stytch allows a maximum of 5
-    /// certificates per connection. There must always be at least one certificate per active connection.
-    /// </summary>
-    public async Task<B2BSSOSAMLDeleteVerificationCertificateResponse> DeleteVerificationCertificate(
-        B2BSSOSAMLDeleteVerificationCertificateRequest request)
-    {
-        // Serialize the request model to JSON
-        var jsonBody = JsonConvert.SerializeObject(request);
-
-        // Create the content with the right content type
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        // Send the POST request to the specified URL
-        var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}/verification_certificates/${data.certificate_id}", content);
-
-        // Read the response body (even if the response is not successful)
-        var responseBody = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            // If the response is successful, deserialize and return the response
-            return JsonConvert.DeserializeObject<B2BSSOSAMLDeleteVerificationCertificateResponse>(responseBody);
-        }
-        else
-        {
-            // If the response is not successful, log the error details
-            Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
-            // Optionally, throw an exception or return null or an error object
-            throw new HttpRequestException(
-                $"Request failed with status code {response.StatusCode}: {responseBody}");
-        }
-    }
-
-  }
 
 }
 

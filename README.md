@@ -7,9 +7,9 @@
 - [x] Move Magic Links to nested client attribute - Client.magicLinks.email.send
 - [x] Infer Env from project ID
 - [x] Codegen Bonanza
-- [ ] Docstrings
+- [x] Docstrings
 - [ ] Better tests
-- [ ] Run linter/formatter
+- [x] Run linter/formatter
 - [ ] Example App
 - [ ] Add JWT Manual support
 - [ ] Add M2M Manual support
