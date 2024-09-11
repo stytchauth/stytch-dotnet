@@ -3,156 +3,141 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
-
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
 namespace Stytch.net.Models.Consumer
 {
-    public class M2MClient
-    {
-        // The ID of the client.
-        [JsonProperty("client_id")] public required string ClientId { get; set; }
-
-        // A human-readable name for the client.
-        [JsonProperty("client_name")] public required string ClientName { get; set; }
-
-        // A human-readable description for the client.
-        [JsonProperty("client_description")] public required string ClientDescription { get; set; }
-
-        // The status of the client - either `active` or `inactive`.
-        [JsonProperty("status")] public required string Status { get; set; }
-
-        // An array of scopes assigned to the client.
-        [JsonProperty("scopes")] public required string Scopes { get; set; }
-
-        // The last four characters of the client secret.
-        [JsonProperty("client_secret_last_four")]
-        public required string ClientSecretLastFour { get; set; }
-
-        // An arbitrary JSON object for storing application-specific data.
-        [JsonProperty("trusted_metadata")] public object? TrustedMetadata { get; set; }
-
-        // The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
-        [JsonProperty("next_client_secret_last_four")]
-        public string? NextClientSecretLastFour { get; set; }
+public class M2MClient {
+      // The ID of the client.
+      [JsonProperty("client_id")]
+      public required string ClientId { get; set; }
+      // A human-readable name for the client.
+      [JsonProperty("client_name")]
+      public required string ClientName { get; set; }
+      // A human-readable description for the client.
+      [JsonProperty("client_description")]
+      public required string ClientDescription { get; set; }
+      // The status of the client - either `active` or `inactive`.
+      [JsonProperty("status")]
+      public required string Status { get; set; }
+      // An array of scopes assigned to the client.
+      [JsonProperty("scopes")]
+      public required string Scopes { get; set; }
+      // The last four characters of the client secret.
+      [JsonProperty("client_secret_last_four")]
+      public required string ClientSecretLastFour { get; set; }
+      // An arbitrary JSON object for storing application-specific data.
+      [JsonProperty("trusted_metadata")]
+      public object? TrustedMetadata { get; set; }
+      // The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      [JsonProperty("next_client_secret_last_four")]
+      public string? NextClientSecretLastFour { get; set; }
+    }
+public class M2MClientWithClientSecret {
+      // The ID of the client.
+      [JsonProperty("client_id")]
+      public required string ClientId { get; set; }
+      /**
+    * The secret of the client. **Important:** this is the only time you will be able to view the
+    * `client_secret`. Be sure to persist the `client_secret` in a secure location. If the `client_secret` is
+    * lost, you will need to trigger a secret rotation flow to receive another one.
+    */
+      [JsonProperty("client_secret")]
+      public required string ClientSecret { get; set; }
+      // A human-readable name for the client.
+      [JsonProperty("client_name")]
+      public required string ClientName { get; set; }
+      // A human-readable description for the client.
+      [JsonProperty("client_description")]
+      public required string ClientDescription { get; set; }
+      // The status of the client - either `active` or `inactive`.
+      [JsonProperty("status")]
+      public required string Status { get; set; }
+      // An array of scopes assigned to the client.
+      [JsonProperty("scopes")]
+      public required string Scopes { get; set; }
+      // The last four characters of the client secret.
+      [JsonProperty("client_secret_last_four")]
+      public required string ClientSecretLastFour { get; set; }
+      // An arbitrary JSON object for storing application-specific data.
+      [JsonProperty("trusted_metadata")]
+      public object? TrustedMetadata { get; set; }
+      // The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      [JsonProperty("next_client_secret_last_four")]
+      public string? NextClientSecretLastFour { get; set; }
+    }
+public class M2MClientWithNextClientSecret {
+      // The ID of the client.
+      [JsonProperty("client_id")]
+      public required string ClientId { get; set; }
+      /**
+    * The newly created secret that's next in rotation for the client. **Important:** this is the only time
+    * you will be able to view the `next_client_secret`. Be sure to persist the `next_client_secret` in a
+    * secure location. If the `next_client_secret` is lost, you will need to trigger a secret rotation flow to
+    * receive another one.
+    */
+      [JsonProperty("next_client_secret")]
+      public required string NextClientSecret { get; set; }
+      // A human-readable name for the client.
+      [JsonProperty("client_name")]
+      public required string ClientName { get; set; }
+      // A human-readable description for the client.
+      [JsonProperty("client_description")]
+      public required string ClientDescription { get; set; }
+      // The status of the client - either `active` or `inactive`.
+      [JsonProperty("status")]
+      public required string Status { get; set; }
+      // An array of scopes assigned to the client.
+      [JsonProperty("scopes")]
+      public required string Scopes { get; set; }
+      // The last four characters of the client secret.
+      [JsonProperty("client_secret_last_four")]
+      public required string ClientSecretLastFour { get; set; }
+      // An arbitrary JSON object for storing application-specific data.
+      [JsonProperty("trusted_metadata")]
+      public object? TrustedMetadata { get; set; }
+      // The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      [JsonProperty("next_client_secret_last_four")]
+      public string? NextClientSecretLastFour { get; set; }
+    }
+public class M2MResultsMetadata {
+      // The total number of results returned by your search query.
+      [JsonProperty("total")]
+      public required int Total { get; set; }
+      /**
+    * The `next_cursor` string is returned when your search result contains more than one page of results.
+    * This value is passed into your next search call in the `cursor` field.
+    */
+      [JsonProperty("next_cursor")]
+      public string? NextCursor { get; set; }
+    }
+public class M2MSearchQuery {
+      /**
+    * The action to perform on the operands. The accepted value are:
+    * 
+    *   `AND` – all the operand values provided must match.
+    *   
+    *   `OR` – the operator will return any matches to at least one of the operand values you supply.
+    */
+      [JsonProperty("operator")]
+      public required M2MSearchQueryOperator Operator { get; set; }
+      /**
+    * An array of operand objects that contains all of the filters and values to apply to your search search
+    * query.
+    */
+      [JsonProperty("operands")]
+      public required M2MSearchQueryOperand Operands { get; set; }
     }
 
-    public class M2MClientWithClientSecret
+public enum M2MSearchQueryOperator
     {
-        // The ID of the client.
-        [JsonProperty("client_id")] public required string ClientId { get; set; }
-
-        /**
-      * The secret of the client. **Important:** this is the only time you will be able to view the
-      * `client_secret`. Be sure to persist the `client_secret` in a secure location. If the `client_secret` is
-      * lost, you will need to trigger a secret rotation flow to receive another one.
-      */
-        [JsonProperty("client_secret")]
-        public required string ClientSecret { get; set; }
-
-        // A human-readable name for the client.
-        [JsonProperty("client_name")] public required string ClientName { get; set; }
-
-        // A human-readable description for the client.
-        [JsonProperty("client_description")] public required string ClientDescription { get; set; }
-
-        // The status of the client - either `active` or `inactive`.
-        [JsonProperty("status")] public required string Status { get; set; }
-
-        // An array of scopes assigned to the client.
-        [JsonProperty("scopes")] public required string Scopes { get; set; }
-
-        // The last four characters of the client secret.
-        [JsonProperty("client_secret_last_four")]
-        public required string ClientSecretLastFour { get; set; }
-
-        // An arbitrary JSON object for storing application-specific data.
-        [JsonProperty("trusted_metadata")] public object? TrustedMetadata { get; set; }
-
-        // The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
-        [JsonProperty("next_client_secret_last_four")]
-        public string? NextClientSecretLastFour { get; set; }
+      [EnumMember(Value = "OR")]
+      OR,
+      [EnumMember(Value = "AND")]
+      AND,
     }
-
-    public class M2MClientWithNextClientSecret
-    {
-        // The ID of the client.
-        [JsonProperty("client_id")] public required string ClientId { get; set; }
-
-        /**
-      * The newly created secret that's next in rotation for the client. **Important:** this is the only time
-      * you will be able to view the `next_client_secret`. Be sure to persist the `next_client_secret` in a
-      * secure location. If the `next_client_secret` is lost, you will need to trigger a secret rotation flow to
-      * receive another one.
-      */
-        [JsonProperty("next_client_secret")]
-        public required string NextClientSecret { get; set; }
-
-        // A human-readable name for the client.
-        [JsonProperty("client_name")] public required string ClientName { get; set; }
-
-        // A human-readable description for the client.
-        [JsonProperty("client_description")] public required string ClientDescription { get; set; }
-
-        // The status of the client - either `active` or `inactive`.
-        [JsonProperty("status")] public required string Status { get; set; }
-
-        // An array of scopes assigned to the client.
-        [JsonProperty("scopes")] public required string Scopes { get; set; }
-
-        // The last four characters of the client secret.
-        [JsonProperty("client_secret_last_four")]
-        public required string ClientSecretLastFour { get; set; }
-
-        // An arbitrary JSON object for storing application-specific data.
-        [JsonProperty("trusted_metadata")] public object? TrustedMetadata { get; set; }
-
-        // The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
-        [JsonProperty("next_client_secret_last_four")]
-        public string? NextClientSecretLastFour { get; set; }
-    }
-
-    public class M2MResultsMetadata
-    {
-        // The total number of results returned by your search query.
-        [JsonProperty("total")] public required int Total { get; set; }
-
-        /**
-      * The `next_cursor` string is returned when your search result contains more than one page of results.
-      * This value is passed into your next search call in the `cursor` field.
-      */
-        [JsonProperty("next_cursor")]
-        public string? NextCursor { get; set; }
-    }
-
-    public class M2MSearchQuery
-    {
-        /**
-      * The action to perform on the operands. The accepted value are:
-      *
-      *   `AND` – all the operand values provided must match.
-      *
-      *   `OR` – the operator will return any matches to at least one of the operand values you supply.
-      */
-        [JsonProperty("operator")]
-        public required M2MSearchQueryOperator Operator { get; set; }
-
-        /**
-      * An array of operand objects that contains all of the filters and values to apply to your search search
-      * query.
-      */
-        [JsonProperty("operands")]
-        public required M2MSearchQueryOperand Operands { get; set; }
-    }
-
-    public enum M2MSearchQueryOperator
-    {
-        [EnumMember(Value = "OR")] OR,
-        [EnumMember(Value = "AND")] AND,
-    }
-    
-    // MANUAL(M2MSearchQueryOperand)(TYPES)
+// MANUAL(M2MSearchQueryOperand)(TYPES)
     public abstract class M2MSearchQueryOperand
     {
         public abstract string FilterName { get; }
@@ -173,5 +158,6 @@ namespace Stytch.net.Models.Consumer
     {
         public override string FilterName => "scopes";
     }
-    // ENDMANUAL(M2MSearchQueryOperand)
+// ENDMANUAL(M2MSearchQueryOperand)
+
 }

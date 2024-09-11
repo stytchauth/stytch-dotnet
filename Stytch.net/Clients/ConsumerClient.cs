@@ -34,4 +34,5 @@ namespace Stytch.net.Clients
       WebAuthn = new WebAuthn(_httpClient);
     }
   }
+
 }

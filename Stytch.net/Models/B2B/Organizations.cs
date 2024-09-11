@@ -1113,4 +1113,11 @@ public enum SearchQueryOperator
       [EnumMember(Value = "AND")]
       AND,
     }
+// MANUAL(SearchQueryOperand)(TYPES)
+  public abstract class SearchQueryOperand
+  {
+    public abstract string FilterName { get; }
+  }
+// ENDMANUAL(SearchQueryOperand)
+
 }

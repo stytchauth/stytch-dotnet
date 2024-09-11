@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Consumer.Organization>;
 
 namespace Stytch.net.Models.Consumer
 {
@@ -684,5 +685,9 @@ public class B2BOrganizationsMembersUpdateRequestOptions {
       [JsonProperty("status_code")]
       public required int StatusCode { get; set; }
     }
+
+// MANUAL(OrganizationsEntry)(TYPES)
+// ADDIMPORT: using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Consumer.Organization>;
+// ENDMANUAL(OrganizationsEntry)
 
 }

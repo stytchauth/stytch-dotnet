@@ -165,4 +165,14 @@ public class PolicyRolePermission {
       public Policy? Policy { get; set; }
     }
 
+// MANUAL(Authorization)(TYPES)
+public class Authorization
+{
+  // A secret token for a given Stytch Session.
+  public string? SessionToken { get; set; }
+  // The JSON Web Token (JWT) for a given Stytch Session.
+  public string? SessionJwt { get; set; }
+}
+// ENDMANUAL(Authorization)
+
 }

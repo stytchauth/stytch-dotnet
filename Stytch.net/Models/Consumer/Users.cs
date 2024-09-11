@@ -806,4 +806,62 @@ public enum SearchUsersQueryOperator
       [EnumMember(Value = "AND")]
       AND,
     }
+// MANUAL(SearchUsersQueryOperand)(TYPES)
+
+    public abstract class SearchUsersQueryOperand
+    {
+        public abstract string FilterName { get; }
+    }
+
+    public class CreatedAtGreaterThanFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "created_at_greater_than";
+        public string FilterValue { get; set; } // Timestamp in RFC 3339 format
+    }
+
+    public class CreatedAtLessThanFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "created_at_less_than";
+        public string FilterValue { get; set; } // Timestamp in RFC 3339 format
+    }
+
+    public class CreatedAtBetweenFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "created_at_between";
+        public string GreaterThan { get; set; } // Timestamp in RFC 3339 format
+        public string LessThan { get; set; } // Timestamp in RFC 3339 format
+    }
+
+    public class StatusFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "status";
+        public string FilterValue { get; set; } // "active" or "pending"
+    }
+
+    public class OauthProviderFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "oauth_provider";
+        public List<string> FilterValue { get; set; }
+    }
+
+    public class UserIdFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "user_id";
+        public List<string> FilterValue { get; set; }
+    }
+    
+    public class PhoneNumberFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "phone_number";
+        public List<string> FilterValue { get; set; }
+    }
+
+    public class EmailVerifiedFilter : SearchUsersQueryOperand
+    {
+        public override string FilterName => "email_verified";
+        public bool FilterValue { get; set; }
+    }
+
+// ENDMANUAL(SearchUsersQueryOperand)
+
 }
