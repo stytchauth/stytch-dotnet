@@ -21,40 +21,29 @@ namespace Stytch.net.Clients.B2B
             _httpClient = client;
         }
 
-
-
-
-
-
-
         /// <summary>
         /// Create a new SAML Connection.
         /// </summary>
         public async Task<B2BSSOSAMLCreateConnectionResponse> CreateConnection(
             B2BSSOSAMLCreateConnectionRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder($"/v1/b2b/sso/saml/${request.OrganizationId}");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BSSOSAMLCreateConnectionResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BSSOSAMLCreateConnectionResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
@@ -72,28 +61,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BSSOSAMLUpdateConnectionResponse> UpdateConnection(
             B2BSSOSAMLUpdateConnectionRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Put;
+            var uriBuilder = new UriBuilder($"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateConnectionResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateConnectionResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
@@ -111,28 +95,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BSSOSAMLUpdateByURLResponse> UpdateByURL(
             B2BSSOSAMLUpdateByURLRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Put;
+            var uriBuilder = new UriBuilder($"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}/url");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}/url", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateByURLResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateByURLResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
@@ -147,28 +126,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BSSOSAMLDeleteVerificationCertificateResponse> DeleteVerificationCertificate(
             B2BSSOSAMLDeleteVerificationCertificateRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Delete;
+            var uriBuilder = new UriBuilder($"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}/verification_certificates/${request.CertificateId}");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/sso/saml/${data.organization_id}/connections/${data.connection_id}/verification_certificates/${data.certificate_id}", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BSSOSAMLDeleteVerificationCertificateResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BSSOSAMLDeleteVerificationCertificateResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");

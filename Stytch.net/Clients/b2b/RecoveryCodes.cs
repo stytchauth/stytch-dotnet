@@ -21,12 +21,6 @@ namespace Stytch.net.Clients.B2B
             _httpClient = client;
         }
 
-
-
-
-
-
-
         /// <summary>
         /// Allows a Member to complete an MFA flow by consuming a recovery code. This consumes the recovery code
         /// and returns a session token that can be used to authenticate the Member.
@@ -34,28 +28,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BRecoveryCodesRecoverResponse> Recover(
             B2BRecoveryCodesRecoverRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder($"/v1/b2b/recovery_codes/recover");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/recover", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BRecoveryCodesRecoverResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesRecoverResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
@@ -67,28 +56,22 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BRecoveryCodesGetResponse> Get(
             B2BRecoveryCodesGetRequest request)
         {
-            // Serialize the request model to JSON
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder($"/v1/b2b/recovery_codes/${request.OrganizationId}/${request.MemberId}");
+            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+            uriBuilder.Query = query.ToString();
 
-            // Create the content with the right content type
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/${params.organization_id}/${params.member_id}", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BRecoveryCodesGetResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesGetResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
@@ -101,28 +84,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BRecoveryCodesRotateResponse> Rotate(
             B2BRecoveryCodesRotateRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder($"/v1/b2b/recovery_codes/rotate");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/recovery_codes/rotate", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BRecoveryCodesRotateResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesRotateResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");

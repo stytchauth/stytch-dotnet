@@ -26,12 +26,6 @@ namespace Stytch.net.Clients.B2B
         }
 
 
-
-
-
-
-
-
     }
 
 }

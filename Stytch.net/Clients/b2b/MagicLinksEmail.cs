@@ -23,12 +23,6 @@ namespace Stytch.net.Clients.B2B
             Discovery = new MagicLinksEmailDiscovery(_httpClient);
         }
 
-
-
-
-
-
-
         /// <summary>
         /// Send either a login or signup magic link to a Member. A new, pending, or invited Member will receive a
         /// signup Email Magic Link. Members will have a `pending` status until they successfully authenticate. An
@@ -39,28 +33,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BMagicLinksEmailLoginOrSignupResponse> LoginOrSignup(
             B2BMagicLinksEmailLoginOrSignupRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder($"/v1/b2b/magic_links/email/login_or_signup");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/magic_links/email/login_or_signup", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BMagicLinksEmailLoginOrSignupResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BMagicLinksEmailLoginOrSignupResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
@@ -76,28 +65,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BMagicLinksEmailInviteResponse> Invite(
             B2BMagicLinksEmailInviteRequest request)
         {
-            // Serialize the request model to JSON
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder($"/v1/b2b/magic_links/email/invite");
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
-
-            // Create the content with the right content type
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/magic_links/email/invite", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BMagicLinksEmailInviteResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BMagicLinksEmailInviteResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");

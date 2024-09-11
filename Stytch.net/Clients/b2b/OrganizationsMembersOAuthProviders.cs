@@ -21,12 +21,6 @@ namespace Stytch.net.Clients.B2B
             _httpClient = client;
         }
 
-
-
-
-
-
-
         /// <summary>
         /// Retrieve the saved Google access token and ID token for a member. After a successful OAuth login, Stytch
         /// will save the 
@@ -44,28 +38,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BOrganizationsMembersOAuthProvidersGoogleResponse> Google(
             B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
         {
-            // Serialize the request model to JSON
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder($"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/google");
+            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["include_refresh_token"] = (request.IncludeRefreshToken ?? false).ToString().ToLower();
+            uriBuilder.Query = query.ToString();
 
-            // Create the content with the right content type
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/organizations/${params.organization_id}/members/${params.member_id}/oauth_providers/google", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersGoogleResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersGoogleResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
@@ -81,28 +70,23 @@ namespace Stytch.net.Clients.B2B
         public async Task<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse> Microsoft(
             B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
         {
-            // Serialize the request model to JSON
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder($"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/microsoft");
+            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["include_refresh_token"] = (request.IncludeRefreshToken ?? false).ToString().ToLower();
+            uriBuilder.Query = query.ToString();
 
-            // Create the content with the right content type
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
-            // Send the POST request to the specified URL
-            var response = await _httpClient.PostAsync("/v1/b2b/organizations/${params.organization_id}/members/${params.member_id}/oauth_providers/microsoft", content);
-
-            // Read the response body (even if the response is not successful)
+            var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                // If the response is successful, deserialize and return the response
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse>(responseBody)!;
             }
             else
             {
-                // If the response is not successful, log the error details
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {responseBody}");
-
                 // Optionally, throw an exception or return null or an error object
                 throw new HttpRequestException(
                     $"Request failed with status code {response.StatusCode}: {responseBody}");
