@@ -6,7 +6,7 @@ The Stytch .NET library makes it easy to use the Stytch user infrastructure API 
 
 ### Using .NET CLI:
 ```
-dotnet add package Example.Stytch --version 1.0.2
+dotnet add package Stytch
 ```
 
 ## Usage

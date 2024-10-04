@@ -4,10 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>Example.Stytch</PackageId>
-    <Version>1.0.3</Version>
-    <Author>Ollie E</Author>
-    <Product>ExampleStytch</Product>
+    <PackageId>Stytch</PackageId>
+    <Version>1.0.0</Version>
+    <Author>Stytch</Author>
+    <Product>Stytch</Product>
   </PropertyGroup>
 
   <ItemGroup>
