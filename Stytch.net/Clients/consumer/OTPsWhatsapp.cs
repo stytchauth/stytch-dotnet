@@ -5,6 +5,7 @@
 // !!!
 
 using Newtonsoft.Json;
+using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System.Text;
 
@@ -52,7 +53,10 @@ namespace Stytch.net.Clients.Consumer
             OTPsWhatsappSendRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/otps/whatsapp/send");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/otps/whatsapp/send"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -66,11 +70,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<OTPsWhatsappSendResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -92,7 +99,10 @@ namespace Stytch.net.Clients.Consumer
             OTPsWhatsappLoginOrCreateRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/otps/whatsapp/login_or_create");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/otps/whatsapp/login_or_create"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -106,11 +116,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<OTPsWhatsappLoginOrCreateResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
 

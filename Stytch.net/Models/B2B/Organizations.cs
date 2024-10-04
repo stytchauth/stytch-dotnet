@@ -129,7 +129,7 @@ namespace Stytch.net.Models.Consumer
         /// [OIDC Connection](oidc-connection-object) objects the Member has authenticated with.
         /// </summary>
         [JsonProperty("sso_registrations")]
-        public required SSORegistration SSORegistrations { get; set; }
+        public required List<SSORegistration> SSORegistrations { get; set; }
         /// <summary>
         /// Identifies the Member as a break glass user - someone who has permissions to authenticate into an
         /// Organization by bypassing the Organization's settings. A break glass account is typically used for
@@ -148,7 +148,7 @@ namespace Stytch.net.Models.Consumer
         /// A list of OAuth registrations for this member.
         /// </summary>
         [JsonProperty("oauth_registrations")]
-        public required OAuthRegistration OAuthRegistrations { get; set; }
+        public required List<OAuthRegistration> OAuthRegistrations { get; set; }
         /// <summary>
         /// Whether or not the Member's email address is verified.
         /// </summary>
@@ -186,7 +186,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("retired_email_addresses")]
-        public required RetiredEmail RetiredEmailAddresses { get; set; }
+        public required List<RetiredEmail> RetiredEmailAddresses { get; set; }
         /// <summary>
         /// Sets whether the Member is enrolled in MFA. If true, the Member must complete an MFA step whenever they
         /// wish to log in to their Organization. If false, the Member only needs to complete an MFA step if the
@@ -207,7 +207,7 @@ namespace Stytch.net.Models.Consumer
         /// about role assignment.
         /// </summary>
         [JsonProperty("roles")]
-        public required MemberRole Roles { get; set; }
+        public required List<MemberRole> Roles { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
@@ -263,7 +263,7 @@ namespace Stytch.net.Models.Consumer
         /// domain.
         /// </summary>
         [JsonProperty("sources")]
-        public required MemberRoleSource Sources { get; set; }
+        public required List<MemberRoleSource> Sources { get; set; }
     }
     public class MemberRoleSource
     {
@@ -426,13 +426,13 @@ namespace Stytch.net.Models.Consumer
         /// set to `RESTRICTED`.
         /// </summary>
         [JsonProperty("sso_jit_provisioning_allowed_connections")]
-        public required string SSOJITProvisioningAllowedConnections { get; set; }
+        public required List<string> SSOJITProvisioningAllowedConnections { get; set; }
         /// <summary>
         /// An array of active [SAML Connection references](https://stytch.com/docs/b2b/api/saml-connection-object)
         /// or [OIDC Connection references](https://stytch.com/docs/b2b/api/oidc-connection-object).
         /// </summary>
         [JsonProperty("sso_active_connections")]
-        public required ActiveSSOConnection SSOActiveConnections { get; set; }
+        public required List<ActiveSSOConnection> SSOActiveConnections { get; set; }
         /// <summary>
         /// An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced
         /// when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`. 
@@ -442,7 +442,7 @@ namespace Stytch.net.Models.Consumer
         /// [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list.
         /// </summary>
         [JsonProperty("email_allowed_domains")]
-        public required string EmailAllowedDomains { get; set; }
+        public required List<string> EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
         /// Magic Link or OAuth. The accepted values are: 
@@ -488,7 +488,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public required string AllowedAuthMethods { get; set; }
+        public required List<string> AllowedAuthMethods { get; set; }
         [JsonProperty("mfa_policy")]
         public required string MfaPolicy { get; set; }
         /// <summary>
@@ -500,7 +500,7 @@ namespace Stytch.net.Models.Consumer
         ///   for more information about role assignment.
         /// </summary>
         [JsonProperty("rbac_email_implicit_role_assignments")]
-        public required EmailImplicitRoleAssignment RBACEmailImplicitRoleAssignments { get; set; }
+        public required List<EmailImplicitRoleAssignment> RBACEmailImplicitRoleAssignments { get; set; }
         /// <summary>
         /// The setting that controls which MFA methods can be used by Members of an Organization. The accepted
         /// values are:
@@ -520,7 +520,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_mfa_methods")]
-        public required string AllowedMfaMethods { get; set; }
+        public required List<string> AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
         /// tenant. The accepted values are: 
@@ -640,7 +640,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of operand objects that contains all of the filters and values to apply to your search query.
         /// </summary>
         [JsonProperty("operands")]
-        public required SearchQueryOperand Operands { get; set; }
+        public required List<SearchQueryOperand> Operands { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Create"/>..
@@ -692,7 +692,7 @@ namespace Stytch.net.Models.Consumer
         /// [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list.
         /// </summary>
         [JsonProperty("email_allowed_domains")]
-        public string? EmailAllowedDomains { get; set; }
+        public List<string>? EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
         /// Magic Link or OAuth. The accepted values are: 
@@ -738,7 +738,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public string? AllowedAuthMethods { get; set; }
+        public List<string>? AllowedAuthMethods { get; set; }
         /// <summary>
         /// The setting that controls the MFA policy for all Members in the Organization. The accepted values are:
         ///  
@@ -761,7 +761,7 @@ namespace Stytch.net.Models.Consumer
         ///   for more information about role assignment.
         /// </summary>
         [JsonProperty("rbac_email_implicit_role_assignments")]
-        public EmailImplicitRoleAssignment? RBACEmailImplicitRoleAssignments { get; set; }
+        public List<EmailImplicitRoleAssignment>? RBACEmailImplicitRoleAssignments { get; set; }
         /// <summary>
         /// The setting that controls which MFA methods can be used by Members of an Organization. The accepted
         /// values are:
@@ -781,7 +781,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_mfa_methods")]
-        public string? AllowedMfaMethods { get; set; }
+        public List<string>? AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
         /// tenant. The accepted values are: 
@@ -952,7 +952,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of [Organization objects](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organizations")]
-        public required Organization Organizations { get; set; }
+        public required List<Organization> Organizations { get; set; }
         /// <summary>
         /// The search `results_metadata` object contains metadata relevant to your specific query like `total` and
         /// `next_cursor`.
@@ -1049,7 +1049,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("sso_jit_provisioning_allowed_connections")]
-        public string? SSOJITProvisioningAllowedConnections { get; set; }
+        public List<string>? SSOJITProvisioningAllowedConnections { get; set; }
         /// <summary>
         /// An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced
         /// when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`. 
@@ -1062,7 +1062,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.allowed-domains` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("email_allowed_domains")]
-        public string? EmailAllowedDomains { get; set; }
+        public List<string>? EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
         /// Magic Link or OAuth. The accepted values are: 
@@ -1123,7 +1123,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public string? AllowedAuthMethods { get; set; }
+        public List<string>? AllowedAuthMethods { get; set; }
         /// <summary>
         /// The setting that controls the MFA policy for all Members in the Organization. The accepted values are:
         ///  
@@ -1152,7 +1152,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.implicit-roles` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("rbac_email_implicit_role_assignments")]
-        public EmailImplicitRoleAssignment? RBACEmailImplicitRoleAssignments { get; set; }
+        public List<EmailImplicitRoleAssignment>? RBACEmailImplicitRoleAssignments { get; set; }
         /// <summary>
         /// The setting that controls which MFA methods can be used by Members of an Organization. The accepted
         /// values are:
@@ -1180,7 +1180,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("allowed_mfa_methods")]
-        public string? AllowedMfaMethods { get; set; }
+        public List<string>? AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
         /// tenant. The accepted values are: 

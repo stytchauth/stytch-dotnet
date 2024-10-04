@@ -17,7 +17,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of scopes assigned to the client.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// If provided, the ID of the client to create. If not provided, Stytch will generate this value for you.
         /// The `client_id` must be unique within your project.
@@ -183,7 +183,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of M2M Clients that match your search query.
         /// </summary>
         [JsonProperty("m2m_clients")]
-        public required M2MClient M2MClients { get; set; }
+        public required List<M2MClient> M2MClients { get; set; }
         /// <summary>
         /// The search `results_metadata` object contains metadata relevant to your specific query like total and
         /// `next_cursor`.
@@ -226,7 +226,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of scopes assigned to the client.
         /// </summary>
         [JsonProperty("scopes")]
-        public string? Scopes { get; set; }
+        public List<string>? Scopes { get; set; }
         /// <summary>
         /// The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
         /// [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.

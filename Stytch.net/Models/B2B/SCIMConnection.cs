@@ -214,7 +214,7 @@ namespace Stytch.net.Models.Consumer
         /// A list of SCIM Connection Groups belonging to the connection.
         /// </summary>
         [JsonProperty("scim_groups")]
-        public required SCIMGroup SCIMGroups { get; set; }
+        public required List<SCIMGroup> SCIMGroups { get; set; }
         [JsonProperty("status_code")]
         public required int StatusCode { get; set; }
         /// <summary>
@@ -410,7 +410,7 @@ namespace Stytch.net.Models.Consumer
         /// a `role_id`.
         /// </summary>
         [JsonProperty("scim_group_implicit_role_assignments")]
-        public SCIMGroupImplicitRoleAssignments? SCIMGroupImplicitRoleAssignments { get; set; }
+        public List<SCIMGroupImplicitRoleAssignments>? SCIMGroupImplicitRoleAssignments { get; set; }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Update"/>..

@@ -5,6 +5,7 @@
 // !!!
 
 using Newtonsoft.Json;
+using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System.Text;
 
@@ -39,7 +40,10 @@ namespace Stytch.net.Clients.B2B
             B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder($"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/google");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/google"
+            };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
             query["include_refresh_token"] = (request.IncludeRefreshToken ?? false).ToString().ToLower();
             uriBuilder.Query = query.ToString();
@@ -53,11 +57,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersGoogleResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -71,7 +78,10 @@ namespace Stytch.net.Clients.B2B
             B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder($"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/microsoft");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/microsoft"
+            };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
             query["include_refresh_token"] = (request.IncludeRefreshToken ?? false).ToString().ToLower();
             uriBuilder.Query = query.ToString();
@@ -85,11 +95,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
 

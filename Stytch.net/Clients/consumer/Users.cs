@@ -5,6 +5,7 @@
 // !!!
 
 using Newtonsoft.Json;
+using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System.Text;
 
@@ -29,7 +30,10 @@ namespace Stytch.net.Clients.Consumer
             UsersCreateRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/users");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -43,11 +47,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersCreateResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -57,7 +64,10 @@ namespace Stytch.net.Clients.Consumer
             UsersGetRequest request)
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder($"/v1/users/${request.UserId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/${request.UserId}"
+            };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
             uriBuilder.Query = query.ToString();
 
@@ -70,11 +80,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersGetResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -84,7 +97,10 @@ namespace Stytch.net.Clients.Consumer
             UsersSearchRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/users/search");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/search"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -98,11 +114,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersSearchResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -121,7 +140,10 @@ namespace Stytch.net.Clients.Consumer
             UsersUpdateRequest request)
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder($"/v1/users/${request.UserId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/${request.UserId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -135,11 +157,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersUpdateResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -156,7 +181,10 @@ namespace Stytch.net.Clients.Consumer
             UsersExchangePrimaryFactorRequest request)
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder($"/v1/users/${request.UserId}/exchange_primary_factor");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/${request.UserId}/exchange_primary_factor"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -170,11 +198,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersExchangePrimaryFactorResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -184,7 +215,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeleteRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/${request.UserId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/${request.UserId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -198,11 +232,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeleteResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -212,7 +249,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeleteEmailRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/emails/${request.EmailId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/emails/${request.EmailId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -226,11 +266,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeleteEmailResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -240,7 +283,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeletePhoneNumberRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/phone_numbers/${request.PhoneId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/phone_numbers/${request.PhoneId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -254,11 +300,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeletePhoneNumberResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -268,7 +317,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeleteWebAuthnRegistrationRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/webauthn_registrations/${request.WebAuthnRegistrationId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/webauthn_registrations/${request.WebAuthnRegistrationId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -282,11 +334,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeleteWebAuthnRegistrationResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -296,7 +351,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeleteBiometricRegistrationRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/biometric_registrations/${request.BiometricRegistrationId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/biometric_registrations/${request.BiometricRegistrationId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -310,11 +368,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeleteBiometricRegistrationResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -324,7 +385,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeleteTOTPRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/totps/${request.TOTPId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/totps/${request.TOTPId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -338,11 +402,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeleteTOTPResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -352,7 +419,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeleteCryptoWalletRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/crypto_wallets/${request.CryptoWalletId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/crypto_wallets/${request.CryptoWalletId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -366,11 +436,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeleteCryptoWalletResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -380,7 +453,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeletePasswordRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/passwords/${request.PasswordId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/passwords/${request.PasswordId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -394,11 +470,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeletePasswordResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -408,7 +487,10 @@ namespace Stytch.net.Clients.Consumer
             UsersDeleteOAuthRegistrationRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/users/oauth/${request.OAuthUserRegistrationId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/users/oauth/${request.OAuthUserRegistrationId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -422,11 +504,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<UsersDeleteOAuthRegistrationResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
 

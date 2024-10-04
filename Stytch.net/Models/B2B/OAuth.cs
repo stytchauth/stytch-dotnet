@@ -15,7 +15,7 @@ namespace Stytch.net.Models.Consumer
         /// are included by default and how to add custom scopes.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// The `access_token` that you may use to access the User's data in the provider's API.
         /// </summary>

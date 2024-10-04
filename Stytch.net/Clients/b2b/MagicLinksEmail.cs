@@ -5,6 +5,7 @@
 // !!!
 
 using Newtonsoft.Json;
+using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System.Text;
 
@@ -34,7 +35,10 @@ namespace Stytch.net.Clients.B2B
             B2BMagicLinksEmailLoginOrSignupRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/b2b/magic_links/email/login_or_signup");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/magic_links/email/login_or_signup"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -48,11 +52,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BMagicLinksEmailLoginOrSignupResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -66,7 +73,10 @@ namespace Stytch.net.Clients.B2B
             B2BMagicLinksEmailInviteRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/b2b/magic_links/email/invite");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/magic_links/email/invite"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -80,11 +90,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BMagicLinksEmailInviteResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
 

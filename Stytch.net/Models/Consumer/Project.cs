@@ -25,7 +25,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("project_id")]
         public required string ProjectId { get; set; }
         [JsonProperty("metrics")]
-        public required ProjectMetric Metrics { get; set; }
+        public required List<ProjectMetric> Metrics { get; set; }
         [JsonProperty("status_code")]
         public required int StatusCode { get; set; }
     }

@@ -5,6 +5,7 @@
 // !!!
 
 using Newtonsoft.Json;
+using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System.Text;
 
@@ -28,7 +29,10 @@ namespace Stytch.net.Clients.Consumer
             ProjectMetricsRequest request)
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder($"/v1/projects/metrics");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/projects/metrics"
+            };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
             uriBuilder.Query = query.ToString();
 
@@ -41,11 +45,14 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<ProjectMetricsResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
 

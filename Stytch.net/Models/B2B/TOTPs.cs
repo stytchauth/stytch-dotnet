@@ -237,7 +237,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of recovery codes that can be used to recover a Member's account.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required string RecoveryCodes { get; set; }
+        public required List<string> RecoveryCodes { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
@@ -282,7 +282,7 @@ namespace Stytch.net.Models.Consumer
         /// secondary MFA method.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required string RecoveryCodes { get; set; }
+        public required List<string> RecoveryCodes { get; set; }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.TOTPs.Migrate"/>..
@@ -319,7 +319,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of recovery codes that can be used to recover a Member's account.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required string RecoveryCodes { get; set; }
+        public required List<string> RecoveryCodes { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

@@ -5,6 +5,7 @@
 // !!!
 
 using Newtonsoft.Json;
+using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System.Text;
 
@@ -28,7 +29,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionUpdateRequest request)
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -42,11 +46,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionUpdateResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -56,7 +63,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionDeleteRequest request)
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -70,11 +80,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionDeleteResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -84,7 +97,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionRotateStartRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/start");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/start"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -98,11 +114,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateStartResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -114,7 +133,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionRotateCompleteRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/complete");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/complete"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -128,11 +150,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateCompleteResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -143,7 +168,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionRotateCancelRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/cancel");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/cancel"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -157,11 +185,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateCancelResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -171,7 +202,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionGetGroupsRequest request)
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
+            };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
             query["cursor"] = request.Cursor;
             query["limit"] = request.Limit?.ToString();
@@ -186,11 +220,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionGetGroupsResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -200,7 +237,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionCreateRequest request)
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection"
+            };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
             var jsonBody = JsonConvert.SerializeObject(request);
@@ -214,11 +254,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionCreateResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
         /// <summary>
@@ -228,7 +271,10 @@ namespace Stytch.net.Clients.B2B
             B2BSCIMConnectionGetRequest request)
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder($"/v1/b2b/scim/${request.OrganizationId}/connection");
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            {
+                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection"
+            };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
             uriBuilder.Query = query.ToString();
 
@@ -241,11 +287,14 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSCIMConnectionGetResponse>(responseBody)!;
             }
-            else
+            try
             {
-                // Optionally, throw an exception or return null or an error object
-                throw new HttpRequestException(
-                    $"Request failed with status code {response.StatusCode}: {responseBody}");
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
 

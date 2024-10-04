@@ -93,7 +93,7 @@ namespace Stytch.net.Models.Consumer
         ///    for more information about role assignment.
         /// </summary>
         [JsonProperty("roles")]
-        public string? Roles { get; set; }
+        public List<string>? Roles { get; set; }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.MagicLinks.Email.Invite"/>..

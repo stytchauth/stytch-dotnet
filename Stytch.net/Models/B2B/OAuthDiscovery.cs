@@ -81,7 +81,7 @@ namespace Stytch.net.Models.Consumer
         /// domain as the end user (to prevent phishing attacks).
         /// </summary>
         [JsonProperty("discovered_organizations")]
-        public required DiscoveredOrganization DiscoveredOrganizations { get; set; }
+        public required List<DiscoveredOrganization> DiscoveredOrganizations { get; set; }
         [JsonProperty("provider_type")]
         public required string ProviderType { get; set; }
         [JsonProperty("provider_tenant_id")]

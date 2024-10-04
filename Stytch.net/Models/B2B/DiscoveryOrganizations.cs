@@ -108,7 +108,7 @@ namespace Stytch.net.Models.Consumer
         /// [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list.
         /// </summary>
         [JsonProperty("email_allowed_domains")]
-        public string? EmailAllowedDomains { get; set; }
+        public List<string>? EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
         /// Magic Link or OAuth. The accepted values are: 
@@ -154,7 +154,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public string? AllowedAuthMethods { get; set; }
+        public List<string>? AllowedAuthMethods { get; set; }
         /// <summary>
         /// The setting that controls the MFA policy for all Members in the Organization. The accepted values are:
         ///  
@@ -177,7 +177,7 @@ namespace Stytch.net.Models.Consumer
         ///   for more information about role assignment.
         /// </summary>
         [JsonProperty("rbac_email_implicit_role_assignments")]
-        public EmailImplicitRoleAssignment? RBACEmailImplicitRoleAssignments { get; set; }
+        public List<EmailImplicitRoleAssignment>? RBACEmailImplicitRoleAssignments { get; set; }
         /// <summary>
         /// The setting that controls which MFA methods can be used by Members of an Organization. The accepted
         /// values are:
@@ -197,7 +197,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_mfa_methods")]
-        public string? AllowedMfaMethods { get; set; }
+        public List<string>? AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
         /// tenant. The accepted values are: 
@@ -357,7 +357,7 @@ namespace Stytch.net.Models.Consumer
         /// domain as the end user (to prevent phishing attacks).
         /// </summary>
         [JsonProperty("discovered_organizations")]
-        public required DiscoveredOrganization DiscoveredOrganizations { get; set; }
+        public required List<DiscoveredOrganization> DiscoveredOrganizations { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

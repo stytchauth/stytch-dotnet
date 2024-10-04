@@ -147,7 +147,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("active")]
         public required bool Active { get; set; }
         [JsonProperty("groups")]
-        public required Group Groups { get; set; }
+        public required List<Group> Groups { get; set; }
         [JsonProperty("display_name")]
         public required string DisplayName { get; set; }
         [JsonProperty("nick_name")]
@@ -165,21 +165,21 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("timezone")]
         public required string Timezone { get; set; }
         [JsonProperty("emails")]
-        public required B2BSCIMEmail Emails { get; set; }
+        public required List<B2BSCIMEmail> Emails { get; set; }
         [JsonProperty("phone_numbers")]
-        public required B2BSCIMPhoneNumber PhoneNumbers { get; set; }
+        public required List<B2BSCIMPhoneNumber> PhoneNumbers { get; set; }
         [JsonProperty("addresses")]
-        public required Address Addresses { get; set; }
+        public required List<Address> Addresses { get; set; }
         [JsonProperty("ims")]
-        public required IMs Ims { get; set; }
+        public required List<IMs> Ims { get; set; }
         [JsonProperty("photos")]
-        public required Photo Photos { get; set; }
+        public required List<Photo> Photos { get; set; }
         [JsonProperty("entitlements")]
-        public required Entitlement Entitlements { get; set; }
+        public required List<Entitlement> Entitlements { get; set; }
         [JsonProperty("roles")]
-        public required Role Roles { get; set; }
+        public required List<Role> Roles { get; set; }
         [JsonProperty("x509certificates")]
-        public required B2BSCIMX509Certificate X509Certificates { get; set; }
+        public required List<B2BSCIMX509Certificate> X509Certificates { get; set; }
         [JsonProperty("name")]
         public B2BSCIMName? Name { get; set; }
         [JsonProperty("enterprise_extension")]
@@ -202,7 +202,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("bearer_token_last_four")]
         public required string BearerTokenLastFour { get; set; }
         [JsonProperty("scim_group_implicit_role_assignments")]
-        public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
+        public required List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("next_bearer_token_last_four")]
         public required string NextBearerTokenLastFour { get; set; }
         [JsonProperty("bearer_token_expires_at")]
@@ -229,7 +229,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("next_bearer_token")]
         public required string NextBearerToken { get; set; }
         [JsonProperty("scim_group_implicit_role_assignments")]
-        public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
+        public required List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("bearer_token_expires_at")]
         public string? BearerTokenExpiresAt { get; set; }
         [JsonProperty("next_bearer_token_expires_at")]
@@ -252,7 +252,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("bearer_token")]
         public required string BearerToken { get; set; }
         [JsonProperty("scim_group_implicit_role_assignments")]
-        public required SCIMGroupImplicitRoleAssignments SCIMGroupImplicitRoleAssignments { get; set; }
+        public required List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("bearer_token_expires_at")]
         public string? BearerTokenExpiresAt { get; set; }
     }

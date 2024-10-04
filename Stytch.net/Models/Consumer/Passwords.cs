@@ -49,7 +49,7 @@ namespace Stytch.net.Models.Consumer
         /// password.
         /// </summary>
         [JsonProperty("suggestions")]
-        public required string Suggestions { get; set; }
+        public required List<string> Suggestions { get; set; }
         /// <summary>
         /// Contains which LUDS properties are fulfilled by the password and which are missing to convert an invalid
         /// password into a valid one. You'll use these fields to provide feedback to the user on how to improve the

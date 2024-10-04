@@ -27,7 +27,7 @@ namespace Stytch.net.Models.Consumer
         /// authentication. Every resource must be an RFC 3986 URI.
         /// </summary>
         [JsonProperty("resources")]
-        public required string Resources { get; set; }
+        public required List<string> Resources { get; set; }
         /// <summary>
         /// The EIP-155 Chain ID to which the session is bound. Defaults to 1. Must be the string representation of
         /// an integer between 1 and 9,223,372,036,854,775,771, inclusive.
@@ -268,7 +268,7 @@ namespace Stytch.net.Models.Consumer
         /// authentication. Every resource must be an RFC 3986 URI.
         /// </summary>
         [JsonProperty("resources")]
-        public required string Resources { get; set; }
+        public required List<string> Resources { get; set; }
         [JsonProperty("status_code")]
         public required int StatusCode { get; set; }
         /// <summary>

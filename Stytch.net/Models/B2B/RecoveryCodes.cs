@@ -56,7 +56,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of recovery codes that can be used to recover a Member's account.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required string RecoveryCodes { get; set; }
+        public required List<string> RecoveryCodes { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
@@ -242,7 +242,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of recovery codes that can be used to recover a Member's account.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required string RecoveryCodes { get; set; }
+        public required List<string> RecoveryCodes { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

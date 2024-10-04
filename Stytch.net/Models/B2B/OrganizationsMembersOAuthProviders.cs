@@ -44,7 +44,7 @@ namespace Stytch.net.Models.Consumer
         /// are included by default and how to add custom scopes.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
@@ -114,7 +114,7 @@ namespace Stytch.net.Models.Consumer
         /// are included by default and how to add custom scopes.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

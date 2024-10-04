@@ -43,9 +43,9 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("status")]
         public required string Status { get; set; }
         [JsonProperty("external_connection_implicit_role_assignments")]
-        public required ConnectionImplicitRoleAssignment ExternalConnectionImplicitRoleAssignments { get; set; }
+        public required List<ConnectionImplicitRoleAssignment> ExternalConnectionImplicitRoleAssignments { get; set; }
         [JsonProperty("external_group_implicit_role_assignments")]
-        public required GroupImplicitRoleAssignment ExternalGroupImplicitRoleAssignments { get; set; }
+        public required List<GroupImplicitRoleAssignment> ExternalGroupImplicitRoleAssignments { get; set; }
     }
     public class ConnectionImplicitRoleAssignment
     {
@@ -107,13 +107,13 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("audience_uri")]
         public required string AudienceUri { get; set; }
         [JsonProperty("signing_certificates")]
-        public required X509Certificate SigningCertificates { get; set; }
+        public required List<X509Certificate> SigningCertificates { get; set; }
         [JsonProperty("verification_certificates")]
-        public required X509Certificate VerificationCertificates { get; set; }
+        public required List<X509Certificate> VerificationCertificates { get; set; }
         [JsonProperty("saml_connection_implicit_role_assignments")]
-        public required SAMLConnectionImplicitRoleAssignment SAMLConnectionImplicitRoleAssignments { get; set; }
+        public required List<SAMLConnectionImplicitRoleAssignment> SAMLConnectionImplicitRoleAssignments { get; set; }
         [JsonProperty("saml_group_implicit_role_assignments")]
-        public required SAMLGroupImplicitRoleAssignment SAMLGroupImplicitRoleAssignments { get; set; }
+        public required List<SAMLGroupImplicitRoleAssignment> SAMLGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("alternative_audience_uri")]
         public required string AlternativeAudienceUri { get; set; }
         [JsonProperty("identity_provider")]
@@ -407,15 +407,15 @@ namespace Stytch.net.Models.Consumer
         /// organization.
         /// </summary>
         [JsonProperty("saml_connections")]
-        public required SAMLConnection SAMLConnections { get; set; }
+        public required List<SAMLConnection> SAMLConnections { get; set; }
         /// <summary>
         /// The list of [OIDC Connections](https://stytch.com/docs/b2b/api/oidc-connection-object) owned by this
         /// organization.
         /// </summary>
         [JsonProperty("oidc_connections")]
-        public required OIDCConnection OIDCConnections { get; set; }
+        public required List<OIDCConnection> OIDCConnections { get; set; }
         [JsonProperty("external_connections")]
-        public required Connection ExternalConnections { get; set; }
+        public required List<Connection> ExternalConnections { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

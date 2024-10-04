@@ -313,13 +313,13 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("use")]
         public required string Use { get; set; }
         [JsonProperty("key_ops")]
-        public required string KeyOps { get; set; }
+        public required List<string> KeyOps { get; set; }
         [JsonProperty("alg")]
         public required string Alg { get; set; }
         [JsonProperty("kid")]
         public required string Kid { get; set; }
         [JsonProperty("x5c")]
-        public required string X5C { get; set; }
+        public required List<string> X5C { get; set; }
         [JsonProperty("x5tS256")]
         public required string X5TS256 { get; set; }
         [JsonProperty("n")]
@@ -434,7 +434,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of different authentication factors that comprise a Session.
         /// </summary>
         [JsonProperty("authentication_factors")]
-        public required AuthenticationFactor AuthenticationFactors { get; set; }
+        public required List<AuthenticationFactor> AuthenticationFactors { get; set; }
         /// <summary>
         /// The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
@@ -669,7 +669,7 @@ namespace Stytch.net.Models.Consumer
         /// The JWK
         /// </summary>
         [JsonProperty("keys")]
-        public required JWK Keys { get; set; }
+        public required List<JWK> Keys { get; set; }
         /// <summary>
         /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
@@ -709,7 +709,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of Session objects.
         /// </summary>
         [JsonProperty("sessions")]
-        public required Session Sessions { get; set; }
+        public required List<Session> Sessions { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

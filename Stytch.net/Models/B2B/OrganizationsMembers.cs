@@ -169,7 +169,7 @@ namespace Stytch.net.Models.Consumer
         ///    for more information about role assignment.
         /// </summary>
         [JsonProperty("roles")]
-        public string? Roles { get; set; }
+        public List<string>? Roles { get; set; }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Create"/>..
@@ -526,7 +526,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of organization_ids. At least one value is required.
         /// </summary>
         [JsonProperty("organization_ids")]
-        public required string OrganizationIds { get; set; }
+        public required List<string> OrganizationIds { get; set; }
         /// <summary>
         /// The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
         /// results. If your query returns more than 1000 results, you will need to paginate the responses using the
@@ -566,7 +566,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of [Member objects](member-object).
         /// </summary>
         [JsonProperty("members")]
-        public required Member Members { get; set; }
+        public required List<Member> Members { get; set; }
         /// <summary>
         /// The search `results_metadata` object contains metadata relevant to your specific query like `total` and
         /// `next_cursor`.
@@ -760,7 +760,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.roles` action on the `stytch.member` Resource.
         /// </summary>
         [JsonProperty("roles")]
-        public string? Roles { get; set; }
+        public List<string>? Roles { get; set; }
         /// <summary>
         /// Whether to preserve existing sessions when explicit Roles that are revoked are also implicitly assigned
         ///   by SSO connection or SSO group. Defaults to `false` - that is, existing Member Sessions that contain

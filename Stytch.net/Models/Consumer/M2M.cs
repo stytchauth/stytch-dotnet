@@ -34,7 +34,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of scopes assigned to the client.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// The last four characters of the client secret.
         /// </summary>
@@ -84,7 +84,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of scopes assigned to the client.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// The last four characters of the client secret.
         /// </summary>
@@ -135,7 +135,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of scopes assigned to the client.
         /// </summary>
         [JsonProperty("scopes")]
-        public required string Scopes { get; set; }
+        public required List<string> Scopes { get; set; }
         /// <summary>
         /// The last four characters of the client secret.
         /// </summary>
@@ -182,7 +182,7 @@ namespace Stytch.net.Models.Consumer
         /// query.
         /// </summary>
         [JsonProperty("operands")]
-        public required M2MSearchQueryOperand Operands { get; set; }
+        public required List<M2MSearchQueryOperand> Operands { get; set; }
     }
 
     public enum M2MSearchQueryOperator

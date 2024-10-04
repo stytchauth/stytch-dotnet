@@ -14,12 +14,12 @@ namespace Stytch.net.Models.Consumer
         /// An array of [Role objects](https://stytch.com/docs/b2b/api/rbac-role-object).
         /// </summary>
         [JsonProperty("roles")]
-        public required PolicyRole Roles { get; set; }
+        public required List<PolicyRole> Roles { get; set; }
         /// <summary>
         /// An array of [Resource objects](https://stytch.com/docs/b2b/api/rbac-resource-object).
         /// </summary>
         [JsonProperty("resources")]
-        public required PolicyResource Resources { get; set; }
+        public required List<PolicyResource> Resources { get; set; }
     }
     public class PolicyResource
     {
@@ -92,7 +92,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("actions")]
-        public required string Actions { get; set; }
+        public required List<string> Actions { get; set; }
     }
     public class PolicyRole
     {
@@ -121,7 +121,7 @@ namespace Stytch.net.Models.Consumer
         /// list of actions.
         /// </summary>
         [JsonProperty("permissions")]
-        public required PolicyRolePermission Permissions { get; set; }
+        public required List<PolicyRolePermission> Permissions { get; set; }
     }
     public class PolicyRolePermission
     {
@@ -149,7 +149,7 @@ namespace Stytch.net.Models.Consumer
         /// as a wildcard to grant a Role permission to use all possible actions related to the Resource. 
         /// </summary>
         [JsonProperty("actions")]
-        public required string Actions { get; set; }
+        public required List<string> Actions { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.RBAC.Policy"/>..
