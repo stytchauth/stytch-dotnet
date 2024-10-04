@@ -29,6 +29,7 @@ This client library supports all of Stytch's live products:
 - [x] [Time-based one-time passcodes (TOTPs)](https://stytch.com/docs/api/totp-create)
 - [x] [Crypto wallets](https://stytch.com/docs/api/crypto-wallet-authenticate-start)
 - [x] [Passwords](https://stytch.com/docs/api/password-create)
+- [] [M2M](https://stytch.com/docs/api/m2m-client)
 
 **B2B**
 
@@ -42,6 +43,8 @@ This client library supports all of Stytch's live products:
 - [x] [Discovery](https://stytch.com/docs/b2b/api/discovered-organization-object)
 - [x] [Passwords](https://stytch.com/docs/b2b/api/passwords-authenticate)
 - [x] [SMS OTP (MFA)](https://stytch.com/docs/b2b/api/otp-sms-send)
+- [] [M2M](https://stytch.com/docs/b2b/api/m2m-client)
+
 
 
 ### Example B2C usage
