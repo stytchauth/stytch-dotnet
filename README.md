@@ -1,9 +1,6 @@
 # Stytch dotnet Library
 
-The Stytch .NET SDK makes it easy to use the Stytch user infrastructure API in server-side .NET applications.
-
-It pairs well with the Stytch [Web SDK](https://www.npmjs.com/package/@stytch/vanilla-js) or your own custom authentication flow.
-
+The Stytch .NET library makes it easy to use the Stytch user infrastructure API in .NET applications.
 
 ## Install
 
@@ -32,6 +29,7 @@ This client library supports all of Stytch's live products:
 - [x] [Time-based one-time passcodes (TOTPs)](https://stytch.com/docs/api/totp-create)
 - [x] [Crypto wallets](https://stytch.com/docs/api/crypto-wallet-authenticate-start)
 - [x] [Passwords](https://stytch.com/docs/api/password-create)
+- [x] [M2M](https://stytch.com/docs/api/m2m-client)
 
 **B2B**
 
@@ -98,7 +96,7 @@ var client = new B2BClient(new ClientConfig
 Create an organization
 
 ```csharp
-client.organizations.create({
+client.Organizations.Create({
     OrganizationName = "Acme Co",
     OrganizationSlug = "acme-co",
     EmailAllowedDomains = ["acme.co"],
@@ -108,38 +106,24 @@ client.organizations.create({
 Log the first user into the organization
 
 ```csharp
-client.magicLinks.loginOrSignup({
+client.MagicLinks.Email.LoginOrSignup({
     OrganizationId = "organization-id-from-create-response-...",
     EmailAddress = "admin@acme.co",
 }));
 ```
 
-## Documentation
-
-See example requests and responses for all the endpoints in the [Stytch API Reference](https://stytch.com/docs/api).
-
-Follow one of the [integration guides](https://stytch.com/docs/home#guides) or start with one of our [example apps](https://stytch.com/docs/home#example-apps).
-
 ## Support
 
-If you've found a bug, [open an issue](https://github.com/stytchauth/stytch-otnet/issues/new)!
+If you've found a bug, [open an issue](https://github.com/stytchauth/TODO/issues/new)!
 
 If you have questions or want help troubleshooting, join us in [Slack](https://stytch.com/docs/resources/support/overview) or email support@stytch.com.
 
 If you've found a security vulnerability, please follow our [responsible disclosure instructions](https://stytch.com/docs/resources/security-and-trust/security#:~:text=Responsible%20disclosure%20program).
 
+## Development
 
-### TODO:
-- [x] Update user-agent to be Stytch-dotnet
-- [x] Move Magic Links to nested client attribute - Client.magicLinks.email.send
-- [x] Infer Env from project ID
-- [x] Codegen Bonanza
-- [x] Docstrings
-- [ ] Better tests
-- [x] Run linter/formatter
-- [ ] Example App
-- [ ] Add JWT Manual support
-- [ ] Add M2M Manual support
-- [ ] Add CODEOWNERS, COC.md, DEVELOPMENT.md
-- [ ] Polish README
-- [ ] Set up auto publish workflow
+See [DEVELOPMENT.md](DEVELOPMENT.md)
+
+## Code of Conduct
+
+Everyone interacting in the Stytch project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
