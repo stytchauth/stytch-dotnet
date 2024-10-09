@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -34,16 +38,21 @@ namespace Stytch.net.Clients.Consumer
         /// If not using the SIWE protocol, the message will simply consist of the project name and a random string.
         /// </summary>
         public async Task<CryptoWalletsAuthenticateStartResponse> AuthenticateStart(
-            CryptoWalletsAuthenticateStartRequest request)
+            CryptoWalletsAuthenticateStartRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/crypto_wallets/authenticate/start"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -52,11 +61,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<CryptoWalletsAuthenticateStartResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<CryptoWalletsAuthenticateStartResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -68,16 +77,21 @@ namespace Stytch.net.Clients.Consumer
         /// Complete the authentication of a crypto wallet by passing the signature.
         /// </summary>
         public async Task<CryptoWalletsAuthenticateResponse> Authenticate(
-            CryptoWalletsAuthenticateRequest request)
+            CryptoWalletsAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/crypto_wallets/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -86,11 +100,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<CryptoWalletsAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<CryptoWalletsAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

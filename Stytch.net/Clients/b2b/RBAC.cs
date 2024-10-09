@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -38,10 +42,11 @@ namespace Stytch.net.Clients.B2B
         /// Stytch's RBAC permissioning model.
         /// </summary>
         public async Task<B2BRBACPolicyResponse> Policy(
-            B2BRBACPolicyRequest request)
+            B2BRBACPolicyRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/rbac/policy"
             };
@@ -55,11 +60,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BRBACPolicyResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BRBACPolicyResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

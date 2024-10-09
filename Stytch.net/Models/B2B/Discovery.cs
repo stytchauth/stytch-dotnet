@@ -5,6 +5,8 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -16,27 +18,27 @@ namespace Stytch.net.Models.Consumer
         /// flow. See the `primary_required` and `mfa_required` fields for more details on each.
         /// </summary>
         [JsonProperty("member_authenticated")]
-        public required bool MemberAuthenticated { get; set; }
+        public bool MemberAuthenticated { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public Organization? Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// Information about the membership.
         /// </summary>
         [JsonProperty("membership")]
-        public Membership? Membership { get; set; }
+        public Membership Membership { get; set; }
         /// <summary>
         /// Information about the primary authentication requirements of the Organization.
         /// </summary>
         [JsonProperty("primary_required")]
-        public PrimaryRequired? PrimaryRequired { get; set; }
+        public PrimaryRequired PrimaryRequired { get; set; }
         /// <summary>
         /// Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
         /// </summary>
         [JsonProperty("mfa_required")]
-        public MfaRequired? MfaRequired { get; set; }
+        public MfaRequired MfaRequired { get; set; }
     }
     public class Membership
     {
@@ -44,18 +46,18 @@ namespace Stytch.net.Models.Consumer
         /// Either `active_member`, `pending_member`, `invited_member`, or `eligible_to_join_by_email_domain`
         /// </summary>
         [JsonProperty("type")]
-        public required string Type { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// An object containing additional metadata about the membership, if available.
         /// </summary>
         [JsonProperty("details")]
-        public object? Details { get; set; }
+        public object Details { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object) if one already exists, or null if one
         /// does not.
         /// </summary>
         [JsonProperty("member")]
-        public Member? Member { get; set; }
+        public Member Member { get; set; }
     }
 
 }

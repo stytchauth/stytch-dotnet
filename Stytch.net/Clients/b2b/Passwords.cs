@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -53,16 +57,21 @@ namespace Stytch.net.Clients.B2B
         /// create a password that meets all requirements that they failed.
         /// </summary>
         public async Task<B2BPasswordsStrengthCheckResponse> StrengthCheck(
-            B2BPasswordsStrengthCheckRequest request)
+            B2BPasswordsStrengthCheckRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/passwords/strength_check"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -71,11 +80,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BPasswordsStrengthCheckResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BPasswordsStrengthCheckResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -91,16 +100,21 @@ namespace Stytch.net.Clients.B2B
         /// The member's email will be marked as verified when you use this endpoint.
         /// </summary>
         public async Task<B2BPasswordsMigrateResponse> Migrate(
-            B2BPasswordsMigrateRequest request)
+            B2BPasswordsMigrateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/passwords/migrate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -109,11 +123,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BPasswordsMigrateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BPasswordsMigrateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -132,8 +146,8 @@ namespace Stytch.net.Clients.B2B
         /// this case to ensure that the member is the legitimate owner of the email address and not a malicious
         /// actor abusing the compromised credentials.
         /// 
-        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+        /// If the is required to complete MFA to log in to the, the returned value of `member_authenticated` will
+        /// be `false`, and an `intermediate_session_token` will be returned.
         /// The `intermediate_session_token` can be passed into the
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
         /// MFA step and acquire a full member session.
@@ -143,16 +157,21 @@ namespace Stytch.net.Clients.B2B
         /// MFA step.
         /// </summary>
         public async Task<B2BPasswordsAuthenticateResponse> Authenticate(
-            B2BPasswordsAuthenticateRequest request)
+            B2BPasswordsAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/passwords/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -161,11 +180,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BPasswordsAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BPasswordsAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

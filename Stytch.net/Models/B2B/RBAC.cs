@@ -5,6 +5,8 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -14,12 +16,12 @@ namespace Stytch.net.Models.Consumer
         /// An array of [Role objects](https://stytch.com/docs/b2b/api/rbac-role-object).
         /// </summary>
         [JsonProperty("roles")]
-        public required List<PolicyRole> Roles { get; set; }
+        public List<PolicyRole> Roles { get; set; }
         /// <summary>
         /// An array of [Resource objects](https://stytch.com/docs/b2b/api/rbac-resource-object).
         /// </summary>
         [JsonProperty("resources")]
-        public required List<PolicyResource> Resources { get; set; }
+        public List<PolicyResource> Resources { get; set; }
     }
     public class PolicyResource
     {
@@ -41,12 +43,12 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("resource_id")]
-        public required string ResourceId { get; set; }
+        public string ResourceId { get; set; }
         /// <summary>
         /// The description of the RBAC Resource.
         /// </summary>
         [JsonProperty("description")]
-        public required string Description { get; set; }
+        public string Description { get; set; }
         /// <summary>
         /// A list of all possible actions for a provided Resource. 
         ///   
@@ -92,7 +94,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("actions")]
-        public required List<string> Actions { get; set; }
+        public List<string> Actions { get; set; }
     }
     public class PolicyRole
     {
@@ -110,18 +112,18 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("role_id")]
-        public required string RoleId { get; set; }
+        public string RoleId { get; set; }
         /// <summary>
         /// The description of the RBAC Role.
         /// </summary>
         [JsonProperty("description")]
-        public required string Description { get; set; }
+        public string Description { get; set; }
         /// <summary>
         /// A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a
         /// list of actions.
         /// </summary>
         [JsonProperty("permissions")]
-        public required List<PolicyRolePermission> Permissions { get; set; }
+        public List<PolicyRolePermission> Permissions { get; set; }
     }
     public class PolicyRolePermission
     {
@@ -143,19 +145,22 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("resource_id")]
-        public required string ResourceId { get; set; }
+        public string ResourceId { get; set; }
         /// <summary>
         /// A list of permitted actions the Role is authorized to take with the provided Resource. You can use `*`
         /// as a wildcard to grant a Role permission to use all possible actions related to the Resource. 
         /// </summary>
         [JsonProperty("actions")]
-        public required List<string> Actions { get; set; }
+        public List<string> Actions { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.RBAC.Policy"/>..
     /// </summary>
     public class B2BRBACPolicyRequest
     {
+        public B2BRBACPolicyRequest()
+        {
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.RBAC.Policy"/>..
@@ -167,20 +172,20 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The RBAC Policy document that contains all defined Roles and Resources – which are managed in the
         /// [Dashboard](/dashboard/rbac). Read more about these entities and how they work in our
         /// [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview).
         /// </summary>
         [JsonProperty("policy")]
-        public Policy? Policy { get; set; }
+        public Policy Policy { get; set; }
     }
 
     // MANUAL(Authorization)(TYPES)

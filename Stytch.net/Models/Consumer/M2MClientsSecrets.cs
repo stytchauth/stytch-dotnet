@@ -5,6 +5,8 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -17,7 +19,11 @@ namespace Stytch.net.Models.Consumer
         /// The ID of the client.
         /// </summary>
         [JsonProperty("client_id")]
-        public required string ClientId { get; set; }
+        public string ClientId { get; set; }
+        public M2MClientsSecretsRotateCancelRequest(string clientId)
+        {
+            this.ClientId = clientId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.M2M.Clients.Secrets.RotateCancel"/>..
@@ -29,18 +35,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The M2M Client affected by this operation.
         /// </summary>
         [JsonProperty("m2m_client")]
-        public required M2MClient M2MClient { get; set; }
+        public M2MClient M2MClient { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.M2M.Clients.Secrets.Rotate"/>..
@@ -51,7 +57,11 @@ namespace Stytch.net.Models.Consumer
         /// The ID of the client.
         /// </summary>
         [JsonProperty("client_id")]
-        public required string ClientId { get; set; }
+        public string ClientId { get; set; }
+        public M2MClientsSecretsRotateRequest(string clientId)
+        {
+            this.ClientId = clientId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.M2M.Clients.Secrets.Rotate"/>..
@@ -63,18 +73,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The M2M Client affected by this operation.
         /// </summary>
         [JsonProperty("m2m_client")]
-        public required M2MClient M2MClient { get; set; }
+        public M2MClient M2MClient { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.M2M.Clients.Secrets.RotateStart"/>..
@@ -85,7 +95,11 @@ namespace Stytch.net.Models.Consumer
         /// The ID of the client.
         /// </summary>
         [JsonProperty("client_id")]
-        public required string ClientId { get; set; }
+        public string ClientId { get; set; }
+        public M2MClientsSecretsRotateStartRequest(string clientId)
+        {
+            this.ClientId = clientId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.M2M.Clients.Secrets.RotateStart"/>..
@@ -97,18 +111,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The M2M Client affected by this operation.
         /// </summary>
         [JsonProperty("m2m_client")]
-        public required M2MClientWithNextClientSecret M2MClient { get; set; }
+        public M2MClientWithNextClientSecret M2MClient { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
 }

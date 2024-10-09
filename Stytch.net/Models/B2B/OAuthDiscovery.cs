@@ -5,6 +5,8 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -17,20 +19,24 @@ namespace Stytch.net.Models.Consumer
         /// The Discovery OAuth token to authenticate.
         /// </summary>
         [JsonProperty("discovery_oauth_token")]
-        public required string DiscoveryOAuthToken { get; set; }
+        public string DiscoveryOAuthToken { get; set; }
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         [JsonProperty("session_duration_minutes")]
         public int? SessionDurationMinutes { get; set; }
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
         /// <summary>
         /// A base64url encoded one time secret used to validate that the request starts and ends on the same device.
         /// </summary>
         [JsonProperty("pkce_code_verifier")]
-        public string? PkceCodeVerifier { get; set; }
+        public string PkceCodeVerifier { get; set; }
+        public B2BOAuthDiscoveryAuthenticateRequest(string discoveryOAuthToken)
+        {
+            this.DiscoveryOAuthToken = discoveryOAuthToken;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.OAuth.Discovery.Authenticate"/>..
@@ -42,7 +48,7 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The Intermediate Session Token. This token does not necessarily belong to a specific instance of a
         /// Member, but represents a bag of factors that may be converted to a member session. The token can be used
@@ -56,12 +62,12 @@ namespace Stytch.net.Models.Consumer
         /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public required string IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
         /// <summary>
         /// The email address.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// An array of `discovered_organization` objects tied to the `intermediate_session_token`, `session_token`,
         /// or `session_jwt`. See the
@@ -81,17 +87,17 @@ namespace Stytch.net.Models.Consumer
         /// domain as the end user (to prevent phishing attacks).
         /// </summary>
         [JsonProperty("discovered_organizations")]
-        public required List<DiscoveredOrganization> DiscoveredOrganizations { get; set; }
+        public List<DiscoveredOrganization> DiscoveredOrganizations { get; set; }
         [JsonProperty("provider_type")]
-        public required string ProviderType { get; set; }
+        public string ProviderType { get; set; }
         [JsonProperty("provider_tenant_id")]
-        public required string ProviderTenantId { get; set; }
+        public string ProviderTenantId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
 }

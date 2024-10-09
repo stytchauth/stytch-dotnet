@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -37,15 +41,16 @@ namespace Stytch.net.Clients.B2B
         /// [Start Google OAuth flow](https://stytch.com/docs/b2b/api/oauth-google-start) endpoint.
         /// </summary>
         public async Task<B2BOrganizationsMembersOAuthProvidersGoogleResponse> Google(
-            B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
+            B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/google"
             };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["include_refresh_token"] = (request.IncludeRefreshToken ?? false).ToString().ToLower();
+            query["include_refresh_token"] = (request.IncludeRefreshToken).ToString().ToLower();
             uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -55,11 +60,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersGoogleResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersGoogleResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -75,15 +80,16 @@ namespace Stytch.net.Clients.B2B
         /// access token automatically.
         /// </summary>
         public async Task<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse> Microsoft(
-            B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request)
+            B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oauth_providers/microsoft"
             };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["include_refresh_token"] = (request.IncludeRefreshToken ?? false).ToString().ToLower();
+            query["include_refresh_token"] = (request.IncludeRefreshToken).ToString().ToLower();
             uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -93,11 +99,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOAuthProvidersMicrosoftResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

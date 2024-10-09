@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -23,7 +27,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Send a One-Time Passcode (OTP) to a Member's phone number.
+        /// Send a One-Time Passcode (OTP) to a's phone number.
         /// 
         /// If the Member already has a phone number, the `mfa_phone_number` field is not needed; the endpoint will
         /// send an OTP to the number associated with the Member.
@@ -58,16 +62,21 @@ namespace Stytch.net.Clients.B2B
         /// to [support@stytch.com](mailto:support@stytch.com?subject=Enable%20international%20SMS).
         /// </summary>
         public async Task<B2BOTPSmsSendResponse> Send(
-            B2BOTPSmsSendRequest request)
+            B2BOTPSmsSendRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/otps/sms/send"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -76,11 +85,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOTPSmsSendResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOTPSmsSendResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -106,8 +115,8 @@ namespace Stytch.net.Clients.B2B
         /// or upon successful calls to discovery authenticate methods, such as
         /// [email magic link discovery authenticate](https://stytch.com/docs/b2b/api/authenticate-discovery-magic-link).
         /// 
-        /// If the Organization's MFA policy is `REQUIRED_FOR_ALL`, a successful OTP authentication will change the
-        /// Member's `mfa_enrolled` status to `true` if it is not already `true`.
+        /// If the's MFA policy is `REQUIRED_FOR_ALL`, a successful OTP authentication will change the's
+        /// `mfa_enrolled` status to `true` if it is not already `true`.
         /// If the Organization's MFA policy is `OPTIONAL`, the Member's MFA enrollment can be toggled by passing in
         /// a value for the `set_mfa_enrollment` field.
         /// The Member's MFA enrollment can also be toggled through the
@@ -118,16 +127,21 @@ namespace Stytch.net.Clients.B2B
         /// of 60 minutes.
         /// </summary>
         public async Task<B2BOTPSmsAuthenticateResponse> Authenticate(
-            B2BOTPSmsAuthenticateRequest request)
+            B2BOTPSmsAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/otps/sms/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -136,11 +150,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOTPSmsAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOTPSmsAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

@@ -5,6 +5,8 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -14,16 +16,16 @@ namespace Stytch.net.Models.Consumer
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// A human-readable display name for the connection.
         /// </summary>
         [JsonProperty("display_name")]
-        public required string DisplayName { get; set; }
+        public string DisplayName { get; set; }
         [JsonProperty("bearer_token_last_four")]
-        public required string BearerTokenLastFour { get; set; }
+        public string BearerTokenLastFour { get; set; }
         [JsonProperty("bearer_token_expires_at")]
-        public string? BearerTokenExpiresAt { get; set; }
+        public string BearerTokenExpiresAt { get; set; }
     }
     public class ActiveSSOConnection
     {
@@ -31,12 +33,12 @@ namespace Stytch.net.Models.Consumer
         /// Globally unique UUID that identifies a specific SSO `connection_id` for a Member.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// A human-readable display name for the connection.
         /// </summary>
         [JsonProperty("display_name")]
-        public required string DisplayName { get; set; }
+        public string DisplayName { get; set; }
     }
     public class B2BOrganizationsDeleteRequestOptions
     {
@@ -46,7 +48,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsResultsMetadata
     {
@@ -54,13 +56,13 @@ namespace Stytch.net.Models.Consumer
         /// The total number of results returned by your search query.
         /// </summary>
         [JsonProperty("total")]
-        public required int Total { get; set; }
+        public int Total { get; set; }
         /// <summary>
         /// The `next_cursor` string is returned when your search result contains more than one page of results.
         /// This value is passed into your next search call in the `cursor` field.
         /// </summary>
         [JsonProperty("next_cursor")]
-        public string? NextCursor { get; set; }
+        public string NextCursor { get; set; }
     }
     public class B2BOrganizationsUpdateRequestOptions
     {
@@ -70,7 +72,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class EmailImplicitRoleAssignment
     {
@@ -78,7 +80,7 @@ namespace Stytch.net.Models.Consumer
         /// Email domain that grants the specified Role.
         /// </summary>
         [JsonProperty("domain")]
-        public required string Domain { get; set; }
+        public string Domain { get; set; }
         /// <summary>
         /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.  
         ///   
@@ -93,7 +95,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("role_id")]
-        public required string RoleId { get; set; }
+        public string RoleId { get; set; }
     }
     public class Member
     {
@@ -102,34 +104,34 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// The status of the Member. The possible values are: `pending`, `invited`, `active`, or `deleted`.
         /// </summary>
         [JsonProperty("status")]
-        public required string Status { get; set; }
+        public string Status { get; set; }
         /// <summary>
         /// The name of the Member.
         /// </summary>
         [JsonProperty("name")]
-        public required string Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// An array of registered [SAML Connection](saml-connection-object) or
         /// [OIDC Connection](oidc-connection-object) objects the Member has authenticated with.
         /// </summary>
         [JsonProperty("sso_registrations")]
-        public required List<SSORegistration> SSORegistrations { get; set; }
+        public List<SSORegistration> SSORegistrations { get; set; }
         /// <summary>
         /// Identifies the Member as a break glass user - someone who has permissions to authenticate into an
         /// Organization by bypassing the Organization's settings. A break glass account is typically used for
@@ -138,27 +140,27 @@ namespace Stytch.net.Models.Consumer
         /// more details.
         /// </summary>
         [JsonProperty("is_breakglass")]
-        public required bool IsBreakglass { get; set; }
+        public bool IsBreakglass { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a Member's password.
         /// </summary>
         [JsonProperty("member_password_id")]
-        public required string MemberPasswordId { get; set; }
+        public string MemberPasswordId { get; set; }
         /// <summary>
         /// A list of OAuth registrations for this member.
         /// </summary>
         [JsonProperty("oauth_registrations")]
-        public required List<OAuthRegistration> OAuthRegistrations { get; set; }
+        public List<OAuthRegistration> OAuthRegistrations { get; set; }
         /// <summary>
         /// Whether or not the Member's email address is verified.
         /// </summary>
         [JsonProperty("email_address_verified")]
-        public required bool EmailAddressVerified { get; set; }
+        public bool EmailAddressVerified { get; set; }
         /// <summary>
         /// Whether or not the Member's phone number is verified.
         /// </summary>
         [JsonProperty("mfa_phone_number_verified")]
-        public required bool MfaPhoneNumberVerified { get; set; }
+        public bool MfaPhoneNumberVerified { get; set; }
         /// <summary>
         /// Whether or not the Member has the `stytch_admin` Role. This Role is automatically granted to Members 
         ///   who create an Organization through the
@@ -166,9 +168,9 @@ namespace Stytch.net.Models.Consumer
         ///   [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for more details on this Role.
         /// </summary>
         [JsonProperty("is_admin")]
-        public required bool IsAdmin { get; set; }
+        public bool IsAdmin { get; set; }
         [JsonProperty("totp_registration_id")]
-        public required string TOTPRegistrationId { get; set; }
+        public string TOTPRegistrationId { get; set; }
         /// <summary>
         /// 
         ///   A list of retired email addresses for this member.
@@ -186,33 +188,33 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("retired_email_addresses")]
-        public required List<RetiredEmail> RetiredEmailAddresses { get; set; }
+        public List<RetiredEmail> RetiredEmailAddresses { get; set; }
         /// <summary>
         /// Sets whether the Member is enrolled in MFA. If true, the Member must complete an MFA step whenever they
         /// wish to log in to their Organization. If false, the Member only needs to complete an MFA step if the
         /// Organization's MFA policy is set to `REQUIRED_FOR_ALL`.
         /// </summary>
         [JsonProperty("mfa_enrolled")]
-        public required bool MfaEnrolled { get; set; }
+        public bool MfaEnrolled { get; set; }
         /// <summary>
         /// The Member's phone number. A Member may only have one phone number.
         /// </summary>
         [JsonProperty("mfa_phone_number")]
-        public required string MfaPhoneNumber { get; set; }
+        public string MfaPhoneNumber { get; set; }
         [JsonProperty("default_mfa_method")]
-        public required string DefaultMfaMethod { get; set; }
+        public string DefaultMfaMethod { get; set; }
         /// <summary>
         /// Explicit or implicit Roles assigned to this Member, along with details about the role assignment source.
         ///    See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information
         /// about role assignment.
         /// </summary>
         [JsonProperty("roles")]
-        public required List<MemberRole> Roles { get; set; }
+        public List<MemberRole> Roles { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// An arbitrary JSON object of application-specific data. These fields can be edited directly by the
         ///   frontend SDK, and should not be used to store critical information. See the
@@ -220,25 +222,25 @@ namespace Stytch.net.Models.Consumer
         ///   for complete field behavior details.
         /// </summary>
         [JsonProperty("untrusted_metadata")]
-        public object? UntrustedMetadata { get; set; }
+        public object UntrustedMetadata { get; set; }
         /// <summary>
         /// The timestamp of the Member's creation. Values conform to the RFC 3339 standard and are expressed in
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("created_at")]
-        public string? CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
         /// <summary>
         /// The timestamp of when the Member was last updated. Values conform to the RFC 3339 standard and are
         /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("updated_at")]
-        public string? UpdatedAt { get; set; }
+        public string UpdatedAt { get; set; }
         /// <summary>
         /// A scim member registration, referencing a [SCIM Connection](scim-connection-object) object in use for
         /// the Member creation.
         /// </summary>
         [JsonProperty("scim_registration")]
-        public SCIMRegistration? SCIMRegistration { get; set; }
+        public SCIMRegistration SCIMRegistration { get; set; }
     }
     public class MemberRole
     {
@@ -256,14 +258,14 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("role_id")]
-        public required string RoleId { get; set; }
+        public string RoleId { get; set; }
         /// <summary>
         /// A list of sources for this role assignment. A role assignment can come from multiple sources - for
         /// example, the Role could be both explicitly assigned and implicitly granted from the Member's email
         /// domain.
         /// </summary>
         [JsonProperty("sources")]
-        public required List<MemberRoleSource> Sources { get; set; }
+        public List<MemberRoleSource> Sources { get; set; }
     }
     public class MemberRoleSource
     {
@@ -326,7 +328,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("type")]
-        public required string Type { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// An object containing additional metadata about the source assignment. The fields will vary depending
         ///   on the role assignment type as follows:
@@ -346,7 +348,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("details")]
-        public object? Details { get; set; }
+        public object Details { get; set; }
     }
     public class OAuthRegistration
     {
@@ -355,30 +357,47 @@ namespace Stytch.net.Models.Consumer
         /// etc.
         /// </summary>
         [JsonProperty("provider_type")]
-        public required string ProviderType { get; set; }
+        public string ProviderType { get; set; }
         /// <summary>
         /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
         /// "Subject field" in OAuth protocols.
         /// </summary>
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         /// <summary>
         /// The unique ID of an OAuth registration.
         /// </summary>
         [JsonProperty("member_oauth_registration_id")]
-        public required string MemberOAuthRegistrationId { get; set; }
+        public string MemberOAuthRegistrationId { get; set; }
         /// <summary>
         /// If available, the `profile_picture_url` is a URL of the User's profile picture set in OAuth identity the
         /// provider that the User has authenticated with, e.g. Google profile picture.
         /// </summary>
         [JsonProperty("profile_picture_url")]
-        public string? ProfilePictureURL { get; set; }
+        public string ProfilePictureURL { get; set; }
         /// <summary>
         /// If available, the `locale` is the Member's locale set in the OAuth identity provider that the user has
         /// authenticated with.
         /// </summary>
         [JsonProperty("locale")]
-        public string? Locale { get; set; }
+        public string Locale { get; set; }
+    }
+    public class OIDCProviderInfo
+    {
+        [JsonProperty("provider_subject")]
+        public string ProviderSubject { get; set; }
+        [JsonProperty("id_token")]
+        public string IdToken { get; set; }
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+        [JsonProperty("access_token_expires_in")]
+        public int AccessTokenExpiresIn { get; set; }
+        [JsonProperty("scopes")]
+        public List<string> Scopes { get; set; }
+        [JsonProperty("connection_id")]
+        public string ConnectionId { get; set; }
+        [JsonProperty("refresh_token")]
+        public string RefreshToken { get; set; }
     }
     public class Organization
     {
@@ -387,23 +406,23 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The name of the Organization. Must be between 1 and 128 characters in length.
         /// </summary>
         [JsonProperty("organization_name")]
-        public required string OrganizationName { get; set; }
+        public string OrganizationName { get; set; }
         /// <summary>
         /// The image URL of the Organization logo.
         /// </summary>
         [JsonProperty("organization_logo_url")]
-        public required string OrganizationLogoURL { get; set; }
+        public string OrganizationLogoURL { get; set; }
         /// <summary>
         /// The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following
         /// reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length.
         /// </summary>
         [JsonProperty("organization_slug")]
-        public required string OrganizationSlug { get; set; }
+        public string OrganizationSlug { get; set; }
         /// <summary>
         /// The authentication setting that controls the JIT provisioning of Members when authenticating via SSO.
         /// The accepted values are:
@@ -418,7 +437,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("sso_jit_provisioning")]
-        public required string SSOJITProvisioning { get; set; }
+        public string SSOJITProvisioning { get; set; }
         /// <summary>
         /// An array of `connection_id`s that reference
         /// [SAML Connection objects](https://stytch.com/docs/b2b/api/saml-connection-object). 
@@ -426,13 +445,13 @@ namespace Stytch.net.Models.Consumer
         /// set to `RESTRICTED`.
         /// </summary>
         [JsonProperty("sso_jit_provisioning_allowed_connections")]
-        public required List<string> SSOJITProvisioningAllowedConnections { get; set; }
+        public List<string> SSOJITProvisioningAllowedConnections { get; set; }
         /// <summary>
         /// An array of active [SAML Connection references](https://stytch.com/docs/b2b/api/saml-connection-object)
         /// or [OIDC Connection references](https://stytch.com/docs/b2b/api/oidc-connection-object).
         /// </summary>
         [JsonProperty("sso_active_connections")]
-        public required List<ActiveSSOConnection> SSOActiveConnections { get; set; }
+        public List<ActiveSSOConnection> SSOActiveConnections { get; set; }
         /// <summary>
         /// An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced
         /// when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`. 
@@ -442,7 +461,7 @@ namespace Stytch.net.Models.Consumer
         /// [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list.
         /// </summary>
         [JsonProperty("email_allowed_domains")]
-        public required List<string> EmailAllowedDomains { get; set; }
+        public List<string> EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
         /// Magic Link or OAuth. The accepted values are: 
@@ -454,7 +473,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("email_jit_provisioning")]
-        public required string EmailJITProvisioning { get; set; }
+        public string EmailJITProvisioning { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be invited to an organization by email.
         /// The accepted values are: 
@@ -468,7 +487,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("email_invites")]
-        public required string EmailInvites { get; set; }
+        public string EmailInvites { get; set; }
         /// <summary>
         /// The setting that controls which authentication methods can be used by Members of an Organization. The
         /// accepted values are:
@@ -480,7 +499,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("auth_methods")]
-        public required string AuthMethods { get; set; }
+        public string AuthMethods { get; set; }
         /// <summary>
         /// An array of allowed authentication methods. This list is enforced when `auth_methods` is set to
         /// `RESTRICTED`. 
@@ -488,9 +507,9 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public required List<string> AllowedAuthMethods { get; set; }
+        public List<string> AllowedAuthMethods { get; set; }
         [JsonProperty("mfa_policy")]
-        public required string MfaPolicy { get; set; }
+        public string MfaPolicy { get; set; }
         /// <summary>
         /// Implicit role assignments based off of email domains. 
         ///   For each domain-Role pair, all Members whose email addresses have the specified email domain will be
@@ -500,7 +519,7 @@ namespace Stytch.net.Models.Consumer
         ///   for more information about role assignment.
         /// </summary>
         [JsonProperty("rbac_email_implicit_role_assignments")]
-        public required List<EmailImplicitRoleAssignment> RBACEmailImplicitRoleAssignments { get; set; }
+        public List<EmailImplicitRoleAssignment> RBACEmailImplicitRoleAssignments { get; set; }
         /// <summary>
         /// The setting that controls which MFA methods can be used by Members of an Organization. The accepted
         /// values are:
@@ -512,7 +531,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("mfa_methods")]
-        public required string MfaMethods { get; set; }
+        public string MfaMethods { get; set; }
         /// <summary>
         /// An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to
         /// `RESTRICTED`.
@@ -520,7 +539,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_mfa_methods")]
-        public required List<string> AllowedMfaMethods { get; set; }
+        public List<string> AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
         /// tenant. The accepted values are: 
@@ -531,40 +550,40 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("oauth_tenant_jit_provisioning")]
-        public required string OAuthTenantJITProvisioning { get; set; }
+        public string OAuthTenantJITProvisioning { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// The timestamp of the Organization's creation. Values conform to the RFC 3339 standard and are expressed
         /// in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("created_at")]
-        public string? CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
         /// <summary>
         /// The timestamp of when the Organization was last updated. Values conform to the RFC 3339 standard and are
         /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("updated_at")]
-        public string? UpdatedAt { get; set; }
+        public string UpdatedAt { get; set; }
         /// <summary>
         /// The default connection used for SSO when there are multiple active connections.
         /// </summary>
         [JsonProperty("sso_default_connection_id")]
-        public string? SSODefaultConnectionId { get; set; }
+        public string SSODefaultConnectionId { get; set; }
         /// <summary>
         /// An active [SCIM Connection references](https://stytch.com/docs/b2b/api/scim-connection-object).
         /// </summary>
         [JsonProperty("scim_active_connection")]
-        public ActiveSCIMConnection? SCIMActiveConnection { get; set; }
+        public ActiveSCIMConnection SCIMActiveConnection { get; set; }
         /// <summary>
         /// A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT
         /// provisioning by OAuth Tenant. Allowed keys are "slack" and "hubspot".
         /// </summary>
         [JsonProperty("allowed_oauth_tenants")]
-        public object? AllowedOAuthTenants { get; set; }
+        public object AllowedOAuthTenants { get; set; }
     }
     public class RetiredEmail
     {
@@ -572,12 +591,12 @@ namespace Stytch.net.Models.Consumer
         /// The globally unique UUID of a Member's email.
         /// </summary>
         [JsonProperty("email_id")]
-        public required string EmailId { get; set; }
+        public string EmailId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
     }
     public class SCIMRegistration
     {
@@ -585,22 +604,22 @@ namespace Stytch.net.Models.Consumer
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// The unique ID of a SCIM Registration.
         /// </summary>
         [JsonProperty("registration_id")]
-        public required string RegistrationId { get; set; }
+        public string RegistrationId { get; set; }
         /// <summary>
         /// The ID of the member given by the identity provider.
         /// </summary>
         [JsonProperty("external_id")]
-        public string? ExternalId { get; set; }
+        public string ExternalId { get; set; }
         /// <summary>
         /// An object for storing SCIM attributes brought over from the identity provider.
         /// </summary>
         [JsonProperty("scim_attributes")]
-        public SCIMAttributes? SCIMAttributes { get; set; }
+        public SCIMAttributes SCIMAttributes { get; set; }
     }
     public class SSORegistration
     {
@@ -608,22 +627,22 @@ namespace Stytch.net.Models.Consumer
         /// Globally unique UUID that identifies a specific SSO `connection_id` for a Member.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// The ID of the member given by the identity provider.
         /// </summary>
         [JsonProperty("external_id")]
-        public required string ExternalId { get; set; }
+        public string ExternalId { get; set; }
         /// <summary>
         /// The unique ID of an SSO Registration.
         /// </summary>
         [JsonProperty("registration_id")]
-        public required string RegistrationId { get; set; }
+        public string RegistrationId { get; set; }
         /// <summary>
         /// An object for storing SSO attributes brought over from the identity provider.
         /// </summary>
         [JsonProperty("sso_attributes")]
-        public object? SSOAttributes { get; set; }
+        public object SSOAttributes { get; set; }
     }
     public class SearchQuery
     {
@@ -635,12 +654,12 @@ namespace Stytch.net.Models.Consumer
         ///   `OR` – the operator will return any matches to at least one of the operand values you supply.
         /// </summary>
         [JsonProperty("operator")]
-        public required SearchQueryOperator Operator { get; set; }
+        public SearchQueryOperator Operator { get; set; }
         /// <summary>
         /// An array of operand objects that contains all of the filters and values to apply to your search query.
         /// </summary>
         [JsonProperty("operands")]
-        public required List<SearchQueryOperand> Operands { get; set; }
+        public List<SearchQueryOperand> Operands { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Create"/>..
@@ -651,23 +670,23 @@ namespace Stytch.net.Models.Consumer
         /// The name of the Organization. Must be between 1 and 128 characters in length.
         /// </summary>
         [JsonProperty("organization_name")]
-        public required string OrganizationName { get; set; }
+        public string OrganizationName { get; set; }
         /// <summary>
         /// The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following
         /// reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length.
         /// </summary>
         [JsonProperty("organization_slug")]
-        public string? OrganizationSlug { get; set; }
+        public string OrganizationSlug { get; set; }
         /// <summary>
         /// The image URL of the Organization logo.
         /// </summary>
         [JsonProperty("organization_logo_url")]
-        public string? OrganizationLogoURL { get; set; }
+        public string OrganizationLogoURL { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// The authentication setting that controls the JIT provisioning of Members when authenticating via SSO.
         /// The accepted values are:
@@ -682,7 +701,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("sso_jit_provisioning")]
-        public string? SSOJITProvisioning { get; set; }
+        public string SSOJITProvisioning { get; set; }
         /// <summary>
         /// An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced
         /// when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`. 
@@ -692,7 +711,7 @@ namespace Stytch.net.Models.Consumer
         /// [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list.
         /// </summary>
         [JsonProperty("email_allowed_domains")]
-        public List<string>? EmailAllowedDomains { get; set; }
+        public List<string> EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
         /// Magic Link or OAuth. The accepted values are: 
@@ -704,7 +723,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("email_jit_provisioning")]
-        public string? EmailJITProvisioning { get; set; }
+        public string EmailJITProvisioning { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be invited to an organization by email.
         /// The accepted values are: 
@@ -718,7 +737,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("email_invites")]
-        public string? EmailInvites { get; set; }
+        public string EmailInvites { get; set; }
         /// <summary>
         /// The setting that controls which authentication methods can be used by Members of an Organization. The
         /// accepted values are:
@@ -730,7 +749,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("auth_methods")]
-        public string? AuthMethods { get; set; }
+        public string AuthMethods { get; set; }
         /// <summary>
         /// An array of allowed authentication methods. This list is enforced when `auth_methods` is set to
         /// `RESTRICTED`. 
@@ -738,7 +757,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public List<string>? AllowedAuthMethods { get; set; }
+        public List<string> AllowedAuthMethods { get; set; }
         /// <summary>
         /// The setting that controls the MFA policy for all Members in the Organization. The accepted values are:
         ///  
@@ -751,7 +770,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("mfa_policy")]
-        public string? MfaPolicy { get; set; }
+        public string MfaPolicy { get; set; }
         /// <summary>
         /// Implicit role assignments based off of email domains. 
         ///   For each domain-Role pair, all Members whose email addresses have the specified email domain will be
@@ -761,7 +780,7 @@ namespace Stytch.net.Models.Consumer
         ///   for more information about role assignment.
         /// </summary>
         [JsonProperty("rbac_email_implicit_role_assignments")]
-        public List<EmailImplicitRoleAssignment>? RBACEmailImplicitRoleAssignments { get; set; }
+        public List<EmailImplicitRoleAssignment> RBACEmailImplicitRoleAssignments { get; set; }
         /// <summary>
         /// The setting that controls which MFA methods can be used by Members of an Organization. The accepted
         /// values are:
@@ -773,7 +792,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("mfa_methods")]
-        public string? MfaMethods { get; set; }
+        public string MfaMethods { get; set; }
         /// <summary>
         /// An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to
         /// `RESTRICTED`.
@@ -781,7 +800,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("allowed_mfa_methods")]
-        public List<string>? AllowedMfaMethods { get; set; }
+        public List<string> AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
         /// tenant. The accepted values are: 
@@ -792,13 +811,17 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("oauth_tenant_jit_provisioning")]
-        public string? OAuthTenantJITProvisioning { get; set; }
+        public string OAuthTenantJITProvisioning { get; set; }
         /// <summary>
         /// A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT
         /// provisioning by OAuth Tenant. Allowed keys are "slack" and "hubspot".
         /// </summary>
         [JsonProperty("allowed_oauth_tenants")]
-        public object? AllowedOAuthTenants { get; set; }
+        public object AllowedOAuthTenants { get; set; }
+        public B2BOrganizationsCreateRequest(string organizationName)
+        {
+            this.OrganizationName = organizationName;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Create"/>..
@@ -810,18 +833,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Delete"/>..
@@ -833,7 +856,11 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
+        public B2BOrganizationsDeleteRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Delete"/>..
@@ -845,19 +872,19 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Get"/>..
@@ -869,7 +896,11 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
+        public B2BOrganizationsGetRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Get"/>..
@@ -881,32 +912,36 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     public class B2BOrganizationsMetricsRequest
     {
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
+        public B2BOrganizationsMetricsRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     public class B2BOrganizationsMetricsResponse
     {
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         [JsonProperty("member_count")]
-        public required uint MemberCount { get; set; }
+        public uint MemberCount { get; set; }
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Search"/>..
@@ -921,21 +956,24 @@ namespace Stytch.net.Models.Consumer
         /// next page of results. Continue to make search calls until the `next_cursor` in the response is null.
         /// </summary>
         [JsonProperty("cursor")]
-        public string? Cursor { get; set; }
+        public string Cursor { get; set; }
         /// <summary>
         /// The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
         /// be returned by a single search request. If the total size of your result set is greater than one page
         /// size, you must paginate the response. See the `cursor` field.
         /// </summary>
         [JsonProperty("limit")]
-        public uint? Limit { get; set; }
+        public uint Limit { get; set; }
         /// <summary>
         /// The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter
         /// your results. Only an operator is required. If you include no operands, no filtering will be applied. If
         /// you include no query object, it will return all Organizations with no filtering applied.
         /// </summary>
         [JsonProperty("query")]
-        public SearchQuery? Query { get; set; }
+        public SearchQuery Query { get; set; }
+        public B2BOrganizationsSearchRequest()
+        {
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Search"/>..
@@ -947,24 +985,24 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// An array of [Organization objects](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organizations")]
-        public required List<Organization> Organizations { get; set; }
+        public List<Organization> Organizations { get; set; }
         /// <summary>
         /// The search `results_metadata` object contains metadata relevant to your specific query like `total` and
         /// `next_cursor`.
         /// </summary>
         [JsonProperty("results_metadata")]
-        public required B2BOrganizationsResultsMetadata ResultsMetadata { get; set; }
+        public B2BOrganizationsResultsMetadata ResultsMetadata { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Update"/>..
@@ -976,7 +1014,7 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The name of the Organization. Must be between 1 and 128 characters in length.
         /// 
@@ -984,7 +1022,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.info.name` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("organization_name")]
-        public string? OrganizationName { get; set; }
+        public string OrganizationName { get; set; }
         /// <summary>
         /// The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following
         /// reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length.
@@ -993,7 +1031,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.info.slug` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("organization_slug")]
-        public string? OrganizationSlug { get; set; }
+        public string OrganizationSlug { get; set; }
         /// <summary>
         /// The image URL of the Organization logo.
         /// 
@@ -1001,7 +1039,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.info.logo-url` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("organization_logo_url")]
-        public string? OrganizationLogoURL { get; set; }
+        public string OrganizationLogoURL { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         ///           If a session header is passed into the request, this field may **not** be passed into the
@@ -1009,7 +1047,7 @@ namespace Stytch.net.Models.Consumer
         ///           update trusted metadata when acting as a Member.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// The default connection used for SSO when there are multiple active connections.
         /// 
@@ -1018,7 +1056,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("sso_default_connection_id")]
-        public string? SSODefaultConnectionId { get; set; }
+        public string SSODefaultConnectionId { get; set; }
         /// <summary>
         /// The authentication setting that controls the JIT provisioning of Members when authenticating via SSO.
         /// The accepted values are:
@@ -1037,7 +1075,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("sso_jit_provisioning")]
-        public string? SSOJITProvisioning { get; set; }
+        public string SSOJITProvisioning { get; set; }
         /// <summary>
         /// An array of `connection_id`s that reference
         /// [SAML Connection objects](https://stytch.com/docs/b2b/api/saml-connection-object). 
@@ -1049,7 +1087,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("sso_jit_provisioning_allowed_connections")]
-        public List<string>? SSOJITProvisioningAllowedConnections { get; set; }
+        public List<string> SSOJITProvisioningAllowedConnections { get; set; }
         /// <summary>
         /// An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced
         /// when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`. 
@@ -1062,7 +1100,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.allowed-domains` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("email_allowed_domains")]
-        public List<string>? EmailAllowedDomains { get; set; }
+        public List<string> EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
         /// Magic Link or OAuth. The accepted values are: 
@@ -1078,7 +1116,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("email_jit_provisioning")]
-        public string? EmailJITProvisioning { get; set; }
+        public string EmailJITProvisioning { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be invited to an organization by email.
         /// The accepted values are: 
@@ -1095,7 +1133,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.email-invites` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("email_invites")]
-        public string? EmailInvites { get; set; }
+        public string EmailInvites { get; set; }
         /// <summary>
         /// The setting that controls which authentication methods can be used by Members of an Organization. The
         /// accepted values are:
@@ -1111,7 +1149,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("auth_methods")]
-        public string? AuthMethods { get; set; }
+        public string AuthMethods { get; set; }
         /// <summary>
         /// An array of allowed authentication methods. This list is enforced when `auth_methods` is set to
         /// `RESTRICTED`. 
@@ -1123,7 +1161,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
-        public List<string>? AllowedAuthMethods { get; set; }
+        public List<string> AllowedAuthMethods { get; set; }
         /// <summary>
         /// The setting that controls the MFA policy for all Members in the Organization. The accepted values are:
         ///  
@@ -1139,7 +1177,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.mfa-policy` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("mfa_policy")]
-        public string? MfaPolicy { get; set; }
+        public string MfaPolicy { get; set; }
         /// <summary>
         /// Implicit role assignments based off of email domains. 
         ///   For each domain-Role pair, all Members whose email addresses have the specified email domain will be
@@ -1152,7 +1190,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.implicit-roles` action on the `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("rbac_email_implicit_role_assignments")]
-        public List<EmailImplicitRoleAssignment>? RBACEmailImplicitRoleAssignments { get; set; }
+        public List<EmailImplicitRoleAssignment> RBACEmailImplicitRoleAssignments { get; set; }
         /// <summary>
         /// The setting that controls which MFA methods can be used by Members of an Organization. The accepted
         /// values are:
@@ -1168,7 +1206,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("mfa_methods")]
-        public string? MfaMethods { get; set; }
+        public string MfaMethods { get; set; }
         /// <summary>
         /// An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to
         /// `RESTRICTED`.
@@ -1180,7 +1218,7 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("allowed_mfa_methods")]
-        public List<string>? AllowedMfaMethods { get; set; }
+        public List<string> AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
         /// tenant. The accepted values are: 
@@ -1195,7 +1233,7 @@ namespace Stytch.net.Models.Consumer
         /// `stytch.organization` Resource.
         /// </summary>
         [JsonProperty("oauth_tenant_jit_provisioning")]
-        public string? OAuthTenantJITProvisioning { get; set; }
+        public string OAuthTenantJITProvisioning { get; set; }
         /// <summary>
         /// A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT
         /// provisioning by OAuth Tenant. Allowed keys are "slack" and "hubspot".
@@ -1205,7 +1243,11 @@ namespace Stytch.net.Models.Consumer
         /// Resource.
         /// </summary>
         [JsonProperty("allowed_oauth_tenants")]
-        public object? AllowedOAuthTenants { get; set; }
+        public object AllowedOAuthTenants { get; set; }
+        public B2BOrganizationsUpdateRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Update"/>..
@@ -1217,18 +1259,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
     public enum SearchQueryOperator

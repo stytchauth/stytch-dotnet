@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -27,14 +31,14 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Authenticate a Member with a Magic Link. This endpoint requires a Magic Link token that is not expired
-        /// or previously used. If the Member’s status is `pending` or `invited`, they will be updated to `active`.
+        /// Authenticate a with a Magic Link. This endpoint requires a Magic Link token that is not expired or
+        /// previously used. If the Member’s status is `pending` or `invited`, they will be updated to `active`.
         /// Provide the `session_duration_minutes` parameter to set the lifetime of the session. If the
         /// `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute
         /// duration.
         /// 
-        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+        /// If the Member is required to complete MFA to log in to the, the returned value of `member_authenticated`
+        /// will be `false`, and an `intermediate_session_token` will be returned.
         /// The `intermediate_session_token` can be passed into the
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), 
@@ -50,16 +54,21 @@ namespace Stytch.net.Clients.B2B
         /// MFA step.
         /// </summary>
         public async Task<B2BMagicLinksAuthenticateResponse> Authenticate(
-            B2BMagicLinksAuthenticateRequest request)
+            B2BMagicLinksAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/magic_links/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -68,11 +77,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BMagicLinksAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BMagicLinksAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

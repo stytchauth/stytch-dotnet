@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -25,7 +29,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Creates an Organization. An `organization_name` and a unique `organization_slug` are required.
+        /// Creates an. An `organization_name` and a unique `organization_slug` are required.
         /// 
         /// By default, `email_invites` and `sso_jit_provisioning` will be set to `ALL_ALLOWED`, and `mfa_policy`
         /// will be set to `OPTIONAL` if no Organization authentication settings are explicitly defined in the
@@ -36,16 +40,21 @@ namespace Stytch.net.Clients.B2B
         /// `sso_jit_provisioning`, etc., and their behaviors.
         /// </summary>
         public async Task<B2BOrganizationsCreateResponse> Create(
-            B2BOrganizationsCreateRequest request)
+            B2BOrganizationsCreateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -54,11 +63,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsCreateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsCreateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -67,13 +76,14 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Returns an Organization specified by `organization_id`.
+        /// Returns an specified by `organization_id`.
         /// </summary>
         public async Task<B2BOrganizationsGetResponse> Get(
-            B2BOrganizationsGetRequest request)
+            B2BOrganizationsGetRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}"
             };
@@ -87,11 +97,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsGetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -100,37 +110,51 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Updates an Organization specified by `organization_id`. An Organization must always have at least one
-        /// auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
+        /// Updates an specified by `organization_id`. An Organization must always have at least one auth setting
+        /// set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
         /// 
         /// *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings)
         /// resource to learn more about fields like `email_jit_provisioning`, `email_invites`,
         /// `sso_jit_provisioning`, etc., and their behaviors.
         /// </summary>
         public async Task<B2BOrganizationsUpdateResponse> Update(
-            B2BOrganizationsUpdateRequest request)
+            B2BOrganizationsUpdateRequest request
+            , B2BOrganizationsUpdateRequestOptions options
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsUpdateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsUpdateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -139,33 +163,46 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Deletes an Organization specified by `organization_id`. All Members of the Organization will also be
-        /// deleted.
+        /// Deletes an specified by `organization_id`. All Members of the Organization will also be deleted.
         /// </summary>
         public async Task<B2BOrganizationsDeleteResponse> Delete(
-            B2BOrganizationsDeleteRequest request)
+            B2BOrganizationsDeleteRequest request
+            , B2BOrganizationsDeleteRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsDeleteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsDeleteResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -179,16 +216,21 @@ namespace Stytch.net.Clients.B2B
         /// characters.
         /// </summary>
         public async Task<B2BOrganizationsSearchResponse> Search(
-            B2BOrganizationsSearchRequest request)
+            B2BOrganizationsSearchRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/search"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -197,11 +239,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsSearchResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsSearchResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -213,10 +255,11 @@ namespace Stytch.net.Clients.B2B
         /// 
         /// </summary>
         public async Task<B2BOrganizationsMetricsResponse> Metrics(
-            B2BOrganizationsMetricsRequest request)
+            B2BOrganizationsMetricsRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/metrics"
             };
@@ -230,11 +273,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMetricsResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMetricsResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

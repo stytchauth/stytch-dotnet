@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -27,16 +31,21 @@ namespace Stytch.net.Clients.Consumer
         /// operations within Stytch. An `email` or a `phone_number` is required.
         /// </summary>
         public async Task<UsersCreateResponse> Create(
-            UsersCreateRequest request)
+            UsersCreateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -45,11 +54,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersCreateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersCreateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -61,10 +70,11 @@ namespace Stytch.net.Clients.Consumer
         /// Get information about a specific User.
         /// </summary>
         public async Task<UsersGetResponse> Get(
-            UsersGetRequest request)
+            UsersGetRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/${request.UserId}"
             };
@@ -78,11 +88,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersGetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -94,16 +104,21 @@ namespace Stytch.net.Clients.Consumer
         /// Search for Users within your Stytch Project. Submit an empty `query` in the request to return all Users.
         /// </summary>
         public async Task<UsersSearchResponse> Search(
-            UsersSearchRequest request)
+            UsersSearchRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/search"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -112,11 +127,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersSearchResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersSearchResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -137,16 +152,21 @@ namespace Stytch.net.Clients.Consumer
         /// new User. We require this process to guard against an account takeover vulnerability.
         /// </summary>
         public async Task<UsersUpdateResponse> Update(
-            UsersUpdateRequest request)
+            UsersUpdateRequest request
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/${request.UserId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -155,11 +175,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersUpdateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersUpdateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -178,16 +198,21 @@ namespace Stytch.net.Clients.Consumer
         /// Use this endpoint with caution as it performs an admin level action.
         /// </summary>
         public async Task<UsersExchangePrimaryFactorResponse> ExchangePrimaryFactor(
-            UsersExchangePrimaryFactorRequest request)
+            UsersExchangePrimaryFactorRequest request
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/${request.UserId}/exchange_primary_factor"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -196,11 +221,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersExchangePrimaryFactorResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersExchangePrimaryFactorResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -212,16 +237,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete a User from Stytch.
         /// </summary>
         public async Task<UsersDeleteResponse> Delete(
-            UsersDeleteRequest request)
+            UsersDeleteRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/${request.UserId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -230,11 +260,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeleteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeleteResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -246,16 +276,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete an email from a User.
         /// </summary>
         public async Task<UsersDeleteEmailResponse> DeleteEmail(
-            UsersDeleteEmailRequest request)
+            UsersDeleteEmailRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/emails/${request.EmailId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -264,11 +299,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeleteEmailResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeleteEmailResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -280,16 +315,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete a phone number from a User.
         /// </summary>
         public async Task<UsersDeletePhoneNumberResponse> DeletePhoneNumber(
-            UsersDeletePhoneNumberRequest request)
+            UsersDeletePhoneNumberRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/phone_numbers/${request.PhoneId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -298,11 +338,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeletePhoneNumberResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeletePhoneNumberResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -314,16 +354,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete a WebAuthn registration from a User.
         /// </summary>
         public async Task<UsersDeleteWebAuthnRegistrationResponse> DeleteWebAuthnRegistration(
-            UsersDeleteWebAuthnRegistrationRequest request)
+            UsersDeleteWebAuthnRegistrationRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/webauthn_registrations/${request.WebAuthnRegistrationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -332,11 +377,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeleteWebAuthnRegistrationResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeleteWebAuthnRegistrationResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -348,16 +393,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete a biometric registration from a User.
         /// </summary>
         public async Task<UsersDeleteBiometricRegistrationResponse> DeleteBiometricRegistration(
-            UsersDeleteBiometricRegistrationRequest request)
+            UsersDeleteBiometricRegistrationRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/biometric_registrations/${request.BiometricRegistrationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -366,11 +416,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeleteBiometricRegistrationResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeleteBiometricRegistrationResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -382,16 +432,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete a TOTP from a User.
         /// </summary>
         public async Task<UsersDeleteTOTPResponse> DeleteTOTP(
-            UsersDeleteTOTPRequest request)
+            UsersDeleteTOTPRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/totps/${request.TOTPId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -400,11 +455,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeleteTOTPResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeleteTOTPResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -416,16 +471,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete a crypto wallet from a User.
         /// </summary>
         public async Task<UsersDeleteCryptoWalletResponse> DeleteCryptoWallet(
-            UsersDeleteCryptoWalletRequest request)
+            UsersDeleteCryptoWalletRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/crypto_wallets/${request.CryptoWalletId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -434,11 +494,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeleteCryptoWalletResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeleteCryptoWalletResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -450,16 +510,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete a password from a User.
         /// </summary>
         public async Task<UsersDeletePasswordResponse> DeletePassword(
-            UsersDeletePasswordRequest request)
+            UsersDeletePasswordRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/passwords/${request.PasswordId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -468,11 +533,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeletePasswordResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeletePasswordResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -484,16 +549,21 @@ namespace Stytch.net.Clients.Consumer
         /// Delete an OAuth registration from a User.
         /// </summary>
         public async Task<UsersDeleteOAuthRegistrationResponse> DeleteOAuthRegistration(
-            UsersDeleteOAuthRegistrationRequest request)
+            UsersDeleteOAuthRegistrationRequest request
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/users/oauth/${request.OAuthUserRegistrationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -502,11 +572,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<UsersDeleteOAuthRegistrationResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<UsersDeleteOAuthRegistrationResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

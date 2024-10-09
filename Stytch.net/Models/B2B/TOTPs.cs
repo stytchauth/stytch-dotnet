@@ -5,6 +5,8 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -18,18 +20,18 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The code to authenticate.
         /// </summary>
         [JsonProperty("code")]
-        public required string Code { get; set; }
+        public string Code { get; set; }
         /// <summary>
         /// The Intermediate Session Token. This token does not necessarily belong to a specific instance of a
         /// Member, but represents a bag of factors that may be converted to a member session. The token can be used
@@ -43,17 +45,17 @@ namespace Stytch.net.Models.Consumer
         /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public string? IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist, 
@@ -82,7 +84,7 @@ namespace Stytch.net.Models.Consumer
         ///   Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
         /// <summary>
         /// Optionally sets the Member’s MFA enrollment status upon a successful authentication. If the
         /// Organization’s MFA policy is `REQUIRED_FOR_ALL`, this field will be ignored. If this field is not passed
@@ -96,7 +98,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("set_mfa_enrollment")]
-        public string? SetMfaEnrollment { get; set; }
+        public string SetMfaEnrollment { get; set; }
         /// <summary>
         /// If passed will set the authenticated method to the default MFA method. Completing an MFA authentication
         /// flow for the first time for a Member will implicitly set the method to the default MFA method. This
@@ -104,6 +106,12 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("set_default_mfa")]
         public bool? SetDefaultMfa { get; set; }
+        public B2BTOTPsAuthenticateRequest(string organizationId, string memberId, string code)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+            this.Code = code;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.TOTPs.Authenticate"/>..
@@ -115,43 +123,43 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
         /// </summary>
         [JsonProperty("member_session")]
-        public MemberSession? MemberSession { get; set; }
+        public MemberSession MemberSession { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.TOTPs.Create"/>..
@@ -163,13 +171,13 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The expiration for the TOTP registration. If the newly created TOTP registration is not authenticated
         /// within this time frame the member will have to restart the registration flow. Defaults to 60 (1 hour)
@@ -190,17 +198,22 @@ namespace Stytch.net.Models.Consumer
         /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public string? IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
+        public B2BTOTPsCreateRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.TOTPs.Create"/>..
@@ -212,48 +225,48 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The unique ID for a TOTP instance.
         /// </summary>
         [JsonProperty("totp_registration_id")]
-        public required string TOTPRegistrationId { get; set; }
+        public string TOTPRegistrationId { get; set; }
         /// <summary>
         /// The TOTP secret key shared between the authenticator app and the server used to generate TOTP codes.
         /// </summary>
         [JsonProperty("secret")]
-        public required string Secret { get; set; }
+        public string Secret { get; set; }
         /// <summary>
         /// The QR code image encoded in base64.
         /// </summary>
         [JsonProperty("qr_code")]
-        public required string QrCode { get; set; }
+        public string QrCode { get; set; }
         /// <summary>
         /// An array of recovery codes that can be used to recover a Member's account.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required List<string> RecoveryCodes { get; set; }
+        public List<string> RecoveryCodes { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.TOTPs.Migrate"/>..
@@ -265,24 +278,31 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The TOTP secret key shared between the authenticator app and the server used to generate TOTP codes.
         /// </summary>
         [JsonProperty("secret")]
-        public required string Secret { get; set; }
+        public string Secret { get; set; }
         /// <summary>
         /// An existing set of recovery codes to be imported into Stytch to be used to authenticate in place of the
         /// secondary MFA method.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required List<string> RecoveryCodes { get; set; }
+        public List<string> RecoveryCodes { get; set; }
+        public B2BTOTPsMigrateRequest(string organizationId, string memberId, string secret, List<string> recoveryCodes)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+            this.Secret = secret;
+            this.RecoveryCodes = recoveryCodes;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.TOTPs.Migrate"/>..
@@ -294,38 +314,38 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The unique ID for a TOTP instance.
         /// </summary>
         [JsonProperty("totp_registration_id")]
-        public required string TOTPRegistrationId { get; set; }
+        public string TOTPRegistrationId { get; set; }
         /// <summary>
         /// An array of recovery codes that can be used to recover a Member's account.
         /// </summary>
         [JsonProperty("recovery_codes")]
-        public required List<string> RecoveryCodes { get; set; }
+        public List<string> RecoveryCodes { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
 }

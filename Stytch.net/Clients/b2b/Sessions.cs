@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -26,10 +30,11 @@ namespace Stytch.net.Clients.B2B
         /// Retrieves all active Sessions for a Member.
         /// </summary>
         public async Task<B2BSessionsGetResponse> Get(
-            B2BSessionsGetRequest request)
+            B2BSessionsGetRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sessions"
             };
@@ -45,11 +50,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSessionsGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSessionsGetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -69,8 +74,8 @@ namespace Stytch.net.Clients.B2B
         /// for more information.
         /// 
         /// If an `authorization_check` object is passed in, this method will also check if the Member is authorized
-        /// to perform the given action on the given Resource in the specified Organization. A Member is authorized
-        /// if their Member Session contains a Role, assigned
+        /// to perform the given action on the given Resource in the specified. A is authorized if their Member
+        /// Session contains a Role, assigned
         /// [explicitly or implicitly](https://stytch.com/docs/b2b/guides/rbac/role-assignment), with adequate
         /// permissions.
         /// In addition, the `organization_id` passed in the authorization check must match the Member's
@@ -81,16 +86,21 @@ namespace Stytch.net.Clients.B2B
         /// Otherwise, the response will contain a list of Roles that satisfied the authorization check.
         /// </summary>
         public async Task<B2BSessionsAuthenticateResponse> Authenticate(
-            B2BSessionsAuthenticateRequest request)
+            B2BSessionsAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sessions/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -99,11 +109,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSessionsAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSessionsAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -117,29 +127,43 @@ namespace Stytch.net.Clients.B2B
         /// the `member_id`.
         /// </summary>
         public async Task<B2BSessionsRevokeResponse> Revoke(
-            B2BSessionsRevokeRequest request)
+            B2BSessionsRevokeRequest request
+            , B2BSessionsRevokeRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sessions/revoke"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSessionsRevokeResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSessionsRevokeResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -148,8 +172,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Use this endpoint to exchange a Member's existing session for another session in a different
-        /// Organization. This can be used to accept an invite, but not to create a new member via domain matching.
+        /// Use this endpoint to exchange a's existing session for another session in a different. This can be used
+        /// to accept an invite, but not to create a new member via domain matching.
         /// 
         /// To create a new member via domain matching, use the
         /// [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) flow
@@ -160,6 +184,8 @@ namespace Stytch.net.Clients.B2B
         /// Any OAuth Tokens owned by the Member will not be transferred to the new Organization.
         /// SMS OTP factors can be used to fulfill MFA requirements for the target Organization if both the original
         /// and target Member have the same phone number and the phone number is verified for both Members.
+        /// HubSpot and Slack OAuth registrations will not be transferred between sessions. Instead, you will
+        /// receive a corresponding factor with type `"oauth_exchange_slack"` or `"oauth_exchange_hubspot"`
         /// 
         /// If the Member is required to complete MFA to log in to the Organization, the returned value of
         /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
@@ -173,16 +199,21 @@ namespace Stytch.net.Clients.B2B
         /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
         /// </summary>
         public async Task<B2BSessionsExchangeResponse> Exchange(
-            B2BSessionsExchangeRequest request)
+            B2BSessionsExchangeRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sessions/exchange"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -191,11 +222,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSessionsExchangeResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSessionsExchangeResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -207,20 +238,25 @@ namespace Stytch.net.Clients.B2B
         /// Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo
         /// endpoint defined in your Stytch Project settings in the [Dashboard](/dashboard), and then perform a
         /// lookup using the `session_token`. If the response contains a valid email address, Stytch will attempt to
-        /// match that email address with an existing Member in your Organization and create a Stytch Session. You
-        /// will need to create the member before using this endpoint.
+        /// match that email address with an existing in your and create a Stytch Session. You will need to create
+        /// the member before using this endpoint.
         /// </summary>
         public async Task<B2BSessionsMigrateResponse> Migrate(
-            B2BSessionsMigrateRequest request)
+            B2BSessionsMigrateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sessions/migrate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -229,11 +265,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSessionsMigrateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSessionsMigrateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -263,10 +299,11 @@ namespace Stytch.net.Clients.B2B
         /// for more information.
         /// </summary>
         public async Task<B2BSessionsGetJWKSResponse> GetJWKS(
-            B2BSessionsGetJWKSRequest request)
+            B2BSessionsGetJWKSRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sessions/jwks/${request.ProjectId}"
             };
@@ -280,11 +317,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSessionsGetJWKSResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSessionsGetJWKSResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

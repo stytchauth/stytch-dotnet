@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -30,8 +34,8 @@ namespace Stytch.net.Clients.B2B
         /// 
         /// This endpoint can be used to accept invites and create new members via domain matching.
         /// 
-        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-        /// `member_authenticated` will be `false`.
+        /// If the is required to complete MFA to log in to the, the returned value of `member_authenticated` will
+        /// be `false`.
         /// The `intermediate_session_token` will not be consumed and instead will be returned in the response.
         /// The `intermediate_session_token` can be passed into the
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
@@ -41,18 +45,30 @@ namespace Stytch.net.Clients.B2B
         /// or the
         /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to join a different Organization or create a new one.
         /// The `session_duration_minutes` and `session_custom_claims` parameters will be ignored.
+        /// 
+        /// If the Member is logging in via an OAuth provider that does not fully verify the email, the returned
+        /// value of `member_authenticated` will be `false`.
+        /// The `intermediate_session_token` will not be consumed and instead will be returned in the response.
+        /// The `primary_required` field details the authentication flow the Member must perform in order to
+        /// [complete a step-up authentication](https://stytch.com/docs/b2b/guides/oauth/auth-flows) into the
+        /// organization. The `intermediate_session_token` must be passed into that authentication flow.
         /// </summary>
         public async Task<B2BDiscoveryIntermediateSessionsExchangeResponse> Exchange(
-            B2BDiscoveryIntermediateSessionsExchangeRequest request)
+            B2BDiscoveryIntermediateSessionsExchangeRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/discovery/intermediate_sessions/exchange"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -61,11 +77,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BDiscoveryIntermediateSessionsExchangeResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BDiscoveryIntermediateSessionsExchangeResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

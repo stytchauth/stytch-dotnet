@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -25,32 +29,46 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Updates a Member specified by `organization_id` and `member_id`.
+        /// Updates a specified by `organization_id` and `member_id`.
         /// </summary>
         public async Task<B2BOrganizationsMembersUpdateResponse> Update(
-            B2BOrganizationsMembersUpdateRequest request)
+            B2BOrganizationsMembersUpdateRequest request
+            , B2BOrganizationsMembersUpdateRequestOptions options
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersUpdateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersUpdateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -59,32 +77,46 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Deletes a Member specified by `organization_id` and `member_id`.
+        /// Deletes a specified by `organization_id` and `member_id`.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeleteResponse> Delete(
-            B2BOrganizationsMembersDeleteRequest request)
+            B2BOrganizationsMembersDeleteRequest request
+            , B2BOrganizationsMembersDeleteRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeleteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeleteResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -93,33 +125,47 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Reactivates a deleted Member's status and its associated email status (if applicable) to active,
-        /// specified by `organization_id` and `member_id`.
+        /// Reactivates a deleted's status and its associated email status (if applicable) to active, specified by
+        /// `organization_id` and `member_id`.
         /// </summary>
         public async Task<B2BOrganizationsMembersReactivateResponse> Reactivate(
-            B2BOrganizationsMembersReactivateRequest request)
+            B2BOrganizationsMembersReactivateRequest request
+            , B2BOrganizationsMembersReactivateRequestOptions options
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/reactivate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersReactivateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersReactivateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -128,7 +174,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Delete a Member's MFA phone number. 
+        /// Delete a's MFA phone number. 
         /// 
         /// To change a Member's phone number, you must first call this endpoint to delete the existing phone number.
         /// 
@@ -140,29 +186,43 @@ namespace Stytch.net.Clients.B2B
         /// [OTP SMS Authenticate](https://stytch.com/docs/b2b/api/authenticate-otp-sms) endpoint.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeleteMFAPhoneNumberResponse> DeleteMFAPhoneNumber(
-            B2BOrganizationsMembersDeleteMFAPhoneNumberRequest request)
+            B2BOrganizationsMembersDeleteMFAPhoneNumberRequest request
+            , B2BOrganizationsMembersDeleteMFAPhoneNumberRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/mfa_phone_numbers/${request.MemberId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeleteMFAPhoneNumberResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeleteMFAPhoneNumberResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -180,29 +240,43 @@ namespace Stytch.net.Clients.B2B
         /// registration is deleted, and MFA will not be enforced until the Member logs in again.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeleteTOTPResponse> DeleteTOTP(
-            B2BOrganizationsMembersDeleteTOTPRequest request)
+            B2BOrganizationsMembersDeleteTOTPRequest request
+            , B2BOrganizationsMembersDeleteTOTPRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/totp"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeleteTOTPResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeleteTOTPResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -217,29 +291,43 @@ namespace Stytch.net.Clients.B2B
         /// *All fuzzy search filters require a minimum of three characters.
         /// </summary>
         public async Task<B2BOrganizationsMembersSearchResponse> Search(
-            B2BOrganizationsMembersSearchRequest request)
+            B2BOrganizationsMembersSearchRequest request
+            , B2BOrganizationsMembersSearchRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/members/search"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersSearchResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersSearchResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -248,32 +336,46 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Delete a Member's password.
+        /// Delete a's password.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeletePasswordResponse> DeletePassword(
-            B2BOrganizationsMembersDeletePasswordRequest request)
+            B2BOrganizationsMembersDeletePasswordRequest request
+            , B2BOrganizationsMembersDeletePasswordRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/passwords/${request.MemberPasswordId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeletePasswordResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeletePasswordResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -288,14 +390,16 @@ namespace Stytch.net.Clients.B2B
         /// [Get Member](https://stytch.com/docs/b2b/api/get-member) API instead.
         /// </summary>
         public async Task<B2BOrganizationsMembersGetResponse> DangerouslyGet(
-            B2BOrganizationsMembersDangerouslyGetRequest request)
+            B2BOrganizationsMembersDangerouslyGetRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/members/dangerously_get/${request.MemberId}"
             };
             var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["include_deleted"] = (request.IncludeDeleted).ToString().ToLower();
             uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -305,11 +409,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersGetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -318,8 +422,43 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Unlinks a retired email address from a Member specified by their `organization_id` and `member_id`. The
-        /// email address
+        /// 
+        /// </summary>
+        public async Task<B2BOrganizationsMembersOIDCProvidersResponse> OIDCProviders(
+            B2BOrganizationsMembersOIDCProviderInformationRequest request
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oidc_providers"
+            };
+            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["include_refresh_token"] = (request.IncludeRefreshToken).ToString().ToLower();
+            uriBuilder.Query = query.ToString();
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersOIDCProvidersResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Unlinks a retired email address from a specified by their `organization_id` and `member_id`. The email
+        /// address
         /// to be retired can be identified in the request body by either its `email_id`, its `email_address`, or
         /// both. If using
         /// both identifiers they must refer to the same email.
@@ -339,29 +478,43 @@ namespace Stytch.net.Clients.B2B
         ///  %}
         /// </summary>
         public async Task<B2BOrganizationsMembersUnlinkRetiredEmailResponse> UnlinkRetiredEmail(
-            B2BOrganizationsMembersUnlinkRetiredEmailRequest request)
+            B2BOrganizationsMembersUnlinkRetiredEmailRequest request
+            , B2BOrganizationsMembersUnlinkRetiredEmailRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/unlink_retired_email"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersUnlinkRetiredEmailResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersUnlinkRetiredEmailResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -370,32 +523,46 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Creates a Member. An `organization_id` and `email_address` are required.
+        /// Creates a. An `organization_id` and `email_address` are required.
         /// </summary>
         public async Task<B2BOrganizationsMembersCreateResponse> Create(
-            B2BOrganizationsMembersCreateRequest request)
+            B2BOrganizationsMembersCreateRequest request
+            , B2BOrganizationsMembersCreateRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/members"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersCreateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersCreateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -407,10 +574,11 @@ namespace Stytch.net.Clients.B2B
         /// Get a Member by `member_id` or `email_address`.
         /// </summary>
         public async Task<B2BOrganizationsMembersGetResponse> Get(
-            B2BOrganizationsMembersGetRequest request)
+            B2BOrganizationsMembersGetRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/organizations/${request.OrganizationId}/member"
             };
@@ -426,11 +594,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BOrganizationsMembersGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersGetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

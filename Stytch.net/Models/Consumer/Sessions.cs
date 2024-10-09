@@ -5,26 +5,28 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
     public class AmazonOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class AppleOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class AuthenticationFactor
     {
@@ -33,7 +35,7 @@ namespace Stytch.net.Models.Consumer
         ///        `oauth`, `password`, or `sso`.
         /// </summary>
         [JsonProperty("type")]
-        public required AuthenticationFactorType Type { get; set; }
+        public AuthenticationFactorType Type { get; set; }
         /// <summary>
         /// The method that was used to deliver the authentication factor. The possible values depend on the `type`: 
         ///      
@@ -49,117 +51,117 @@ namespace Stytch.net.Models.Consumer
         ///       
         /// </summary>
         [JsonProperty("delivery_method")]
-        public required AuthenticationFactorDeliveryMethod DeliveryMethod { get; set; }
+        public AuthenticationFactorDeliveryMethod DeliveryMethod { get; set; }
         /// <summary>
         /// The timestamp when the factor was last authenticated.
         /// </summary>
         [JsonProperty("last_authenticated_at")]
-        public string? LastAuthenticatedAt { get; set; }
+        public string LastAuthenticatedAt { get; set; }
         /// <summary>
         /// The timestamp when the factor was initially authenticated.
         /// </summary>
         [JsonProperty("created_at")]
-        public string? CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
         /// <summary>
         /// The timestamp when the factor was last updated.
         /// </summary>
         [JsonProperty("updated_at")]
-        public string? UpdatedAt { get; set; }
+        public string UpdatedAt { get; set; }
         /// <summary>
         /// Information about the email factor, if one is present.
         /// </summary>
         [JsonProperty("email_factor")]
-        public EmailFactor? EmailFactor { get; set; }
+        public EmailFactor EmailFactor { get; set; }
         /// <summary>
         /// Information about the phone number factor, if one is present.
         /// </summary>
         [JsonProperty("phone_number_factor")]
-        public PhoneNumberFactor? PhoneNumberFactor { get; set; }
+        public PhoneNumberFactor PhoneNumberFactor { get; set; }
         /// <summary>
         /// Information about the Google OAuth factor, if one is present.
         /// </summary>
         [JsonProperty("google_oauth_factor")]
-        public GoogleOAuthFactor? GoogleOAuthFactor { get; set; }
+        public GoogleOAuthFactor GoogleOAuthFactor { get; set; }
         /// <summary>
         /// Information about the Microsoft OAuth factor, if one is present.
         /// </summary>
         [JsonProperty("microsoft_oauth_factor")]
-        public MicrosoftOAuthFactor? MicrosoftOAuthFactor { get; set; }
+        public MicrosoftOAuthFactor MicrosoftOAuthFactor { get; set; }
         [JsonProperty("apple_oauth_factor")]
-        public AppleOAuthFactor? AppleOAuthFactor { get; set; }
+        public AppleOAuthFactor AppleOAuthFactor { get; set; }
         [JsonProperty("webauthn_factor")]
-        public WebAuthnFactor? WebAuthnFactor { get; set; }
+        public WebAuthnFactor WebAuthnFactor { get; set; }
         /// <summary>
         /// Information about the TOTP-backed Authenticator App factor, if one is present.
         /// </summary>
         [JsonProperty("authenticator_app_factor")]
-        public AuthenticatorAppFactor? AuthenticatorAppFactor { get; set; }
+        public AuthenticatorAppFactor AuthenticatorAppFactor { get; set; }
         [JsonProperty("github_oauth_factor")]
-        public GithubOAuthFactor? GithubOAuthFactor { get; set; }
+        public GithubOAuthFactor GithubOAuthFactor { get; set; }
         [JsonProperty("recovery_code_factor")]
-        public RecoveryCodeFactor? RecoveryCodeFactor { get; set; }
+        public RecoveryCodeFactor RecoveryCodeFactor { get; set; }
         [JsonProperty("facebook_oauth_factor")]
-        public FacebookOAuthFactor? FacebookOAuthFactor { get; set; }
+        public FacebookOAuthFactor FacebookOAuthFactor { get; set; }
         [JsonProperty("crypto_wallet_factor")]
-        public CryptoWalletFactor? CryptoWalletFactor { get; set; }
+        public CryptoWalletFactor CryptoWalletFactor { get; set; }
         [JsonProperty("amazon_oauth_factor")]
-        public AmazonOAuthFactor? AmazonOAuthFactor { get; set; }
+        public AmazonOAuthFactor AmazonOAuthFactor { get; set; }
         [JsonProperty("bitbucket_oauth_factor")]
-        public BitbucketOAuthFactor? BitbucketOAuthFactor { get; set; }
+        public BitbucketOAuthFactor BitbucketOAuthFactor { get; set; }
         [JsonProperty("coinbase_oauth_factor")]
-        public CoinbaseOAuthFactor? CoinbaseOAuthFactor { get; set; }
+        public CoinbaseOAuthFactor CoinbaseOAuthFactor { get; set; }
         [JsonProperty("discord_oauth_factor")]
-        public DiscordOAuthFactor? DiscordOAuthFactor { get; set; }
+        public DiscordOAuthFactor DiscordOAuthFactor { get; set; }
         [JsonProperty("figma_oauth_factor")]
-        public FigmaOAuthFactor? FigmaOAuthFactor { get; set; }
+        public FigmaOAuthFactor FigmaOAuthFactor { get; set; }
         [JsonProperty("git_lab_oauth_factor")]
-        public GitLabOAuthFactor? GitLabOAuthFactor { get; set; }
+        public GitLabOAuthFactor GitLabOAuthFactor { get; set; }
         [JsonProperty("instagram_oauth_factor")]
-        public InstagramOAuthFactor? InstagramOAuthFactor { get; set; }
+        public InstagramOAuthFactor InstagramOAuthFactor { get; set; }
         [JsonProperty("linked_in_oauth_factor")]
-        public LinkedInOAuthFactor? LinkedInOAuthFactor { get; set; }
+        public LinkedInOAuthFactor LinkedInOAuthFactor { get; set; }
         [JsonProperty("shopify_oauth_factor")]
-        public ShopifyOAuthFactor? ShopifyOAuthFactor { get; set; }
+        public ShopifyOAuthFactor ShopifyOAuthFactor { get; set; }
         [JsonProperty("slack_oauth_factor")]
-        public SlackOAuthFactor? SlackOAuthFactor { get; set; }
+        public SlackOAuthFactor SlackOAuthFactor { get; set; }
         [JsonProperty("snapchat_oauth_factor")]
-        public SnapchatOAuthFactor? SnapchatOAuthFactor { get; set; }
+        public SnapchatOAuthFactor SnapchatOAuthFactor { get; set; }
         [JsonProperty("spotify_oauth_factor")]
-        public SpotifyOAuthFactor? SpotifyOAuthFactor { get; set; }
+        public SpotifyOAuthFactor SpotifyOAuthFactor { get; set; }
         [JsonProperty("steam_oauth_factor")]
-        public SteamOAuthFactor? SteamOAuthFactor { get; set; }
+        public SteamOAuthFactor SteamOAuthFactor { get; set; }
         [JsonProperty("tik_tok_oauth_factor")]
-        public TikTokOAuthFactor? TikTokOAuthFactor { get; set; }
+        public TikTokOAuthFactor TikTokOAuthFactor { get; set; }
         [JsonProperty("twitch_oauth_factor")]
-        public TwitchOAuthFactor? TwitchOAuthFactor { get; set; }
+        public TwitchOAuthFactor TwitchOAuthFactor { get; set; }
         [JsonProperty("twitter_oauth_factor")]
-        public TwitterOAuthFactor? TwitterOAuthFactor { get; set; }
+        public TwitterOAuthFactor TwitterOAuthFactor { get; set; }
         [JsonProperty("embeddable_magic_link_factor")]
-        public EmbeddableMagicLinkFactor? EmbeddableMagicLinkFactor { get; set; }
+        public EmbeddableMagicLinkFactor EmbeddableMagicLinkFactor { get; set; }
         [JsonProperty("biometric_factor")]
-        public BiometricFactor? BiometricFactor { get; set; }
+        public BiometricFactor BiometricFactor { get; set; }
         /// <summary>
         /// Information about the SAML SSO factor, if one is present.
         /// </summary>
         [JsonProperty("saml_sso_factor")]
-        public SAMLSSOFactor? SAMLSSOFactor { get; set; }
+        public SAMLSSOFactor SAMLSSOFactor { get; set; }
         /// <summary>
         /// Information about the OIDC SSO factor, if one is present.
         /// </summary>
         [JsonProperty("oidc_sso_factor")]
-        public OIDCSSOFactor? OIDCSSOFactor { get; set; }
+        public OIDCSSOFactor OIDCSSOFactor { get; set; }
         [JsonProperty("salesforce_oauth_factor")]
-        public SalesforceOAuthFactor? SalesforceOAuthFactor { get; set; }
+        public SalesforceOAuthFactor SalesforceOAuthFactor { get; set; }
         [JsonProperty("yahoo_oauth_factor")]
-        public YahooOAuthFactor? YahooOAuthFactor { get; set; }
+        public YahooOAuthFactor YahooOAuthFactor { get; set; }
         [JsonProperty("hubspot_oauth_factor")]
-        public HubspotOAuthFactor? HubspotOAuthFactor { get; set; }
+        public HubspotOAuthFactor HubspotOAuthFactor { get; set; }
         [JsonProperty("slack_oauth_exchange_factor")]
-        public SlackOAuthExchangeFactor? SlackOAuthExchangeFactor { get; set; }
+        public SlackOAuthExchangeFactor SlackOAuthExchangeFactor { get; set; }
         [JsonProperty("hubspot_oauth_exchange_factor")]
-        public HubspotOAuthExchangeFactor? HubspotOAuthExchangeFactor { get; set; }
-        [JsonProperty("strava_oauth_factor")]
-        public StravaOAuthFactor? StravaOAuthFactor { get; set; }
+        public HubspotOAuthExchangeFactor HubspotOAuthExchangeFactor { get; set; }
+        [JsonProperty("github_oauth_exchange_factor")]
+        public GithubOAuthExchangeFactor GithubOAuthExchangeFactor { get; set; }
     }
     public class AuthenticatorAppFactor
     {
@@ -167,48 +169,48 @@ namespace Stytch.net.Models.Consumer
         /// Globally unique UUID that identifies a TOTP instance.
         /// </summary>
         [JsonProperty("totp_id")]
-        public required string TOTPId { get; set; }
+        public string TOTPId { get; set; }
     }
     public class BiometricFactor
     {
         [JsonProperty("biometric_registration_id")]
-        public required string BiometricRegistrationId { get; set; }
+        public string BiometricRegistrationId { get; set; }
     }
     public class BitbucketOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class CoinbaseOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class CryptoWalletFactor
     {
         [JsonProperty("crypto_wallet_id")]
-        public required string CryptoWalletId { get; set; }
+        public string CryptoWalletId { get; set; }
         [JsonProperty("crypto_wallet_address")]
-        public required string CryptoWalletAddress { get; set; }
+        public string CryptoWalletAddress { get; set; }
         [JsonProperty("crypto_wallet_type")]
-        public required string CryptoWalletType { get; set; }
+        public string CryptoWalletType { get; set; }
     }
     public class DiscordOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class EmailFactor
     {
@@ -216,53 +218,58 @@ namespace Stytch.net.Models.Consumer
         /// The globally unique UUID of the Member's email.
         /// </summary>
         [JsonProperty("email_id")]
-        public required string EmailId { get; set; }
+        public string EmailId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
     }
     public class EmbeddableMagicLinkFactor
     {
         [JsonProperty("embedded_id")]
-        public required string EmbeddedId { get; set; }
+        public string EmbeddedId { get; set; }
     }
     public class FacebookOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class FigmaOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class GitLabOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
+    }
+    public class GithubOAuthExchangeFactor
+    {
+        [JsonProperty("email_id")]
+        public string EmailId { get; set; }
     }
     public class GithubOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class GoogleOAuthFactor
     {
@@ -270,71 +277,71 @@ namespace Stytch.net.Models.Consumer
         /// The unique ID of an OAuth registration.
         /// </summary>
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
         /// "Subject field" in OAuth protocols.
         /// </summary>
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         /// <summary>
         /// The globally unique UUID of the Member's email.
         /// </summary>
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class HubspotOAuthExchangeFactor
     {
         [JsonProperty("email_id")]
-        public required string EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class HubspotOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class InstagramOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class JWK
     {
         [JsonProperty("kty")]
-        public required string Kty { get; set; }
+        public string Kty { get; set; }
         [JsonProperty("use")]
-        public required string Use { get; set; }
+        public string Use { get; set; }
         [JsonProperty("key_ops")]
-        public required List<string> KeyOps { get; set; }
+        public List<string> KeyOps { get; set; }
         [JsonProperty("alg")]
-        public required string Alg { get; set; }
+        public string Alg { get; set; }
         [JsonProperty("kid")]
-        public required string Kid { get; set; }
+        public string Kid { get; set; }
         [JsonProperty("x5c")]
-        public required List<string> X5C { get; set; }
+        public List<string> X5C { get; set; }
         [JsonProperty("x5tS256")]
-        public required string X5TS256 { get; set; }
+        public string X5TS256 { get; set; }
         [JsonProperty("n")]
-        public required string N { get; set; }
+        public string N { get; set; }
         [JsonProperty("e")]
-        public required string E { get; set; }
+        public string E { get; set; }
     }
     public class LinkedInOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class MicrosoftOAuthFactor
     {
@@ -342,18 +349,18 @@ namespace Stytch.net.Models.Consumer
         /// The unique ID of an OAuth registration.
         /// </summary>
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
         /// "Subject field" in OAuth protocols.
         /// </summary>
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         /// <summary>
         /// The globally unique UUID of the Member's email.
         /// </summary>
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class OIDCSSOFactor
     {
@@ -361,17 +368,17 @@ namespace Stytch.net.Models.Consumer
         /// The unique ID of an SSO Registration.
         /// </summary>
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific OIDC Connection.
         /// </summary>
         [JsonProperty("provider_id")]
-        public required string ProviderId { get; set; }
+        public string ProviderId { get; set; }
         /// <summary>
         /// The ID of the member given by the identity provider.
         /// </summary>
         [JsonProperty("external_id")]
-        public required string ExternalId { get; set; }
+        public string ExternalId { get; set; }
     }
     public class PhoneNumberFactor
     {
@@ -379,17 +386,17 @@ namespace Stytch.net.Models.Consumer
         /// The globally unique UUID of the Member's phone number.
         /// </summary>
         [JsonProperty("phone_id")]
-        public required string PhoneId { get; set; }
+        public string PhoneId { get; set; }
         /// <summary>
         /// The phone number of the Member.
         /// </summary>
         [JsonProperty("phone_number")]
-        public required string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
     }
     public class RecoveryCodeFactor
     {
         [JsonProperty("totp_recovery_code_id")]
-        public required string TOTPRecoveryCodeId { get; set; }
+        public string TOTPRecoveryCodeId { get; set; }
     }
     public class SAMLSSOFactor
     {
@@ -397,26 +404,26 @@ namespace Stytch.net.Models.Consumer
         /// The unique ID of an SSO Registration.
         /// </summary>
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific SAML Connection.
         /// </summary>
         [JsonProperty("provider_id")]
-        public required string ProviderId { get; set; }
+        public string ProviderId { get; set; }
         /// <summary>
         /// The ID of the member given by the identity provider.
         /// </summary>
         [JsonProperty("external_id")]
-        public required string ExternalId { get; set; }
+        public string ExternalId { get; set; }
     }
     public class SalesforceOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class Session
     {
@@ -424,150 +431,141 @@ namespace Stytch.net.Models.Consumer
         /// A unique identifier for a specific Session.
         /// </summary>
         [JsonProperty("session_id")]
-        public required string SessionId { get; set; }
+        public string SessionId { get; set; }
         /// <summary>
         /// The unique ID of the affected User.
         /// </summary>
         [JsonProperty("user_id")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// An array of different authentication factors that comprise a Session.
         /// </summary>
         [JsonProperty("authentication_factors")]
-        public required List<AuthenticationFactor> AuthenticationFactors { get; set; }
+        public List<AuthenticationFactor> AuthenticationFactors { get; set; }
         /// <summary>
         /// The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("started_at")]
-        public string? StartedAt { get; set; }
+        public string StartedAt { get; set; }
         /// <summary>
         /// The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are
         /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("last_accessed_at")]
-        public string? LastAccessedAt { get; set; }
+        public string LastAccessedAt { get; set; }
         /// <summary>
         /// The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("expires_at")]
-        public string? ExpiresAt { get; set; }
+        public string ExpiresAt { get; set; }
         /// <summary>
         /// Provided attributes help with fraud detection.
         /// </summary>
         [JsonProperty("attributes")]
-        public Attributes? Attributes { get; set; }
+        public Attributes Attributes { get; set; }
         /// <summary>
         /// The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate
         /// call.
         /// </summary>
         [JsonProperty("custom_claims")]
-        public object? CustomClaims { get; set; }
+        public object CustomClaims { get; set; }
     }
     public class ShopifyOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class SlackOAuthExchangeFactor
     {
         [JsonProperty("email_id")]
-        public required string EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class SlackOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class SnapchatOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class SpotifyOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class SteamOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
-    }
-    public class StravaOAuthFactor
-    {
-        [JsonProperty("id")]
-        public required string Id { get; set; }
-        [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
-        [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class TikTokOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class TwitchOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class TwitterOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     public class WebAuthnFactor
     {
         [JsonProperty("webauthn_registration_id")]
-        public required string WebAuthnRegistrationId { get; set; }
+        public string WebAuthnRegistrationId { get; set; }
         [JsonProperty("domain")]
-        public required string Domain { get; set; }
+        public string Domain { get; set; }
         [JsonProperty("user_agent")]
-        public string? UserAgent { get; set; }
+        public string UserAgent { get; set; }
     }
     public class YahooOAuthFactor
     {
         [JsonProperty("id")]
-        public required string Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("provider_subject")]
-        public required string ProviderSubject { get; set; }
+        public string ProviderSubject { get; set; }
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Sessions.Authenticate"/>..
@@ -578,7 +576,7 @@ namespace Stytch.net.Models.Consumer
         /// The session token to authenticate.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now; minimum of 5 and a maximum of 527040 minutes
         /// (366 days). Note that a successful authentication will continue to extend the session this many minutes.
@@ -591,7 +589,7 @@ namespace Stytch.net.Models.Consumer
         /// return a new JWT.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
@@ -602,7 +600,10 @@ namespace Stytch.net.Models.Consumer
         /// ignored. Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
+        public SessionsAuthenticateRequest()
+        {
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.Sessions.Authenticate"/>..
@@ -614,7 +615,7 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
@@ -623,29 +624,29 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("session")]
-        public required Session Session { get; set; }
+        public Session Session { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
         /// </summary>
         [JsonProperty("user")]
-        public required User User { get; set; }
+        public User User { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Sessions.GetJWKS"/>., <see
@@ -657,7 +658,11 @@ namespace Stytch.net.Models.Consumer
         /// The `project_id` to get the JWKS for.
         /// </summary>
         [JsonProperty("project_id")]
-        public required string ProjectId { get; set; }
+        public string ProjectId { get; set; }
+        public SessionsGetJWKSRequest(string projectId)
+        {
+            this.ProjectId = projectId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Sessions.GetJWKS"/>., <see
@@ -669,19 +674,19 @@ namespace Stytch.net.Models.Consumer
         /// The JWK
         /// </summary>
         [JsonProperty("keys")]
-        public required List<JWK> Keys { get; set; }
+        public List<JWK> Keys { get; set; }
         /// <summary>
         /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Sessions.Get"/>..
@@ -692,7 +697,11 @@ namespace Stytch.net.Models.Consumer
         /// The `user_id` to get active Sessions for.
         /// </summary>
         [JsonProperty("user_id")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; }
+        public SessionsGetRequest(string userId)
+        {
+            this.UserId = userId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.Sessions.Get"/>..
@@ -704,18 +713,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// An array of Session objects.
         /// </summary>
         [JsonProperty("sessions")]
-        public required List<Session> Sessions { get; set; }
+        public List<Session> Sessions { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Sessions.Migrate"/>..
@@ -726,7 +735,7 @@ namespace Stytch.net.Models.Consumer
         /// The `session_token` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist, 
@@ -753,7 +762,11 @@ namespace Stytch.net.Models.Consumer
         /// ignored. Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
+        public SessionsMigrateRequest(string sessionToken)
+        {
+            this.SessionToken = sessionToken;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.Sessions.Migrate"/>..
@@ -765,30 +778,30 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The unique ID of the affected User.
         /// </summary>
         [JsonProperty("user_id")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
         /// </summary>
         [JsonProperty("user")]
-        public required User User { get; set; }
+        public User User { get; set; }
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
@@ -797,7 +810,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("session")]
-        public Session? Session { get; set; }
+        public Session Session { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Sessions.Revoke"/>..
@@ -808,17 +821,20 @@ namespace Stytch.net.Models.Consumer
         /// The `session_id` to revoke.
         /// </summary>
         [JsonProperty("session_id")]
-        public string? SessionId { get; set; }
+        public string SessionId { get; set; }
         /// <summary>
         /// The session token to revoke.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// A JWT for the session to revoke.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
+        public SessionsRevokeRequest()
+        {
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.Sessions.Revoke"/>..
@@ -830,13 +846,13 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
     public enum AuthenticationFactorDeliveryMethod
@@ -919,8 +935,8 @@ namespace Stytch.net.Models.Consumer
         OAUTH_EXCHANGE_SLACK,
         [EnumMember(Value = "oauth_exchange_hubspot")]
         OAUTH_EXCHANGE_HUBSPOT,
-        [EnumMember(Value = "oauth_strava")]
-        OAUTH_STRAVA,
+        [EnumMember(Value = "oauth_exchange_github")]
+        OAUTH_EXCHANGE_GITHUB,
     }
     public enum AuthenticationFactorType
     {

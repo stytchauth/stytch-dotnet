@@ -5,6 +5,8 @@
 // !!!
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -16,7 +18,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSSOGetConnectionsRequestOptions
     {
@@ -26,100 +28,104 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class Connection
     {
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         [JsonProperty("external_organization_id")]
-        public required string ExternalOrganizationId { get; set; }
+        public string ExternalOrganizationId { get; set; }
         [JsonProperty("external_connection_id")]
-        public required string ExternalConnectionId { get; set; }
+        public string ExternalConnectionId { get; set; }
         [JsonProperty("display_name")]
-        public required string DisplayName { get; set; }
+        public string DisplayName { get; set; }
         [JsonProperty("status")]
-        public required string Status { get; set; }
+        public string Status { get; set; }
         [JsonProperty("external_connection_implicit_role_assignments")]
-        public required List<ConnectionImplicitRoleAssignment> ExternalConnectionImplicitRoleAssignments { get; set; }
+        public List<ConnectionImplicitRoleAssignment> ExternalConnectionImplicitRoleAssignments { get; set; }
         [JsonProperty("external_group_implicit_role_assignments")]
-        public required List<GroupImplicitRoleAssignment> ExternalGroupImplicitRoleAssignments { get; set; }
+        public List<GroupImplicitRoleAssignment> ExternalGroupImplicitRoleAssignments { get; set; }
     }
     public class ConnectionImplicitRoleAssignment
     {
         [JsonProperty("role_id")]
-        public required string RoleId { get; set; }
+        public string RoleId { get; set; }
     }
     public class GroupImplicitRoleAssignment
     {
         [JsonProperty("role_id")]
-        public required string RoleId { get; set; }
+        public string RoleId { get; set; }
         [JsonProperty("group")]
-        public required string Group { get; set; }
+        public string Group { get; set; }
     }
     public class OIDCConnection
     {
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         [JsonProperty("status")]
-        public required string Status { get; set; }
+        public string Status { get; set; }
         [JsonProperty("display_name")]
-        public required string DisplayName { get; set; }
+        public string DisplayName { get; set; }
         [JsonProperty("redirect_url")]
-        public required string RedirectURL { get; set; }
+        public string RedirectURL { get; set; }
         [JsonProperty("client_id")]
-        public required string ClientId { get; set; }
+        public string ClientId { get; set; }
         [JsonProperty("client_secret")]
-        public required string ClientSecret { get; set; }
+        public string ClientSecret { get; set; }
         [JsonProperty("issuer")]
-        public required string Issuer { get; set; }
+        public string Issuer { get; set; }
         [JsonProperty("authorization_url")]
-        public required string AuthorizationURL { get; set; }
+        public string AuthorizationURL { get; set; }
         [JsonProperty("token_url")]
-        public required string TokenURL { get; set; }
+        public string TokenURL { get; set; }
         [JsonProperty("userinfo_url")]
-        public required string UserinfoURL { get; set; }
+        public string UserinfoURL { get; set; }
         [JsonProperty("jwks_url")]
-        public required string JWKSURL { get; set; }
+        public string JWKSURL { get; set; }
         [JsonProperty("identity_provider")]
-        public required string IdentityProvider { get; set; }
+        public string IdentityProvider { get; set; }
+        [JsonProperty("custom_scopes")]
+        public string CustomScopes { get; set; }
+        [JsonProperty("attribute_mapping")]
+        public object AttributeMapping { get; set; }
     }
     public class SAMLConnection
     {
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         [JsonProperty("status")]
-        public required string Status { get; set; }
+        public string Status { get; set; }
         [JsonProperty("idp_entity_id")]
-        public required string IdpEntityId { get; set; }
+        public string IdpEntityId { get; set; }
         [JsonProperty("display_name")]
-        public required string DisplayName { get; set; }
+        public string DisplayName { get; set; }
         [JsonProperty("idp_sso_url")]
-        public required string IdpSSOURL { get; set; }
+        public string IdpSSOURL { get; set; }
         [JsonProperty("acs_url")]
-        public required string AcsURL { get; set; }
+        public string AcsURL { get; set; }
         [JsonProperty("audience_uri")]
-        public required string AudienceUri { get; set; }
+        public string AudienceUri { get; set; }
         [JsonProperty("signing_certificates")]
-        public required List<X509Certificate> SigningCertificates { get; set; }
+        public List<X509Certificate> SigningCertificates { get; set; }
         [JsonProperty("verification_certificates")]
-        public required List<X509Certificate> VerificationCertificates { get; set; }
+        public List<X509Certificate> VerificationCertificates { get; set; }
         [JsonProperty("saml_connection_implicit_role_assignments")]
-        public required List<SAMLConnectionImplicitRoleAssignment> SAMLConnectionImplicitRoleAssignments { get; set; }
+        public List<SAMLConnectionImplicitRoleAssignment> SAMLConnectionImplicitRoleAssignments { get; set; }
         [JsonProperty("saml_group_implicit_role_assignments")]
-        public required List<SAMLGroupImplicitRoleAssignment> SAMLGroupImplicitRoleAssignments { get; set; }
+        public List<SAMLGroupImplicitRoleAssignment> SAMLGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("alternative_audience_uri")]
-        public required string AlternativeAudienceUri { get; set; }
+        public string AlternativeAudienceUri { get; set; }
         [JsonProperty("identity_provider")]
-        public required string IdentityProvider { get; set; }
+        public string IdentityProvider { get; set; }
         [JsonProperty("attribute_mapping")]
-        public object? AttributeMapping { get; set; }
+        public object AttributeMapping { get; set; }
     }
     public class SAMLConnectionImplicitRoleAssignment
     {
@@ -137,7 +143,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("role_id")]
-        public required string RoleId { get; set; }
+        public string RoleId { get; set; }
     }
     public class SAMLGroupImplicitRoleAssignment
     {
@@ -155,25 +161,25 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("role_id")]
-        public required string RoleId { get; set; }
+        public string RoleId { get; set; }
         /// <summary>
         /// The name of the SAML group that grants the specified role assignment.
         /// </summary>
         [JsonProperty("group")]
-        public required string Group { get; set; }
+        public string Group { get; set; }
     }
     public class X509Certificate
     {
         [JsonProperty("certificate_id")]
-        public required string CertificateId { get; set; }
+        public string CertificateId { get; set; }
         [JsonProperty("certificate")]
-        public required string Certificate { get; set; }
+        public string Certificate { get; set; }
         [JsonProperty("issuer")]
-        public required string Issuer { get; set; }
+        public string Issuer { get; set; }
         [JsonProperty("created_at")]
-        public string? CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
         [JsonProperty("expires_at")]
-        public string? ExpiresAt { get; set; }
+        public string ExpiresAt { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.Authenticate"/>..
@@ -184,22 +190,22 @@ namespace Stytch.net.Models.Consumer
         /// The token to authenticate.
         /// </summary>
         [JsonProperty("sso_token")]
-        public required string SSOToken { get; set; }
+        public string SSOToken { get; set; }
         /// <summary>
         /// A base64url encoded one time secret used to validate that the request starts and ends on the same device.
         /// </summary>
         [JsonProperty("pkce_code_verifier")]
-        public string? PkceCodeVerifier { get; set; }
+        public string PkceCodeVerifier { get; set; }
         /// <summary>
         /// The `session_token` belonging to the member that you wish to associate the email with.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The `session_jwt` belonging to the member that you wish to associate the email with.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist, 
@@ -228,9 +234,9 @@ namespace Stytch.net.Models.Consumer
         ///   Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
+        /// If the needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
         /// used to determine which language to use when sending the passcode.
         /// 
@@ -245,7 +251,7 @@ namespace Stytch.net.Models.Consumer
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BSSOAuthenticateRequestLocale? Locale { get; set; }
+        public B2BSSOAuthenticateRequestLocale Locale { get; set; }
         /// <summary>
         /// Adds this primary authentication factor to the intermediate session token. If the resulting set of
         /// factors satisfies the organization's primary authentication requirements and MFA requirements, the
@@ -253,7 +259,11 @@ namespace Stytch.net.Models.Consumer
         /// intermediate session token will be returned.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public string? IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
+        public B2BSSOAuthenticateRequest(string ssoToken)
+        {
+            this.SSOToken = ssoToken;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SSO.Authenticate"/>..
@@ -265,33 +275,33 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Indicates if all Sessions linked to the Member need to be reset. You should check this field if you
         /// aren't using
@@ -299,12 +309,12 @@ namespace Stytch.net.Models.Consumer
         /// Sessions for you.
         /// </summary>
         [JsonProperty("reset_session")]
-        public required bool ResetSession { get; set; }
+        public bool ResetSession { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The returned Intermediate Session Token contains an SSO factor associated with the Member. If this value
         /// is non-empty, the member must complete an MFA step to finish logging in to the Organization. The token
@@ -316,29 +326,29 @@ namespace Stytch.net.Models.Consumer
         /// intermediate session token is not valid for use with discovery endpoints.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public required string IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
         /// <summary>
         /// Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step
         /// to log in to the Organization.
         /// </summary>
         [JsonProperty("member_authenticated")]
-        public required bool MemberAuthenticated { get; set; }
+        public bool MemberAuthenticated { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
         /// </summary>
         [JsonProperty("member_session")]
-        public MemberSession? MemberSession { get; set; }
+        public MemberSession MemberSession { get; set; }
         /// <summary>
         /// Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
         /// </summary>
         [JsonProperty("mfa_required")]
-        public MfaRequired? MfaRequired { get; set; }
+        public MfaRequired MfaRequired { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.DeleteConnection"/>..
@@ -349,12 +359,17 @@ namespace Stytch.net.Models.Consumer
         /// The organization ID that the SSO connection belongs to.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The ID of the SSO connection. Both SAML and OIDC connection IDs can be provided.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
+        public B2BSSODeleteConnectionRequest(string organizationId, string connectionId)
+        {
+            this.OrganizationId = organizationId;
+            this.ConnectionId = connectionId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SSO.DeleteConnection"/>..
@@ -366,18 +381,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The `connection_id` that was deleted as part of the delete request.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.GetConnections"/>..
@@ -389,7 +404,11 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
+        public B2BSSOGetConnectionsRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SSO.GetConnections"/>..
@@ -401,27 +420,27 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The list of [SAML Connections](https://stytch.com/docs/b2b/api/saml-connection-object) owned by this
         /// organization.
         /// </summary>
         [JsonProperty("saml_connections")]
-        public required List<SAMLConnection> SAMLConnections { get; set; }
+        public List<SAMLConnection> SAMLConnections { get; set; }
         /// <summary>
         /// The list of [OIDC Connections](https://stytch.com/docs/b2b/api/oidc-connection-object) owned by this
         /// organization.
         /// </summary>
         [JsonProperty("oidc_connections")]
-        public required List<OIDCConnection> OIDCConnections { get; set; }
+        public List<OIDCConnection> OIDCConnections { get; set; }
         [JsonProperty("external_connections")]
-        public required List<Connection> ExternalConnections { get; set; }
+        public List<Connection> ExternalConnections { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
     public enum B2BSSOAuthenticateRequestLocale

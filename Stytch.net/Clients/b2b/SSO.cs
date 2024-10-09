@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 
 
@@ -30,10 +34,12 @@ namespace Stytch.net.Clients.B2B
         /// Get all SSO Connections owned by the organization.
         /// </summary>
         public async Task<B2BSSOGetConnectionsResponse> GetConnections(
-            B2BSSOGetConnectionsRequest request)
+            B2BSSOGetConnectionsRequest request
+            , B2BSSOGetConnectionsRequestOptions options
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sso/${request.OrganizationId}"
             };
@@ -41,17 +47,25 @@ namespace Stytch.net.Clients.B2B
             uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSSOGetConnectionsResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSSOGetConnectionsResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -63,29 +77,43 @@ namespace Stytch.net.Clients.B2B
         /// Delete an existing SSO connection.
         /// </summary>
         public async Task<B2BSSODeleteConnectionResponse> DeleteConnection(
-            B2BSSODeleteConnectionRequest request)
+            B2BSSODeleteConnectionRequest request
+            , B2BSSODeleteConnectionRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sso/${request.OrganizationId}/connections/${request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSSODeleteConnectionResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSSODeleteConnectionResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -103,8 +131,8 @@ namespace Stytch.net.Clients.B2B
         /// To link this authentication event to an existing Stytch session, include either the `session_token` or
         /// `session_jwt` param.
         /// 
-        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+        /// If the is required to complete MFA to log in to the, the returned value of `member_authenticated` will
+        /// be `false`, and an `intermediate_session_token` will be returned.
         /// The `intermediate_session_token` can be passed into the
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp),
@@ -116,16 +144,21 @@ namespace Stytch.net.Clients.B2B
         /// MFA step.
         /// </summary>
         public async Task<B2BSSOAuthenticateResponse> Authenticate(
-            B2BSSOAuthenticateRequest request)
+            B2BSSOAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sso/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -134,11 +167,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSSOAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSSOAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
