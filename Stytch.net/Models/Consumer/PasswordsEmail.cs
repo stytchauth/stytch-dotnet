@@ -4,7 +4,10 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -22,18 +25,18 @@ namespace Stytch.net.Models.Consumer
         /// [here](https://stytch.com/docs/guides/dashboard/redirect-urls).
         /// </summary>
         [JsonProperty("token")]
-        public required string Token { get; set; }
+        public string Token { get; set; }
         /// <summary>
         /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
-        public required string Password { get; set; }
+        public string Password { get; set; }
         /// <summary>
         /// The `session_token` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist, 
@@ -54,12 +57,12 @@ namespace Stytch.net.Models.Consumer
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// A base64url encoded one time secret used to validate that the request starts and ends on the same device.
         /// </summary>
         [JsonProperty("code_verifier")]
-        public string? CodeVerifier { get; set; }
+        public string CodeVerifier { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
@@ -70,17 +73,22 @@ namespace Stytch.net.Models.Consumer
         /// ignored. Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
         /// <summary>
         /// Provided attributes help with fraud detection.
         /// </summary>
         [JsonProperty("attributes")]
-        public Attributes? Attributes { get; set; }
+        public Attributes Attributes { get; set; }
         /// <summary>
         /// Specify optional security settings.
         /// </summary>
         [JsonProperty("options")]
-        public Options? Options { get; set; }
+        public Options Options { get; set; }
+        public PasswordsEmailResetRequest(string token, string password)
+        {
+            this.Token = token;
+            this.Password = password;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.Passwords.Email.Reset"/>..
@@ -92,34 +100,34 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The unique ID of the affected User.
         /// </summary>
         [JsonProperty("user_id")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
         /// </summary>
         [JsonProperty("user")]
-        public required User User { get; set; }
+        public User User { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
@@ -128,7 +136,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("session")]
-        public Session? Session { get; set; }
+        public Session Session { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Passwords.Email.ResetStart"/>..
@@ -139,7 +147,7 @@ namespace Stytch.net.Models.Consumer
         /// The email of the User that requested the password reset.
         /// </summary>
         [JsonProperty("email")]
-        public required string Email { get; set; }
+        public string Email { get; set; }
         /// <summary>
         /// The url that the user clicks from the password reset email to finish the reset password flow. 
         ///   This should be a url that your app receives and parses before showing your app's reset password page. 
@@ -150,7 +158,7 @@ namespace Stytch.net.Models.Consumer
         ///   If you have not set a default reset password redirect URL, an error is returned.
         /// </summary>
         [JsonProperty("reset_password_redirect_url")]
-        public string? ResetPasswordRedirectURL { get; set; }
+        public string ResetPasswordRedirectURL { get; set; }
         /// <summary>
         /// Set the expiration for the password reset, in minutes. By default, it expires in 30 minutes. 
         ///   The minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
@@ -162,12 +170,12 @@ namespace Stytch.net.Models.Consumer
         /// on the same device.
         /// </summary>
         [JsonProperty("code_challenge")]
-        public string? CodeChallenge { get; set; }
+        public string CodeChallenge { get; set; }
         /// <summary>
         /// Provided attributes help with fraud detection.
         /// </summary>
         [JsonProperty("attributes")]
-        public Attributes? Attributes { get; set; }
+        public Attributes Attributes { get; set; }
         /// <summary>
         /// The URL Stytch redirects to after the OAuth flow is completed for a user that already exists. This URL
         /// should be a route in your application which will run `oauth.authenticate` (see below) and finish the
@@ -177,7 +185,7 @@ namespace Stytch.net.Models.Consumer
         /// field is not specified, the default Login URL will be used.
         /// </summary>
         [JsonProperty("login_redirect_url")]
-        public string? LoginRedirectURL { get; set; }
+        public string LoginRedirectURL { get; set; }
         /// <summary>
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
@@ -190,14 +198,18 @@ namespace Stytch.net.Models.Consumer
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public PasswordsEmailResetStartRequestLocale? Locale { get; set; }
+        public PasswordsEmailResetStartRequestLocale Locale { get; set; }
         /// <summary>
         /// Use a custom template for password reset emails. By default, it will use your default email template. 
         ///   The template must be a template using our built-in customizations or a custom HTML email for Passwords
         /// - Password reset.
         /// </summary>
         [JsonProperty("reset_password_template_id")]
-        public string? ResetPasswordTemplateId { get; set; }
+        public string ResetPasswordTemplateId { get; set; }
+        public PasswordsEmailResetStartRequest(string email)
+        {
+            this.Email = email;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.Passwords.Email.ResetStart"/>..
@@ -209,25 +221,26 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The unique ID of the affected User.
         /// </summary>
         [JsonProperty("user_id")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// The unique ID of a specific email address.
         /// </summary>
         [JsonProperty("email_id")]
-        public required string EmailId { get; set; }
+        public string EmailId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum PasswordsEmailResetStartRequestLocale
     {
         [EnumMember(Value = "en")]

@@ -4,7 +4,10 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -17,27 +20,27 @@ namespace Stytch.net.Models.Consumer
         /// The `email_id` or `phone_id` involved in the given authentication.
         /// </summary>
         [JsonProperty("method_id")]
-        public required string MethodId { get; set; }
+        public string MethodId { get; set; }
         /// <summary>
         /// The code to authenticate.
         /// </summary>
         [JsonProperty("code")]
-        public required string Code { get; set; }
+        public string Code { get; set; }
         /// <summary>
         /// Provided attributes help with fraud detection.
         /// </summary>
         [JsonProperty("attributes")]
-        public Attributes? Attributes { get; set; }
+        public Attributes Attributes { get; set; }
         /// <summary>
         /// Specify optional security settings.
         /// </summary>
         [JsonProperty("options")]
-        public Options? Options { get; set; }
+        public Options Options { get; set; }
         /// <summary>
         /// The `session_token` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist, 
@@ -58,7 +61,7 @@ namespace Stytch.net.Models.Consumer
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
@@ -69,7 +72,12 @@ namespace Stytch.net.Models.Consumer
         /// ignored. Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
+        public OTPsAuthenticateRequest(string methodId, string code)
+        {
+            this.MethodId = methodId;
+            this.Code = code;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.Consumer.OTPs.Authenticate"/>..
@@ -81,46 +89,46 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The unique ID of the affected User.
         /// </summary>
         [JsonProperty("user_id")]
-        public required string UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// The `email_id` or `phone_id` involved in the given authentication.
         /// </summary>
         [JsonProperty("method_id")]
-        public required string MethodId { get; set; }
+        public string MethodId { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
         /// </summary>
         [JsonProperty("user")]
-        public required User User { get; set; }
+        public User User { get; set; }
         /// <summary>
         /// Indicates if all other of the User's Sessions need to be reset. You should check this field if you
         /// aren't using Stytch's Session product. If you are using Stytch's Session product, we revoke the User's
         /// other sessions for you.
         /// </summary>
         [JsonProperty("reset_sessions")]
-        public required bool ResetSessions { get; set; }
+        public bool ResetSessions { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
@@ -129,7 +137,7 @@ namespace Stytch.net.Models.Consumer
         ///   
         /// </summary>
         [JsonProperty("session")]
-        public Session? Session { get; set; }
+        public Session Session { get; set; }
     }
 
 }

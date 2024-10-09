@@ -4,7 +4,10 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -16,7 +19,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.MagicLinks.Email.Invite"/>..
@@ -28,12 +31,12 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// The URL that the Member clicks from the invite Email Magic Link. This URL should be an endpoint in the
         /// backend server that verifies
@@ -43,22 +46,22 @@ namespace Stytch.net.Models.Consumer
         /// is returned.
         /// </summary>
         [JsonProperty("invite_redirect_url")]
-        public string? InviteRedirectURL { get; set; }
+        public string InviteRedirectURL { get; set; }
         /// <summary>
         /// The `member_id` of the Member who sends the invite.
         /// </summary>
         [JsonProperty("invited_by_member_id")]
-        public string? InvitedByMemberId { get; set; }
+        public string InvitedByMemberId { get; set; }
         /// <summary>
         /// The name of the Member.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// An arbitrary JSON object of application-specific data. These fields can be edited directly by the
         ///   frontend SDK, and should not be used to store critical information. See the
@@ -66,14 +69,14 @@ namespace Stytch.net.Models.Consumer
         ///   for complete field behavior details.
         /// </summary>
         [JsonProperty("untrusted_metadata")]
-        public object? UntrustedMetadata { get; set; }
+        public object UntrustedMetadata { get; set; }
         /// <summary>
         /// Use a custom template for invite emails. By default, it will use your default email template. The
         /// template must be a template
         ///   using our built-in customizations or a custom HTML email for Magic Links - Invite.
         /// </summary>
         [JsonProperty("invite_template_id")]
-        public string? InviteTemplateId { get; set; }
+        public string InviteTemplateId { get; set; }
         /// <summary>
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
@@ -86,14 +89,19 @@ namespace Stytch.net.Models.Consumer
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BMagicLinksEmailInviteRequestLocale? Locale { get; set; }
+        public B2BMagicLinksEmailInviteRequestLocale Locale { get; set; }
         /// <summary>
         /// Roles to explicitly assign to this Member. See the
         /// [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)
         ///    for more information about role assignment.
         /// </summary>
         [JsonProperty("roles")]
-        public List<string>? Roles { get; set; }
+        public List<string> Roles { get; set; }
+        public B2BMagicLinksEmailInviteRequest(string organizationId, string emailAddress)
+        {
+            this.OrganizationId = organizationId;
+            this.EmailAddress = emailAddress;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.MagicLinks.Email.Invite"/>..
@@ -105,28 +113,28 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.MagicLinks.Email.LoginOrSignup"/>..
@@ -138,12 +146,12 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// The URL that the Member clicks from the login Email Magic Link. This URL should be an endpoint in the
         /// backend server that
@@ -153,7 +161,7 @@ namespace Stytch.net.Models.Consumer
         /// an error is returned.
         /// </summary>
         [JsonProperty("login_redirect_url")]
-        public string? LoginRedirectURL { get; set; }
+        public string LoginRedirectURL { get; set; }
         /// <summary>
         /// The URL the Member clicks from the signup Email Magic Link. This URL should be an endpoint in the
         /// backend server that verifies
@@ -163,27 +171,27 @@ namespace Stytch.net.Models.Consumer
         /// is returned.
         /// </summary>
         [JsonProperty("signup_redirect_url")]
-        public string? SignupRedirectURL { get; set; }
+        public string SignupRedirectURL { get; set; }
         /// <summary>
         /// A base64url encoded SHA256 hash of a one time secret used to validate that the request starts and ends
         /// on the same device.
         /// </summary>
         [JsonProperty("pkce_code_challenge")]
-        public string? PkceCodeChallenge { get; set; }
+        public string PkceCodeChallenge { get; set; }
         /// <summary>
         /// Use a custom template for login emails. By default, it will use your default email template. The
         /// template must be from Stytch's
         /// built-in customizations or a custom HTML email for Magic Links - Login.
         /// </summary>
         [JsonProperty("login_template_id")]
-        public string? LoginTemplateId { get; set; }
+        public string LoginTemplateId { get; set; }
         /// <summary>
         /// Use a custom template for signup emails. By default, it will use your default email template. The
         /// template must be from Stytch's
         /// built-in customizations or a custom HTML email for Magic Links - Signup.
         /// </summary>
         [JsonProperty("signup_template_id")]
-        public string? SignupTemplateId { get; set; }
+        public string SignupTemplateId { get; set; }
         /// <summary>
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
@@ -196,7 +204,12 @@ namespace Stytch.net.Models.Consumer
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public LoginOrSignupRequestLocale? Locale { get; set; }
+        public LoginOrSignupRequestLocale Locale { get; set; }
+        public B2BMagicLinksEmailLoginOrSignupRequest(string organizationId, string emailAddress)
+        {
+            this.OrganizationId = organizationId;
+            this.EmailAddress = emailAddress;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.MagicLinks.Email.LoginOrSignup"/>..
@@ -208,36 +221,37 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// A flag indicating `true` if a new Member object was created and `false` if the Member object already
         /// existed.
         /// </summary>
         [JsonProperty("member_created")]
-        public required bool MemberCreated { get; set; }
+        public bool MemberCreated { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BMagicLinksEmailInviteRequestLocale
     {
         [EnumMember(Value = "en")]
@@ -247,6 +261,7 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "pt-br")]
         PTBR,
     }
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum LoginOrSignupRequestLocale
     {
         [EnumMember(Value = "en")]

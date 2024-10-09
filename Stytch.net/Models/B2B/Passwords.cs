@@ -4,7 +4,10 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -14,36 +17,36 @@ namespace Stytch.net.Models.Consumer
         /// For LUDS validation, whether the password contains at least one lowercase letter.
         /// </summary>
         [JsonProperty("has_lower_case")]
-        public required bool HasLowerCase { get; set; }
+        public bool HasLowerCase { get; set; }
         /// <summary>
         /// For LUDS validation, whether the password contains at least one uppercase letter.
         /// </summary>
         [JsonProperty("has_upper_case")]
-        public required bool HasUpperCase { get; set; }
+        public bool HasUpperCase { get; set; }
         /// <summary>
         /// For LUDS validation, whether the password contains at least one digit.
         /// </summary>
         [JsonProperty("has_digit")]
-        public required bool HasDigit { get; set; }
+        public bool HasDigit { get; set; }
         /// <summary>
         /// For LUDS validation, whether the password contains at least one symbol. Any UTF8 character outside of
         /// a-z or A-Z may count as a valid symbol.
         /// </summary>
         [JsonProperty("has_symbol")]
-        public required bool HasSymbol { get; set; }
+        public bool HasSymbol { get; set; }
         /// <summary>
         /// For LUDS validation, the number of complexity requirements that are missing from the password. 
         ///       Check the complexity fields to see which requirements are missing.
         /// </summary>
         [JsonProperty("missing_complexity")]
-        public required int MissingComplexity { get; set; }
+        public int MissingComplexity { get; set; }
         /// <summary>
         /// For LUDS validation, this is the required length of the password that you've set minus the length of the
         /// password being checked. 
         ///       The user will need to add this many characters to the password to make it valid.
         /// </summary>
         [JsonProperty("missing_characters")]
-        public required int MissingCharacters { get; set; }
+        public int MissingCharacters { get; set; }
     }
     public class ZxcvbnFeedback
     {
@@ -52,13 +55,13 @@ namespace Stytch.net.Models.Consumer
         /// enough.
         /// </summary>
         [JsonProperty("warning")]
-        public required string Warning { get; set; }
+        public string Warning { get; set; }
         /// <summary>
         /// For zxcvbn validation, contains end user consumable suggestions on how to improve the strength of the
         /// password.
         /// </summary>
         [JsonProperty("suggestions")]
-        public required List<string> Suggestions { get; set; }
+        public List<string> Suggestions { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Authenticate"/>..
@@ -70,23 +73,23 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
         /// spaces, emojis, non-English characers, etc.
         /// </summary>
         [JsonProperty("password")]
-        public required string Password { get; set; }
+        public string Password { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist, 
@@ -109,7 +112,7 @@ namespace Stytch.net.Models.Consumer
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in
@@ -120,7 +123,7 @@ namespace Stytch.net.Models.Consumer
         ///   Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
         /// <summary>
         /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
@@ -137,7 +140,7 @@ namespace Stytch.net.Models.Consumer
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BPasswordsAuthenticateRequestLocale? Locale { get; set; }
+        public B2BPasswordsAuthenticateRequestLocale Locale { get; set; }
         /// <summary>
         /// Adds this primary authentication factor to the intermediate session token. If the resulting set of
         /// factors satisfies the organization's primary authentication requirements and MFA requirements, the
@@ -145,7 +148,13 @@ namespace Stytch.net.Models.Consumer
         /// intermediate session token will be returned.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public string? IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
+        public B2BPasswordsAuthenticateRequest(string organizationId, string emailAddress, string password)
+        {
+            this.OrganizationId = organizationId;
+            this.EmailAddress = emailAddress;
+            this.Password = password;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Passwords.Authenticate"/>..
@@ -157,38 +166,38 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The returned Intermediate Session Token contains a password factor associated with the Member. If this
         /// value is non-empty, the member must complete an MFA step to finish logging in to the Organization. The
@@ -200,29 +209,29 @@ namespace Stytch.net.Models.Consumer
         /// the intermediate session token is not valid for use with discovery endpoints.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public required string IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
         /// <summary>
         /// Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step
         /// to log in to the Organization.
         /// </summary>
         [JsonProperty("member_authenticated")]
-        public required bool MemberAuthenticated { get; set; }
+        public bool MemberAuthenticated { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
         /// </summary>
         [JsonProperty("member_session")]
-        public MemberSession? MemberSession { get; set; }
+        public MemberSession MemberSession { get; set; }
         /// <summary>
         /// Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
         /// </summary>
         [JsonProperty("mfa_required")]
-        public MfaRequired? MfaRequired { get; set; }
+        public MfaRequired MfaRequired { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Migrate"/>..
@@ -233,60 +242,60 @@ namespace Stytch.net.Models.Consumer
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// The password hash. For a Scrypt or PBKDF2 hash, the hash needs to be a base64 encoded string.
         /// </summary>
         [JsonProperty("hash")]
-        public required string Hash { get; set; }
+        public string Hash { get; set; }
         /// <summary>
         /// The password hash used. Currently `bcrypt`, `scrypt`, `argon2i`, `argon2id`, `md_5`, `sha_1`, and
         /// `pbkdf_2` are supported.
         /// </summary>
         [JsonProperty("hash_type")]
-        public required B2BPasswordsMigrateRequestHashType HashType { get; set; }
+        public B2BPasswordsMigrateRequestHashType HashType { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Optional parameters for MD-5 hash types.
         /// </summary>
         [JsonProperty("md_5_config")]
-        public MD5Config? Md5Config { get; set; }
+        public MD5Config Md5Config { get; set; }
         /// <summary>
         /// Required parameters if the argon2 hex form, as opposed to the encoded form, is supplied.
         /// </summary>
         [JsonProperty("argon_2_config")]
-        public Argon2Config? Argon2Config { get; set; }
+        public Argon2Config Argon2Config { get; set; }
         /// <summary>
         /// Optional parameters for SHA-1 hash types.
         /// </summary>
         [JsonProperty("sha_1_config")]
-        public SHA1Config? Sha1Config { get; set; }
+        public SHA1Config Sha1Config { get; set; }
         /// <summary>
         /// Required parameters if the scrypt is not provided in a **PHC encoded form**.
         /// </summary>
         [JsonProperty("scrypt_config")]
-        public ScryptConfig? ScryptConfig { get; set; }
+        public ScryptConfig ScryptConfig { get; set; }
         /// <summary>
         /// Required additional parameters for PBKDF2 hash keys. Note that we use the SHA-256 by default, please
         /// contact [support@stytch.com](mailto:support@stytch.com) if you use another hashing function.
         /// </summary>
         [JsonProperty("pbkdf_2_config")]
-        public PBKDF2Config? Pbkdf2Config { get; set; }
+        public PBKDF2Config Pbkdf2Config { get; set; }
         /// <summary>
         /// The name of the Member. Each field in the name object is optional.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// An arbitrary JSON object of application-specific data. These fields can be edited directly by the
         ///   frontend SDK, and should not be used to store critical information. See the
@@ -294,7 +303,7 @@ namespace Stytch.net.Models.Consumer
         ///   for complete field behavior details.
         /// </summary>
         [JsonProperty("untrusted_metadata")]
-        public object? UntrustedMetadata { get; set; }
+        public object UntrustedMetadata { get; set; }
         /// <summary>
         /// Roles to explicitly assign to this Member.
         ///  Will completely replace any existing explicitly assigned roles. See the
@@ -309,7 +318,7 @@ namespace Stytch.net.Models.Consumer
         ///    `preserve_existing_sessions` parameter with a value of `true`.
         /// </summary>
         [JsonProperty("roles")]
-        public List<string>? Roles { get; set; }
+        public List<string> Roles { get; set; }
         /// <summary>
         /// Whether to preserve existing sessions when explicit Roles that are revoked are also implicitly assigned
         ///   by SSO connection or SSO group. Defaults to `false` - that is, existing Member Sessions that contain
@@ -318,6 +327,13 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("preserve_existing_sessions")]
         public bool? PreserveExistingSessions { get; set; }
+        public B2BPasswordsMigrateRequest(string emailAddress, string hash, B2BPasswordsMigrateRequestHashType hashType, string organizationId)
+        {
+            this.EmailAddress = emailAddress;
+            this.Hash = hash;
+            this.HashType = hashType;
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Passwords.Migrate"/>..
@@ -329,34 +345,34 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// A flag indicating `true` if a new Member object was created and `false` if the Member object already
         /// existed.
         /// </summary>
         [JsonProperty("member_created")]
-        public required bool MemberCreated { get; set; }
+        public bool MemberCreated { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.StrengthCheck"/>..
@@ -368,12 +384,16 @@ namespace Stytch.net.Models.Consumer
         /// spaces, emojis, non-English characers, etc.
         /// </summary>
         [JsonProperty("password")]
-        public required string Password { get; set; }
+        public string Password { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public string? EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public B2BPasswordsStrengthCheckRequest(string password)
+        {
+            this.Password = password;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Passwords.StrengthCheck"/>..
@@ -385,7 +405,7 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Returns `true` if the password passes our password validation. We offer two validation options, 
         ///   [zxcvbn](https://stytch.com/docs/passwords#strength-requirements) is the default option which offers a
@@ -396,24 +416,24 @@ namespace Stytch.net.Models.Consumer
         /// [HaveIBeenPwned](https://haveibeenpwned.com/)
         /// </summary>
         [JsonProperty("valid_password")]
-        public required bool ValidPassword { get; set; }
+        public bool ValidPassword { get; set; }
         /// <summary>
         /// The score of the password determined by [zxcvbn](https://github.com/dropbox/zxcvbn). Values will be
         /// between 1 and 4, a 3 or greater is required to pass validation.
         /// </summary>
         [JsonProperty("score")]
-        public required int Score { get; set; }
+        public int Score { get; set; }
         /// <summary>
         /// Returns `true` if the password has been breached. Powered by
         /// [HaveIBeenPwned](https://haveibeenpwned.com/).
         /// </summary>
         [JsonProperty("breached_password")]
-        public required bool BreachedPassword { get; set; }
+        public bool BreachedPassword { get; set; }
         /// <summary>
         /// The strength policy type enforced, either `zxcvbn` or `luds`.
         /// </summary>
         [JsonProperty("strength_policy")]
-        public required string StrengthPolicy { get; set; }
+        public string StrengthPolicy { get; set; }
         /// <summary>
         /// Will return `true` if breach detection will be evaluated. By default this option is enabled. 
         ///   This option can be disabled by contacting
@@ -421,27 +441,28 @@ namespace Stytch.net.Models.Consumer
         ///   If this value is false then `breached_password` will always be `false` as well.
         /// </summary>
         [JsonProperty("breach_detection_on_create")]
-        public required bool BreachDetectionOnCreate { get; set; }
+        public bool BreachDetectionOnCreate { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// Feedback for how to improve the password's strength using
         /// [luds](https://stytch.com/docs/passwords#strength-requirements).
         /// </summary>
         [JsonProperty("luds_feedback")]
-        public LudsFeedback? LudsFeedback { get; set; }
+        public LudsFeedback LudsFeedback { get; set; }
         /// <summary>
         /// Feedback for how to improve the password's strength using
         /// [zxcvbn](https://stytch.com/docs/passwords#strength-requirements).
         /// </summary>
         [JsonProperty("zxcvbn_feedback")]
-        public ZxcvbnFeedback? ZxcvbnFeedback { get; set; }
+        public ZxcvbnFeedback ZxcvbnFeedback { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BPasswordsAuthenticateRequestLocale
     {
         [EnumMember(Value = "en")]
@@ -451,6 +472,7 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "pt-br")]
         PTBR,
     }
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BPasswordsMigrateRequestHashType
     {
         [EnumMember(Value = "bcrypt")]

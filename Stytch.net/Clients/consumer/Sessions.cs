@@ -7,9 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
-
-
+using System.Threading.Tasks;
 
 
 namespace Stytch.net.Clients.Consumer
@@ -17,6 +19,7 @@ namespace Stytch.net.Clients.Consumer
     public class Sessions
     {
         private readonly HttpClient _httpClient;
+
         public Sessions(HttpClient client)
         {
             _httpClient = client;
@@ -27,16 +30,18 @@ namespace Stytch.net.Clients.Consumer
         /// standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         public async Task<SessionsGetResponse> Get(
-            SessionsGetRequest request)
+            SessionsGetRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/sessions"
             };
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["user_id"] = request.UserId;
-            uriBuilder.Query = query.ToString();
+            uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string>
+            {
+                { "user_id", request.UserId },
+            });
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
@@ -45,11 +50,12 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<SessionsGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<SessionsGetResponse>(responseBody);
             }
+
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -57,6 +63,7 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Authenticate a session token or session JWT and retrieve associated session data. If
         /// `session_duration_minutes` is included, update the lifetime of the session to be that many minutes from
@@ -70,16 +77,21 @@ namespace Stytch.net.Clients.Consumer
         /// information.
         /// </summary>
         public async Task<SessionsAuthenticateResponse> Authenticate(
-            SessionsAuthenticateRequest request)
+            SessionsAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/sessions/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -88,11 +100,12 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<SessionsAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<SessionsAuthenticateResponse>(responseBody);
             }
+
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -100,22 +113,28 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Revoke a Session, immediately invalidating all of its session tokens. You can revoke a session in three
         /// ways: using its ID, or using one of its session tokens, or one of its JWTs. This endpoint requires
         /// exactly one of those to be included in the request. It will return an error if multiple are present.
         /// </summary>
         public async Task<SessionsRevokeResponse> Revoke(
-            SessionsRevokeRequest request)
+            SessionsRevokeRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/sessions/revoke"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -124,11 +143,12 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<SessionsRevokeResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<SessionsRevokeResponse>(responseBody);
             }
+
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -136,6 +156,7 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo
         /// endpoint defined in your Stytch Project settings in the [Dashboard](/dashboard), and then perform a
@@ -144,16 +165,21 @@ namespace Stytch.net.Clients.Consumer
         /// user before using this endpoint.
         /// </summary>
         public async Task<SessionsMigrateResponse> Migrate(
-            SessionsMigrateRequest request)
+            SessionsMigrateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/sessions/migrate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -162,11 +188,12 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<SessionsMigrateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<SessionsMigrateResponse>(responseBody);
             }
+
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -174,6 +201,7 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
         /// 
@@ -195,15 +223,14 @@ namespace Stytch.net.Clients.Consumer
         /// more information.
         /// </summary>
         public async Task<SessionsGetJWKSResponse> GetJWKS(
-            SessionsGetJWKSRequest request)
+            SessionsGetJWKSRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/sessions/jwks/${request.ProjectId}"
             };
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
@@ -212,11 +239,12 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<SessionsGetJWKSResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<SessionsGetJWKSResponse>(responseBody);
             }
+
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -224,8 +252,5 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
     }
-
 }
-
