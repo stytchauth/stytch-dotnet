@@ -198,7 +198,7 @@ namespace Stytch.net.Models.Consumer
     public abstract class M2MSearchQueryOperand
     {
         public abstract string FilterName { get; }
-        public required string[] FilterValue { get; set; }
+        public string[] FilterValue { get; set; }
     }
 
     public class ClientIdFilter : M2MSearchQueryOperand

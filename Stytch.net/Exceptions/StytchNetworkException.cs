@@ -1,12 +1,16 @@
-namespace Stytch.net.Exceptions;
+using System.Net.Http;
+using System;
 
-public class StytchNetworkException : Exception
+namespace Stytch.net.Exceptions
 {
-    public HttpResponseMessage Response { get; set; }
-
-    public StytchNetworkException(string message, HttpResponseMessage response)
-        : base(message)
+    public class StytchNetworkException : Exception
     {
-        Response = response;
+        public HttpResponseMessage Response { get; set; }
+
+        public StytchNetworkException(string message, HttpResponseMessage response)
+            : base(message)
+        {
+            Response = response;
+        }
     }
 }

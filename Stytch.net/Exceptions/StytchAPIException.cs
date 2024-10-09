@@ -1,20 +1,22 @@
+using System;
 using Newtonsoft.Json;
 
-namespace Stytch.net.Exceptions;
-
-public class StytchApiException : Exception
+namespace Stytch.net.Exceptions
 {
-    [JsonProperty("status_code")]
-    public required int StatusCode { get; set; }
-    [JsonProperty("error_type")]
-    public required string ErrorType { get; set; }
-    [JsonProperty("error_message")]
-    public required string ErrorMessage { get; set; }
-    [JsonProperty("error_url")]
-    public required string ErrorUrl { get; set; }
-
-    public override string ToString()
+    public class StytchApiException : Exception
     {
-        return $"StytchApiException<{ErrorType}, {StatusCode}>: {ErrorMessage}\n{ErrorUrl}";
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+        [JsonProperty("error_type")]
+        public string ErrorType { get; set; }
+        [JsonProperty("error_message")]
+        public string ErrorMessage { get; set; }
+        [JsonProperty("error_url")]
+        public string ErrorUrl { get; set; }
+
+        public override string ToString()
+        {
+            return $"StytchApiException<{ErrorType}, {StatusCode}>: {ErrorMessage}\n{ErrorUrl}";
+        }
     }
 }
