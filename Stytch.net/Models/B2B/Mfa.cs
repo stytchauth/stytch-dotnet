@@ -4,7 +4,10 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -14,12 +17,12 @@ namespace Stytch.net.Models.Consumer
         /// The Member's MFA phone number.
         /// </summary>
         [JsonProperty("mfa_phone_number")]
-        public required string MfaPhoneNumber { get; set; }
+        public string MfaPhoneNumber { get; set; }
         /// <summary>
         /// The Member's MFA TOTP registration ID.
         /// </summary>
         [JsonProperty("totp_registration_id")]
-        public required string TOTPRegistrationId { get; set; }
+        public string TOTPRegistrationId { get; set; }
     }
     public class MfaRequired
     {
@@ -27,7 +30,7 @@ namespace Stytch.net.Models.Consumer
         /// Information about the Member's options for completing MFA.
         /// </summary>
         [JsonProperty("member_options")]
-        public MemberOptions? MemberOptions { get; set; }
+        public MemberOptions MemberOptions { get; set; }
         /// <summary>
         /// If null, indicates that no secondary authentication has been initiated. If equal to "sms_otp", indicates
         /// that the Member has a phone number, and a one time passcode has been sent to the Member's phone number.
@@ -35,7 +38,7 @@ namespace Stytch.net.Models.Consumer
         /// organizations endpoints, even if the Member has a phone number.
         /// </summary>
         [JsonProperty("secondary_auth_initiated")]
-        public string? SecondaryAuthInitiated { get; set; }
+        public string SecondaryAuthInitiated { get; set; }
     }
 
 }

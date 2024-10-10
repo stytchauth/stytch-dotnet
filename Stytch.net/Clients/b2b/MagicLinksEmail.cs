@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -32,16 +36,21 @@ namespace Stytch.net.Clients.B2B
         /// The magic link is valid for 60 minutes.
         /// </summary>
         public async Task<B2BMagicLinksEmailLoginOrSignupResponse> LoginOrSignup(
-            B2BMagicLinksEmailLoginOrSignupRequest request)
+            B2BMagicLinksEmailLoginOrSignupRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/magic_links/email/login_or_signup"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -50,11 +59,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BMagicLinksEmailLoginOrSignupResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BMagicLinksEmailLoginOrSignupResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -70,29 +79,43 @@ namespace Stytch.net.Clients.B2B
         /// The magic link invite will be valid for 1 week.
         /// </summary>
         public async Task<B2BMagicLinksEmailInviteResponse> Invite(
-            B2BMagicLinksEmailInviteRequest request)
+            B2BMagicLinksEmailInviteRequest request
+            , B2BMagicLinksEmailInviteRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/magic_links/email/invite"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BMagicLinksEmailInviteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BMagicLinksEmailInviteResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

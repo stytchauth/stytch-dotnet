@@ -4,7 +4,10 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Consumer.Organization>;
 
 namespace Stytch.net.Models.Consumer
@@ -18,7 +21,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersDeleteMFAPhoneNumberRequestOptions
     {
@@ -28,7 +31,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersDeletePasswordRequestOptions
     {
@@ -38,7 +41,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersDeleteRequestOptions
     {
@@ -48,7 +51,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersDeleteTOTPRequestOptions
     {
@@ -58,7 +61,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersReactivateRequestOptions
     {
@@ -68,7 +71,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersSearchRequestOptions
     {
@@ -78,7 +81,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersUnlinkRetiredEmailRequestOptions
     {
@@ -88,7 +91,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersUpdateRequestOptions
     {
@@ -98,7 +101,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Create"/>..
@@ -110,22 +113,22 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// The name of the Member.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// An arbitrary JSON object of application-specific data. These fields can be edited directly by the
         ///   frontend SDK, and should not be used to store critical information. See the
@@ -133,7 +136,7 @@ namespace Stytch.net.Models.Consumer
         ///   for complete field behavior details.
         /// </summary>
         [JsonProperty("untrusted_metadata")]
-        public object? UntrustedMetadata { get; set; }
+        public object UntrustedMetadata { get; set; }
         /// <summary>
         /// Flag for whether or not to save a Member as `pending` or `active` in Stytch. It defaults to false. If
         /// true, new Members will be created with status `pending` in Stytch's backend. Their status will remain
@@ -155,7 +158,7 @@ namespace Stytch.net.Models.Consumer
         /// The Member's phone number. A Member may only have one phone number.
         /// </summary>
         [JsonProperty("mfa_phone_number")]
-        public string? MfaPhoneNumber { get; set; }
+        public string MfaPhoneNumber { get; set; }
         /// <summary>
         /// Sets whether the Member is enrolled in MFA. If true, the Member must complete an MFA step whenever they
         /// wish to log in to their Organization. If false, the Member only needs to complete an MFA step if the
@@ -169,7 +172,12 @@ namespace Stytch.net.Models.Consumer
         ///    for more information about role assignment.
         /// </summary>
         [JsonProperty("roles")]
-        public List<string>? Roles { get; set; }
+        public List<string> Roles { get; set; }
+        public B2BOrganizationsMembersCreateRequest(string organizationId, string emailAddress)
+        {
+            this.OrganizationId = organizationId;
+            this.EmailAddress = emailAddress;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Create"/>..
@@ -181,28 +189,28 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DangerouslyGet"/>..
@@ -214,7 +222,13 @@ namespace Stytch.net.Models.Consumer
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
+        [JsonProperty("include_deleted")]
+        public bool? IncludeDeleted { get; set; }
+        public B2BOrganizationsMembersDangerouslyGetRequest(string memberId)
+        {
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DeleteMFAPhoneNumber"/>..
@@ -226,13 +240,18 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
+        public B2BOrganizationsMembersDeleteMFAPhoneNumberRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DeleteMFAPhoneNumber"/>..
@@ -244,28 +263,28 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DeletePassword"/>..
@@ -277,12 +296,17 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a Member's password.
         /// </summary>
         [JsonProperty("member_password_id")]
-        public required string MemberPasswordId { get; set; }
+        public string MemberPasswordId { get; set; }
+        public B2BOrganizationsMembersDeletePasswordRequest(string organizationId, string memberPasswordId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberPasswordId = memberPasswordId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DeletePassword"/>..
@@ -294,28 +318,28 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Delete"/>..
@@ -327,13 +351,18 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
+        public B2BOrganizationsMembersDeleteRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Delete"/>..
@@ -345,18 +374,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DeleteTOTP"/>..
@@ -368,13 +397,18 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
+        public B2BOrganizationsMembersDeleteTOTPRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DeleteTOTP"/>..
@@ -386,28 +420,28 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Get"/>..
@@ -419,18 +453,22 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public string? MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public string? EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public B2BOrganizationsMembersGetRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DangerouslyGet"/>., <see
@@ -443,28 +481,51 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
+    }
+    public class B2BOrganizationsMembersOIDCProviderInformationRequest
+    {
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        [JsonProperty("include_refresh_token")]
+        public bool? IncludeRefreshToken { get; set; }
+        public B2BOrganizationsMembersOIDCProviderInformationRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
+    }
+    public class B2BOrganizationsMembersOIDCProvidersResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("registrations")]
+        public List<OIDCProviderInfo> Registrations { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Reactivate"/>..
@@ -476,13 +537,18 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
+        public B2BOrganizationsMembersReactivateRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Reactivate"/>..
@@ -494,28 +560,28 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Search"/>..
@@ -526,7 +592,7 @@ namespace Stytch.net.Models.Consumer
         /// An array of organization_ids. At least one value is required.
         /// </summary>
         [JsonProperty("organization_ids")]
-        public required List<string> OrganizationIds { get; set; }
+        public List<string> OrganizationIds { get; set; }
         /// <summary>
         /// The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
         /// results. If your query returns more than 1000 results, you will need to paginate the responses using the
@@ -535,21 +601,25 @@ namespace Stytch.net.Models.Consumer
         /// next page of results. Continue to make search calls until the `next_cursor` in the response is null.
         /// </summary>
         [JsonProperty("cursor")]
-        public string? Cursor { get; set; }
+        public string Cursor { get; set; }
         /// <summary>
         /// The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
         /// be returned by a single search request. If the total size of your result set is greater than one page
         /// size, you must paginate the response. See the `cursor` field.
         /// </summary>
         [JsonProperty("limit")]
-        public uint? Limit { get; set; }
+        public uint Limit { get; set; }
         /// <summary>
         /// The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter
         /// your results. Only an operator is required. If you include no operands, no filtering will be applied. If
         /// you include no query object, it will return all Members with no filtering applied.
         /// </summary>
         [JsonProperty("query")]
-        public SearchQuery? Query { get; set; }
+        public SearchQuery Query { get; set; }
+        public B2BOrganizationsMembersSearchRequest(List<string> organizationIds)
+        {
+            this.OrganizationIds = organizationIds;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Search"/>..
@@ -561,31 +631,31 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// An array of [Member objects](member-object).
         /// </summary>
         [JsonProperty("members")]
-        public required List<Member> Members { get; set; }
+        public List<Member> Members { get; set; }
         /// <summary>
         /// The search `results_metadata` object contains metadata relevant to your specific query like `total` and
         /// `next_cursor`.
         /// </summary>
         [JsonProperty("results_metadata")]
-        public required B2BOrganizationsResultsMetadata ResultsMetadata { get; set; }
+        public B2BOrganizationsResultsMetadata ResultsMetadata { get; set; }
         /// <summary>
         /// A map from `organization_id` to
         /// [Organization object](https://stytch.com/docs/b2b/api/organization-object). The map only contains the
         /// Organizations that the Members belongs to.
         /// </summary>
         [JsonProperty("organizations")]
-        public required OrganizationsEntry Organizations { get; set; }
+        public OrganizationsEntry Organizations { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.UnlinkRetiredEmail"/>..
@@ -597,23 +667,28 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The globally unique UUID of a Member's email.
         /// </summary>
         [JsonProperty("email_id")]
-        public string? EmailId { get; set; }
+        public string EmailId { get; set; }
         /// <summary>
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public string? EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public B2BOrganizationsMembersUnlinkRetiredEmailRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.UnlinkRetiredEmail"/>..
@@ -625,34 +700,34 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Update"/>..
@@ -664,13 +739,13 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The name of the Member.
         /// 
@@ -681,7 +756,7 @@ namespace Stytch.net.Models.Consumer
         /// `update.info.name` action on the `stytch.self` Resource.
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         ///           If a session header is passed into the request, this field may **not** be passed into the
@@ -689,7 +764,7 @@ namespace Stytch.net.Models.Consumer
         ///           update trusted metadata when acting as a Member.
         /// </summary>
         [JsonProperty("trusted_metadata")]
-        public object? TrustedMetadata { get; set; }
+        public object TrustedMetadata { get; set; }
         /// <summary>
         /// An arbitrary JSON object of application-specific data. These fields can be edited directly by the
         ///   frontend SDK, and should not be used to store critical information. See the
@@ -703,7 +778,7 @@ namespace Stytch.net.Models.Consumer
         /// `update.info.untrusted-metadata` action on the `stytch.self` Resource.
         /// </summary>
         [JsonProperty("untrusted_metadata")]
-        public object? UntrustedMetadata { get; set; }
+        public object UntrustedMetadata { get; set; }
         /// <summary>
         /// Identifies the Member as a break glass user - someone who has permissions to authenticate into an
         /// Organization by bypassing the Organization's settings. A break glass account is typically used for
@@ -729,7 +804,7 @@ namespace Stytch.net.Models.Consumer
         /// `update.info.mfa-phone` action on the `stytch.self` Resource.
         /// </summary>
         [JsonProperty("mfa_phone_number")]
-        public string? MfaPhoneNumber { get; set; }
+        public string MfaPhoneNumber { get; set; }
         /// <summary>
         /// Sets whether the Member is enrolled in MFA. If true, the Member must complete an MFA step whenever they
         /// wish to log in to their Organization. If false, the Member only needs to complete an MFA step if the
@@ -760,7 +835,7 @@ namespace Stytch.net.Models.Consumer
         /// permission to perform the `update.settings.roles` action on the `stytch.member` Resource.
         /// </summary>
         [JsonProperty("roles")]
-        public List<string>? Roles { get; set; }
+        public List<string> Roles { get; set; }
         /// <summary>
         /// Whether to preserve existing sessions when explicit Roles that are revoked are also implicitly assigned
         ///   by SSO connection or SSO group. Defaults to `false` - that is, existing Member Sessions that contain
@@ -781,7 +856,7 @@ namespace Stytch.net.Models.Consumer
         /// `update.settings.default-mfa-method` action on the `stytch.self` Resource.
         /// </summary>
         [JsonProperty("default_mfa_method")]
-        public string? DefaultMfaMethod { get; set; }
+        public string DefaultMfaMethod { get; set; }
         /// <summary>
         /// Updates the Member's `email_address`, if provided.
         ///         If a Member's email address is changed, other Members in the same Organization cannot use the
@@ -793,7 +868,12 @@ namespace Stytch.net.Models.Consumer
         /// update their own email address.
         /// </summary>
         [JsonProperty("email_address")]
-        public string? EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public B2BOrganizationsMembersUpdateRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Update"/>..
@@ -805,28 +885,28 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
     // MANUAL(OrganizationsEntry)(TYPES)

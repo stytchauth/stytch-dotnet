@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -27,16 +31,21 @@ namespace Stytch.net.Clients.B2B
         /// Intermediate Session Tokens can be used for various Discovery login flows and are valid for 10 minutes.
         /// </summary>
         public async Task<B2BMagicLinksDiscoveryAuthenticateResponse> Authenticate(
-            B2BMagicLinksDiscoveryAuthenticateRequest request)
+            B2BMagicLinksDiscoveryAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/magic_links/discovery/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -45,11 +54,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BMagicLinksDiscoveryAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BMagicLinksDiscoveryAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

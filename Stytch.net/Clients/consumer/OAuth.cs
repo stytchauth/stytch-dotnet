@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -35,16 +39,21 @@ namespace Stytch.net.Clients.Consumer
         /// cases where we can't, such as missing or unverified provider information.
         /// </summary>
         public async Task<OAuthAttachResponse> Attach(
-            OAuthAttachRequest request)
+            OAuthAttachRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/oauth/attach"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -53,11 +62,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<OAuthAttachResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<OAuthAttachResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -72,16 +81,21 @@ namespace Stytch.net.Clients.Consumer
         /// provider, e.g. Google or Facebook, will always be initiated upon successful authentication.
         /// </summary>
         public async Task<OAuthAuthenticateResponse> Authenticate(
-            OAuthAuthenticateRequest request)
+            OAuthAuthenticateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/oauth/authenticate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -90,11 +104,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<OAuthAuthenticateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<OAuthAuthenticateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

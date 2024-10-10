@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -27,16 +31,21 @@ namespace Stytch.net.Clients.Consumer
         /// address, containing a magic link that will allow them to set a new password and authenticate.
         /// </summary>
         public async Task<PasswordsEmailResetStartResponse> ResetStart(
-            PasswordsEmailResetStartRequest request)
+            PasswordsEmailResetStartRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/passwords/email/reset/start"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -45,11 +54,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<PasswordsEmailResetStartResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<PasswordsEmailResetStartResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -69,16 +78,21 @@ namespace Stytch.net.Clients.Consumer
         /// Note that a successful password reset by email will revoke all active sessions for the `user_id`.
         /// </summary>
         public async Task<PasswordsEmailResetResponse> Reset(
-            PasswordsEmailResetRequest request)
+            PasswordsEmailResetRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/passwords/email/reset"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -87,11 +101,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<PasswordsEmailResetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<PasswordsEmailResetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

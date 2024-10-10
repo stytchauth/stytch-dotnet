@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -36,16 +40,21 @@ namespace Stytch.net.Clients.B2B
         /// [stytch dashboard](https://stytch.com/dashboard/password-strength-config).
         /// </summary>
         public async Task<B2BPasswordsEmailResetStartResponse> ResetStart(
-            B2BPasswordsEmailResetStartRequest request)
+            B2BPasswordsEmailResetStartRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/passwords/email/reset/start"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -54,11 +63,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BPasswordsEmailResetStartResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BPasswordsEmailResetStartResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -87,16 +96,21 @@ namespace Stytch.net.Clients.B2B
         /// Note that a successful password reset by email will revoke all active sessions for the `member_id`.
         /// </summary>
         public async Task<B2BPasswordsEmailResetResponse> Reset(
-            B2BPasswordsEmailResetRequest request)
+            B2BPasswordsEmailResetRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/passwords/email/reset"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -105,11 +119,50 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BPasswordsEmailResetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BPasswordsEmailResetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<B2BPasswordsEmailDeleteResponse> Delete(
+            B2BPasswordsEmailDeleteRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/passwords/email/delete"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BPasswordsEmailDeleteResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

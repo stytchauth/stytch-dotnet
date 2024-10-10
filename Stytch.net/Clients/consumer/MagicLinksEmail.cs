@@ -7,7 +7,13 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+
+
 
 
 namespace Stytch.net.Clients.Consumer
@@ -15,7 +21,6 @@ namespace Stytch.net.Clients.Consumer
     public class MagicLinksEmail
     {
         private readonly HttpClient _httpClient;
-
         public MagicLinksEmail(HttpClient client)
         {
             _httpClient = client;
@@ -42,16 +47,21 @@ namespace Stytch.net.Clients.Consumer
         /// authentication.
         /// </summary>
         public async Task<MagicLinksEmailSendResponse> Send(
-            MagicLinksEmailSendRequest request)
+            MagicLinksEmailSendRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/magic_links/email/send"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -60,12 +70,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<MagicLinksEmailSendResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<MagicLinksEmailSendResponse>(responseBody);
             }
-
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -73,7 +82,6 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
         /// <summary>
         /// Send either a login or signup Magic Link to the User based on if the email is associated with a User
         /// already. A new or pending User will receive a signup Magic Link. An active User will receive a login
@@ -88,16 +96,21 @@ namespace Stytch.net.Clients.Consumer
         /// authentication.
         /// </summary>
         public async Task<MagicLinksEmailLoginOrCreateResponse> LoginOrCreate(
-            MagicLinksEmailLoginOrCreateRequest request)
+            MagicLinksEmailLoginOrCreateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/magic_links/email/login_or_create"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -106,12 +119,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<MagicLinksEmailLoginOrCreateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<MagicLinksEmailLoginOrCreateResponse>(responseBody);
             }
-
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -119,7 +131,6 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
         /// <summary>
         /// Create a User and send an invite Magic Link to the provided `email`. The User will be created with a
         /// `pending` status until they click the Magic Link in the invite email.
@@ -132,16 +143,21 @@ namespace Stytch.net.Clients.Consumer
         /// authentication.
         /// </summary>
         public async Task<MagicLinksEmailInviteResponse> Invite(
-            MagicLinksEmailInviteRequest request)
+            MagicLinksEmailInviteRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/magic_links/email/invite"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -150,12 +166,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<MagicLinksEmailInviteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<MagicLinksEmailInviteResponse>(responseBody);
             }
-
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -163,21 +178,25 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
         /// <summary>
         /// Revoke a pending invite based on the `email` provided.
         /// </summary>
         public async Task<MagicLinksEmailRevokeInviteResponse> RevokeInvite(
-            MagicLinksEmailRevokeInviteRequest request)
+            MagicLinksEmailRevokeInviteRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/magic_links/email/revoke_invite"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -186,12 +205,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<MagicLinksEmailRevokeInviteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<MagicLinksEmailRevokeInviteResponse>(responseBody);
             }
-
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -199,5 +217,8 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
     }
+
 }
+

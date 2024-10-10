@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -26,29 +30,43 @@ namespace Stytch.net.Clients.B2B
         /// Create a new SAML Connection.
         /// </summary>
         public async Task<B2BSSOSAMLCreateConnectionResponse> CreateConnection(
-            B2BSSOSAMLCreateConnectionRequest request)
+            B2BSSOSAMLCreateConnectionRequest request
+            , B2BSSOSAMLCreateConnectionRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sso/saml/${request.OrganizationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSSOSAMLCreateConnectionResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSSOSAMLCreateConnectionResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -66,29 +84,43 @@ namespace Stytch.net.Clients.B2B
         /// * `x509_certificate`
         /// </summary>
         public async Task<B2BSSOSAMLUpdateConnectionResponse> UpdateConnection(
-            B2BSSOSAMLUpdateConnectionRequest request)
+            B2BSSOSAMLUpdateConnectionRequest request
+            , B2BSSOSAMLUpdateConnectionRequestOptions options
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateConnectionResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateConnectionResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -106,29 +138,43 @@ namespace Stytch.net.Clients.B2B
         /// * `attribute_mapping` (must be supplied using [Update SAML Connection](update-saml-connection))
         /// </summary>
         public async Task<B2BSSOSAMLUpdateByURLResponse> UpdateByURL(
-            B2BSSOSAMLUpdateByURLRequest request)
+            B2BSSOSAMLUpdateByURLRequest request
+            , B2BSSOSAMLUpdateByURLRequestOptions options
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}/url"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateByURLResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSSOSAMLUpdateByURLResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -143,29 +189,43 @@ namespace Stytch.net.Clients.B2B
         /// certificates per connection. There must always be at least one certificate per active connection.
         /// </summary>
         public async Task<B2BSSOSAMLDeleteVerificationCertificateResponse> DeleteVerificationCertificate(
-            B2BSSOSAMLDeleteVerificationCertificateRequest request)
+            B2BSSOSAMLDeleteVerificationCertificateRequest request
+            , B2BSSOSAMLDeleteVerificationCertificateRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}/verification_certificates/${request.CertificateId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSSOSAMLDeleteVerificationCertificateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSSOSAMLDeleteVerificationCertificateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

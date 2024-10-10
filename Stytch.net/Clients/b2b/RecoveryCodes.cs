@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -27,16 +31,21 @@ namespace Stytch.net.Clients.B2B
         /// and returns a session token that can be used to authenticate the Member.
         /// </summary>
         public async Task<B2BRecoveryCodesRecoverResponse> Recover(
-            B2BRecoveryCodesRecoverRequest request)
+            B2BRecoveryCodesRecoverRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/recovery_codes/recover"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -45,11 +54,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BRecoveryCodesRecoverResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesRecoverResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -61,15 +70,14 @@ namespace Stytch.net.Clients.B2B
         /// Returns a Member's full set of active recovery codes.
         /// </summary>
         public async Task<B2BRecoveryCodesGetResponse> Get(
-            B2BRecoveryCodesGetRequest request)
+            B2BRecoveryCodesGetRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/recovery_codes/${request.OrganizationId}/${request.MemberId}"
             };
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
@@ -78,11 +86,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BRecoveryCodesGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesGetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -95,16 +103,21 @@ namespace Stytch.net.Clients.B2B
         /// of recovery codes.
         /// </summary>
         public async Task<B2BRecoveryCodesRotateResponse> Rotate(
-            B2BRecoveryCodesRotateRequest request)
+            B2BRecoveryCodesRotateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/recovery_codes/rotate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -113,11 +126,11 @@ namespace Stytch.net.Clients.B2B
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BRecoveryCodesRotateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BRecoveryCodesRotateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

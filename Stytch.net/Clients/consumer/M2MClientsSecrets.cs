@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -36,16 +40,21 @@ namespace Stytch.net.Clients.Consumer
         /// will need to trigger a secret rotation flow to receive another one.
         /// </summary>
         public async Task<M2MClientsSecretsRotateStartResponse> RotateStart(
-            M2MClientsSecretsRotateStartRequest request)
+            M2MClientsSecretsRotateStartRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/m2m/clients/${request.ClientId}/secrets/rotate/start"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -54,11 +63,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<M2MClientsSecretsRotateStartResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<M2MClientsSecretsRotateStartResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -74,16 +83,21 @@ namespace Stytch.net.Clients.Consumer
         /// `client_secret` will be valid.
         /// </summary>
         public async Task<M2MClientsSecretsRotateCancelResponse> RotateCancel(
-            M2MClientsSecretsRotateCancelRequest request)
+            M2MClientsSecretsRotateCancelRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/m2m/clients/${request.ClientId}/secrets/rotate/cancel"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -92,11 +106,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<M2MClientsSecretsRotateCancelResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<M2MClientsSecretsRotateCancelResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -112,16 +126,21 @@ namespace Stytch.net.Clients.Consumer
         /// previous `client_secret` will no longer be valid.
         /// </summary>
         public async Task<M2MClientsSecretsRotateResponse> Rotate(
-            M2MClientsSecretsRotateRequest request)
+            M2MClientsSecretsRotateRequest request
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/m2m/clients/${request.ClientId}/secrets/rotate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
 
@@ -130,11 +149,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<M2MClientsSecretsRotateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<M2MClientsSecretsRotateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
