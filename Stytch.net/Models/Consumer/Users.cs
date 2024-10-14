@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -184,7 +185,7 @@ namespace Stytch.net.Models.Consumer
         /// e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         /// <summary>
         /// The password object is returned for users with a password.
         /// </summary>
@@ -942,7 +943,7 @@ namespace Stytch.net.Models.Consumer
         /// e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         /// <summary>
         /// The password object is returned for users with a password.
         /// </summary>

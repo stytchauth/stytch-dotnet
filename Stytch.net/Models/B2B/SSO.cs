@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -178,9 +179,9 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("issuer")]
         public string Issuer { get; set; }
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         [JsonProperty("expires_at")]
-        public string ExpiresAt { get; set; }
+        public DateTime? ExpiresAt { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.Authenticate"/>..

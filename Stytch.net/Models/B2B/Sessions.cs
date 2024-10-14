@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -78,19 +79,19 @@ namespace Stytch.net.Models.Consumer
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("started_at")]
-        public string StartedAt { get; set; }
+        public DateTime StartedAt { get; set; }
         /// <summary>
         /// The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are
         /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("last_accessed_at")]
-        public string LastAccessedAt { get; set; }
+        public DateTime LastAccessedAt { get; set; }
         /// <summary>
         /// The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("expires_at")]
-        public string ExpiresAt { get; set; }
+        public DateTime ExpiresAt { get; set; }
         /// <summary>
         /// An array of different authentication factors that comprise a Session.
         /// </summary>

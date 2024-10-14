@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -49,14 +50,14 @@ namespace Stytch.net.Models.Consumer
         /// to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("issued_at")]
-        public string IssuedAt { get; set; }
+        public DateTime? IssuedAt { get; set; }
         /// <summary>
         /// The time when the signed authentication message will become valid. Defaults to the current time. All
         /// timestamps in our API conform to the RFC 3339 standard and are expressed in UTC, e.g.
         /// `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("not_before")]
-        public string NotBefore { get; set; }
+        public DateTime? NotBefore { get; set; }
         /// <summary>
         /// A system-specific identifier that may be used to uniquely refer to the sign-in request. The
         /// `message_request_id` must be a valid pchar according to RFC 3986 definitions.
@@ -290,7 +291,7 @@ namespace Stytch.net.Models.Consumer
         /// are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("issued_at")]
-        public string IssuedAt { get; set; }
+        public DateTime? IssuedAt { get; set; }
         /// <summary>
         /// A system-specific identifier that may be used to uniquely refer to the sign-in request.
         /// </summary>

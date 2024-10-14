@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -43,7 +44,7 @@ namespace Stytch.net.Models.Consumer
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("expires_at")]
-        public string ExpiresAt { get; set; }
+        public DateTime? ExpiresAt { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.OAuth.Attach"/>..

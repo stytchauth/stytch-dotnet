@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("refresh_token")]
         public string RefreshToken { get; set; }
         [JsonProperty("expires_at")]
-        public string ExpiresAt { get; set; }
+        public DateTime? ExpiresAt { get; set; }
         /// <summary>
         /// The `id_token` returned by the OAuth provider. ID Tokens are JWTs that contain structured information
         /// about a user. The exact content of each ID Token varies from provider to provider. ID Tokens are

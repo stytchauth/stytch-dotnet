@@ -172,14 +172,36 @@ public class ConsumerClient
                 {
                     new UserIdFilter()
                     {
-                        FilterValue = new List<string>{  "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd" },
+                        FilterValue = new List<string> { "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd" },
                     },
                 }
             }
         });
-        
+
         // Assert
         Assert.Equal(200, res.StatusCode);
-        Assert.Empty(res.ResultsMetadata.NextCursor);
+        Assert.Null(res.ResultsMetadata.NextCursor);
+    }
+
+    [Fact]
+    public async Task SessionsAuthenticate_SerializesDateTimesSuccessfully()
+    {
+        // Arrange
+        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+
+        // Act
+        var res = await client.Sessions.Authenticate(new SessionsAuthenticateRequest()
+        {
+            SessionToken = "WJtR5BCy38Szd5AfoDpf0iqFKEt4EE5JhjlWUY7l3FtY"
+        });
+
+        // Assert
+        DateTime startedAt = Assert.NotNull(res.Session.StartedAt);
+        // All Sandbox Sessions started at the same time
+        Assert.Equal(
+            new DateTime(2021, 8, 28, 0, 41, 59),
+            startedAt,
+            new TimeSpan(0, 0, 1)
+        );
     }
 }

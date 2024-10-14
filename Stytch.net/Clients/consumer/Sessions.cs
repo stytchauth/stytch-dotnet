@@ -14,12 +14,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
+
 namespace Stytch.net.Clients.Consumer
 {
     public class Sessions
     {
         private readonly HttpClient _httpClient;
-
         public Sessions(HttpClient client)
         {
             _httpClient = client;
@@ -38,10 +39,9 @@ namespace Stytch.net.Clients.Consumer
             {
                 Path = $"/v1/sessions"
             };
-            uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string>
-            {
-                { "user_id", request.UserId },
-            });
+            uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
+            {"user_id", request.UserId},
+        });
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
@@ -52,7 +52,6 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<SessionsGetResponse>(responseBody);
             }
-
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -63,7 +62,6 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
         /// <summary>
         /// Authenticate a session token or session JWT and retrieve associated session data. If
         /// `session_duration_minutes` is included, update the lifetime of the session to be that many minutes from
@@ -102,7 +100,6 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<SessionsAuthenticateResponse>(responseBody);
             }
-
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -113,7 +110,6 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
         /// <summary>
         /// Revoke a Session, immediately invalidating all of its session tokens. You can revoke a session in three
         /// ways: using its ID, or using one of its session tokens, or one of its JWTs. This endpoint requires
@@ -145,7 +141,6 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<SessionsRevokeResponse>(responseBody);
             }
-
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -156,7 +151,6 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
         /// <summary>
         /// Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo
         /// endpoint defined in your Stytch Project settings in the [Dashboard](/dashboard), and then perform a
@@ -190,7 +184,6 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<SessionsMigrateResponse>(responseBody);
             }
-
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -201,7 +194,6 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
         /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
         /// 
@@ -241,7 +233,6 @@ namespace Stytch.net.Clients.Consumer
             {
                 return JsonConvert.DeserializeObject<SessionsGetJWKSResponse>(responseBody);
             }
-
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -252,5 +243,8 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
     }
+
 }
+

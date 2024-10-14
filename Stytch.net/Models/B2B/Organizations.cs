@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -26,7 +27,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("bearer_token_last_four")]
         public string BearerTokenLastFour { get; set; }
         [JsonProperty("bearer_token_expires_at")]
-        public string BearerTokenExpiresAt { get; set; }
+        public DateTime? BearerTokenExpiresAt { get; set; }
     }
     public class ActiveSSOConnection
     {
@@ -229,13 +230,13 @@ namespace Stytch.net.Models.Consumer
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         /// <summary>
         /// The timestamp of when the Member was last updated. Values conform to the RFC 3339 standard and are
         /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("updated_at")]
-        public string UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         /// <summary>
         /// A scim member registration, referencing a [SCIM Connection](scim-connection-object) object in use for
         /// the Member creation.
@@ -562,13 +563,13 @@ namespace Stytch.net.Models.Consumer
         /// in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         /// <summary>
         /// The timestamp of when the Organization was last updated. Values conform to the RFC 3339 standard and are
         /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         /// </summary>
         [JsonProperty("updated_at")]
-        public string UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         /// <summary>
         /// The default connection used for SSO when there are multiple active connections.
         /// </summary>

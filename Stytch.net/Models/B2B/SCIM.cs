@@ -5,6 +5,7 @@
 // !!!
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
@@ -209,9 +210,9 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("next_bearer_token_last_four")]
         public string NextBearerTokenLastFour { get; set; }
         [JsonProperty("bearer_token_expires_at")]
-        public string BearerTokenExpiresAt { get; set; }
+        public DateTime? BearerTokenExpiresAt { get; set; }
         [JsonProperty("next_bearer_token_expires_at")]
-        public string NextBearerTokenExpiresAt { get; set; }
+        public DateTime? NextBearerTokenExpiresAt { get; set; }
     }
     public class SCIMConnectionWithNextToken
     {
@@ -234,9 +235,9 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("scim_group_implicit_role_assignments")]
         public List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("bearer_token_expires_at")]
-        public string BearerTokenExpiresAt { get; set; }
+        public DateTime? BearerTokenExpiresAt { get; set; }
         [JsonProperty("next_bearer_token_expires_at")]
-        public string NextBearerTokenExpiresAt { get; set; }
+        public DateTime? NextBearerTokenExpiresAt { get; set; }
     }
     public class SCIMConnectionWithToken
     {
@@ -257,7 +258,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("scim_group_implicit_role_assignments")]
         public List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("bearer_token_expires_at")]
-        public string BearerTokenExpiresAt { get; set; }
+        public DateTime? BearerTokenExpiresAt { get; set; }
     }
     public class SCIMGroup
     {
