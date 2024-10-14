@@ -52,9 +52,9 @@ This client library supports all of Stytch's live products:
 Create an API client:
 
 ```csharp
-using Stytch;
+using Stytch.net.Clients;
 
-var client = new ConsumerClient(new ClientConfig
+var client = new Stytch.net.Clients.ConsumerClient(new ClientConfig
 {
     ProjectId = "project-live-c60c0abe-c25a-4472-a9ed-320c6667d317",
     Secret = "secret-live-80JASucyk7z_G8Z-7dVwZVGXL5NT_qGAQ2I="
@@ -64,8 +64,7 @@ var client = new ConsumerClient(new ClientConfig
 Send a magic link by email:
 
 ```csharp
-client.OTPs.Email.LoginOrCreate({
-    Email = "sandbox@stytch.com",
+client.OTPs.Email.LoginOrCreate(new OTPsEmailLoginOrCreateRequest(email: "sandbox@stytch.com"){
     LoginMagicLinkUrl = "https://example.com/authenticate",
     SignupMagicLinkUrl = "https://example.com/authenticate"
 });
@@ -74,10 +73,7 @@ client.OTPs.Email.LoginOrCreate({
 Authenticate the token from the magic link:
 
 ```csharp
-client.MagicLinks.Authenticate(new AuthenticateRequest
-{
-    Token = "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94="
-});
+client.MagicLinks.Authenticate(new AuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94="));
 ```
 
 ### Example B2B usage
@@ -85,9 +81,9 @@ client.MagicLinks.Authenticate(new AuthenticateRequest
 Create an API client:
 
 ```csharp
-using Stytch;
+using Stytch.net.Clients;
 
-var client = new B2BClient(new ClientConfig
+var client = new Stytch.net.Clients.B2BClient(new ClientConfig
 {
     ProjectId = "project-live-c60c0abe-c25a-4472-a9ed-320c6667d317",
     Secret = "secret-live-80JASucyk7z_G8Z-7dVwZVGXL5NT_qGAQ2I="
@@ -97,8 +93,7 @@ var client = new B2BClient(new ClientConfig
 Create an organization
 
 ```csharp
-client.Organizations.Create({
-    OrganizationName = "Acme Co",
+client.Organizations.Create(new B2BOrganizationsCreateRequest(organizationName: "Acme Co"){
     OrganizationSlug = "acme-co",
     EmailAllowedDomains = ["acme.co"],
 });
@@ -107,7 +102,7 @@ client.Organizations.Create({
 Log the first user into the organization
 
 ```csharp
-client.MagicLinks.Email.LoginOrSignup({
+client.MagicLinks.Email.LoginOrSignup(new B2BMagicLinksEmailLoginOrSignupRequest(){
     OrganizationId = "organization-id-from-create-response-...",
     EmailAddress = "admin@acme.co",
 }));
