@@ -984,7 +984,7 @@ namespace Stytch.net.Models.Consumer
         /// size, you must paginate the response. See the `cursor` field.
         /// </summary>
         [JsonProperty("limit")]
-        public uint Limit { get; set; }
+        public uint? Limit { get; set; }
         /// <summary>
         /// The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter
         /// your results. Only an operator is required. If you include no operands, no filtering will be applied. If

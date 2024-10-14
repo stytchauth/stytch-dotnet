@@ -216,7 +216,7 @@ namespace Stytch.net.Models.Consumer
         /// size, you must paginate the response. See the `cursor` field.
         /// </summary>
         [JsonProperty("limit")]
-        public uint Limit { get; set; }
+        public uint? Limit { get; set; }
         public B2BSCIMConnectionGetGroupsRequest(string organizationId, string connectionId)
         {
             this.OrganizationId = organizationId;
