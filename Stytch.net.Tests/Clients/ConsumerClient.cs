@@ -81,7 +81,9 @@ public class ConsumerClient
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var response = await client.MagicLinks.Authenticate(new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94="));
+        var response =
+            await client.MagicLinks.Authenticate(
+                new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94="));
 
         // Assert
         Assert.Equal(200, response.StatusCode);
@@ -99,10 +101,11 @@ public class ConsumerClient
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var response = await client.MagicLinks.Authenticate(new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94=")
-        {
-            SessionDurationMinutes = 60
-        });
+        var response = await client.MagicLinks.Authenticate(
+            new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94=")
+            {
+                SessionDurationMinutes = 60
+            });
 
         // Assert
         Assert.NotNull(response.Session);
@@ -120,7 +123,8 @@ public class ConsumerClient
         // Act
         var exception = await Assert.ThrowsAsync<StytchApiException>(() =>
         {
-            return client.MagicLinks.Authenticate(new MagicLinksAuthenticateRequest(token: "3pzjQpgksDlGKWEwUq2Up--hCHC_0oamfLHyfspKDFU="));
+            return client.MagicLinks.Authenticate(
+                new MagicLinksAuthenticateRequest(token: "3pzjQpgksDlGKWEwUq2Up--hCHC_0oamfLHyfspKDFU="));
         });
 
         // Assert
@@ -142,11 +146,40 @@ public class ConsumerClient
         // Act
         var exception = await Assert.ThrowsAsync<StytchApiException>(() =>
         {
-            return client.Sessions.Get(new SessionsGetRequest(userId: "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd"));
+            return client.Sessions.Get(
+                new SessionsGetRequest(userId: "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd"));
         });
 
         // Assert
         Assert.Equal(404, exception.StatusCode);
         Assert.Equal("user_not_found", exception.ErrorType);
+    }
+
+
+    [Fact]
+    public async Task UsersSearch_SerializesSuccessfully()
+    {
+        // Arrange
+        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+
+        // Act
+        var res = await client.Users.Search(new UsersSearchRequest()
+        {
+            Limit = 3,
+            Query = new SearchUsersQuery()
+            {
+                Operands = new List<SearchUsersQueryOperand>()
+                {
+                    new UserIdFilter()
+                    {
+                        FilterValue = new List<string>{  "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd" },
+                    },
+                }
+            }
+        });
+        
+        // Assert
+        Assert.Equal(200, res.StatusCode);
+        Assert.Empty(res.ResultsMetadata.NextCursor);
     }
 }

@@ -1120,55 +1120,65 @@ namespace Stytch.net.Models.Consumer
 
     public abstract class SearchUsersQueryOperand
     {
+        [JsonProperty("filter_name")]
         public abstract string FilterName { get; }
     }
 
     public class CreatedAtGreaterThanFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "created_at_greater_than";
+        [JsonProperty("filter_value")]
         public string FilterValue { get; set; } // Timestamp in RFC 3339 format
     }
 
     public class CreatedAtLessThanFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "created_at_less_than";
+        [JsonProperty("filter_value")]
         public string FilterValue { get; set; } // Timestamp in RFC 3339 format
     }
 
     public class CreatedAtBetweenFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "created_at_between";
+        [JsonProperty("greater_than")]
         public string GreaterThan { get; set; } // Timestamp in RFC 3339 format
+        [JsonProperty("less_than")]
         public string LessThan { get; set; } // Timestamp in RFC 3339 format
     }
 
     public class StatusFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "status";
+        [JsonProperty("filter_value")]
         public string FilterValue { get; set; } // "active" or "pending"
     }
 
     public class OauthProviderFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "oauth_provider";
+        [JsonProperty("filter_value")]
         public List<string> FilterValue { get; set; }
     }
 
     public class UserIdFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "user_id";
+        [JsonProperty("filter_value")]
         public List<string> FilterValue { get; set; }
     }
 
     public class PhoneNumberFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "phone_number";
+        [JsonProperty("filter_value")]
         public List<string> FilterValue { get; set; }
     }
 
     public class EmailVerifiedFilter : SearchUsersQueryOperand
     {
         public override string FilterName => "email_verified";
+        [JsonProperty("filter_value")]
         public bool FilterValue { get; set; }
     }
 

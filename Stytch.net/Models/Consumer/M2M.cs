@@ -199,7 +199,9 @@ namespace Stytch.net.Models.Consumer
     // MANUAL(M2MSearchQueryOperand)(TYPES)
     public abstract class M2MSearchQueryOperand
     {
+        [JsonProperty("filter_name")]
         public abstract string FilterName { get; }
+        [JsonProperty("filter_value")]
         public string[] FilterValue { get; set; }
     }
 
