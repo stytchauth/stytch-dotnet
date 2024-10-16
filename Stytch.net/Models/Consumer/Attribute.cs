@@ -4,7 +4,11 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -14,12 +18,12 @@ namespace Stytch.net.Models.Consumer
         /// The IP address of the user.
         /// </summary>
         [JsonProperty("ip_address")]
-        public string? IpAddress { get; set; }
+        public string IpAddress { get; set; }
         /// <summary>
         /// The user agent of the User.
         /// </summary>
         [JsonProperty("user_agent")]
-        public string? UserAgent { get; set; }
+        public string UserAgent { get; set; }
     }
 
 }

@@ -4,7 +4,11 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -17,12 +21,12 @@ namespace Stytch.net.Models.Consumer
         /// The Email Magic Link token to authenticate.
         /// </summary>
         [JsonProperty("magic_links_token")]
-        public required string MagicLinksToken { get; set; }
+        public string MagicLinksToken { get; set; }
         /// <summary>
         /// A base64url encoded one time secret used to validate that the request starts and ends on the same device.
         /// </summary>
         [JsonProperty("pkce_code_verifier")]
-        public string? PkceCodeVerifier { get; set; }
+        public string PkceCodeVerifier { get; set; }
         /// <summary>
         /// Reuse an existing session instead of creating a new one. If you provide a `session_token`, Stytch will
         /// update the session.
@@ -31,7 +35,7 @@ namespace Stytch.net.Models.Consumer
         ///       both `session_token` and `session_jwt` are provided.
         /// </summary>
         [JsonProperty("session_token")]
-        public string? SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// Reuse an existing session instead of creating a new one. If you provide a `session_jwt`, Stytch will
         /// update the session. If the `session_jwt`
@@ -40,7 +44,7 @@ namespace Stytch.net.Models.Consumer
         ///       are provided.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string? SessionJwt { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist, 
@@ -69,7 +73,7 @@ namespace Stytch.net.Models.Consumer
         ///   Total custom claims size cannot exceed four kilobytes.
         /// </summary>
         [JsonProperty("session_custom_claims")]
-        public object? SessionCustomClaims { get; set; }
+        public object SessionCustomClaims { get; set; }
         /// <summary>
         /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
@@ -86,7 +90,7 @@ namespace Stytch.net.Models.Consumer
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BMagicLinksAuthenticateRequestLocale? Locale { get; set; }
+        public B2BMagicLinksAuthenticateRequestLocale Locale { get; set; }
         /// <summary>
         /// Adds this primary authentication factor to the intermediate session token. If the resulting set of
         /// factors satisfies the organization's primary authentication requirements and MFA requirements, the
@@ -94,7 +98,11 @@ namespace Stytch.net.Models.Consumer
         /// intermediate session token will be returned.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public string? IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
+        public B2BMagicLinksAuthenticateRequest(string magicLinksToken)
+        {
+            this.MagicLinksToken = magicLinksToken;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.MagicLinks.Authenticate"/>..
@@ -106,17 +114,17 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member.
         /// </summary>
         [JsonProperty("member_id")]
-        public required string MemberId { get; set; }
+        public string MemberId { get; set; }
         /// <summary>
         /// The email or device involved in the authentication.
         /// </summary>
         [JsonProperty("method_id")]
-        public required string MethodId { get; set; }
+        public string MethodId { get; set; }
         /// <summary>
         /// Indicates if all Sessions linked to the Member need to be reset. You should check this field if you
         /// aren't using
@@ -124,38 +132,33 @@ namespace Stytch.net.Models.Consumer
         /// Sessions for you.
         /// </summary>
         [JsonProperty("reset_sessions")]
-        public required bool ResetSessions { get; set; }
+        public bool ResetSessions { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
         [JsonProperty("member")]
-        public required Member Member { get; set; }
+        public Member Member { get; set; }
         /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
-        public required string SessionToken { get; set; }
+        public string SessionToken { get; set; }
         /// <summary>
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public required string SessionJwt { get; set; }
-        /// <summary>
-        /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
-        /// </summary>
-        [JsonProperty("member_session")]
-        public required MemberSession MemberSession { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>
         [JsonProperty("organization")]
-        public required Organization Organization { get; set; }
+        public Organization Organization { get; set; }
         /// <summary>
         /// The returned Intermediate Session Token contains an Email Magic Link factor associated with the Member's
         /// email address. If this value is non-empty, the member must complete an MFA step to finish logging in to
@@ -170,26 +173,32 @@ namespace Stytch.net.Models.Consumer
         /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
-        public required string IntermediateSessionToken { get; set; }
+        public string IntermediateSessionToken { get; set; }
         /// <summary>
         /// Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step
         /// to log in to the Organization.
         /// </summary>
         [JsonProperty("member_authenticated")]
-        public required bool MemberAuthenticated { get; set; }
+        public bool MemberAuthenticated { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
+        /// <summary>
+        /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
+        /// </summary>
+        [JsonProperty("member_session")]
+        public MemberSession MemberSession { get; set; }
         /// <summary>
         /// Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
         /// </summary>
         [JsonProperty("mfa_required")]
-        public MfaRequired? MfaRequired { get; set; }
+        public MfaRequired MfaRequired { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BMagicLinksAuthenticateRequestLocale
     {
         [EnumMember(Value = "en")]

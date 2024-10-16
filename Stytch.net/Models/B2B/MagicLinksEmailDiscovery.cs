@@ -4,7 +4,11 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -17,7 +21,7 @@ namespace Stytch.net.Models.Consumer
         /// The email address of the Member.
         /// </summary>
         [JsonProperty("email_address")]
-        public required string EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         /// <summary>
         /// The URL that the end user clicks from the discovery Magic Link. This URL should be an endpoint in the
         /// backend server that
@@ -27,20 +31,20 @@ namespace Stytch.net.Models.Consumer
         /// redirect URL, an error is returned.
         /// </summary>
         [JsonProperty("discovery_redirect_url")]
-        public string? DiscoveryRedirectURL { get; set; }
+        public string DiscoveryRedirectURL { get; set; }
         /// <summary>
         /// A base64url encoded SHA256 hash of a one time secret used to validate that the request starts and ends
         /// on the same device.
         /// </summary>
         [JsonProperty("pkce_code_challenge")]
-        public string? PkceCodeChallenge { get; set; }
+        public string PkceCodeChallenge { get; set; }
         /// <summary>
         /// Use a custom template for discovery emails. By default, it will use your default email template. The
         /// template must be from Stytch's
         /// built-in customizations or a custom HTML email for Magic Links - Login.
         /// </summary>
         [JsonProperty("login_template_id")]
-        public string? LoginTemplateId { get; set; }
+        public string LoginTemplateId { get; set; }
         /// <summary>
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
@@ -53,7 +57,11 @@ namespace Stytch.net.Models.Consumer
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BMagicLinksEmailDiscoverySendRequestLocale? Locale { get; set; }
+        public B2BMagicLinksEmailDiscoverySendRequestLocale Locale { get; set; }
+        public B2BMagicLinksEmailDiscoverySendRequest(string emailAddress)
+        {
+            this.EmailAddress = emailAddress;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.MagicLinks.Email.Discovery.Send"/>..
@@ -65,15 +73,16 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BMagicLinksEmailDiscoverySendRequestLocale
     {
         [EnumMember(Value = "en")]

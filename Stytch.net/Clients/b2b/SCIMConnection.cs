@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -26,29 +30,43 @@ namespace Stytch.net.Clients.B2B
         /// Update a SCIM Connection.
         /// </summary>
         public async Task<B2BSCIMConnectionUpdateResponse> Update(
-            B2BSCIMConnectionUpdateRequest request)
+            B2BSCIMConnectionUpdateRequest request
+            , B2BSCIMConnectionUpdateRequestOptions options
+        )
         {
             var method = HttpMethod.Put;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionUpdateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionUpdateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -60,29 +78,43 @@ namespace Stytch.net.Clients.B2B
         /// Deletes a SCIM Connection.
         /// </summary>
         public async Task<B2BSCIMConnectionDeleteResponse> Delete(
-            B2BSCIMConnectionDeleteRequest request)
+            B2BSCIMConnectionDeleteRequest request
+            , B2BSCIMConnectionDeleteRequestOptions options
+        )
         {
             var method = HttpMethod.Delete;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionDeleteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionDeleteResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -94,29 +126,43 @@ namespace Stytch.net.Clients.B2B
         /// Start a SCIM token rotation.
         /// </summary>
         public async Task<B2BSCIMConnectionRotateStartResponse> RotateStart(
-            B2BSCIMConnectionRotateStartRequest request)
+            B2BSCIMConnectionRotateStartRequest request
+            , B2BSCIMConnectionRotateStartRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/start"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateStartResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateStartResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -130,29 +176,43 @@ namespace Stytch.net.Clients.B2B
         /// [start SCIM token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start) response.
         /// </summary>
         public async Task<B2BSCIMConnectionRotateCompleteResponse> RotateComplete(
-            B2BSCIMConnectionRotateCompleteRequest request)
+            B2BSCIMConnectionRotateCompleteRequest request
+            , B2BSCIMConnectionRotateCompleteRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/complete"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateCompleteResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateCompleteResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -165,29 +225,43 @@ namespace Stytch.net.Clients.B2B
         /// token active.
         /// </summary>
         public async Task<B2BSCIMConnectionRotateCancelResponse> RotateCancel(
-            B2BSCIMConnectionRotateCancelRequest request)
+            B2BSCIMConnectionRotateCancelRequest request
+            , B2BSCIMConnectionRotateCancelRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/cancel"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateCancelResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionRotateCancelResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -199,30 +273,40 @@ namespace Stytch.net.Clients.B2B
         /// Gets a paginated list of all SCIM Groups associated with a given Connection.
         /// </summary>
         public async Task<B2BSCIMConnectionGetGroupsResponse> GetGroups(
-            B2BSCIMConnectionGetGroupsRequest request)
+            B2BSCIMConnectionGetGroupsRequest request
+            , B2BSCIMConnectionGetGroupsRequestOptions options
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
             };
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["cursor"] = request.Cursor;
-            query["limit"] = request.Limit?.ToString();
-            uriBuilder.Query = query.ToString();
+            uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
+            {"cursor", request.Cursor},
+            {"limit", request.Limit.ToString()},
+        });
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionGetGroupsResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionGetGroupsResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -234,29 +318,43 @@ namespace Stytch.net.Clients.B2B
         /// Create a new SCIM Connection.
         /// </summary>
         public async Task<B2BSCIMConnectionCreateResponse> Create(
-            B2BSCIMConnectionCreateRequest request)
+            B2BSCIMConnectionCreateRequest request
+            , B2BSCIMConnectionCreateRequestOptions options
+        )
         {
             var method = HttpMethod.Post;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonBody = JsonConvert.SerializeObject(request);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionCreateResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionCreateResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)
@@ -268,28 +366,36 @@ namespace Stytch.net.Clients.B2B
         /// Get SCIM Connection.
         /// </summary>
         public async Task<B2BSCIMConnectionGetResponse> Get(
-            B2BSCIMConnectionGetRequest request)
+            B2BSCIMConnectionGetRequest request
+            , B2BSCIMConnectionGetRequestOptions options
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/b2b/scim/${request.OrganizationId}/connection"
             };
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BSCIMConnectionGetResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<B2BSCIMConnectionGetResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

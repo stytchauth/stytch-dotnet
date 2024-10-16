@@ -4,32 +4,40 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
     public class ProjectMetric
     {
         [JsonProperty("count")]
-        public required uint Count { get; set; }
+        public uint Count { get; set; }
         [JsonProperty("metric_type")]
-        public ProjectMetricMetricType? MetricType { get; set; }
+        public ProjectMetricMetricType MetricType { get; set; }
     }
     public class ProjectMetricsRequest
     {
+        public ProjectMetricsRequest()
+        {
+        }
     }
     public class ProjectMetricsResponse
     {
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         [JsonProperty("project_id")]
-        public required string ProjectId { get; set; }
+        public string ProjectId { get; set; }
         [JsonProperty("metrics")]
-        public required List<ProjectMetric> Metrics { get; set; }
+        public List<ProjectMetric> Metrics { get; set; }
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ProjectMetricMetricType
     {
         [EnumMember(Value = "UNKNOWN")]

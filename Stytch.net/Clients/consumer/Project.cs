@@ -7,7 +7,11 @@
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -26,15 +30,14 @@ namespace Stytch.net.Clients.Consumer
         /// 
         /// </summary>
         public async Task<ProjectMetricsResponse> Metrics(
-            ProjectMetricsRequest request)
+            ProjectMetricsRequest request
+        )
         {
             var method = HttpMethod.Get;
-            var uriBuilder = new UriBuilder(_httpClient.BaseAddress!)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
                 Path = $"/v1/projects/metrics"
             };
-            var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-            uriBuilder.Query = query.ToString();
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
@@ -43,11 +46,11 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ProjectMetricsResponse>(responseBody)!;
+                return JsonConvert.DeserializeObject<ProjectMetricsResponse>(responseBody);
             }
             try
             {
-                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody)!;
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
                 throw apiException;
             }
             catch (JsonException)

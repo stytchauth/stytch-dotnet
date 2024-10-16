@@ -10,9 +10,9 @@ namespace Stytch.net.Clients
 {
     public class ClientConfig
     {
-        public required string ProjectId { get; set; }
-        public required string ProjectSecret { get; set; }
-        public string? Environment { get; set; } // Optional property
+        public string ProjectId { get; set; }
+        public string ProjectSecret { get; set; }
+        public string Environment { get; set; }
         public int Timeout { get; set; } = 10 * 60 * 1000; // Default timeout (10 minutes)
     }
 

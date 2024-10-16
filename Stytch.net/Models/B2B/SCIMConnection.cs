@@ -4,7 +4,11 @@
 // or your changes may be overwritten later!
 // !!!
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+
 
 namespace Stytch.net.Models.Consumer
 {
@@ -16,7 +20,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSCIMConnectionDeleteRequestOptions
     {
@@ -26,7 +30,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSCIMConnectionGetGroupsRequestOptions
     {
@@ -36,7 +40,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSCIMConnectionGetRequestOptions
     {
@@ -46,7 +50,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSCIMConnectionRotateCancelRequestOptions
     {
@@ -56,7 +60,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSCIMConnectionRotateCompleteRequestOptions
     {
@@ -66,7 +70,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSCIMConnectionRotateStartRequestOptions
     {
@@ -76,7 +80,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     public class B2BSCIMConnectionUpdateRequestOptions
     {
@@ -86,7 +90,7 @@ namespace Stytch.net.Models.Consumer
         /// will be run using that member's permissions.
         /// </summary>
         [JsonProperty("authorization")]
-        public Authorization? Authorization { get; set; }
+        public Authorization Authorization { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Create"/>..
@@ -98,14 +102,18 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// A human-readable display name for the connection.
         /// </summary>
         [JsonProperty("display_name")]
-        public string? DisplayName { get; set; }
+        public string DisplayName { get; set; }
         [JsonProperty("identity_provider")]
-        public CreateRequestIdentityProvider? IdentityProvider { get; set; }
+        public CreateRequestIdentityProvider IdentityProvider { get; set; }
+        public B2BSCIMConnectionCreateRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Create"/>..
@@ -117,20 +125,20 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The `SCIM Connection` object affected by this API call. See the
         /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
         /// field details.
         /// </summary>
         [JsonProperty("connection")]
-        public SCIMConnectionWithToken? Connection { get; set; }
+        public SCIMConnectionWithToken Connection { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Delete"/>..
@@ -142,12 +150,17 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
+        public B2BSCIMConnectionDeleteRequest(string organizationId, string connectionId)
+        {
+            this.OrganizationId = organizationId;
+            this.ConnectionId = connectionId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Delete"/>..
@@ -159,18 +172,18 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The `connection_id` that was deleted as part of the delete request.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.GetGroups"/>..
@@ -182,12 +195,12 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
         /// results. If your query returns more than 1000 results, you will need to paginate the responses using the
@@ -196,7 +209,7 @@ namespace Stytch.net.Models.Consumer
         /// next page of results. Continue to make search calls until the `next_cursor` in the response is null.
         /// </summary>
         [JsonProperty("cursor")]
-        public string? Cursor { get; set; }
+        public string Cursor { get; set; }
         /// <summary>
         /// The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
         /// be returned by a single search request. If the total size of your result set is greater than one page
@@ -204,6 +217,11 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("limit")]
         public uint? Limit { get; set; }
+        public B2BSCIMConnectionGetGroupsRequest(string organizationId, string connectionId)
+        {
+            this.OrganizationId = organizationId;
+            this.ConnectionId = connectionId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.GetGroups"/>..
@@ -214,15 +232,15 @@ namespace Stytch.net.Models.Consumer
         /// A list of SCIM Connection Groups belonging to the connection.
         /// </summary>
         [JsonProperty("scim_groups")]
-        public required List<SCIMGroup> SCIMGroups { get; set; }
+        public List<SCIMGroup> SCIMGroups { get; set; }
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The `next_cursor` string is returned when your search result contains more than one page of results.
         /// This value is passed into your next search call in the `cursor` field.
         /// </summary>
         [JsonProperty("next_cursor")]
-        public string? NextCursor { get; set; }
+        public string NextCursor { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Get"/>..
@@ -234,7 +252,11 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
+        public B2BSCIMConnectionGetRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Get"/>..
@@ -246,15 +268,15 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         [JsonProperty("connection")]
-        public SCIMConnection? Connection { get; set; }
+        public SCIMConnection Connection { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.RotateCancel"/>..
@@ -266,12 +288,17 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
+        public B2BSCIMConnectionRotateCancelRequest(string organizationId, string connectionId)
+        {
+            this.OrganizationId = organizationId;
+            this.ConnectionId = connectionId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.RotateCancel"/>..
@@ -283,20 +310,20 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The `SCIM Connection` object affected by this API call. See the
         /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
         /// field details.
         /// </summary>
         [JsonProperty("connection")]
-        public SCIMConnection? Connection { get; set; }
+        public SCIMConnection Connection { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.RotateComplete"/>..
@@ -308,12 +335,17 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
+        public B2BSCIMConnectionRotateCompleteRequest(string organizationId, string connectionId)
+        {
+            this.OrganizationId = organizationId;
+            this.ConnectionId = connectionId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.RotateComplete"/>..
@@ -325,20 +357,20 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The `SCIM Connection` object affected by this API call. See the
         /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
         /// field details.
         /// </summary>
         [JsonProperty("connection")]
-        public SCIMConnection? Connection { get; set; }
+        public SCIMConnection Connection { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.RotateStart"/>..
@@ -350,12 +382,17 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
+        public B2BSCIMConnectionRotateStartRequest(string organizationId, string connectionId)
+        {
+            this.OrganizationId = organizationId;
+            this.ConnectionId = connectionId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.RotateStart"/>..
@@ -367,20 +404,20 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The `SCIM Connection` object affected by this API call. See the
         /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
         /// field details.
         /// </summary>
         [JsonProperty("connection")]
-        public SCIMConnectionWithNextToken? Connection { get; set; }
+        public SCIMConnectionWithNextToken Connection { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Update"/>..
@@ -392,25 +429,30 @@ namespace Stytch.net.Models.Consumer
         /// perform operations on an Organization, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("organization_id")]
-        public required string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// The ID of the SCIM connection.
         /// </summary>
         [JsonProperty("connection_id")]
-        public required string ConnectionId { get; set; }
+        public string ConnectionId { get; set; }
         /// <summary>
         /// A human-readable display name for the connection.
         /// </summary>
         [JsonProperty("display_name")]
-        public string? DisplayName { get; set; }
+        public string DisplayName { get; set; }
         [JsonProperty("identity_provider")]
-        public UpdateRequestIdentityProvider? IdentityProvider { get; set; }
+        public UpdateRequestIdentityProvider IdentityProvider { get; set; }
         /// <summary>
         /// An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and
         /// a `role_id`.
         /// </summary>
         [JsonProperty("scim_group_implicit_role_assignments")]
-        public List<SCIMGroupImplicitRoleAssignments>? SCIMGroupImplicitRoleAssignments { get; set; }
+        public List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
+        public B2BSCIMConnectionUpdateRequest(string organizationId, string connectionId)
+        {
+            this.OrganizationId = organizationId;
+            this.ConnectionId = connectionId;
+        }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.SCIM.Connection.Update"/>..
@@ -422,22 +464,23 @@ namespace Stytch.net.Models.Consumer
         /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         /// </summary>
         [JsonProperty("request_id")]
-        public required string RequestId { get; set; }
+        public string RequestId { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
         [JsonProperty("status_code")]
-        public required int StatusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// The `SAML Connection` object affected by this API call. See the
         /// [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object) for complete response
         /// field details.
         /// </summary>
         [JsonProperty("connection")]
-        public SCIMConnection? Connection { get; set; }
+        public SCIMConnection Connection { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum CreateRequestIdentityProvider
     {
         [EnumMember(Value = "generic")]
@@ -457,6 +500,7 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "rippling")]
         RIPPLING,
     }
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum UpdateRequestIdentityProvider
     {
         [EnumMember(Value = "generic")]

@@ -36,9 +36,6 @@ public class ConsumerClient
 
         var sdkVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0";
         var expectedUserAgent = $"stytch-dotnet/{sdkVersion}";
-
-        var expectedAuthValue = "cHJvamVjdC10ZXN0LWI5NmRhYmIzLWZjNjQtNDFmMC1hMDY0LWUyM2RmODZmZmUyYTpzaGhoaA==";
-
         var expectedBaseAddress = $"https://test.stytch.com/";
 
         // Act
@@ -67,10 +64,7 @@ public class ConsumerClient
         // Arrange
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
-        var request = new MagicLinksEmailSendRequest()
-        {
-            Email = "sandbox@stytch.com",
-        };
+        var request = new MagicLinksEmailSendRequest(email: "sandbox@stytch.com");
 
         // Act
         var response = await client.MagicLinks.Email.Send(request);
@@ -87,14 +81,37 @@ public class ConsumerClient
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var response = await client.MagicLinks.Authenticate(new MagicLinksAuthenticateRequest()
-        {
-            Token = "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94="
-        });
+        var response =
+            await client.MagicLinks.Authenticate(
+                new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94="));
 
         // Assert
         Assert.Equal(200, response.StatusCode);
         Assert.Equal("user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd", response.UserId);
+        Assert.Empty(response.SessionJwt);
+        Assert.Empty(response.SessionToken);
+        Assert.Null(response.Session);
+    }
+
+
+    [Fact]
+    public async Task MagicLinksAuthenticate_ShouldReturnSandboxResponseWithSession()
+    {
+        // Arrange
+        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+
+        // Act
+        var response = await client.MagicLinks.Authenticate(
+            new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94=")
+            {
+                SessionDurationMinutes = 60
+            });
+
+        // Assert
+        Assert.NotNull(response.Session);
+        Assert.NotNull(response.SessionJwt);
+        Assert.NotNull(response.SessionToken);
+        Assert.Equal("sandbox@stytch.com", response.Session.AuthenticationFactors[0].EmailFactor.EmailAddress);
     }
 
     [Fact]
@@ -106,10 +123,8 @@ public class ConsumerClient
         // Act
         var exception = await Assert.ThrowsAsync<StytchApiException>(() =>
         {
-            return client.MagicLinks.Authenticate(new MagicLinksAuthenticateRequest()
-            {
-                Token = "3pzjQpgksDlGKWEwUq2Up--hCHC_0oamfLHyfspKDFU="
-            });
+            return client.MagicLinks.Authenticate(
+                new MagicLinksAuthenticateRequest(token: "3pzjQpgksDlGKWEwUq2Up--hCHC_0oamfLHyfspKDFU="));
         });
 
         // Assert
@@ -120,5 +135,73 @@ public class ConsumerClient
             exception.ErrorMessage
         );
         Assert.Equal("https://stytch.com/docs/api/errors/401#unable_to_auth_magic_link", exception.ErrorUrl);
+    }
+
+    [Fact]
+    public async Task SessionsGet_ShouldReturnSandboxNotAuthorizedError()
+    {
+        // Arrange
+        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+
+        // Act
+        var exception = await Assert.ThrowsAsync<StytchApiException>(() =>
+        {
+            return client.Sessions.Get(
+                new SessionsGetRequest(userId: "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd"));
+        });
+
+        // Assert
+        Assert.Equal(404, exception.StatusCode);
+        Assert.Equal("user_not_found", exception.ErrorType);
+    }
+
+
+    [Fact]
+    public async Task UsersSearch_SerializesSuccessfully()
+    {
+        // Arrange
+        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+
+        // Act
+        var res = await client.Users.Search(new UsersSearchRequest()
+        {
+            Limit = 3,
+            Query = new SearchUsersQuery()
+            {
+                Operands = new List<SearchUsersQueryOperand>()
+                {
+                    new UserIdFilter()
+                    {
+                        FilterValue = new List<string> { "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd" },
+                    },
+                }
+            }
+        });
+
+        // Assert
+        Assert.Equal(200, res.StatusCode);
+        Assert.Null(res.ResultsMetadata.NextCursor);
+    }
+
+    [Fact]
+    public async Task SessionsAuthenticate_SerializesDateTimesSuccessfully()
+    {
+        // Arrange
+        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+
+        // Act
+        var res = await client.Sessions.Authenticate(new SessionsAuthenticateRequest()
+        {
+            SessionToken = "WJtR5BCy38Szd5AfoDpf0iqFKEt4EE5JhjlWUY7l3FtY"
+        });
+
+        // Assert
+        DateTime startedAt = Assert.NotNull(res.Session.StartedAt);
+        // All Sandbox Sessions started at the same time
+        Assert.Equal(
+            new DateTime(2021, 8, 28, 0, 41, 59),
+            startedAt,
+            new TimeSpan(0, 0, 1)
+        );
     }
 }
