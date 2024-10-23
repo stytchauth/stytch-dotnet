@@ -314,6 +314,12 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("return_passkey_credential_options")]
         public bool? ReturnPasskeyCredentialOptions { get; set; }
+        [JsonProperty("override_id")]
+        public string OverrideId { get; set; }
+        [JsonProperty("override_name")]
+        public string OverrideName { get; set; }
+        [JsonProperty("override_display_name")]
+        public string OverrideDisplayName { get; set; }
         public WebAuthnRegisterStartRequest(string userId, string domain)
         {
             this.UserId = userId;

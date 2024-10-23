@@ -23,11 +23,13 @@ namespace Stytch.net.Clients.B2B
         private readonly HttpClient _httpClient;
         public readonly SSOOIDC OIDC;
         public readonly SSOSAML SAML;
+        public readonly SSOExternal External;
         public SSO(HttpClient client)
         {
             _httpClient = client;
             OIDC = new SSOOIDC(_httpClient);
             SAML = new SSOSAML(_httpClient);
+            External = new SSOExternal(_httpClient);
         }
 
         /// <summary>

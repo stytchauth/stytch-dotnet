@@ -12,7 +12,17 @@ using System.Collections.Generic;
 
 namespace Stytch.net.Models.Consumer
 {
-    public class B2BPasswordsEmailDeleteRequest
+    public class B2BPasswordsEmailRequireResetRequestOptions
+    {
+        /// <summary>
+        /// Optional authorization object.
+        /// Pass in an active Stytch Member session token or session JWT and the request
+        /// will be run using that member's permissions.
+        /// </summary>
+        [JsonProperty("authorization")]
+        public Authorization Authorization { get; set; }
+    }
+    public class B2BPasswordsEmailRequireResetRequest
     {
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
@@ -20,12 +30,12 @@ namespace Stytch.net.Models.Consumer
         public string OrganizationId { get; set; }
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
-        public B2BPasswordsEmailDeleteRequest(string emailAddress)
+        public B2BPasswordsEmailRequireResetRequest(string emailAddress)
         {
             this.EmailAddress = emailAddress;
         }
     }
-    public class B2BPasswordsEmailDeleteResponse
+    public class B2BPasswordsEmailRequireResetResponse
     {
         [JsonProperty("member")]
         public Member Member { get; set; }

@@ -134,14 +134,15 @@ namespace Stytch.net.Clients.B2B
         /// <summary>
         /// 
         /// </summary>
-        public async Task<B2BPasswordsEmailDeleteResponse> Delete(
-            B2BPasswordsEmailDeleteRequest request
+        public async Task<B2BPasswordsEmailRequireResetResponse> RequireReset(
+            B2BPasswordsEmailRequireResetRequest request
+            , B2BPasswordsEmailRequireResetRequestOptions options
         )
         {
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/passwords/email/delete"
+                Path = $"/v1/b2b/passwords/email/require_reset"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -152,13 +153,21 @@ namespace Stytch.net.Clients.B2B
             var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BPasswordsEmailDeleteResponse>(responseBody);
+                return JsonConvert.DeserializeObject<B2BPasswordsEmailRequireResetResponse>(responseBody);
             }
             try
             {

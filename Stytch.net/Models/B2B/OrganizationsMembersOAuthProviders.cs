@@ -12,6 +12,17 @@ using System.Collections.Generic;
 
 namespace Stytch.net.Models.Consumer
 {
+    public class B2BOrganizationsMembersOAuthProvidersGithubResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("provider_type")]
+        public string ProviderType { get; set; }
+        [JsonProperty("registrations")]
+        public List<GithubProviderInfo> Registrations { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Google"/>..
     /// </summary>
@@ -71,6 +82,17 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("refresh_token")]
         public string RefreshToken { get; set; }
+    }
+    public class B2BOrganizationsMembersOAuthProvidersHubspotResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("provider_type")]
+        public string ProviderType { get; set; }
+        [JsonProperty("registrations")]
+        public List<HubspOTPRoviderInfo> Registrations { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Microsoft"/>..
@@ -162,6 +184,29 @@ namespace Stytch.net.Models.Consumer
             this.OrganizationId = organizationId;
             this.MemberId = memberId;
         }
+    }
+    public class B2BOrganizationsMembersOAuthProvidersSlackRequest
+    {
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        public B2BOrganizationsMembersOAuthProvidersSlackRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
+    }
+    public class B2BOrganizationsMembersOAuthProvidersSlackResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("provider_type")]
+        public string ProviderType { get; set; }
+        [JsonProperty("registrations")]
+        public List<SlackProviderInfo> Registrations { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
     }
 
 }
