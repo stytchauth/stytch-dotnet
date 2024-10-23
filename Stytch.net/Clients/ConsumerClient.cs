@@ -20,7 +20,7 @@ namespace Stytch.net.Clients
         public ConsumerClient(ClientConfig config) : base(config)
         {
             CryptoWallets = new CryptoWallets(_httpClient);
-            M2M = new M2M(_httpClient);
+            M2M = new M2M(_httpClient, _config);
             MagicLinks = new MagicLinks(_httpClient);
             OAuth = new OAuth(_httpClient);
             OTPs = new OTPs(_httpClient);

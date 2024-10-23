@@ -9,11 +9,11 @@ using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
-
+using Microsoft.VisualBasic;
 
 
 namespace Stytch.net.Clients.Consumer
@@ -21,15 +21,62 @@ namespace Stytch.net.Clients.Consumer
     public class M2M
     {
         private readonly HttpClient _httpClient;
+        private readonly ClientConfig _config;
         public readonly M2MClients Clients;
-        public M2M(HttpClient client)
+
+        public M2M(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
             Clients = new M2MClients(_httpClient);
         }
 
+        // MANUAL(token)(SERVICE_METHOD)
+        /// <summary>
+        /// Retrieve an access token for the given M2M Client.
+        /// Access tokens are JWTs signed with the project's JWKS, and are valid for one hour after issuance.
+        /// M2M Access tokens contain a standard set of claims as well as any custom claims generated from templates.
+        /// 
+        /// M2M Access tokens can be validated locally using the Authenticate Access Token method in the Stytch Backend SDKs,
+        /// or with any library that supports JWT signature validation.
+        /// </summary>
+        public async Task<M2MTokenResponse> Token(
+            M2MTokenRequest request
+        )
+        {
+            var formData = new Dictionary<string, string>
+            {
+                { "client_id", request.ClientId },
+                { "client_secret", request.ClientSecret },
+                { "grant_type", "client_credentials" }
+            };
 
+            if (request.Scopes != null && request.Scopes.Count > 0)
+            {
+                formData["scope"] = String.Join(" ", request.Scopes.ToArray());
+            }
+
+            var httpReq = new HttpRequestMessage(HttpMethod.Post, $"/v1/public/{_config.ProjectId}/oauth2/token");
+            httpReq.Content = new FormUrlEncodedContent(formData);
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<M2MTokenResponse>(responseBody);
+            }
+
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        // ENDMANUAL(token)
     }
-
 }
-

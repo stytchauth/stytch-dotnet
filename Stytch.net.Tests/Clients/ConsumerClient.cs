@@ -203,4 +203,25 @@ public class ConsumerClient
             new TimeSpan(0, 0, 1)
         );
     }
+
+    [Fact]
+    public async Task M2MToken_Success()
+    {
+        // Arrange
+        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+
+        // Act
+        // A (temporary) hack - we do not support sandbox values for M2M so we provisioned a client 
+        // that reuses the Project ID and Project Secret values we already have saved in CI 
+        var res = await client.M2M.Token(new M2MTokenRequest()
+        {
+            ClientId = _clientConfig.ProjectId,
+            ClientSecret = _clientConfig.ProjectSecret
+        });
+
+        // Assert
+        Assert.NotEmpty(res.AccessToken);
+        Assert.Equal("bearer", res.TokenType);
+        Assert.Equal(3600, res.ExpiresIn);
+    }
 }

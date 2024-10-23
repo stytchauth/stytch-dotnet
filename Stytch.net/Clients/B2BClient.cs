@@ -25,7 +25,7 @@ namespace Stytch.net.Clients
         public B2BClient(ClientConfig config) : base(config)
         {
             Discovery = new Discovery(_httpClient);
-            M2M = new M2M(_httpClient);
+            M2M = new M2M(_httpClient, _config);
             MagicLinks = new MagicLinks(_httpClient);
             OAuth = new OAuth(_httpClient);
             OTPs = new OTPs(_httpClient);
