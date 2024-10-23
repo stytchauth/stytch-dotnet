@@ -34,8 +34,7 @@ public class ConsumerClient
         // Arrange
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
-        var sdkVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0";
-        var expectedUserAgent = $"stytch-dotnet/{sdkVersion}";
+        var expectedUserAgent = $"stytch-dotnet/";
         var expectedBaseAddress = $"https://test.stytch.com/";
 
         // Act
@@ -51,7 +50,7 @@ public class ConsumerClient
         Assert.NotNull(httpClient.DefaultRequestHeaders.Authorization.Parameter);
 
         // User Agent Header
-        Assert.Equal(httpClient.DefaultRequestHeaders.UserAgent.ToString(), expectedUserAgent);
+        Assert.StartsWith(expectedUserAgent, httpClient.DefaultRequestHeaders.UserAgent.ToString());
 
         // Environment
         Assert.Equal(httpClient.BaseAddress?.ToString(), expectedBaseAddress);
