@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.Consumer
 {
     public class OAuth
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public OAuth(HttpClient client)
+        public OAuth(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

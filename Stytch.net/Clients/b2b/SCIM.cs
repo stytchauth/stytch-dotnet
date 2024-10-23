@@ -20,12 +20,14 @@ namespace Stytch.net.Clients.B2B
 {
     public class SCIM
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly SCIMConnection Connection;
-        public SCIM(HttpClient client)
+        public SCIM(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Connection = new SCIMConnection(_httpClient);
+            _config = config;
+            Connection = new SCIMConnection(_httpClient, _config);
         }
 
 

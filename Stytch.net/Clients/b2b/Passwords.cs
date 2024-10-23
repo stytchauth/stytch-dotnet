@@ -20,18 +20,20 @@ namespace Stytch.net.Clients.B2B
 {
     public class Passwords
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly PasswordsEmail Email;
         public readonly PasswordsSessions Sessions;
         public readonly PasswordsExistingPassword ExistingPassword;
         public readonly PasswordsDiscovery Discovery;
-        public Passwords(HttpClient client)
+        public Passwords(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Email = new PasswordsEmail(_httpClient);
-            Sessions = new PasswordsSessions(_httpClient);
-            ExistingPassword = new PasswordsExistingPassword(_httpClient);
-            Discovery = new PasswordsDiscovery(_httpClient);
+            _config = config;
+            Email = new PasswordsEmail(_httpClient, _config);
+            Sessions = new PasswordsSessions(_httpClient, _config);
+            ExistingPassword = new PasswordsExistingPassword(_httpClient, _config);
+            Discovery = new PasswordsDiscovery(_httpClient, _config);
         }
 
         /// <summary>

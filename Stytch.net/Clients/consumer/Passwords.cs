@@ -20,16 +20,18 @@ namespace Stytch.net.Clients.Consumer
 {
     public class Passwords
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly PasswordsEmail Email;
         public readonly PasswordsExistingPassword ExistingPassword;
         public readonly PasswordsSessions Sessions;
-        public Passwords(HttpClient client)
+        public Passwords(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Email = new PasswordsEmail(_httpClient);
-            ExistingPassword = new PasswordsExistingPassword(_httpClient);
-            Sessions = new PasswordsSessions(_httpClient);
+            _config = config;
+            Email = new PasswordsEmail(_httpClient, _config);
+            ExistingPassword = new PasswordsExistingPassword(_httpClient, _config);
+            Sessions = new PasswordsSessions(_httpClient, _config);
         }
 
         /// <summary>

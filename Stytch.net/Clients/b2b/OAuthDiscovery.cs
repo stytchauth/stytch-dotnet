@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class OAuthDiscovery
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public OAuthDiscovery(HttpClient client)
+        public OAuthDiscovery(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

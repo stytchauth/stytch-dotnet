@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class RBAC
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public RBAC(HttpClient client)
+        public RBAC(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

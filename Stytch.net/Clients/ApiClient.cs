@@ -25,7 +25,7 @@ namespace Stytch.net.Clients
         public BaseClient(ClientConfig config)
         {
             _config = config;
-            
+
             if (string.IsNullOrEmpty(config.Environment))
             {
                 if (config.ProjectId.StartsWith("project-live-"))

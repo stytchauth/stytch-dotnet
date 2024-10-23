@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class TOTPs
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public TOTPs(HttpClient client)
+        public TOTPs(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

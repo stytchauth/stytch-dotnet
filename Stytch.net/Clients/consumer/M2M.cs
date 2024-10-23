@@ -9,27 +9,27 @@ using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+
+
 
 
 namespace Stytch.net.Clients.Consumer
 {
     public class M2M
     {
-        private readonly HttpClient _httpClient;
         private readonly ClientConfig _config;
+        private readonly HttpClient _httpClient;
         public readonly M2MClients Clients;
-
         public M2M(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
-            Clients = new M2MClients(_httpClient);
+            Clients = new M2MClients(_httpClient, _config);
         }
+
 
         // MANUAL(token)(SERVICE_METHOD)
         /// <summary>
@@ -45,11 +45,11 @@ namespace Stytch.net.Clients.Consumer
         )
         {
             var formData = new Dictionary<string, string>
-            {
-                { "client_id", request.ClientId },
-                { "client_secret", request.ClientSecret },
-                { "grant_type", "client_credentials" }
-            };
+        {
+            { "client_id", request.ClientId },
+            { "client_secret", request.ClientSecret },
+            { "grant_type", "client_credentials" }
+        };
 
             if (request.Scopes != null && request.Scopes.Count > 0)
             {
@@ -78,5 +78,9 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         // ENDMANUAL(token)
+
+
     }
+
 }
+

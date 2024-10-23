@@ -20,16 +20,18 @@ namespace Stytch.net.Clients.Consumer
 {
     public class OTPs
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly OTPsSms Sms;
         public readonly OTPsWhatsapp Whatsapp;
         public readonly OTPsEmail Email;
-        public OTPs(HttpClient client)
+        public OTPs(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Sms = new OTPsSms(_httpClient);
-            Whatsapp = new OTPsWhatsapp(_httpClient);
-            Email = new OTPsEmail(_httpClient);
+            _config = config;
+            Sms = new OTPsSms(_httpClient, _config);
+            Whatsapp = new OTPsWhatsapp(_httpClient, _config);
+            Email = new OTPsEmail(_httpClient, _config);
         }
 
         /// <summary>

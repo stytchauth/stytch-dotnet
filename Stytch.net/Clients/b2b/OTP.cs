@@ -20,12 +20,14 @@ namespace Stytch.net.Clients.B2B
 {
     public class OTPs
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly OTPsSms Sms;
-        public OTPs(HttpClient client)
+        public OTPs(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Sms = new OTPsSms(_httpClient);
+            _config = config;
+            Sms = new OTPsSms(_httpClient, _config);
         }
 
 

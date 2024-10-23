@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class SSOSAML
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public SSOSAML(HttpClient client)
+        public SSOSAML(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

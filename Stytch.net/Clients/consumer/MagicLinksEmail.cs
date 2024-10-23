@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.Consumer
 {
     public class MagicLinksEmail
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public MagicLinksEmail(HttpClient client)
+        public MagicLinksEmail(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

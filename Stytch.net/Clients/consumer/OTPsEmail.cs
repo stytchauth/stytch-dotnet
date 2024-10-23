@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.Consumer
 {
     public class OTPsEmail
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public OTPsEmail(HttpClient client)
+        public OTPsEmail(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

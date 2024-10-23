@@ -20,14 +20,16 @@ namespace Stytch.net.Clients.B2B
 {
     public class MagicLinks
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly MagicLinksEmail Email;
         public readonly MagicLinksDiscovery Discovery;
-        public MagicLinks(HttpClient client)
+        public MagicLinks(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Email = new MagicLinksEmail(_httpClient);
-            Discovery = new MagicLinksDiscovery(_httpClient);
+            _config = config;
+            Email = new MagicLinksEmail(_httpClient, _config);
+            Discovery = new MagicLinksDiscovery(_httpClient, _config);
         }
 
         /// <summary>

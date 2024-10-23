@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class OrganizationsMembersOAuthProviders
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public OrganizationsMembersOAuthProviders(HttpClient client)
+        public OrganizationsMembersOAuthProviders(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

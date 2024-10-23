@@ -20,16 +20,18 @@ namespace Stytch.net.Clients.B2B
 {
     public class SSO
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly SSOOIDC OIDC;
         public readonly SSOSAML SAML;
         public readonly SSOExternal External;
-        public SSO(HttpClient client)
+        public SSO(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            OIDC = new SSOOIDC(_httpClient);
-            SAML = new SSOSAML(_httpClient);
-            External = new SSOExternal(_httpClient);
+            _config = config;
+            OIDC = new SSOOIDC(_httpClient, _config);
+            SAML = new SSOSAML(_httpClient, _config);
+            External = new SSOExternal(_httpClient, _config);
         }
 
         /// <summary>

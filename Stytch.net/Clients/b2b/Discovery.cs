@@ -20,14 +20,16 @@ namespace Stytch.net.Clients.B2B
 {
     public class Discovery
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly DiscoveryIntermediateSessions IntermediateSessions;
         public readonly DiscoveryOrganizations Organizations;
-        public Discovery(HttpClient client)
+        public Discovery(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            IntermediateSessions = new DiscoveryIntermediateSessions(_httpClient);
-            Organizations = new DiscoveryOrganizations(_httpClient);
+            _config = config;
+            IntermediateSessions = new DiscoveryIntermediateSessions(_httpClient, _config);
+            Organizations = new DiscoveryOrganizations(_httpClient, _config);
         }
 
 
