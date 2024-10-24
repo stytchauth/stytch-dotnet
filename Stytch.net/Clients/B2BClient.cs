@@ -1,3 +1,4 @@
+using System;
 using Stytch.net.Clients.B2B;
 using M2M = Stytch.net.Clients.Consumer.M2M;
 using Project = Stytch.net.Clients.Consumer.Project;
@@ -38,6 +39,12 @@ namespace Stytch.net.Clients
             SSO = new SSO(_httpClient, _config);
             Sessions = new Sessions(_httpClient, _config);
             TOTPs = new TOTPs(_httpClient, _config);
+
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/sessions/jwks/{config.ProjectId}"
+            };
+            _config.JwksUri = uriBuilder.ToString();
         }
     }
 

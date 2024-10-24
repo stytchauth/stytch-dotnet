@@ -9,6 +9,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
+using Microsoft.IdentityModel.Tokens;
 
 namespace Stytch.net.Models.Consumer
 {
@@ -290,6 +291,7 @@ namespace Stytch.net.Models.Consumer
         INACTIVE,
     }
     // MANUAL(M2M)(TYPES)
+    // ADDIMPORT: using Microsoft.IdentityModel.Tokens;
     public class M2MTokenRequest
     {
         /// <summary>
@@ -328,6 +330,48 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("expires_in")]
         public int ExpiresIn { get; set; }
+    }
+
+    public class M2MAuthenticateTokenRequest
+    {
+        /// <summary>
+        /// The token to authenticate. Should be a JWT 
+        /// </summary> 
+        public string AccessToken { get; set; }
+
+        /// <summary>
+        /// A list of scopes that should be present in the token.
+        /// <exception cref="Exceptions.StytchMissingScopesException">thrown when scope is not present in token</exception>  
+        /// </summary>
+        public List<string> RequiredScopes { get; set; }
+
+        /// <summary>
+        /// Configures the acceptable amount of clock skew when validating timestamps.
+        /// </summary>
+        public TimeSpan ClockSkew { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Gets or sets a delegate that will be used to validate the lifetime of the token
+        /// </summary>
+        public LifetimeValidator LifetimeValidator { get; set; }
+    }
+
+    public class M2MAuthenticateTokenResponse
+    {
+        /// <summary>
+        /// The ID of the client the token belongs to.
+        /// </summary>
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// A list of scopes granted to the client.
+        /// </summary>
+        public List<string> Scopes { get; set; }
+
+        /// <summary>
+        /// A dictionary containing all custom claims found within the token. Claims may be strings, booleans, numbers, or JsonElements. 
+        /// </summary>
+        public Dictionary<string, object> CustomClaims { get; set; }
     }
     // ENDMANUAL(M2M)
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Stytch.net is an async .NET client for the Stytch API.  (Official Library)</Description>
-    <TargetFrameworks>net8.0;netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>net8.0;netstandard2.0;net462</TargetFrameworks>
     <PackageTags>stytch;oauth;login</PackageTags>
     <ImplicitUsings>disable</ImplicitUsings>
     <PackageId>Stytch.net</PackageId>
@@ -22,6 +22,8 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.1.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
     <None Include="..\README.md" Pack="true" PackagePath="\"/>
     <None Include="..\LICENSE.txt" Pack="true" PackagePath="\"/>
   </ItemGroup>
