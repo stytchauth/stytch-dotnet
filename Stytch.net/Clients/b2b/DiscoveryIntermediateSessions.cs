@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class DiscoveryIntermediateSessions
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public DiscoveryIntermediateSessions(HttpClient client)
+        public DiscoveryIntermediateSessions(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

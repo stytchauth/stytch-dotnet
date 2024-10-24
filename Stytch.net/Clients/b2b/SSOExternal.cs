@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class SSOExternal
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public SSOExternal(HttpClient client)
+        public SSOExternal(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

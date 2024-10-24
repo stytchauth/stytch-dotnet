@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class RecoveryCodes
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public RecoveryCodes(HttpClient client)
+        public RecoveryCodes(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

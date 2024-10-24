@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class PasswordsEmail
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public PasswordsEmail(HttpClient client)
+        public PasswordsEmail(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

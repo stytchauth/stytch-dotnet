@@ -19,10 +19,12 @@ namespace Stytch.net.Clients
     public class BaseClient
     {
         protected readonly HttpClient _httpClient;
+        protected readonly ClientConfig _config;
         protected static readonly string SdkVersion = GetSdkVersion();
 
         public BaseClient(ClientConfig config)
         {
+            _config = config;
 
             if (string.IsNullOrEmpty(config.Environment))
             {

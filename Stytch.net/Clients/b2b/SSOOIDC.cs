@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.B2B
 {
     public class SSOOIDC
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public SSOOIDC(HttpClient client)
+        public SSOOIDC(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

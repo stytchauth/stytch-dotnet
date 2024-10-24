@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.Consumer
 {
     public class CryptoWallets
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public CryptoWallets(HttpClient client)
+        public CryptoWallets(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>

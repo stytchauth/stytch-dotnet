@@ -20,12 +20,14 @@ namespace Stytch.net.Clients.Consumer
 {
     public class M2MClients
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly M2MClientsSecrets Secrets;
-        public M2MClients(HttpClient client)
+        public M2MClients(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Secrets = new M2MClientsSecrets(_httpClient);
+            _config = config;
+            Secrets = new M2MClientsSecrets(_httpClient, _config);
         }
 
         /// <summary>

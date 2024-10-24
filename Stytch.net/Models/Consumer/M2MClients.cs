@@ -289,4 +289,46 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "inactive")]
         INACTIVE,
     }
+    // MANUAL(M2M)(TYPES)
+    public class M2MTokenRequest
+    {
+        /// <summary>
+        /// The ID of the client.
+        /// </summary> 
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// The secret of the client.
+        /// </summary> 
+        public string ClientSecret { get; set; }
+
+        /// <summary>
+        /// An array of scopes requested. If omitted, all scopes assigned to the client will be returned. 
+        /// </summary>
+        public List<string> Scopes { get; set; }
+    }
+
+    public class M2MTokenResponse
+    {
+        /// <summary>
+        /// The access token granted to the client. Access tokens are JWTs signed with the project's JWKs.
+        /// </summary>
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+
+        /// <summary>
+        /// The type of the returned access token. Today, this value will always be equal to "bearer"
+        /// </summary>
+        [JsonProperty("token_type")]
+        public string TokenType { get; set; }
+
+        /// <summary>
+        /// The lifetime in seconds of the access token.
+        /// For example, the value 3600 denotes that the access token will expire in one hour from the time the response was generated.
+        /// </summary>
+        [JsonProperty("expires_in")]
+        public int ExpiresIn { get; set; }
+    }
+    // ENDMANUAL(M2M)
+
 }

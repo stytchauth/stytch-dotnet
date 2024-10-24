@@ -20,12 +20,14 @@ namespace Stytch.net.Clients.B2B
 {
     public class PasswordsDiscovery
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly PasswordsDiscoveryEmail Email;
-        public PasswordsDiscovery(HttpClient client)
+        public PasswordsDiscovery(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
-            Email = new PasswordsDiscoveryEmail(_httpClient);
+            _config = config;
+            Email = new PasswordsDiscoveryEmail(_httpClient, _config);
         }
 
         /// <summary>

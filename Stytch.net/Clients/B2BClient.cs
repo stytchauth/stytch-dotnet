@@ -24,20 +24,20 @@ namespace Stytch.net.Clients
 
         public B2BClient(ClientConfig config) : base(config)
         {
-            Discovery = new Discovery(_httpClient);
-            M2M = new M2M(_httpClient);
-            MagicLinks = new MagicLinks(_httpClient);
-            OAuth = new OAuth(_httpClient);
-            OTPs = new OTPs(_httpClient);
-            Organizations = new Organizations(_httpClient);
-            Passwords = new Passwords(_httpClient);
-            Project = new Project(_httpClient);
-            RBAC = new RBAC(_httpClient);
-            RecoveryCodes = new RecoveryCodes(_httpClient);
-            SCIM = new SCIM(_httpClient);
-            SSO = new SSO(_httpClient);
-            Sessions = new Sessions(_httpClient);
-            TOTPs = new TOTPs(_httpClient);
+            Discovery = new Discovery(_httpClient, _config);
+            M2M = new M2M(_httpClient, _config);
+            MagicLinks = new MagicLinks(_httpClient, _config);
+            OAuth = new OAuth(_httpClient, _config);
+            OTPs = new OTPs(_httpClient, _config);
+            Organizations = new Organizations(_httpClient, _config);
+            Passwords = new Passwords(_httpClient, _config);
+            Project = new Project(_httpClient, _config);
+            RBAC = new RBAC(_httpClient, _config);
+            RecoveryCodes = new RecoveryCodes(_httpClient, _config);
+            SCIM = new SCIM(_httpClient, _config);
+            SSO = new SSO(_httpClient, _config);
+            Sessions = new Sessions(_httpClient, _config);
+            TOTPs = new TOTPs(_httpClient, _config);
         }
     }
 

@@ -20,10 +20,12 @@ namespace Stytch.net.Clients.Consumer
 {
     public class Sessions
     {
+        private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public Sessions(HttpClient client)
+        public Sessions(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
+            _config = config;
         }
 
         /// <summary>
