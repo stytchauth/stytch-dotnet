@@ -1,0 +1,52 @@
+name: Publish NPM package
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    name: Build and publish stytch package to NPM
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install
+        run: npm install
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Stytch.net/Stytch.net.csproj)
+          echo "release_tag=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get changed files
+        id: files
+        uses: jitterbit/get-changed-files@v1
+
+      - name: Check for version.py diff
+        id: diff
+        run: |
+          FOUND=0
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            if [[ $changed_file == "Stytch.net/Stytch.net.csproj" ]]; then
+              FOUND=1
+            fi
+          done
+          echo "diff=$FOUND" >> $GITHUB_OUTPUT
+
+      - name: Publish to Nuget
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        run: |
+          dotnet pack -o ./build
+          dotnet nuget push ./build/*.nupkg --source "nuget.org" --skip-duplicate --api-key $NUGET_KEY
+
+      - name: Create release
+        if: steps.diff.outputs.diff != 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create "${{ steps.version.outputs.release_tag }}" --generate-notes
