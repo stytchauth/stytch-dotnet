@@ -8,7 +8,7 @@
     <PackageId>Stytch</PackageId>
     <AssemblyTitle>Stytch</AssemblyTitle>
     <AssemblyName>Stytch</AssemblyName>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <Author>Stytch</Author>
     <Product>Stytch</Product>
     <PackageProjectUrl>https://github.com/stytchauth/stytch-dotnet</PackageProjectUrl>
