@@ -24,12 +24,14 @@ namespace Stytch.net.Clients.B2B
         public readonly PasswordsEmail Email;
         public readonly PasswordsSessions Sessions;
         public readonly PasswordsExistingPassword ExistingPassword;
+        public readonly PasswordsDiscovery Discovery;
         public Passwords(HttpClient client)
         {
             _httpClient = client;
             Email = new PasswordsEmail(_httpClient);
             Sessions = new PasswordsSessions(_httpClient);
             ExistingPassword = new PasswordsExistingPassword(_httpClient);
+            Discovery = new PasswordsDiscovery(_httpClient);
         }
 
         /// <summary>

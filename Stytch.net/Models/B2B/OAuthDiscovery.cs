@@ -94,6 +94,8 @@ namespace Stytch.net.Models.Consumer
         public string ProviderType { get; set; }
         [JsonProperty("provider_tenant_id")]
         public string ProviderTenantId { get; set; }
+        [JsonProperty("provider_tenant_ids")]
+        public List<string> ProviderTenantIds { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

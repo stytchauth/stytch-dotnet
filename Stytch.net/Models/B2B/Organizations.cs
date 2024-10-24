@@ -99,6 +99,32 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
     }
+    public class GithubProviderInfo
+    {
+        [JsonProperty("provider_subject")]
+        public string ProviderSubject { get; set; }
+        [JsonProperty("provider_tenant_ids")]
+        public List<string> ProviderTenantIds { get; set; }
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+        [JsonProperty("scopes")]
+        public List<string> Scopes { get; set; }
+    }
+    public class HubspOTPRoviderInfo
+    {
+        [JsonProperty("provider_subject")]
+        public string ProviderSubject { get; set; }
+        [JsonProperty("provider_tenant_id")]
+        public string ProviderTenantId { get; set; }
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+        [JsonProperty("access_token_expires_in")]
+        public int AccessTokenExpiresIn { get; set; }
+        [JsonProperty("scopes")]
+        public List<string> Scopes { get; set; }
+        [JsonProperty("refresh_token")]
+        public string RefreshToken { get; set; }
+    }
     public class Member
     {
         /// <summary>
@@ -662,6 +688,21 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("operands")]
         public List<SearchQueryOperand> Operands { get; set; }
+    }
+    public class SlackProviderInfo
+    {
+        [JsonProperty("provider_subject")]
+        public string ProviderSubject { get; set; }
+        [JsonProperty("provider_tenant_id")]
+        public string ProviderTenantId { get; set; }
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+        [JsonProperty("scopes")]
+        public List<string> Scopes { get; set; }
+        [JsonProperty("bot_access_token")]
+        public string BotAccessToken { get; set; }
+        [JsonProperty("bot_scopes")]
+        public List<string> BotScopes { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Create"/>..
