@@ -14,6 +14,7 @@ namespace Stytch.net.Clients
         public string ProjectSecret { get; set; }
         public string Environment { get; set; }
         public int Timeout { get; set; } = 10 * 60 * 1000; // Default timeout (10 minutes)
+        internal string JwksUri { get; set; }
     }
 
     public class BaseClient

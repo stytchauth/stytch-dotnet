@@ -1,3 +1,4 @@
+using System;
 using Stytch.net.Clients.Consumer;
 
 namespace Stytch.net.Clients
@@ -30,6 +31,12 @@ namespace Stytch.net.Clients
             TOTPs = new TOTPs(_httpClient, _config);
             Users = new Users(_httpClient, _config);
             WebAuthn = new WebAuthn(_httpClient, _config);
+
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/sessions/jwks/{config.ProjectId}"
+            };
+            _config.JwksUri = uriBuilder.ToString();
         }
     }
 
