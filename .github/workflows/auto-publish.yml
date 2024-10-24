@@ -1,4 +1,4 @@
-name: Publish NPM package
+name: Publish NuGet package
 
 on:
   push:
@@ -7,15 +7,12 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    name: Build and publish stytch package to NPM
+    name: Build and publish stytch package to NuGet
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-
-      - name: Install
-        run: npm install
 
       - name: Get version
         id: version
@@ -27,7 +24,7 @@ jobs:
         id: files
         uses: jitterbit/get-changed-files@v1
 
-      - name: Check for version.py diff
+      - name: Check for Stytch.net.csproj diff
         id: diff
         run: |
           FOUND=0
@@ -38,7 +35,7 @@ jobs:
           done
           echo "diff=$FOUND" >> $GITHUB_OUTPUT
 
-      - name: Publish to Nuget
+      - name: Publish to NuGet
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
         run: |
