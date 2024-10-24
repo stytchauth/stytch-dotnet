@@ -298,7 +298,7 @@ namespace Stytch.net.Models.Consumer
         public string ClientId { get; set; }
 
         /// <summary>
-        /// The ID of the client.
+        /// The secret of the client.
         /// </summary> 
         public string ClientSecret { get; set; }
 
