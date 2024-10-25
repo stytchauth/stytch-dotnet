@@ -3,12 +3,11 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using System.Runtime.Serialization;
-using System.Collections.Generic;
-
 using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Consumer.Organization>;
 
 namespace Stytch.net.Models.Consumer
