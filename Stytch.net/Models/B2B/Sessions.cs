@@ -8,6 +8,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace Stytch.net.Models.Consumer
@@ -633,4 +634,98 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "pt-br")]
         PTBR,
     }
+
+    // MANUAL(AuthenticateJWT)(TYPES)
+    // ADDIMPORT: using Microsoft.IdentityModel.Tokens;
+    public class B2BAuthenticateJwtRequest
+    {
+        /// <summary>
+        /// The JSON Web Token (JWT) for a given Stytch Session.
+        /// </summary>
+        public string SessionJwt { get; set; }
+
+        /// <summary>
+        /// If an `authorization_check` object is passed in, this endpoint will also check if the Member is
+        ///   authorized to perform the given action on the given Resource in the specified Organization. A Member
+        /// is authorized if
+        ///   their Member Session contains a Role, assigned
+        ///   [explicitly or implicitly](https://stytch.com/docs/b2b/guides/rbac/role-assignment), with adequate
+        /// permissions.
+        ///   In addition, the `organization_id` passed in the authorization check must match the Member's
+        /// Organization.
+        ///   
+        ///   The Roles on the Member Session may differ from the Roles you see on the Member object - Roles that
+        /// are implicitly
+        ///   assigned by SSO connection or SSO group will only be valid for a Member Session if there is at least
+        /// one authentication
+        ///   factor on the Member Session from the specified SSO connection.
+        ///   
+        ///   If the Member is not authorized to perform the specified action on the specified Resource, or if the
+        ///   `organization_id` does not match the Member's Organization, a 403 error will be thrown.
+        ///   Otherwise, the response will contain a list of Roles that satisfied the authorization check.
+        /// </summary>
+        public AuthorizationCheck AuthorizationCheck { get; set; }
+
+        /// <summary>
+        /// Configures the acceptable amount of clock skew when validating timestamps.
+        /// </summary>
+        public TimeSpan ClockSkew { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Gets or sets a delegate that will be used to validate the lifetime of the token
+        /// </summary>
+        public LifetimeValidator LifetimeValidator { get; set; }
+
+        public B2BAuthenticateJwtRequest(string sessionJwt)
+        {
+            SessionJwt = sessionJwt;
+        }
+    }
+
+    public class B2BAuthenticateJwtLocalRequest
+    {
+        /// <summary>
+        /// The JSON Web Token (JWT) for a given Stytch Session.
+        /// </summary>
+        public string SessionJwt { get; set; }
+
+        /// <summary>
+        /// If an `authorization_check` object is passed in, this endpoint will also check if the Member is
+        ///   authorized to perform the given action on the given Resource in the specified Organization. A Member
+        /// is authorized if
+        ///   their Member Session contains a Role, assigned
+        ///   [explicitly or implicitly](https://stytch.com/docs/b2b/guides/rbac/role-assignment), with adequate
+        /// permissions.
+        ///   In addition, the `organization_id` passed in the authorization check must match the Member's
+        /// Organization.
+        ///   
+        ///   The Roles on the Member Session may differ from the Roles you see on the Member object - Roles that
+        /// are implicitly
+        ///   assigned by SSO connection or SSO group will only be valid for a Member Session if there is at least
+        /// one authentication
+        ///   factor on the Member Session from the specified SSO connection.
+        ///   
+        ///   If the Member is not authorized to perform the specified action on the specified Resource, or if the
+        ///   `organization_id` does not match the Member's Organization, a 403 error will be thrown.
+        ///   Otherwise, the response will contain a list of Roles that satisfied the authorization check.
+        /// </summary>
+        public AuthorizationCheck AuthorizationCheck { get; set; }
+
+        /// <summary>
+        /// Configures the acceptable amount of clock skew when validating timestamps.
+        /// </summary>
+        public TimeSpan ClockSkew { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Gets or sets a delegate that will be used to validate the lifetime of the token
+        /// </summary>
+        public LifetimeValidator LifetimeValidator { get; set; }
+
+        public B2BAuthenticateJwtLocalRequest(string sessionJwt)
+        {
+            SessionJwt = sessionJwt;
+        }
+    }
+
+    // ENDMANUAL(AuthenticateJWT)
 }

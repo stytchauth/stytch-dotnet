@@ -12,6 +12,9 @@ namespace Stytch.net
 {
     public static class Utility
     {
+
+        public const string SessionClaimKey = "https://stytch.com/session";
+        public const string OrganizationClaimKey = "https://stytch.com/organization";
         public static string BuildQueryString(Dictionary<string, string> parameters)
         {
             var queryString = new List<string>();
@@ -32,7 +35,9 @@ namespace Stytch.net
             return string.Join("&", queryString);
         }
 
+
         private static JsonWebKeySet _cachedJwks;
+        private static string _cachedJwksUrl;
         private static DateTime _jwksLastFetched;
         private static TimeSpan _jwksRefreshInterval = TimeSpan.FromMinutes(15);
 
@@ -95,10 +100,11 @@ namespace Stytch.net
 
         private static async Task<JsonWebKeySet> GetJwksFromUrl(HttpClient client, string jwksUrl)
         {
-            if (_cachedJwks == null || DateTime.UtcNow - _jwksLastFetched > _jwksRefreshInterval)
+            if (_cachedJwks == null || _cachedJwksUrl != jwksUrl || DateTime.UtcNow - _jwksLastFetched > _jwksRefreshInterval)
             {
                 string jwksJson = await client.GetStringAsync(jwksUrl);
                 _cachedJwks = new JsonWebKeySet(jwksJson);
+                _cachedJwksUrl = jwksUrl;
                 _jwksLastFetched = DateTime.UtcNow;
             }
 

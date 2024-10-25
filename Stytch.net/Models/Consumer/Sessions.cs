@@ -972,9 +972,19 @@ namespace Stytch.net.Models.Consumer
     // ADDIMPORT: using Microsoft.IdentityModel.Tokens;
     public class AuthenticateJwtRequest
     {
+        /// <summary>
+        /// The JSON Web Token (JWT) for a given Stytch Session.
+        /// </summary>
         public string SessionJwt { get; set; }
+
+        /// <summary>
+        /// Configures the acceptable amount of clock skew when validating timestamps.
+        /// </summary>
         public TimeSpan ClockSkew { get; set; } = TimeSpan.FromMinutes(1);
 
+        /// <summary>
+        /// Gets or sets a delegate that will be used to validate the lifetime of the token
+        /// </summary>
         public LifetimeValidator LifetimeValidator { get; set; }
 
         public AuthenticateJwtRequest(string sessionJwt)
@@ -988,6 +998,9 @@ namespace Stytch.net.Models.Consumer
         public string SessionJwt { get; set; }
         public TimeSpan ClockSkew { get; set; } = TimeSpan.FromMinutes(1);
 
+        /// <summary>
+        /// Gets or sets a delegate that will be used to validate the lifetime of the token
+        /// </summary>
         public LifetimeValidator LifetimeValidator { get; set; }
 
         public AuthenticateJwtLocalRequest(string sessionJwt)
