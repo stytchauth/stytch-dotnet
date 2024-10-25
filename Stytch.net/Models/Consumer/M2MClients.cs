@@ -308,6 +308,12 @@ namespace Stytch.net.Models.Consumer
         /// An array of scopes requested. If omitted, all scopes assigned to the client will be returned. 
         /// </summary>
         public List<string> Scopes { get; set; }
+
+        public M2MTokenRequest(string clientId, string clientSecret)
+        {
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+        }
     }
 
     public class M2MTokenResponse
@@ -354,6 +360,11 @@ namespace Stytch.net.Models.Consumer
         /// Gets or sets a delegate that will be used to validate the lifetime of the token
         /// </summary>
         public LifetimeValidator LifetimeValidator { get; set; }
+
+        public M2MAuthenticateTokenRequest(string accessToken)
+        {
+            AccessToken = accessToken;
+        }
     }
 
     public class M2MAuthenticateTokenResponse

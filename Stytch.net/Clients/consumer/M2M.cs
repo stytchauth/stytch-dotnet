@@ -102,6 +102,8 @@ namespace Stytch.net.Clients.Consumer
             var scopeClaim = (string)res.CustomClaims["scope"];
             var scopes = new List<string>((scopeClaim).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
 
+            // Scope is a Stytch-controlled field, not a user-defined one.
+            // Let's remove it from the custom claims and return it as a well-typed property
             res.CustomClaims.Remove("scope");
 
             if (request.RequiredScopes != null && request.RequiredScopes.Count > 0)

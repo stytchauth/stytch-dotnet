@@ -16,11 +16,7 @@ public class M2M : TestBase
         // Act
         // A (temporary) hack - we do not support sandbox values for M2M so we provisioned a client 
         // that reuses the Project ID and Project Secret values we already have saved in CI 
-        var res = await client.M2M.Token(new M2MTokenRequest()
-        {
-            ClientId = _clientConfig.ProjectId,
-            ClientSecret = _clientConfig.ProjectSecret,
-        });
+        var res = await client.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
 
         // Assert
         Assert.NotEmpty(res.AccessToken);
@@ -35,16 +31,9 @@ public class M2M : TestBase
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var tokenRes = await client.M2M.Token(new M2MTokenRequest()
-        {
-            ClientId = _clientConfig.ProjectId,
-            ClientSecret = _clientConfig.ProjectSecret,
-        });
+        var tokenRes = await client.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
 
-        var authRes = await client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest()
-        {
-            AccessToken = tokenRes.AccessToken,
-        });
+        var authRes = await client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken));
 
         // Assert
         Assert.NotNull(authRes);
@@ -60,19 +49,12 @@ public class M2M : TestBase
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var tokenRes = await client.M2M.Token(new M2MTokenRequest()
-        {
-            ClientId = _clientConfig.ProjectId,
-            ClientSecret = _clientConfig.ProjectSecret,
-        });
+        var tokenRes = await client.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
 
         // Assert
         await Assert.ThrowsAsync<SecurityTokenInvalidSignatureException>(() =>
         {
-            return client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest()
-            {
-                AccessToken = $"{tokenRes.AccessToken}garbage",
-            });
+            return client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest($"{tokenRes.AccessToken}garbage"));
         });
     }
 
@@ -83,15 +65,10 @@ public class M2M : TestBase
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var tokenRes = await client.M2M.Token(new M2MTokenRequest()
-        {
-            ClientId = _clientConfig.ProjectId,
-            ClientSecret = _clientConfig.ProjectSecret,
-        });
+        var tokenRes = await client.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
 
-        var authRes = await client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest()
+        var authRes = await client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken)
         {
-            AccessToken = tokenRes.AccessToken,
             RequiredScopes = new List<string> { "read:users" }
         });
 
@@ -106,18 +83,13 @@ public class M2M : TestBase
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var tokenRes = await client.M2M.Token(new M2MTokenRequest()
-        {
-            ClientId = _clientConfig.ProjectId,
-            ClientSecret = _clientConfig.ProjectSecret,
-        });
+        var tokenRes = await client.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
 
         // Act
         var exception = await Assert.ThrowsAsync<StytchMissingScopesException>(() =>
         {
-            return client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest()
+            return client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken)
             {
-                AccessToken = tokenRes.AccessToken,
                 RequiredScopes = new List<string> { "read:users", "superadmin" }
             });
         });
@@ -134,11 +106,7 @@ public class M2M : TestBase
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var tokenRes = await client.M2M.Token(new M2MTokenRequest()
-        {
-            ClientId = _clientConfig.ProjectId,
-            ClientSecret = _clientConfig.ProjectSecret,
-        });
+        var tokenRes = await client.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
 
         bool LifetimeValidator(DateTime? notbefore, DateTime? expires, SecurityToken securitytoken,
             TokenValidationParameters validationparameters)
@@ -146,9 +114,8 @@ public class M2M : TestBase
             return DateTime.UtcNow > notbefore && DateTime.UtcNow < expires;
         }
 
-        var authRes = await client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest()
+        var authRes = await client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken)
         {
-            AccessToken = tokenRes.AccessToken,
             LifetimeValidator = LifetimeValidator
         });
 
@@ -164,11 +131,7 @@ public class M2M : TestBase
         var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
 
         // Act
-        var tokenRes = await client.M2M.Token(new M2MTokenRequest()
-        {
-            ClientId = _clientConfig.ProjectId,
-            ClientSecret = _clientConfig.ProjectSecret,
-        });
+        var tokenRes = await client.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
 
         // Act
         var exception = await Assert.ThrowsAsync<SecurityTokenInvalidLifetimeException>(() =>
@@ -179,9 +142,8 @@ public class M2M : TestBase
                 return false;
             }
 
-            return client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest()
+            return client.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken)
             {
-                AccessToken = tokenRes.AccessToken,
                 RequiredScopes = new List<string> { "read:users", "superadmin" },
                 LifetimeValidator = LifetimeValidator
             });
