@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
+
 namespace Stytch.net.Clients.Consumer
 {
     public class M2M
@@ -21,7 +23,6 @@ namespace Stytch.net.Clients.Consumer
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly M2MClients Clients;
-
         public M2M(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
@@ -43,12 +44,10 @@ namespace Stytch.net.Clients.Consumer
             M2MTokenRequest request
         )
         {
-            var formData = new Dictionary<string, string>
-            {
-                { "client_id", request.ClientId },
-                { "client_secret", request.ClientSecret },
-                { "grant_type", "client_credentials" }
-            };
+            var formData = new Dictionary<string, string>();
+            formData.Add("client_id", request.ClientId);
+            formData.Add("client_secret", request.ClientSecret);
+            formData.Add("grant_type", "client_credentials");
 
             if (request.Scopes != null && request.Scopes.Count > 0)
             {
@@ -81,12 +80,9 @@ namespace Stytch.net.Clients.Consumer
 
         // MANUAL(authenticateToken)(SERVICE_METHOD)
         /// <summary>
-        /// Retrieve an access token for the given M2M Client.
-        /// Access tokens are JWTs signed with the project's JWKS, and are valid for one hour after issuance.
-        /// M2M Access tokens contain a standard set of claims as well as any custom claims generated from templates.
-        /// 
-        /// M2M Access tokens can be validated locally using the Authenticate Access Token method in the Stytch Backend SDKs,
-        /// or with any library that supports JWT signature validation.
+        /// Authenticate an access token issued by Stytch from the Token endpoint.
+        /// M2M access tokens are JWTs signed with the project's JWKs, and can be validated locally using any Stytch client library.
+        /// You may pass in an optional set of scopes that the JWT must contain in order to enforce permissions.
         /// </summary>
         public async Task<M2MAuthenticateTokenResponse> AuthenticateToken(
             M2MAuthenticateTokenRequest request
@@ -132,5 +128,9 @@ namespace Stytch.net.Clients.Consumer
             };
         }
         // ENDMANUAL(authenticateToken)
+
+
     }
+
 }
+

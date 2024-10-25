@@ -9,6 +9,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
+using Microsoft.IdentityModel.Tokens;
 
 namespace Stytch.net.Models.Consumer
 {
@@ -967,4 +968,34 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "recovery_codes")]
         RECOVERY_CODES,
     }
+    // MANUAL(AuthenticateJWT)(TYPES)
+    // ADDIMPORT: using Microsoft.IdentityModel.Tokens;
+    public class AuthenticateJwtRequest
+    {
+        public string SessionJwt { get; set; }
+        public TimeSpan ClockSkew { get; set; } = TimeSpan.FromMinutes(1);
+
+        public LifetimeValidator LifetimeValidator { get; set; }
+
+        public AuthenticateJwtRequest(string sessionJwt)
+        {
+            SessionJwt = sessionJwt;
+        }
+    }
+
+    public class AuthenticateJwtLocalRequest
+    {
+        public string SessionJwt { get; set; }
+        public TimeSpan ClockSkew { get; set; } = TimeSpan.FromMinutes(1);
+
+        public LifetimeValidator LifetimeValidator { get; set; }
+
+        public AuthenticateJwtLocalRequest(string sessionJwt)
+        {
+            SessionJwt = sessionJwt;
+        }
+    }
+
+    // ENDMANUAL(AuthenticateJWT)
+
 }
