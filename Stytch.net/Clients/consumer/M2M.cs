@@ -14,8 +14,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
-
 namespace Stytch.net.Clients.Consumer
 {
     public class M2M
@@ -23,6 +21,7 @@ namespace Stytch.net.Clients.Consumer
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly M2MClients Clients;
+
         public M2M(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
@@ -45,11 +44,11 @@ namespace Stytch.net.Clients.Consumer
         )
         {
             var formData = new Dictionary<string, string>
-        {
-            { "client_id", request.ClientId },
-            { "client_secret", request.ClientSecret },
-            { "grant_type", "client_credentials" }
-        };
+            {
+                { "client_id", request.ClientId },
+                { "client_secret", request.ClientSecret },
+                { "grant_type", "client_credentials" }
+            };
 
             if (request.Scopes != null && request.Scopes.Count > 0)
             {
@@ -80,7 +79,58 @@ namespace Stytch.net.Clients.Consumer
         // ENDMANUAL(token)
 
 
+        // MANUAL(authenticateToken)(SERVICE_METHOD)
+        /// <summary>
+        /// Retrieve an access token for the given M2M Client.
+        /// Access tokens are JWTs signed with the project's JWKS, and are valid for one hour after issuance.
+        /// M2M Access tokens contain a standard set of claims as well as any custom claims generated from templates.
+        /// 
+        /// M2M Access tokens can be validated locally using the Authenticate Access Token method in the Stytch Backend SDKs,
+        /// or with any library that supports JWT signature validation.
+        /// </summary>
+        public async Task<M2MAuthenticateTokenResponse> AuthenticateToken(
+            M2MAuthenticateTokenRequest request
+        )
+        {
+            var res = await Utility.AuthenticateJwtLocal(_httpClient, _config, new Utility.AuthenticateJwtParams
+            {
+                Jwt = request.AccessToken,
+                ClockSkew = request.ClockSkew,
+                LifetimeValidator = request.LifetimeValidator,
+            });
+
+            var scopeClaim = (string)res.CustomClaims["scope"];
+            var scopes = new List<string>((scopeClaim).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+
+            // Scope is a Stytch-controlled field, not a user-defined one.
+            // Let's remove it from the custom claims and return it as a well-typed property
+            res.CustomClaims.Remove("scope");
+
+            if (request.RequiredScopes != null && request.RequiredScopes.Count > 0)
+            {
+                foreach (var requiredScope in request.RequiredScopes)
+                {
+                    if (!scopes.Contains(requiredScope))
+                    {
+                        throw new StytchMissingScopesException()
+                        {
+                            RequiredScope = requiredScope,
+                            ClientScopes = scopes,
+                            ClientId = res.Subject
+                        };
+                    }
+
+                    ;
+                }
+            }
+
+            return new M2MAuthenticateTokenResponse
+            {
+                ClientId = res.Subject,
+                Scopes = new List<string>(scopes),
+                CustomClaims = res.CustomClaims,
+            };
+        }
+        // ENDMANUAL(authenticateToken)
     }
-
 }
-
