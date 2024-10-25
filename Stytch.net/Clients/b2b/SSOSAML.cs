@@ -39,7 +39,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/sso/saml/${request.OrganizationId}"
+                Path = $"/v1/b2b/sso/saml/{request.OrganizationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -93,7 +93,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}"
+                Path = $"/v1/b2b/sso/saml/{request.OrganizationId}/connections/{request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -147,7 +147,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}/url"
+                Path = $"/v1/b2b/sso/saml/{request.OrganizationId}/connections/{request.ConnectionId}/url"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -198,7 +198,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/sso/saml/${request.OrganizationId}/connections/${request.ConnectionId}/verification_certificates/${request.CertificateId}"
+                Path = $"/v1/b2b/sso/saml/{request.OrganizationId}/connections/{request.ConnectionId}/verification_certificates/{request.CertificateId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

@@ -45,7 +45,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/sso/${request.OrganizationId}"
+                Path = $"/v1/b2b/sso/{request.OrganizationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -86,7 +86,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/sso/${request.OrganizationId}/connections/${request.ConnectionId}"
+                Path = $"/v1/b2b/sso/{request.OrganizationId}/connections/{request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

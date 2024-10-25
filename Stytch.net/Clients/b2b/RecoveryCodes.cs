@@ -78,7 +78,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/recovery_codes/${request.OrganizationId}/${request.MemberId}"
+                Path = $"/v1/b2b/recovery_codes/{request.OrganizationId}/{request.MemberId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

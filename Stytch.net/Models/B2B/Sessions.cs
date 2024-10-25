@@ -8,8 +8,8 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
-using Microsoft.IdentityModel.Tokens;
 
+using Microsoft.IdentityModel.Tokens;
 
 namespace Stytch.net.Models.Consumer
 {
@@ -634,7 +634,6 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "pt-br")]
         PTBR,
     }
-
     // MANUAL(AuthenticateJWT)(TYPES)
     // ADDIMPORT: using Microsoft.IdentityModel.Tokens;
     public class B2BAuthenticateJwtRequest
@@ -728,4 +727,5 @@ namespace Stytch.net.Models.Consumer
     }
 
     // ENDMANUAL(AuthenticateJWT)
+
 }

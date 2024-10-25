@@ -48,7 +48,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/m2m/clients/${request.ClientId}/secrets/rotate/start"
+                Path = $"/v1/m2m/clients/{request.ClientId}/secrets/rotate/start"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -91,7 +91,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/m2m/clients/${request.ClientId}/secrets/rotate/cancel"
+                Path = $"/v1/m2m/clients/{request.ClientId}/secrets/rotate/cancel"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -134,7 +134,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/m2m/clients/${request.ClientId}/secrets/rotate"
+                Path = $"/v1/m2m/clients/{request.ClientId}/secrets/rotate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

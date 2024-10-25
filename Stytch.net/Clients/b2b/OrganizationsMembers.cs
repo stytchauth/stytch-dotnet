@@ -41,7 +41,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -89,7 +89,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -138,7 +138,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/reactivate"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/reactivate"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -195,7 +195,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/mfa_phone_numbers/${request.MemberId}"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/mfa_phone_numbers/{request.MemberId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -249,7 +249,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/totp"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/totp"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -348,7 +348,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/passwords/${request.MemberPasswordId}"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/passwords/{request.MemberPasswordId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -398,7 +398,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/members/dangerously_get/${request.MemberId}"
+                Path = $"/v1/b2b/organizations/members/dangerously_get/{request.MemberId}"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"include_deleted", (request.IncludeDeleted).ToString().ToLower()},
@@ -433,7 +433,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/oidc_providers"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/oidc_providers"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"include_refresh_token", (request.IncludeRefreshToken).ToString().ToLower()},
@@ -487,7 +487,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members/${request.MemberId}/unlink_retired_email"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/unlink_retired_email"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -535,7 +535,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/members"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -582,7 +582,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/${request.OrganizationId}/member"
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/member"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"member_id", request.MemberId},
