@@ -7,20 +7,15 @@ using Stytch.net.Tests.Clients;
 
 public class ConsumerClient : TestBase
 {
-
     [Fact]
     public void ApiClient_Sets_BasicAuthHeader_Correctly()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
-
         var expectedUserAgent = $"stytch-dotnet/";
         var expectedBaseAddress = $"https://test.stytch.com/";
-
-        // Act
         var httpClient = (HttpClient)typeof(Stytch.net.Clients.ConsumerClient)
             .GetField("_httpClient", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-            ?.GetValue(client)!;
+            ?.GetValue(consumerClient)!;
 
         // Assert
         Assert.NotNull(httpClient);
@@ -41,12 +36,10 @@ public class ConsumerClient : TestBase
     public async Task MagicLinksEmailSend_ShouldReturnSandboxResponse()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
-
         var request = new MagicLinksEmailSendRequest(email: "sandbox@stytch.com");
 
         // Act
-        var response = await client.MagicLinks.Email.Send(request);
+        var response = await consumerClient.MagicLinks.Email.Send(request);
 
         // Assert
         Assert.Equal(200, response.StatusCode);
@@ -57,12 +50,10 @@ public class ConsumerClient : TestBase
     public async Task MagicLinksAuthenticate_ShouldReturnSandboxResponse()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+        var request = new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94=");
 
         // Act
-        var response =
-            await client.MagicLinks.Authenticate(
-                new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94="));
+        var response = await consumerClient.MagicLinks.Authenticate(request);
 
         // Assert
         Assert.Equal(200, response.StatusCode);
@@ -77,14 +68,13 @@ public class ConsumerClient : TestBase
     public async Task MagicLinksAuthenticate_ShouldReturnSandboxResponseWithSession()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+        var request = new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94=")
+        {
+            SessionDurationMinutes = 60
+        };
 
         // Act
-        var response = await client.MagicLinks.Authenticate(
-            new MagicLinksAuthenticateRequest(token: "DOYoip3rvIMMW5lgItikFK-Ak1CfMsgjuiCyI7uuU94=")
-            {
-                SessionDurationMinutes = 60
-            });
+        var response = await consumerClient.MagicLinks.Authenticate(request);
 
         // Assert
         Assert.NotNull(response.Session);
@@ -97,13 +87,13 @@ public class ConsumerClient : TestBase
     public async Task MagicLinksAuthenticate_ShouldReturnSandboxNotAuthorizedError()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+        var request = new MagicLinksAuthenticateRequest(token: "3pzjQpgksDlGKWEwUq2Up--hCHC_0oamfLHyfspKDFU=");
+
 
         // Act
         var exception = await Assert.ThrowsAsync<StytchApiException>(() =>
         {
-            return client.MagicLinks.Authenticate(
-                new MagicLinksAuthenticateRequest(token: "3pzjQpgksDlGKWEwUq2Up--hCHC_0oamfLHyfspKDFU="));
+            return consumerClient.MagicLinks.Authenticate(request);
         });
 
         // Assert
@@ -120,13 +110,12 @@ public class ConsumerClient : TestBase
     public async Task SessionsGet_ShouldReturnSandboxNotAuthorizedError()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+        var request = new SessionsGetRequest(userId: "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd");
 
         // Act
         var exception = await Assert.ThrowsAsync<StytchApiException>(() =>
         {
-            return client.Sessions.Get(
-                new SessionsGetRequest(userId: "user-test-e3795c81-f849-4167-bfda-e4a6e9c280fd"));
+            return consumerClient.Sessions.Get(request);
         });
 
         // Assert
@@ -139,10 +128,7 @@ public class ConsumerClient : TestBase
     public async Task UsersSearch_SerializesSuccessfully()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
-
-        // Act
-        var res = await client.Users.Search(new UsersSearchRequest()
+        var request = new UsersSearchRequest()
         {
             Limit = 3,
             Query = new SearchUsersQuery()
@@ -155,7 +141,10 @@ public class ConsumerClient : TestBase
                     },
                 }
             }
-        });
+        };
+
+        // Act
+        var res = await consumerClient.Users.Search(request);
 
         // Assert
         Assert.Equal(200, res.StatusCode);
@@ -166,21 +155,16 @@ public class ConsumerClient : TestBase
     public async Task SessionsAuthenticate_SerializesDateTimesSuccessfully()
     {
         // Arrange
-        var client = new Stytch.net.Clients.ConsumerClient(_clientConfig);
-
-        // Act
-        var res = await client.Sessions.Authenticate(new SessionsAuthenticateRequest()
+        var request = new SessionsAuthenticateRequest()
         {
             SessionToken = "WJtR5BCy38Szd5AfoDpf0iqFKEt4EE5JhjlWUY7l3FtY"
-        });
+        };
+
+        // Act
+        var res = await consumerClient.Sessions.Authenticate(request);
 
         // Assert
-        DateTime startedAt = Assert.NotNull(res.Session.StartedAt);
         // All Sandbox Sessions started at the same time
-        Assert.Equal(
-            new DateTime(2021, 8, 28, 0, 41, 59),
-            startedAt,
-            new TimeSpan(0, 0, 1)
-        );
+        AssertEqualTimestamps(new DateTime(2021, 8, 28, 0, 41, 59), res.Session.StartedAt);
     }
 }
