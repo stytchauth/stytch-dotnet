@@ -4,17 +4,16 @@
 // or your changes may be overwritten later!
 // !!!
 
-using Newtonsoft.Json;
-using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-
-using JsonException = Newtonsoft.Json.JsonException;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Stytch.net.Exceptions;
+using Stytch.net.Models.Consumer;
+using JsonException = Newtonsoft.Json.JsonException;
 
 
 
