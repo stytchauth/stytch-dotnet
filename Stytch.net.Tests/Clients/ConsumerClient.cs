@@ -5,7 +5,7 @@ using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
 using Stytch.net.Tests.Clients;
 
-public class ConsumerClient : TestBase
+public class ConsumerClient : ConsumerTestBase
 {
     [Fact]
     public void ApiClient_Sets_BasicAuthHeader_Correctly()

@@ -315,10 +315,9 @@ namespace Stytch.net.Clients.Consumer
                 LifetimeValidator = request.LifetimeValidator
             });
 
-            var sessionJsonEl = (JsonElement)res.CustomClaims["https://stytch.com/session"];
-
+            var sessionJsonEl = (JsonElement)res.CustomClaims[Utility.SessionClaimKey];
             return JsonConvert.DeserializeObject<SessionJWTModel>(sessionJsonEl.GetRawText())
-                .ToSession(res.Subject);
+                .ToSession(userId: res.Subject);
         }
         // ENDMANUAL(AuthenticateJWT)
 

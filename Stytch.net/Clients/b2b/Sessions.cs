@@ -11,9 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-
-
+using JsonException = Newtonsoft.Json.JsonException;
 
 
 namespace Stytch.net.Clients.B2B
@@ -22,6 +22,7 @@ namespace Stytch.net.Clients.B2B
     {
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
+
         public Sessions(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
@@ -40,10 +41,11 @@ namespace Stytch.net.Clients.B2B
             {
                 Path = $"/v1/b2b/sessions"
             };
-            uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
-            {"organization_id", request.OrganizationId},
-            {"member_id", request.MemberId},
-        });
+            uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string>
+            {
+                { "organization_id", request.OrganizationId },
+                { "member_id", request.MemberId },
+            });
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
 
@@ -54,6 +56,7 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSessionsGetResponse>(responseBody);
             }
+
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -64,6 +67,7 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Authenticates a Session and updates its lifetime by the specified `session_duration_minutes`. If the
         /// `session_duration_minutes` is not specified, a Session will not be extended. This endpoint requires
@@ -113,6 +117,7 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSessionsAuthenticateResponse>(responseBody);
             }
+
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -123,6 +128,7 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Revoke a Session and immediately invalidate all its tokens. To revoke a specific Session, pass either
         /// the `member_session_id`, `session_token`, or `session_jwt`. To revoke all Sessions for a Member, pass
@@ -151,6 +157,7 @@ namespace Stytch.net.Clients.B2B
             {
                 httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
             }
+
             if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
             {
                 httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
@@ -163,6 +170,7 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSessionsRevokeResponse>(responseBody);
             }
+
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -173,6 +181,7 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Use this endpoint to exchange a Member's existing session for another session in a different
         /// Organization. This can be used to accept an invite, but not to create a new member via domain matching.
@@ -224,6 +233,7 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSessionsExchangeResponse>(responseBody);
             }
+
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -234,6 +244,7 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo
         /// endpoint defined in your Stytch Project settings in the [Dashboard](/dashboard), and then perform a
@@ -267,6 +278,7 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSessionsMigrateResponse>(responseBody);
             }
+
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -277,6 +289,7 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+
         /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
         /// 
@@ -317,6 +330,7 @@ namespace Stytch.net.Clients.B2B
             {
                 return JsonConvert.DeserializeObject<B2BSessionsGetJWKSResponse>(responseBody);
             }
+
             try
             {
                 var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
@@ -328,7 +342,119 @@ namespace Stytch.net.Clients.B2B
             }
         }
 
+        // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
+        // ADDIMPORT: using System.Text.Json;
+        // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
+
+        /// <summary>
+        /// Parse a JWT and verify the signature, preferring local verification to remote.
+        /// If an AuthorizationCheck param is passed in, RBAC authorization will be performed as well.
+        /// </summary>
+        public async Task<MemberSession> AuthenticateJwt(
+            B2BAuthenticateJwtRequest request)
+        {
+            try
+            {
+                return await AuthenticateJwtLocal(new B2BAuthenticateJwtLocalRequest(request.SessionJwt)
+                {
+                    AuthorizationCheck = request.AuthorizationCheck,
+                    ClockSkew = request.ClockSkew,
+                    LifetimeValidator = request.LifetimeValidator,
+                });
+            }
+            catch
+            {
+                var networkResponse = await Authenticate(new B2BSessionsAuthenticateRequest
+                {
+                    AuthorizationCheck = request.AuthorizationCheck,
+                    SessionJwt = request.SessionJwt,
+                });
+                return networkResponse.MemberSession;
+            }
+        }
+
+        private class OrganizationJWTModel
+        {
+            [JsonProperty("organization_id")] public string OrganizationId { get; set; }
+        }
+
+        private class MemberSessionJWTModel : MemberSession
+        {
+            [JsonProperty("id")] public new string MemberSessionId { get; set; }
+
+            public MemberSession ToMemberSession(string memberId, string organizationId)
+            {
+                return new MemberSession
+                {
+                    MemberSessionId = MemberSessionId,
+                    MemberId = memberId,
+                    StartedAt = StartedAt,
+                    LastAccessedAt = LastAccessedAt,
+                    ExpiresAt = ExpiresAt,
+                    AuthenticationFactors = AuthenticationFactors,
+                    OrganizationId = organizationId,
+                    Roles = Roles ?? new List<string>(),
+                    CustomClaims = CustomClaims,
+                };
+            }
+        }
+
+        // PolicyGetter is a shim class that forces the RBAC codegen'd class to implement IPolicyGetter
+        private class PolicyGetter : RBAC, Utility.IPolicyGetter
+        {
+            public PolicyGetter(HttpClient client, ClientConfig config) : base(client, config)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Parse a JWT and verify the signature locally (without calling /authenticate in the API).
+        /// If an AuthorizationCheck param is passed in, RBAC authorization will be performed as well.
+        /// </summary>
+        /// <exception cref="StytchTenancyMismatchException">When the requested organization ID does not match the organization ID of the member in the JWT</exception>
+        /// <exception cref="StytchInvalidPermissionsException">When the member does not have permission to perform the desired action on the requested resource</exception>
+        public async Task<MemberSession> AuthenticateJwtLocal(
+            B2BAuthenticateJwtLocalRequest request)
+        {
+            var res = await Utility.AuthenticateJwtLocal(_httpClient, _config, new Utility.AuthenticateJwtParams
+            {
+                Jwt = request.SessionJwt,
+                ClockSkew = request.ClockSkew,
+                LifetimeValidator = request.LifetimeValidator
+            });
+
+            var memberSessionJsonEl = (JsonElement)res.CustomClaims[Utility.SessionClaimKey];
+            var organizationJsonEl = (JsonElement)res.CustomClaims[Utility.OrganizationClaimKey];
+
+            var organizationModel =
+                JsonConvert.DeserializeObject<OrganizationJWTModel>(organizationJsonEl.GetRawText());
+
+            var memberSession = JsonConvert.DeserializeObject<MemberSessionJWTModel>(memberSessionJsonEl.GetRawText())
+                .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId);
+
+            if (request.AuthorizationCheck != null)
+            {
+                if (request.AuthorizationCheck.OrganizationId != memberSession.OrganizationId)
+                {
+                    throw new StytchTenancyMismatchException(callerOrganizationId: memberSession.OrganizationId,
+                        targetOrganizationId: request.AuthorizationCheck.OrganizationId);
+                }
+
+                var isAuthorized = await Utility.AuthorizeRbacRoles(new PolicyGetter(_httpClient, _config),
+                    new AuthorizationParams
+                    {
+                        ResourceID = request.AuthorizationCheck.ResourceId,
+                        Action = request.AuthorizationCheck.Action,
+                        Roles = memberSession.Roles
+                    });
+                if (!isAuthorized)
+                {
+                    throw new StytchInvalidPermissionsException();
+                }
+            }
+
+            return memberSession;
+        }
+        // ENDMANUAL(AuthenticateJWT)
     }
-
 }
-

@@ -5,7 +5,7 @@ using Stytch.net.Models.Consumer;
 
 namespace Stytch.net.Tests.Clients;
 
-public class M2M : TestBase
+public class M2M : ConsumerTestBase
 {
 
     private readonly Task<M2MTokenResponse> tokenResTask;

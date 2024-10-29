@@ -3,7 +3,7 @@ using Stytch.net.Models.Consumer;
 
 namespace Stytch.net.Tests.Clients;
 
-public class ConsumerSessions : TestBase
+public class ConsumerSessions : ConsumerTestBase
 {
     private readonly Task<SessionsAuthenticateResponse> sessionResTask;
 
