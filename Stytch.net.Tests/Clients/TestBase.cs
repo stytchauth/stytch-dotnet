@@ -6,6 +6,7 @@ public class TestBase
 {
 
     protected readonly ClientConfig _clientConfig;
+    protected readonly net.Clients.ConsumerClient consumerClient;
 
     public TestBase()
     {
@@ -26,5 +27,13 @@ public class TestBase
             ProjectId = projectId,
             ProjectSecret = projectSecret,
         };
+
+        consumerClient = new Stytch.net.Clients.ConsumerClient(_clientConfig);
+    }
+
+
+    protected void AssertEqualTimestamps(DateTime? first, DateTime? second)
+    {
+        Assert.Equal(Assert.NotNull(first), Assert.NotNull(second), TimeSpan.FromSeconds(2));
     }
 }
