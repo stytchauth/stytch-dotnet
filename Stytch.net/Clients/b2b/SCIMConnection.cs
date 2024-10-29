@@ -39,7 +39,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection/{request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -87,7 +87,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection/{request.ConnectionId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -135,7 +135,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/start"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection/{request.ConnectionId}/rotate/start"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -185,7 +185,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/complete"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection/{request.ConnectionId}/rotate/complete"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -234,7 +234,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}/rotate/cancel"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection/{request.ConnectionId}/rotate/cancel"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -282,7 +282,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection/${request.ConnectionId}"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection/{request.ConnectionId}"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"cursor", request.Cursor},
@@ -327,7 +327,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -375,7 +375,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/scim/${request.OrganizationId}/connection"
+                Path = $"/v1/b2b/scim/{request.OrganizationId}/connection"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

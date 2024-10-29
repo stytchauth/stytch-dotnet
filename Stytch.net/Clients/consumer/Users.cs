@@ -78,7 +78,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/${request.UserId}"
+                Path = $"/v1/users/{request.UserId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -158,7 +158,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/${request.UserId}"
+                Path = $"/v1/users/{request.UserId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -204,7 +204,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/${request.UserId}/exchange_primary_factor"
+                Path = $"/v1/users/{request.UserId}/exchange_primary_factor"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -243,7 +243,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/${request.UserId}"
+                Path = $"/v1/users/{request.UserId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -282,7 +282,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/emails/${request.EmailId}"
+                Path = $"/v1/users/emails/{request.EmailId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -321,7 +321,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/phone_numbers/${request.PhoneId}"
+                Path = $"/v1/users/phone_numbers/{request.PhoneId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -360,7 +360,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/webauthn_registrations/${request.WebAuthnRegistrationId}"
+                Path = $"/v1/users/webauthn_registrations/{request.WebAuthnRegistrationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -399,7 +399,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/biometric_registrations/${request.BiometricRegistrationId}"
+                Path = $"/v1/users/biometric_registrations/{request.BiometricRegistrationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -438,7 +438,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/totps/${request.TOTPId}"
+                Path = $"/v1/users/totps/{request.TOTPId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -477,7 +477,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/crypto_wallets/${request.CryptoWalletId}"
+                Path = $"/v1/users/crypto_wallets/{request.CryptoWalletId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -516,7 +516,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/passwords/${request.PasswordId}"
+                Path = $"/v1/users/passwords/{request.PasswordId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -555,7 +555,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/users/oauth/${request.OAuthUserRegistrationId}"
+                Path = $"/v1/users/oauth/{request.OAuthUserRegistrationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

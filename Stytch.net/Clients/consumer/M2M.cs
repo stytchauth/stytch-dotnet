@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
+
 namespace Stytch.net.Clients.Consumer
 {
     public class M2M
@@ -21,7 +23,6 @@ namespace Stytch.net.Clients.Consumer
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly M2MClients Clients;
-
         public M2M(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
@@ -127,5 +128,9 @@ namespace Stytch.net.Clients.Consumer
             };
         }
         // ENDMANUAL(authenticateToken)
+
+
     }
+
 }
+

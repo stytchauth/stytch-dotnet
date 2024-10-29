@@ -238,7 +238,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/webauthn/${request.WebAuthnRegistrationId}"
+                Path = $"/v1/webauthn/{request.WebAuthnRegistrationId}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
