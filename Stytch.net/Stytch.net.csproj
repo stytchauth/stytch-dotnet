@@ -8,7 +8,7 @@
     <PackageId>Stytch.net</PackageId>
     <AssemblyTitle>Stytch.net</AssemblyTitle>
     <AssemblyName>Stytch.net</AssemblyName>
-    <Version>1.2.2</Version>
+    <Version>1.3.0</Version>
     <Author>Stytch</Author>
     <Product>Stytch</Product>
     <PackageProjectUrl>https://github.com/stytchauth/stytch-dotnet</PackageProjectUrl>
@@ -18,7 +18,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
@@ -27,5 +27,5 @@
     <None Include="..\README.md" Pack="true" PackagePath="\"/>
     <None Include="..\LICENSE.txt" Pack="true" PackagePath="\"/>
   </ItemGroup>
-  
+
 </Project>
