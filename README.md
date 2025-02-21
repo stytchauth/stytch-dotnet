@@ -57,7 +57,7 @@ using Stytch.net.Clients;
 var client = new Stytch.net.Clients.ConsumerClient(new ClientConfig
 {
     ProjectId = "project-live-c60c0abe-c25a-4472-a9ed-320c6667d317",
-    Secret = "secret-live-80JASucyk7z_G8Z-7dVwZVGXL5NT_qGAQ2I="
+    ProjectSecret = "secret-live-80JASucyk7z_G8Z-7dVwZVGXL5NT_qGAQ2I="
 });
 ```
 
@@ -86,7 +86,7 @@ using Stytch.net.Clients;
 var client = new Stytch.net.Clients.B2BClient(new ClientConfig
 {
     ProjectId = "project-live-c60c0abe-c25a-4472-a9ed-320c6667d317",
-    Secret = "secret-live-80JASucyk7z_G8Z-7dVwZVGXL5NT_qGAQ2I="
+    ProjectSecret = "secret-live-80JASucyk7z_G8Z-7dVwZVGXL5NT_qGAQ2I="
 });
 ```
 
@@ -96,6 +96,7 @@ Create an organization
 client.Organizations.Create(new B2BOrganizationsCreateRequest(organizationName: "Acme Co"){
     OrganizationSlug = "acme-co",
     EmailAllowedDomains = ["acme.co"],
+    EmailJITProvisioning = "RESTRICTED"
 });
 ```
 
