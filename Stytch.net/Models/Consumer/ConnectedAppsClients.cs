@@ -12,28 +12,67 @@ using Newtonsoft.Json.Converters;
 
 namespace Stytch.net.Models.Consumer
 {
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Create"/>..
+    /// </summary>
     public class ConnectedAppsClientsCreateRequest
     {
+        /// <summary>
+        /// The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and
+        /// `third_party_public`.
+        /// </summary>
         [JsonProperty("client_type")]
         public CreateRequestClientType ClientType { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OAuth Authorization flows.
+        /// </summary>
         [JsonProperty("redirect_urls")]
         public List<string> RedirectURLS { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
+        /// exchanged for a full Stytch session.
+        /// </summary>
         [JsonProperty("full_access_allowed")]
         public bool FullAccessAllowed { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OIDC Logout flows.
+        /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
         public List<string> PostLogoutRedirectURLS { get; set; }
+        /// <summary>
+        /// A human-readable name for the client.
+        /// </summary>
         [JsonProperty("client_name")]
         public string ClientName { get; set; }
+        /// <summary>
+        /// A human-readable description for the client.
+        /// </summary>
         [JsonProperty("client_description")]
         public string ClientDescription { get; set; }
+        /// <summary>
+        /// The number of minutes before the access token expires. The default is 60 minutes.
+        /// </summary>
         [JsonProperty("access_token_expiry_minutes")]
         public int? AccessTokenExpiryMinutes { get; set; }
+        /// <summary>
+        /// The custom audience for the access token.
+        /// </summary>
         [JsonProperty("access_token_custom_audience")]
         public string AccessTokenCustomAudience { get; set; }
+        /// <summary>
+        /// The content of the access token custom claims template. The template must be a valid JSON object.
+        /// </summary>
         [JsonProperty("access_token_template_content")]
         public string AccessTokenTemplateContent { get; set; }
+        /// <summary>
+        /// The logo URL of the Connected App, if any.
+        /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If true, the client does not need to request explicit user consent
+        /// for the `offline_access` scope.
+        /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool? BypassConsentForOfflineAccess { get; set; }
         public ConnectedAppsClientsCreateRequest(CreateRequestClientType clientType, List<string> redirectURLS, bool fullAccessAllowed, List<string> postLogoutRedirectURLS)
@@ -44,17 +83,37 @@ namespace Stytch.net.Models.Consumer
             this.PostLogoutRedirectURLS = postLogoutRedirectURLS;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Create"/>..
+    /// </summary>
     public class ConnectedAppsClientsCreateResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The Connected App created by this API call.
+        /// </summary>
         [JsonProperty("connected_app")]
         public ConnectedAppWithClientSecret ConnectedApp { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Delete"/>..
+    /// </summary>
     public class ConnectedAppsClientsDeleteRequest
     {
+        /// <summary>
+        /// The ID of the client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
         public ConnectedAppsClientsDeleteRequest(string clientId)
@@ -62,17 +121,29 @@ namespace Stytch.net.Models.Consumer
             this.ClientId = clientId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Delete"/>..
+    /// </summary>
     public class ConnectedAppsClientsDeleteResponse
     {
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The ID of the client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Get"/>..
+    /// </summary>
     public class ConnectedAppsClientsGetRequest
     {
+        /// <summary>
+        /// The ID of the Connected App client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
         public ConnectedAppsClientsGetRequest(string clientId)
@@ -80,58 +151,140 @@ namespace Stytch.net.Models.Consumer
             this.ClientId = clientId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Get"/>..
+    /// </summary>
     public class ConnectedAppsClientsGetResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The Connected App affected by this operation.
+        /// </summary>
         [JsonProperty("connected_app")]
         public ConnectedApp ConnectedApp { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Search"/>..
+    /// </summary>
     public class ConnectedAppsClientsSearchRequest
     {
+        /// <summary>
+        /// The `cursor` field allows you to paginate through your results. Each result array is limited to 1000
+        /// results. If your query returns more than 1000 results, you will need to paginate the responses using the
+        /// `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata`
+        /// object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the
+        /// next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        /// </summary>
         [JsonProperty("cursor")]
         public string Cursor { get; set; }
+        /// <summary>
+        /// The number of search results to return per page. The default limit is 100. A maximum of 1000 results can
+        /// be returned by a single search request. If the total size of your result set is greater than one page
+        /// size, you must paginate the response. See the `cursor` field.
+        /// </summary>
         [JsonProperty("limit")]
         public uint? Limit { get; set; }
         public ConnectedAppsClientsSearchRequest()
         {
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Search"/>..
+    /// </summary>
     public class ConnectedAppsClientsSearchResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         [JsonProperty("connected_apps")]
         public List<ConnectedApp> ConnectedApps { get; set; }
+        /// <summary>
+        /// The search `results_metadata` object contains metadata relevant to your specific query like total and
+        /// `next_cursor`.
+        /// </summary>
         [JsonProperty("results_metadata")]
         public ConnectedAppsResultsMetadata ResultsMetadata { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Update"/>..
+    /// </summary>
     public class ConnectedAppsClientsUpdateRequest
     {
+        /// <summary>
+        /// The ID of the client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
+        /// <summary>
+        /// A human-readable name for the client.
+        /// </summary>
         [JsonProperty("client_name")]
         public string ClientName { get; set; }
+        /// <summary>
+        /// A human-readable description for the client.
+        /// </summary>
         [JsonProperty("client_description")]
         public string ClientDescription { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OAuth Authorization flows.
+        /// </summary>
         [JsonProperty("redirect_urls")]
         public List<string> RedirectURLS { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
+        /// exchanged for a full Stytch session.
+        /// </summary>
         [JsonProperty("full_access_allowed")]
         public bool? FullAccessAllowed { get; set; }
+        /// <summary>
+        /// The number of minutes before the access token expires. The default is 60 minutes.
+        /// </summary>
         [JsonProperty("access_token_expiry_minutes")]
         public int? AccessTokenExpiryMinutes { get; set; }
+        /// <summary>
+        /// The custom audience for the access token.
+        /// </summary>
         [JsonProperty("access_token_custom_audience")]
         public string AccessTokenCustomAudience { get; set; }
+        /// <summary>
+        /// The content of the access token custom claims template. The template must be a valid JSON object.
+        /// </summary>
         [JsonProperty("access_token_template_content")]
         public string AccessTokenTemplateContent { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OIDC Logout flows.
+        /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
         public List<string> PostLogoutRedirectURLS { get; set; }
+        /// <summary>
+        /// The logo URL of the Connected App, if any.
+        /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If true, the client does not need to request explicit user consent
+        /// for the `offline_access` scope.
+        /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool? BypassConsentForOfflineAccess { get; set; }
         public ConnectedAppsClientsUpdateRequest(string clientId)
@@ -139,12 +292,26 @@ namespace Stytch.net.Models.Consumer
             this.ClientId = clientId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Update"/>..
+    /// </summary>
     public class ConnectedAppsClientsUpdateResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The Connected App affected by this operation.
+        /// </summary>
         [JsonProperty("connected_app")]
         public ConnectedApp ConnectedApp { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }

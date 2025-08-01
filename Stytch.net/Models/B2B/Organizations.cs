@@ -297,7 +297,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("mfa_enrolled")]
         public bool MfaEnrolled { get; set; }
         /// <summary>
-        /// The Member's phone number. A Member may only have one phone number.
+        /// The Member's phone number. A Member may only have one phone number. The phone number should be in E.164
+        /// format (i.e. +1XXXXXXXXXX).
         /// </summary>
         [JsonProperty("mfa_phone_number")]
         public string MfaPhoneNumber { get; set; }
@@ -353,16 +354,35 @@ namespace Stytch.net.Models.Consumer
     }
     public class MemberConnectedApp
     {
+        /// <summary>
+        /// The ID of the Connected App.
+        /// </summary>
         [JsonProperty("connected_app_id")]
         public string ConnectedAppId { get; set; }
+        /// <summary>
+        /// The name of the Connected App.
+        /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
+        /// <summary>
+        /// A description of the Connected App.
+        /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
+        /// <summary>
+        /// The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and
+        /// `third_party_public`.
+        /// </summary>
         [JsonProperty("client_type")]
         public string ClientType { get; set; }
+        /// <summary>
+        /// The scopes granted to the Connected App at the completion of the last authorization flow.
+        /// </summary>
         [JsonProperty("scopes_granted")]
         public string ScopesGranted { get; set; }
+        /// <summary>
+        /// The logo URL of the Connected App, if any.
+        /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
     }
@@ -708,12 +728,44 @@ namespace Stytch.net.Models.Consumer
         public string OAuthTenantJITProvisioning { get; set; }
         [JsonProperty("claimed_email_domains")]
         public List<string> ClaimedEmailDomains { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards first party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any first party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no first party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("first_party_connected_apps_allowed_type")]
         public string FirstPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of first party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_first_party_connected_apps")]
         public List<string> AllowedFirstPartyConnectedApps { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards third party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any third party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no third party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("third_party_connected_apps_allowed_type")]
         public string ThirdPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of third party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_third_party_connected_apps")]
         public List<string> AllowedThirdPartyConnectedApps { get; set; }
         /// <summary>
@@ -765,8 +817,14 @@ namespace Stytch.net.Models.Consumer
     }
     public class OrganizationConnectedAppActiveMember
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// Scopes that were granted at the completion of the last authorization flow.
+        /// </summary>
         [JsonProperty("granted_scopes")]
         public List<string> GrantedScopes { get; set; }
     }
@@ -887,8 +945,16 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("bot_scopes")]
         public List<string> BotScopes { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.ConnectedApps"/>..
+    /// </summary>
     public class B2BOrganizationsConnectedAppsRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         public B2BOrganizationsConnectedAppsRequest(string organizationId)
@@ -896,8 +962,15 @@ namespace Stytch.net.Models.Consumer
             this.OrganizationId = organizationId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.ConnectedApps"/>..
+    /// </summary>
     public class B2BOrganizationsConnectedAppsResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         [JsonProperty("connected_apps")]
@@ -1070,12 +1143,44 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("claimed_email_domains")]
         public List<string> ClaimedEmailDomains { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards first party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any first party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no first party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("first_party_connected_apps_allowed_type")]
         public B2BOrganizationsCreateRequestFirstPartyConnectedAppsAllowedType FirstPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of first party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_first_party_connected_apps")]
         public List<string> AllowedFirstPartyConnectedApps { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards third party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any third party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no third party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("third_party_connected_apps_allowed_type")]
         public B2BOrganizationsCreateRequestThirdPartyConnectedAppsAllowedType ThirdPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of third party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_third_party_connected_apps")]
         public List<string> AllowedThirdPartyConnectedApps { get; set; }
         public B2BOrganizationsCreateRequest(string organizationName)
@@ -1147,10 +1252,21 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.GetConnectedApp"/>..
+    /// </summary>
     public class B2BOrganizationsGetConnectedAppRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// The ID of the Connected App.
+        /// </summary>
         [JsonProperty("connected_app_id")]
         public string ConnectedAppId { get; set; }
         public B2BOrganizationsGetConnectedAppRequest(string organizationId, string connectedAppId)
@@ -1159,16 +1275,35 @@ namespace Stytch.net.Models.Consumer
             this.ConnectedAppId = connectedAppId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.GetConnectedApp"/>..
+    /// </summary>
     public class B2BOrganizationsGetConnectedAppResponse
     {
+        /// <summary>
+        /// The ID of the Connected App.
+        /// </summary>
         [JsonProperty("connected_app_id")]
         public string ConnectedAppId { get; set; }
+        /// <summary>
+        /// The name of the Connected App.
+        /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
+        /// <summary>
+        /// A description of the Connected App.
+        /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
+        /// <summary>
+        /// The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and
+        /// `third_party_public`.
+        /// </summary>
         [JsonProperty("client_type")]
         public string ClientType { get; set; }
+        /// <summary>
+        /// Details about Members who has installed a Connected App.
+        /// </summary>
         [JsonProperty("active_members")]
         public List<OrganizationConnectedAppActiveMember> ActiveMembers { get; set; }
         [JsonProperty("status_code")]
@@ -1544,12 +1679,44 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("claimed_email_domains")]
         public List<string> ClaimedEmailDomains { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards first party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any first party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no first party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("first_party_connected_apps_allowed_type")]
         public UpdateRequestFirstPartyConnectedAppsAllowedType FirstPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of first party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_first_party_connected_apps")]
         public List<string> AllowedFirstPartyConnectedApps { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards third party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any third party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no third party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("third_party_connected_apps_allowed_type")]
         public UpdateRequestThirdPartyConnectedAppsAllowedType ThirdPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of third party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_third_party_connected_apps")]
         public List<string> AllowedThirdPartyConnectedApps { get; set; }
         public B2BOrganizationsUpdateRequest(string organizationId)

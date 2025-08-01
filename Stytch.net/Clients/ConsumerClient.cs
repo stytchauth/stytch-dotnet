@@ -7,7 +7,6 @@ namespace Stytch.net.Clients
     public class ConsumerClient : BaseClient
     {
         public readonly ConnectedApp ConnectedApp;
-        public readonly ConsumerRBAC ConsumerRBAC;
         public readonly CryptoWallets CryptoWallets;
         public readonly Fraud Fraud;
         public readonly Impersonation Impersonation;
@@ -17,6 +16,7 @@ namespace Stytch.net.Clients
         public readonly OTPs OTPs;
         public readonly Passwords Passwords;
         public readonly Project Project;
+        public readonly RBAC RBAC;
         public readonly Sessions Sessions;
         public readonly TOTPs TOTPs;
         public readonly Users Users;
@@ -25,7 +25,6 @@ namespace Stytch.net.Clients
         public ConsumerClient(ClientConfig config) : base(config)
         {
             ConnectedApp = new ConnectedApp(_httpClient, _config);
-            ConsumerRBAC = new ConsumerRBAC(_httpClient, _config);
             CryptoWallets = new CryptoWallets(_httpClient, _config);
             Fraud = new Fraud(_fraudClient, _config);
             Impersonation = new Impersonation(_httpClient, _config);
@@ -35,6 +34,7 @@ namespace Stytch.net.Clients
             OTPs = new OTPs(_httpClient, _config);
             Passwords = new Passwords(_httpClient, _config);
             Project = new Project(_httpClient, _config);
+            RBAC = new RBAC(_httpClient, _config);
             Sessions = new Sessions(_httpClient, _config);
             TOTPs = new TOTPs(_httpClient, _config);
             Users = new Users(_httpClient, _config);

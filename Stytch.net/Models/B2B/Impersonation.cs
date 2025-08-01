@@ -18,7 +18,7 @@ namespace Stytch.net.Models.Consumer
     public class B2BImpersonationAuthenticateRequest
     {
         /// <summary>
-        /// The User Impersonation token to authenticate.
+        /// The Member Impersonation token to authenticate. Expires in 5 minutes by default.
         /// </summary>
         [JsonProperty("impersonation_token")]
         public string ImpersonationToken { get; set; }

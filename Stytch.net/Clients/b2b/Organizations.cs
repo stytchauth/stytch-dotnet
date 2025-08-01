@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class Organizations
     {
@@ -31,7 +31,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Creates an. An `organization_name` and a unique `organization_slug` are required.
+        /// Creates an Organization. An `organization_name` and a unique `organization_slug` are required.
         /// 
         /// By default, `email_invites` and `sso_jit_provisioning` will be set to `ALL_ALLOWED`, and `mfa_policy`
         /// will be set to `OPTIONAL` if no Organization authentication settings are explicitly defined in the
@@ -78,7 +78,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Returns an specified by `organization_id`.
+        /// Returns an Organization specified by `organization_id`.
         /// </summary>
         public async Task<B2BOrganizationsGetResponse> Get(
             B2BOrganizationsGetRequest request
@@ -110,8 +110,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Updates an specified by `organization_id`. An Organization must always have at least one auth setting
-        /// set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
+        /// Updates an Organization specified by `organization_id`. An Organization must always have at least one
+        /// auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
         /// 
         /// *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings)
         /// resource to learn more about fields like `email_jit_provisioning`, `email_invites`,
@@ -163,7 +163,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Deletes an specified by `organization_id`. All Members of the Organization will also be deleted.
+        /// Deletes an Organization specified by `organization_id`. All Members of the Organization will also be
+        /// deleted.
         /// </summary>
         public async Task<B2BOrganizationsDeleteResponse> Delete(
             B2BOrganizationsDeleteRequest request
@@ -284,7 +285,13 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
+        /// Retrieves a list of Connected Apps for the Organization that have been installed by Members.
+        /// Installation comprises
+        /// successful completion of an authorization flow with a Connected App that has not been revoked.
         /// 
+        /// Connected Apps may be uninstalled if an Organization changes its
+        /// `first_party_connected_apps_allowed_type`
+        /// or `third_party_connected_apps_allowed_type` policies.
         /// </summary>
         public async Task<B2BOrganizationsConnectedAppsResponse> ConnectedApps(
             B2BOrganizationsConnectedAppsRequest request
@@ -325,7 +332,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Get Connected App for Organization retrieves information about the specified Connected App as well as a
+        /// list of the
+        /// Organization's Members who have the App installed along with the scopes they requested at completion of
+        /// their last
+        /// authorization with the App.
         /// </summary>
         public async Task<B2BOrganizationsGetConnectedAppResponse> GetConnectedApp(
             B2BOrganizationsGetConnectedAppRequest request

@@ -31,7 +31,7 @@ namespace Stytch.net.Clients.Consumer
         }
 
         /// <summary>
-        /// 
+        /// Retrieve details of a specific Connected App by `client_id`.
         /// </summary>
         public async Task<ConnectedAppsClientsGetResponse> Get(
             ConnectedAppsClientsGetRequest request
@@ -63,7 +63,7 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
-        /// 
+        /// Updates mutable fields of a Connected App. Cannot update Client Type, Client ID, or Secrets.
         /// </summary>
         public async Task<ConnectedAppsClientsUpdateResponse> Update(
             ConnectedAppsClientsUpdateRequest request
@@ -102,7 +102,7 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
-        /// 
+        /// Deletes a Connected App.
         /// </summary>
         public async Task<ConnectedAppsClientsDeleteResponse> Delete(
             ConnectedAppsClientsDeleteRequest request
@@ -141,7 +141,7 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
-        /// 
+        /// Search for Connected Apps. Supports cursor-based pagination. Specific filters coming soon.
         /// </summary>
         public async Task<ConnectedAppsClientsSearchResponse> Search(
             ConnectedAppsClientsSearchRequest request
@@ -180,7 +180,13 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
+        /// Creates a new Connected App. If the Connected App `client_type` is `first_party` or `third_party` a
+        /// `client_secret` is returned.
         /// 
+        /// **Important:** This is the only time you will be able to view the generated `client_secret` in the API
+        /// response. Stytch stores a hash of the `client_secret` and cannot recover the value if lost. Be sure to
+        /// persist the `client_secret` in a secure location. If the `client_secret` is lost, you will need to
+        /// trigger a secret rotation flow to receive another one.
         /// </summary>
         public async Task<ConnectedAppsClientsCreateResponse> Create(
             ConnectedAppsClientsCreateRequest request

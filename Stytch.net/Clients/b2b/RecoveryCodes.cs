@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class RecoveryCodes
     {
@@ -29,8 +29,8 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Allows a to complete an MFA flow by consuming a recovery code. This consumes the recovery code and
-        /// returns a session token that can be used to authenticate the Member.
+        /// Allows a Member to complete an MFA flow by consuming a recovery code. This consumes the recovery code
+        /// and returns a session token that can be used to authenticate the Member.
         /// </summary>
         public async Task<B2BRecoveryCodesRecoverResponse> Recover(
             B2BRecoveryCodesRecoverRequest request
@@ -69,7 +69,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Returns a's full set of active recovery codes.
+        /// Returns a Member's full set of active recovery codes.
         /// </summary>
         public async Task<B2BRecoveryCodesGetResponse> Get(
             B2BRecoveryCodesGetRequest request
@@ -101,8 +101,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Rotate a's recovery codes. This invalidates all existing recovery codes and generates a new set of
-        /// recovery codes.
+        /// Rotate a Member's recovery codes. This invalidates all existing recovery codes and generates a new set
+        /// of recovery codes.
         /// </summary>
         public async Task<B2BRecoveryCodesRotateResponse> Rotate(
             B2BRecoveryCodesRotateRequest request

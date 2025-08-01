@@ -126,20 +126,63 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("allowed_auth_methods")]
         public List<string> AllowedAuthMethods { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Sessions.Attest"/>..
+    /// </summary>
     public class B2BSessionsAttestRequest
     {
+        /// <summary>
+        /// The organization ID that the session should be authenticated in.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// The ID of the trusted auth token profile to use for attestation.
+        /// </summary>
         [JsonProperty("profile_id")]
         public string ProfileId { get; set; }
+        /// <summary>
+        /// The trusted auth token to authenticate.
+        /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
+        /// <summary>
+        /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
+        /// already exist,
+        ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
+        /// `session_jwt` will have a fixed lifetime of
+        ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
+        /// 
+        ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
+        /// 
+        ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
+        /// extend the session this many minutes.
+        /// 
+        ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
+        /// 60 minute duration. If you don't want
+        ///   to use the Stytch session product, you can ignore the session fields in the response.
+        /// </summary>
         [JsonProperty("session_duration_minutes")]
         public int? SessionDurationMinutes { get; set; }
+        /// <summary>
+        /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
+        /// initialized by providing a value in
+        ///   `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a
+        /// key in an existing Session, supply a new value. To
+        ///   delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`,
+        /// `exp`, `nbf`, `iat`, `jti`) will be ignored.
+        ///   Total custom claims size cannot exceed four kilobytes.
+        /// </summary>
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
+        /// <summary>
+        /// The `session_token` for the session that you wish to add the trusted auth token authentication factor to.
+        /// </summary>
         [JsonProperty("session_token")]
         public string SessionToken { get; set; }
+        /// <summary>
+        /// The `session_jwt` for the session that you wish to add the trusted auth token authentication factor to.
+        /// </summary>
         [JsonProperty("session_jwt")]
         public string SessionJwt { get; set; }
         public B2BSessionsAttestRequest(string organizationId, string profileId, string token)
@@ -149,22 +192,51 @@ namespace Stytch.net.Models.Consumer
             this.Token = token;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Sessions.Attest"/>..
+    /// </summary>
     public class B2BSessionsAttestResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
+        /// </summary>
         [JsonProperty("member_session")]
         public MemberSession MemberSession { get; set; }
+        /// <summary>
+        /// A secret token for a given Stytch Session.
+        /// </summary>
         [JsonProperty("session_token")]
         public string SessionToken { get; set; }
+        /// <summary>
+        /// The JSON Web Token (JWT) for a given Stytch Session.
+        /// </summary>
         [JsonProperty("session_jwt")]
         public string SessionJwt { get; set; }
+        /// <summary>
+        /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
+        /// </summary>
         [JsonProperty("member")]
         public Member Member { get; set; }
+        /// <summary>
+        /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        /// </summary>
         [JsonProperty("organization")]
         public Organization Organization { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
@@ -432,7 +504,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// If the needs to complete an MFA step, and the Member has a phone number, this endpoint will
+        /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
         /// used to determine which language to use when sending the passcode.
         /// 
@@ -527,6 +599,9 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("mfa_required")]
         public MfaRequired MfaRequired { get; set; }
+        /// <summary>
+        /// Information about the primary authentication requirements of the Organization.
+        /// </summary>
         [JsonProperty("primary_required")]
         public PrimaryRequired PrimaryRequired { get; set; }
     }

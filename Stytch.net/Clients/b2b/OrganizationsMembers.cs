@@ -12,11 +12,12 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
+using OrganizationsEntry = System.Collections.Generic.Dictionary<key, value>;
 
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class OrganizationsMembers
     {
@@ -33,7 +34,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Updates a specified by `organization_id` and `member_id`.
+        /// Updates a Member specified by `organization_id` and `member_id`.
         /// </summary>
         public async Task<B2BOrganizationsMembersUpdateResponse> Update(
             B2BOrganizationsMembersUpdateRequest request
@@ -81,7 +82,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Deletes a specified by `organization_id` and `member_id`.
+        /// Deletes a Member specified by `organization_id` and `member_id`.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeleteResponse> Delete(
             B2BOrganizationsMembersDeleteRequest request
@@ -129,9 +130,9 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Reactivates a deleted's status and its associated email status (if applicable) to active, specified by
-        /// `organization_id` and `member_id`. This endpoint will only work for Members with at least one verified
-        /// email where their `email_address_verified` is `true`.
+        /// Reactivates a deleted Member's status and its associated email status (if applicable) to active,
+        /// specified by `organization_id` and `member_id`. This endpoint will only work for Members with at least
+        /// one verified email where their `email_address_verified` is `true`.
         /// </summary>
         public async Task<B2BOrganizationsMembersReactivateResponse> Reactivate(
             B2BOrganizationsMembersReactivateRequest request
@@ -179,7 +180,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Delete a's MFA phone number. 
+        /// Delete a Member's MFA phone number. 
         /// 
         /// To change a Member's phone number, you must first call this endpoint to delete the existing phone number.
         /// 
@@ -341,7 +342,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Delete a's password.
+        /// Delete a Member's password. 
+        /// 
+        /// This endpoint only works for Organization-scoped passwords. For cross-org password Projects, use
+        /// [Require Password Reset By Email](https://stytch.com/docs/b2b/api/passwords-require-reset-by-email)
+        /// instead.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeletePasswordResponse> DeletePassword(
             B2BOrganizationsMembersDeletePasswordRequest request
@@ -466,8 +471,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Unlinks a retired email address from a specified by their `organization_id` and `member_id`. The email
-        /// address
+        /// Unlinks a retired email address from a Member specified by their `organization_id` and `member_id`. The
+        /// email address
         /// to be retired can be identified in the request body by either its `email_id`, its `email_address`, or
         /// both. If using
         /// both identifiers they must refer to the same email.
@@ -484,7 +489,6 @@ namespace Stytch.net.Clients.B2B
         /// addresses allows them to be subsequently re-used by other Organization Members. Retired email addresses
         /// can be viewed
         /// on the [Member object](https://stytch.com/docs/b2b/api/member-object).
-        ///  %}
         /// </summary>
         public async Task<B2BOrganizationsMembersUnlinkRetiredEmailResponse> UnlinkRetiredEmail(
             B2BOrganizationsMembersUnlinkRetiredEmailRequest request
@@ -532,7 +536,19 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
+        /// Starts a self-serve email update for a Member specified by their `organization_id` and `member_id`.
+        /// To perform a self-serve update, members must be active and have an active, verified email address.
         /// 
+        /// The new email address must meet the following requirements:
+        /// 
+        /// - Must not be in use by another member (retired emails count as used until they are
+        /// [unlinked](https://stytch.com/docs/b2b/api/unlink-retired-member-email))
+        /// - Must not be updating for another member (i.e. two members cannot attempt to update to the same email
+        /// at once)
+        /// 
+        /// The member will receive an Email Magic Link that expires in 5 minutes. If they do not verify their new
+        /// email address in that timeframe, the email
+        /// will be freed up for other members to use.
         /// </summary>
         public async Task<B2BOrganizationsMembersStartEmailUpdateResponse> StartEmailUpdate(
             B2BOrganizationsMembersStartEmailUpdateRequest request
@@ -580,7 +596,14 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Member Get Connected Apps retrieves a list of Connected Apps with which the Member has successfully
+        /// completed an
+        /// authorization flow.
+        /// If the Member revokes a Connected App's access (e.g. via the Revoke Connected App endpoint) then the
+        /// Connected App will
+        /// no longer be returned in the response. A Connected App's access may also be revoked if the
+        /// Organization's allowed Connected
+        /// App policy changes.
         /// </summary>
         public async Task<B2BOrganizationsMembersGetConnectedAppsResponse> GetConnectedApps(
             B2BOrganizationsMembersGetConnectedAppsRequest request
@@ -621,7 +644,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Creates a. An `organization_id` and `email_address` are required.
+        /// Creates a Member. An `organization_id` and `email_address` are required.
         /// </summary>
         public async Task<B2BOrganizationsMembersCreateResponse> Create(
             B2BOrganizationsMembersCreateRequest request

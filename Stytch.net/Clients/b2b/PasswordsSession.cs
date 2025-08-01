@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class PasswordsSessions
     {
@@ -29,9 +29,9 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Reset the's password using their existing session. The endpoint will error if the session does not
-        /// contain an authentication factor that has been issued within the last 5 minutes. Either `session_token`
-        /// or `session_jwt` should be provided.
+        /// Reset the Member's password using their existing session. The endpoint will error if the session does
+        /// not contain an authentication factor that has been issued within the last 5 minutes. Either
+        /// `session_token` or `session_jwt` should be provided.
         /// 
         /// Note that a successful password reset via an existing session will revoke all active sessions for the
         /// `member_id`, except for the one used during the reset flow.

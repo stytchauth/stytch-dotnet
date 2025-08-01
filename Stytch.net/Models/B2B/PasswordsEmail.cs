@@ -92,7 +92,7 @@ namespace Stytch.net.Models.Consumer
         public string PasswordResetToken { get; set; }
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
-        /// spaces, emojis, non-English characers, etc.
+        /// spaces, emojis, non-English characters, etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
@@ -149,7 +149,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// If the needs to complete an MFA step, and the Member has a phone number, this endpoint will
+        /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
         /// used to determine which language to use when sending the passcode.
         /// 
@@ -294,7 +294,9 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("reset_password_redirect_url")]
         public string ResetPasswordRedirectURL { get; set; }
         /// <summary>
-        /// Sets a time limit after which the email link to reset the member's password will no longer be valid.
+        /// Sets a time limit after which the email link to reset the member's password will no longer be valid. The
+        /// minimum allowed expiration is 5 minutes and the maximum is 10080 minutes (7 days). By default, the
+        /// expiration is 30 minutes.
         /// </summary>
         [JsonProperty("reset_password_expiration_minutes")]
         public int? ResetPasswordExpirationMinutes { get; set; }
@@ -337,8 +339,9 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("reset_password_template_id")]
         public string ResetPasswordTemplateId { get; set; }
         /// <summary>
-        /// Use a custom template for verification emails sent during password reset flows. This template will be
-        /// used the first time a user sets a password via a 
+        /// Use a custom template for verification emails sent during password reset flows. When cross-organization
+        /// passwords are enabled for your Project, this template will be used the first time a user sets a password
+        /// via a
         ///   password reset flow. By default, it will use your default email template. The template must be a
         /// template using our built-in customizations or a custom HTML email for Passwords - Email Verification.
         /// </summary>

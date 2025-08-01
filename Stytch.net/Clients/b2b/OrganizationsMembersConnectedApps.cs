@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class OrganizationsMembersConnectedApps
     {
@@ -29,7 +29,11 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// 
+        /// Revoke Connected App revokes a Connected App's access to a Member and revokes all active tokens that
+        /// have been created
+        /// on the Member's behalf. New tokens cannot be created until the Member completes a new authorization flow
+        /// with the
+        /// Connected App.
         /// </summary>
         public async Task<B2BOrganizationsMembersConnectedAppsRevokeResponse> Revoke(
             B2BOrganizationsMembersConnectedAppsRevokeRequest request

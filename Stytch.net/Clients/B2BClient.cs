@@ -1,5 +1,7 @@
 using System;
 using Stytch.net.Clients.B2B;
+using ConnectedApp = Stytch.net.Clients.Consumer.ConnectedApp;
+using Fraud = Stytch.net.Clients.Consumer.Fraud;
 using M2M = Stytch.net.Clients.Consumer.M2M;
 using Project = Stytch.net.Clients.Consumer.Project;
 
@@ -53,10 +55,5 @@ namespace Stytch.net.Clients
             _config.JwksUri = uriBuilder.ToString();
         }
     }
-
-    // MANUAL(ConsumerClients)(types)
-    // ADDIMPORT: using M2M = Stytch.net.Clients.Consumer.M2M;
-    // ADDIMPORT: using Project = Stytch.net.Clients.Consumer.Project;
-    // ENDMANUAL(ConsumerClients)
 
 }

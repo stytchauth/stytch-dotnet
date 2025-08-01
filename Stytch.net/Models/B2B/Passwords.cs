@@ -83,7 +83,7 @@ namespace Stytch.net.Models.Consumer
         public string EmailAddress { get; set; }
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
-        /// spaces, emojis, non-English characers, etc.
+        /// spaces, emojis, non-English characters, etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
@@ -127,7 +127,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// If the needs to complete an MFA step, and the Member has a phone number, this endpoint will
+        /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
         /// used to determine which language to use when sending the passcode.
         /// 
@@ -336,8 +336,17 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("preserve_existing_sessions")]
         public bool? PreserveExistingSessions { get; set; }
+        /// <summary>
+        /// The Member's phone number. A Member may only have one phone number. The phone number should be in E.164
+        /// format (i.e. +1XXXXXXXXXX).
+        /// </summary>
         [JsonProperty("mfa_phone_number")]
         public string MfaPhoneNumber { get; set; }
+        /// <summary>
+        /// Whether to set the user's phone number as verified. This is a dangerous field. This flag should only be
+        /// set if you can attest that
+        ///    the user owns the phone number in question.
+        /// </summary>
         [JsonProperty("set_phone_number_verified")]
         public bool? SetPhoneNumberVerified { get; set; }
         /// <summary>
@@ -403,7 +412,7 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
-        /// spaces, emojis, non-English characers, etc.
+        /// spaces, emojis, non-English characters, etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }

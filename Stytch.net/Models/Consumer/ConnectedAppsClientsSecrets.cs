@@ -12,8 +12,14 @@ using Newtonsoft.Json.Converters;
 
 namespace Stytch.net.Models.Consumer
 {
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Secrets.RotateCancel"/>..
+    /// </summary>
     public class ConnectedAppsClientsSecretsRotateCancelRequest
     {
+        /// <summary>
+        /// The ID of the client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
         public ConnectedAppsClientsSecretsRotateCancelRequest(string clientId)
@@ -21,17 +27,37 @@ namespace Stytch.net.Models.Consumer
             this.ClientId = clientId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Secrets.RotateCancel"/>..
+    /// </summary>
     public class ConnectedAppsClientsSecretsRotateCancelResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The Connected App affected by this operation.
+        /// </summary>
         [JsonProperty("connected_app")]
         public ConnectedApp ConnectedApp { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Secrets.Rotate"/>..
+    /// </summary>
     public class ConnectedAppsClientsSecretsRotateRequest
     {
+        /// <summary>
+        /// The ID of the client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
         public ConnectedAppsClientsSecretsRotateRequest(string clientId)
@@ -39,17 +65,37 @@ namespace Stytch.net.Models.Consumer
             this.ClientId = clientId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Secrets.Rotate"/>..
+    /// </summary>
     public class ConnectedAppsClientsSecretsRotateResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The Connected App affected by this operation.
+        /// </summary>
         [JsonProperty("connected_app")]
         public ConnectedApp ConnectedApp { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Secrets.RotateStart"/>..
+    /// </summary>
     public class ConnectedAppsClientsSecretsRotateStartRequest
     {
+        /// <summary>
+        /// The ID of the client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
         public ConnectedAppsClientsSecretsRotateStartRequest(string clientId)
@@ -57,12 +103,26 @@ namespace Stytch.net.Models.Consumer
             this.ClientId = clientId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.ConnectedApp.Clients.Secrets.RotateStart"/>..
+    /// </summary>
     public class ConnectedAppsClientsSecretsRotateStartResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The Connected App affected by this operation.
+        /// </summary>
         [JsonProperty("connected_app")]
         public ConnectedAppWithNextClientSecret ConnectedApp { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }

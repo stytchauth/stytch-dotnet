@@ -24,7 +24,7 @@ namespace Stytch.net.Models.Consumer
         public string EmailAddress { get; set; }
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
-        /// spaces, emojis, non-English characers, etc.
+        /// spaces, emojis, non-English characters, etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }

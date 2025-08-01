@@ -42,7 +42,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("token")]
         public string Token { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -152,7 +153,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -164,7 +165,7 @@ namespace Stytch.net.Models.Consumer
     public class MagicLinksCreateRequest
     {
         /// <summary>
-        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -175,7 +176,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("expiration_minutes")]
         public int? ExpirationMinutes { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }

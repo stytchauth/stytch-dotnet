@@ -110,7 +110,7 @@ namespace Stytch.net.Models.Consumer
     public class NetworkProperties
     {
         /// <summary>
-        /// The IP address of the user.
+        /// The IP address of the client.
         /// </summary>
         [JsonProperty("ip_address")]
         public string IpAddress { get; set; }
@@ -237,14 +237,15 @@ namespace Stytch.net.Models.Consumer
         /// from completing the privileged action in question
         ///   * `CHALLENGE` - This is an unknown or potentially malicious device that should be put through
         /// increased friction such as 2FA or other forms of extended user verification before allowing the
-        /// privileged action to proceed 
+        /// privileged action to proceed
         ///   
         /// </summary>
         [JsonProperty("action")]
         public VerdictAction Action { get; set; }
         /// <summary>
         /// A set of contextual clues to inform why a `CHALLENGE` or `BLOCK` action was suggested. For a list of
-        /// possible Reasons, please [contact support](mailto:support@stytch.com).
+        /// possible Reasons, see
+        /// [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons).
         /// </summary>
         [JsonProperty("reasons")]
         public List<string> Reasons { get; set; }
@@ -259,6 +260,9 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("is_authentic_device")]
         public bool IsAuthenticDevice { get; set; }
+        /// <summary>
+        /// A list of verdict reason overrides that were applied, if any.
+        /// </summary>
         [JsonProperty("verdict_reason_overrides")]
         public List<VerdictReasonOverride> VerdictReasonOverrides { get; set; }
         /// <summary>
@@ -276,21 +280,45 @@ namespace Stytch.net.Models.Consumer
     }
     public class VerdictReasonAction
     {
+        /// <summary>
+        /// The verdict reason.
+        /// </summary>
         [JsonProperty("verdict_reason")]
         public string VerdictReason { get; set; }
+        /// <summary>
+        /// The default action returned for the specified verdict reason in a fingerprint lookup when no overrides
+        /// are specified.
+        /// </summary>
         [JsonProperty("default_action")]
         public VerdictReasonActionAction DefaultAction { get; set; }
+        /// <summary>
+        /// If not null, this action will be returned for the specified verdict reason in a fingerprint lookup, in
+        /// place of the default action.
+        /// </summary>
         [JsonProperty("override_action")]
         public VerdictReasonActionAction OverrideAction { get; set; }
+        /// <summary>
+        /// The time when the override was created, if one exists. Values conform to the RFC 3339 standard and are
+        /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        /// </summary>
         [JsonProperty("override_created_at")]
         public DateTime? OverrideCreatedAt { get; set; }
+        /// <summary>
+        /// A description of the override, if one exists.
+        /// </summary>
         [JsonProperty("override_description")]
         public string OverrideDescription { get; set; }
     }
     public class VerdictReasonOverride
     {
+        /// <summary>
+        /// The verdict reason that was overridden.
+        /// </summary>
         [JsonProperty("verdict_reason")]
         public string VerdictReason { get; set; }
+        /// <summary>
+        /// The action that was applied for the given verdict reason.
+        /// </summary>
         [JsonProperty("override_action")]
         public VerdictReasonOverrideAction OverrideAction { get; set; }
     }

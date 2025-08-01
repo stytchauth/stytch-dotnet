@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Stytch.net.Clients;
+using Stytch.net.Models.B2B;
 using Stytch.net.Models.Consumer;
 
 namespace Stytch.net

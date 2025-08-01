@@ -190,7 +190,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("email")]
         public string Email { get; set; }
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
@@ -280,7 +280,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -297,7 +297,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("email")]
         public string Email { get; set; }
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
@@ -401,7 +401,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -469,12 +469,11 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
         /// <summary>
-        /// Whether to set the user's email as verified. This is a dangerous field. Incorrect use may lead to users
+        /// Whether to set the user's email as verified. This is a dangerous field, incorrect use may lead to users
         /// getting erroneously
-        ///                 deduplicated into one user object. This flag should only be set if you can attest that
+        ///                 deduplicated into one User object. This flag should only be set if you can attest that
         /// the user owns the email address in question.
-        ///                 Access to this field is restricted. To enable it, please send us a note at
-        /// support@stytch.com.
+        ///                 
         /// </summary>
         [JsonProperty("set_email_verified")]
         public bool? SetEmailVerified { get; set; }
@@ -489,19 +488,16 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("phone_number")]
         public string PhoneNumber { get; set; }
         /// <summary>
-        /// Whether to set the user's phone number as verified. This is a dangerous field. This flag should only be
+        /// Whether to set the user's phone number as verified. This is a dangerous field, this flag should only be
         /// set if you can attest that
-        ///    the user owns the phone number in question. Access to this field is restricted. To enable it, please
-        /// send us a note at support@stytch.com.
+        ///    the user owns the phone number in question.
         /// </summary>
         [JsonProperty("set_phone_number_verified")]
         public bool? SetPhoneNumberVerified { get; set; }
         /// <summary>
         /// If a new user is created, this will set an identifier that can be used in API calls wherever a user_id
         /// is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a
-        /// maximum length of 128 characters. External IDs must be unique within an organization, but may be reused
-        /// across different organizations in the same project. Note that if a user already exists, this field will
-        /// be ignored.
+        /// maximum length of 128 characters.
         /// </summary>
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
@@ -559,7 +555,7 @@ namespace Stytch.net.Models.Consumer
     public class PasswordsStrengthCheckRequest
     {
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]

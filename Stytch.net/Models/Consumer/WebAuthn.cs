@@ -135,7 +135,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -153,7 +153,7 @@ namespace Stytch.net.Models.Consumer
         public string Domain { get; set; }
         /// <summary>
         /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to. You may use an
-        /// external_id here if one is set for the user.
+        /// `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -248,7 +248,7 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to. You may use an
-        /// external_id here if one is set for the user.
+        /// `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -344,7 +344,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -357,7 +357,7 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to. You may use an
-        /// external_id here if one is set for the user.
+        /// `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -367,7 +367,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("domain")]
         public string Domain { get; set; }
         /// <summary>
-        /// The user agent of the User.
+        /// The user agent of the client.
         /// </summary>
         [JsonProperty("user_agent")]
         public string UserAgent { get; set; }

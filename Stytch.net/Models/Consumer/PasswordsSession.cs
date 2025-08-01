@@ -18,7 +18,7 @@ namespace Stytch.net.Models.Consumer
     public class PasswordsSessionResetRequest
     {
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
@@ -107,7 +107,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]

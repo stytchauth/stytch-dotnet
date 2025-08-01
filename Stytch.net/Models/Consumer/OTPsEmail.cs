@@ -30,7 +30,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("expiration_minutes")]
         public int? ExpirationMinutes { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -127,7 +128,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("expiration_minutes")]
         public int? ExpirationMinutes { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -145,7 +147,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("locale")]
         public OTPsEmailSendRequestLocale Locale { get; set; }
         /// <summary>
-        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }

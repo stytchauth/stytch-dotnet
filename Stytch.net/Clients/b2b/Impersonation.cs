@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class Impersonation
     {
@@ -29,12 +29,12 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Authenticate an impersonation token to impersonate a. This endpoint requires an impersonation token that
-        /// is not expired or previously used. 
+        /// Authenticate an impersonation token to impersonate a Member. This endpoint requires an impersonation
+        /// token that is not expired or previously used. 
         /// A Stytch session will be created for the impersonated member with a 60 minute duration. Impersonated
         /// sessions cannot be extended.
         /// 
-        /// Prior to this step, you can generate an impersonation token by visiting the Stytch dashboard, viewing a
+        /// Prior to this step, you can generate an impersonation token by visiting the Stytch Dashboard, viewing a
         /// member, and clicking the `Impersonate Member` button.
         /// </summary>
         public async Task<B2BImpersonationAuthenticateResponse> Authenticate(

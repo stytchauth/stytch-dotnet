@@ -8,12 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
 using Stytch.net.Models.Consumer;
-using JsonException = Newtonsoft.Json.JsonException;
+
 
 
 
@@ -202,8 +201,11 @@ namespace Stytch.net.Clients.Consumer
         /// underlying User. 
         /// This session can be used with the Stytch SDKs and APIs.
         /// 
-        /// The Access Token must contain the `full_access` scope and must not be more than 5 minutes old. Access
-        /// Tokens may only be exchanged a single time.
+        /// The Session returned will be the same Session that was active in your application (the authorizing
+        /// party) during the initial authorization flow.
+        /// 
+        /// The Access Token must contain the `full_access` scope (only available to First Party clients) and must
+        /// not be more than 5 minutes old. Access Tokens may only be exchanged a single time.
         /// </summary>
         public async Task<SessionsExchangeAccessTokenResponse> ExchangeAccessToken(
             SessionsExchangeAccessTokenRequest request
@@ -244,19 +246,19 @@ namespace Stytch.net.Clients.Consumer
         /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
         /// 
-        /// JWKS are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key, and both
-        /// keys will be returned by this endpoint for a period of 1 month. 
+        /// Within the JWKS, the JSON Web Keys are rotated every ~6 months. Upon rotation, new JWTs will be signed
+        /// using the new key, and both keys will be returned by this endpoint for a period of 1 month.
         /// 
         /// JWTs have a set lifetime of 5 minutes, so there will be a 5 minute period where some JWTs will be signed
-        /// by the old JWKS, and some JWTs will be signed by the new JWKS. The correct JWKS to use for validation is
-        /// determined by matching the `kid` value of the JWT and JWKS. 
+        /// by the old keys, and some JWTs will be signed by the new keys. The correct key to use for validation is
+        /// determined by matching the `kid` value of the JWT and key.
         /// 
-        /// If you're using one of our [backend SDKs](https://stytch.com/docs/sdks), the JWKS rotation will be
-        /// handled for you.
+        /// If you're using one of our [backend SDKs](https://stytch.com/docs/b2b/sdks), the JSON Web Key (JWK)
+        /// rotation will be handled for you.
         /// 
-        /// If you're using your own JWT validation library, many have built-in support for JWKS rotation, and
-        /// you'll just need to supply this API endpoint. If not, your application should decide which JWKS to use
-        /// for validation by inspecting the `kid` value.
+        /// If you're using your own JWT validation library, many have built-in support for JWK rotation, and you'll
+        /// just need to supply this API endpoint. If not, your application should decide which JWK to use for
+        /// validation by inspecting the `kid` value.
         /// 
         /// See our [How to use Stytch Session JWTs](https://stytch.com/docs/guides/sessions/using-jwts) guide for
         /// more information.
@@ -291,7 +293,10 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
-        /// 
+        /// Exchange an auth token issued by a trusted identity provider for a Stytch session. You must first
+        /// register a Trusted Auth Token profile in the Stytch dashboard
+        /// [here](https://stytch.com/docs/dashboard/trusted-auth-tokens). If a session token or session JWT is
+        /// provided, it will add the trusted auth token as an authentication factor to the existing session.
         /// </summary>
         public async Task<SessionsAttestResponse> Attest(
             SessionsAttestRequest request
@@ -329,80 +334,6 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
-
-        // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
-        // ADDIMPORT: using System.Text.Json;
-        // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
-        /// <summary>
-        /// Parse a JWT and verify the signature, preferring local verification to remote.
-        /// </summary>
-        public async Task<Session> AuthenticateJwt(
-            AuthenticateJwtRequest request)
-        {
-            try
-            {
-                return await AuthenticateJwtLocal(new AuthenticateJwtLocalRequest(request.SessionJwt)
-                {
-                    ClockSkew = request.ClockSkew,
-                    LifetimeValidator = request.LifetimeValidator,
-                });
-            }
-            catch
-            {
-                var networkResponse = await Authenticate(new SessionsAuthenticateRequest
-                {
-                    SessionJwt = request.SessionJwt,
-                });
-                return networkResponse.Session;
-            }
-        }
-
-        /// <summary>
-        /// The SessionJWTModel is an intermediate representation of the Session as stored in the JWT.
-        /// It differs from the typical JSON API Response session in the following ways:
-        /// - SessionId is stored as "id" instead of "session_id"
-        /// - No user ID is present - it is stored under the "sub" claim 
-        /// </summary>
-        private class SessionJWTModel : Session
-        {
-            [JsonProperty("id")] public new string SessionId { get; set; }
-
-            public Session ToSession(string userId)
-            {
-                return new Session
-                {
-                    SessionId = SessionId,
-                    UserId = userId,
-                    AuthenticationFactors = AuthenticationFactors,
-                    StartedAt = StartedAt,
-                    LastAccessedAt = LastAccessedAt,
-                    ExpiresAt = ExpiresAt,
-                    Attributes = Attributes,
-                    CustomClaims = CustomClaims
-                };
-            }
-        }
-
-        /// <summary>
-        /// Parse a JWT and verify the signature locally (without calling /authenticate in the API).
-        /// </summary>
-        public async Task<Session> AuthenticateJwtLocal(
-            AuthenticateJwtLocalRequest request
-        )
-        {
-            var res = await Utility.AuthenticateJwtLocal(_httpClient, _config, new Utility.AuthenticateJwtParams
-            {
-                Jwt = request.SessionJwt,
-                ClockSkew = request.ClockSkew,
-                LifetimeValidator = request.LifetimeValidator
-            });
-
-            var sessionJsonEl = (JsonElement)res.CustomClaims[Utility.SessionClaimKey];
-            return JsonConvert.DeserializeObject<SessionJWTModel>(sessionJsonEl.GetRawText())
-                .ToSession(userId: res.Subject);
-        }
-        // ENDMANUAL(AuthenticateJWT)
-
 
     }
 

@@ -173,7 +173,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -202,7 +202,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("crypto_wallet_address")]
         public string CryptoWalletAddress { get; set; }
         /// <summary>
-        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }

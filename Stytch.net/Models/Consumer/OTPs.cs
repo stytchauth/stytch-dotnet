@@ -28,7 +28,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("code")]
         public string Code { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -134,7 +135,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]

@@ -29,7 +29,7 @@ namespace Stytch.net.Clients.Consumer
         }
 
         /// <summary>
-        /// Lookup the associated fingerprint for the `telemetry_id` returned from the `GetTelemetryID` function.
+        /// Lookup the associated fingerprint for the `telemetry_id` returned from the `GetTelemetryID()` function.
         /// Learn more about the different fingerprint types and verdicts in our
         /// [DFP guide](https://stytch.com/docs/fraud/guides/device-fingerprinting/overview).
         /// 

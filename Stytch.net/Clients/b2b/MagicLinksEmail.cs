@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class MagicLinksEmail
     {
@@ -74,9 +74,9 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Send an invite email to a new to join an. The Member will be created with an `invited` status until they
-        /// successfully authenticate. Sending invites to `pending` Members will update their status to `invited`.
-        /// Sending invites to already `active` Members will return an error.
+        /// Send an invite email to a new Member to join an Organization. The Member will be created with an
+        /// `invited` status until they successfully authenticate. Sending invites to `pending` Members will update
+        /// their status to `invited`. Sending invites to already `active` Members will return an error.
         /// 
         /// The magic link invite will be valid for 1 week.
         /// 

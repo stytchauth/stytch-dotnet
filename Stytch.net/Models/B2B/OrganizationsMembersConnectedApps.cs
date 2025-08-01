@@ -22,12 +22,28 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("authorization")]
         public Authorization Authorization { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.ConnectedApps.Revoke"/>..
+    /// </summary>
     public class B2BOrganizationsMembersConnectedAppsRevokeRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// The ID of the Connected App.
+        /// </summary>
         [JsonProperty("connected_app_id")]
         public string ConnectedAppId { get; set; }
         public B2BOrganizationsMembersConnectedAppsRevokeRequest(string organizationId, string memberId, string connectedAppId)
@@ -37,8 +53,15 @@ namespace Stytch.net.Models.Consumer
             this.ConnectedAppId = connectedAppId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.ConnectedApps.Revoke"/>..
+    /// </summary>
     public class B2BOrganizationsMembersConnectedAppsRevokeResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         [JsonProperty("status_code")]

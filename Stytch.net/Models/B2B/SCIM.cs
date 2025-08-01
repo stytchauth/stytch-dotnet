@@ -263,12 +263,14 @@ namespace Stytch.net.Models.Consumer
     public class SCIMGroup
     {
         /// <summary>
-        /// Globally unique UUID that identifies a specific SCIM Group.
+        /// Stytch-issued, globally unique UUID that identifies a specific SCIM Group. The entity `id` in the SCIM
+        /// specification is issued by the Service Provider (SP) and returned to the Identity Provider (IdP) to
+        /// store and use for uniquely identify and updating the Group moving forward.
         /// </summary>
         [JsonProperty("group_id")]
         public string GroupId { get; set; }
         /// <summary>
-        /// The name of the SCIM group.
+        /// The displayName of the SCIM group, sent from the Identity Provider (IdP).
         /// </summary>
         [JsonProperty("group_name")]
         public string GroupName { get; set; }

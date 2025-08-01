@@ -28,7 +28,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("token")]
         public string Token { get; set; }
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
@@ -76,7 +76,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -133,7 +134,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -173,7 +174,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("code_challenge")]
         public string CodeChallenge { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }

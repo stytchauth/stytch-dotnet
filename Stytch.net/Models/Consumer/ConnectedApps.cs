@@ -14,88 +14,186 @@ namespace Stytch.net.Models.Consumer
 {
     public class ConnectedApp
     {
+        /// <summary>
+        /// The ID of the Connected App client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
+        /// <summary>
+        /// A human-readable name for the client.
+        /// </summary>
         [JsonProperty("client_name")]
         public string ClientName { get; set; }
+        /// <summary>
+        /// A human-readable description for the client.
+        /// </summary>
         [JsonProperty("client_description")]
         public string ClientDescription { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
+        /// exchanged for a full Stytch session.
+        /// </summary>
         [JsonProperty("full_access_allowed")]
         public bool FullAccessAllowed { get; set; }
+        /// <summary>
+        /// The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and
+        /// `third_party_public`.
+        /// </summary>
         [JsonProperty("client_type")]
         public string ClientType { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OAuth Authorization flows.
+        /// </summary>
         [JsonProperty("redirect_urls")]
         public List<string> RedirectURLS { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
         public int AccessTokenExpiryMinutes { get; set; }
         [JsonProperty("access_token_template_content")]
         public string AccessTokenTemplateContent { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OIDC Logout flows.
+        /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
         public List<string> PostLogoutRedirectURLS { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If true, the client does not need to request explicit user consent
+        /// for the `offline_access` scope.
+        /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool BypassConsentForOfflineAccess { get; set; }
+        /// <summary>
+        /// The last four characters of the client secret.
+        /// </summary>
         [JsonProperty("client_secret_last_four")]
         public string ClientSecretLastFour { get; set; }
+        /// <summary>
+        /// The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+        /// </summary>
         [JsonProperty("next_client_secret_last_four")]
         public string NextClientSecretLastFour { get; set; }
         [JsonProperty("access_token_custom_audience")]
         public string AccessTokenCustomAudience { get; set; }
+        /// <summary>
+        /// The logo URL of the Connected App, if any.
+        /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
     }
     public class ConnectedAppWithClientSecret
     {
+        /// <summary>
+        /// The ID of the Connected App client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
+        /// <summary>
+        /// A human-readable name for the client.
+        /// </summary>
         [JsonProperty("client_name")]
         public string ClientName { get; set; }
+        /// <summary>
+        /// A human-readable description for the client.
+        /// </summary>
         [JsonProperty("client_description")]
         public string ClientDescription { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
+        /// exchanged for a full Stytch session.
+        /// </summary>
         [JsonProperty("full_access_allowed")]
         public bool FullAccessAllowed { get; set; }
+        /// <summary>
+        /// The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and
+        /// `third_party_public`.
+        /// </summary>
         [JsonProperty("client_type")]
         public string ClientType { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OAuth Authorization flows.
+        /// </summary>
         [JsonProperty("redirect_urls")]
         public List<string> RedirectURLS { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
         public int AccessTokenExpiryMinutes { get; set; }
         [JsonProperty("access_token_template_content")]
         public string AccessTokenTemplateContent { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OIDC Logout flows.
+        /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
         public List<string> PostLogoutRedirectURLS { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If true, the client does not need to request explicit user consent
+        /// for the `offline_access` scope.
+        /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool BypassConsentForOfflineAccess { get; set; }
+        /// <summary>
+        /// The last four characters of the client secret.
+        /// </summary>
         [JsonProperty("client_secret_last_four")]
         public string ClientSecretLastFour { get; set; }
+        /// <summary>
+        /// The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+        /// </summary>
         [JsonProperty("next_client_secret_last_four")]
         public string NextClientSecretLastFour { get; set; }
+        /// <summary>
+        /// The secret of the Connected App client. **Required for confidential clients**
+        /// </summary>
         [JsonProperty("client_secret")]
         public string ClientSecret { get; set; }
         [JsonProperty("access_token_custom_audience")]
         public string AccessTokenCustomAudience { get; set; }
+        /// <summary>
+        /// The logo URL of the Connected App, if any.
+        /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
     }
     public class ConnectedAppWithNextClientSecret
     {
+        /// <summary>
+        /// The ID of the Connected App client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
+        /// <summary>
+        /// A human-readable name for the client.
+        /// </summary>
         [JsonProperty("client_name")]
         public string ClientName { get; set; }
+        /// <summary>
+        /// A human-readable description for the client.
+        /// </summary>
         [JsonProperty("client_description")]
         public string ClientDescription { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// The last four characters of the client secret.
+        /// </summary>
         [JsonProperty("client_secret_last_four")]
         public string ClientSecretLastFour { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
+        /// exchanged for a full Stytch session.
+        /// </summary>
         [JsonProperty("full_access_allowed")]
         public bool FullAccessAllowed { get; set; }
+        /// <summary>
+        /// The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and
+        /// `third_party_public`.
+        /// </summary>
         [JsonProperty("client_type")]
         public string ClientType { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OAuth Authorization flows.
+        /// </summary>
         [JsonProperty("redirect_urls")]
         public List<string> RedirectURLS { get; set; }
         [JsonProperty("next_client_secret")]
@@ -104,21 +202,42 @@ namespace Stytch.net.Models.Consumer
         public int AccessTokenExpiryMinutes { get; set; }
         [JsonProperty("access_token_template_content")]
         public string AccessTokenTemplateContent { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OIDC Logout flows.
+        /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
         public List<string> PostLogoutRedirectURLS { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If true, the client does not need to request explicit user consent
+        /// for the `offline_access` scope.
+        /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool BypassConsentForOfflineAccess { get; set; }
+        /// <summary>
+        /// The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+        /// </summary>
         [JsonProperty("next_client_secret_last_four")]
         public string NextClientSecretLastFour { get; set; }
         [JsonProperty("access_token_custom_audience")]
         public string AccessTokenCustomAudience { get; set; }
+        /// <summary>
+        /// The logo URL of the Connected App, if any.
+        /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
     }
     public class ConnectedAppsResultsMetadata
     {
+        /// <summary>
+        /// The total number of results returned by your search query. If totals have been disabled for your Stytch
+        /// Workspace to improve search performance, the value will always be -1.
+        /// </summary>
         [JsonProperty("total")]
         public int Total { get; set; }
+        /// <summary>
+        /// The `next_cursor` string is returned when your search result contains more than one page of results.
+        /// This value is passed into your next search call in the `cursor` field.
+        /// </summary>
         [JsonProperty("next_cursor")]
         public string NextCursor { get; set; }
     }

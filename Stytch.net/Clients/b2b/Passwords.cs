@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class Passwords
     {
@@ -40,15 +40,16 @@ namespace Stytch.net.Clients.B2B
         /// This API allows you to check whether the user’s provided password is valid, and to provide feedback to
         /// the user on how to increase the strength of their password.
         /// 
-        /// This endpoint adapts to your Project's password strength configuration. If you're using
-        /// [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are
-        /// considered valid if the strength score is >= 3. If you're using
-        /// [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are considered valid if
-        /// they meet the requirements that you've set with Stytch. You may update your password strength
-        /// configuration in the [stytch dashboard](https://stytch.com/dashboard/password-strength-config).
+        /// This endpoint adapts to your Project's password strength configuration.
+        /// If you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your
+        /// passwords are considered valid if the strength score is >= 3.
+        /// If you're using [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are
+        /// considered valid if they meet the requirements that you've set with Stytch.
+        /// You may update your password strength configuration on the
+        /// [Passwords Policy page](https://stytch.com/dashboard/password-strength-config) in the Stytch Dashboard.
         /// 
         /// ## Password feedback
-        /// The zxcvbn_feedback and luds_feedback objects contains relevant fields for you to relay feedback to
+        /// The `zxcvbn_feedback` and `luds_feedback` objects contains relevant fields for you to relay feedback to
         /// users that failed to create a strong enough password.
         /// 
         /// If you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the feedback object
@@ -97,13 +98,16 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Adds an existing password to a member's email that doesn't have a password yet. We support migrating
-        /// members from passwords stored with bcrypt, scrypt, argon2, MD-5, SHA-1, and PBKDF2. This endpoint has a
-        /// rate limit of 100 requests per second.
+        /// Adds an existing password to a Member's email that doesn't have a password yet.
         /// 
-        /// The member's email will be marked as verified when you use this endpoint. If you are using
-        /// **cross-organization passwords**, call this method separately for each `organization_id` associated with
-        /// the given `email_address` to ensure the email is verified across all of their organizations.
+        /// We support migrating members from passwords stored with bcrypt, scrypt, argon2, MD-5, SHA-1, and PBKDF2.
+        /// This endpoint has a rate limit of 100 requests per second.
+        /// 
+        /// The Member's email will be marked as verified when you use this endpoint.
+        /// 
+        /// If you are using **cross-organization passwords**, i.e. allowing an end user to share the same password
+        /// across all of their Organizations, call this method separately for each `organization_id` associated
+        /// with the given `email_address` to ensure the password is set across all of their Organizations.
         /// </summary>
         public async Task<B2BPasswordsMigrateResponse> Migrate(
             B2BPasswordsMigrateRequest request
@@ -152,8 +156,8 @@ namespace Stytch.net.Clients.B2B
         /// this case to ensure that the member is the legitimate owner of the email address and not a malicious
         /// actor abusing the compromised credentials.
         /// 
-        /// If the is required to complete MFA to log in to the, the returned value of `member_authenticated` will
-        /// be `false`, and an `intermediate_session_token` will be returned.
+        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
+        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
         /// The `intermediate_session_token` can be passed into the
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
         /// MFA step and acquire a full member session.

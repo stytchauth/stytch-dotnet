@@ -16,7 +16,7 @@ using Stytch.net.Models.Consumer;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
     public class OAuthDiscovery
     {
@@ -29,7 +29,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Authenticates the Discovery token and exchanges it for an Intermediate
+        /// Authenticates the Discovery OAuth token and exchanges it for an Intermediate
         /// Session Token. Intermediate Session Tokens can be used for various Discovery login flows and are valid
         /// for 10 minutes.
         /// </summary>

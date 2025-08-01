@@ -221,12 +221,44 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("allowed_oauth_tenants")]
         public object AllowedOAuthTenants { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards first party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any first party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no first party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("first_party_connected_apps_allowed_type")]
         public B2BDiscoveryOrganizationsCreateRequestFirstPartyConnectedAppsAllowedType FirstPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of first party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_first_party_connected_apps")]
         public List<string> AllowedFirstPartyConnectedApps { get; set; }
+        /// <summary>
+        /// The authentication setting that sets the Organization's policy towards third party Connected Apps. The
+        /// accepted values are:
+        ///  
+        ///   `ALL_ALLOWED` – any third party Connected App in the Project is permitted for use by Members.
+        ///  
+        ///   `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be
+        /// used by Members.
+        ///  
+        ///   `NOT_ALLOWED` – no third party Connected Apps are permitted.
+        ///   
+        /// </summary>
         [JsonProperty("third_party_connected_apps_allowed_type")]
         public B2BDiscoveryOrganizationsCreateRequestThirdPartyConnectedAppsAllowedType ThirdPartyConnectedAppsAllowedType { get; set; }
+        /// <summary>
+        /// An array of third party Connected App IDs that are allowed for the Organization. Only used when the
+        /// Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+        /// </summary>
         [JsonProperty("allowed_third_party_connected_apps")]
         public List<string> AllowedThirdPartyConnectedApps { get; set; }
         public B2BDiscoveryOrganizationsCreateRequest(string intermediateSessionToken)

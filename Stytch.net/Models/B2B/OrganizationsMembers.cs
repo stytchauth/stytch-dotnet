@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Consumer.Organization>;
+using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.B2B.Organization>;
 
 namespace Stytch.net.Models.Consumer
 {
@@ -176,7 +176,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("is_breakglass")]
         public bool? IsBreakglass { get; set; }
         /// <summary>
-        /// The Member's phone number. A Member may only have one phone number.
+        /// The Member's phone number. A Member may only have one phone number. The phone number should be in E.164
+        /// format (i.e. +1XXXXXXXXXX).
         /// </summary>
         [JsonProperty("mfa_phone_number")]
         public string MfaPhoneNumber { get; set; }
@@ -482,10 +483,23 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.GetConnectedApps"/>..
+    /// </summary>
     public class B2BOrganizationsMembersGetConnectedAppsRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
         public B2BOrganizationsMembersGetConnectedAppsRequest(string organizationId, string memberId)
@@ -494,10 +508,20 @@ namespace Stytch.net.Models.Consumer
             this.MemberId = memberId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.GetConnectedApps"/>..
+    /// </summary>
     public class B2BOrganizationsMembersGetConnectedAppsResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// An array of Connected Apps with which the Member has successfully completed an authorization flow.
+        /// </summary>
         [JsonProperty("connected_apps")]
         public List<MemberConnectedApp> ConnectedApps { get; set; }
         [JsonProperty("status_code")]
@@ -753,18 +777,58 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.StartEmailUpdate"/>..
+    /// </summary>
     public class B2BOrganizationsMembersStartEmailUpdateRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// The email address of the Member.
+        /// </summary>
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
+        /// <summary>
+        /// The URL that the Member clicks from the login Email Magic Link. This URL should be an endpoint in the
+        /// backend server that
+        ///   verifies the request by querying Stytch's authenticate endpoint and finishes the login. If this value
+        /// is not passed, the default login
+        ///   redirect URL that you set in your Dashboard is used. If you have not set a default login redirect URL,
+        /// an error is returned.
+        /// </summary>
         [JsonProperty("login_redirect_url")]
         public string LoginRedirectURL { get; set; }
+        /// <summary>
+        /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+        /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
+        /// 
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// 
+        /// Request support for additional languages
+        /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+        /// 
+        /// </summary>
         [JsonProperty("locale")]
         public StartEmailUpdateRequestLocale Locale { get; set; }
+        /// <summary>
+        /// Use a custom template for login emails. By default, it will use your default email template. The
+        /// template must be from Stytch's
+        /// built-in customizations or a custom HTML email for Magic Links - Login.
+        /// </summary>
         [JsonProperty("login_template_id")]
         public string LoginTemplateId { get; set; }
         public B2BOrganizationsMembersStartEmailUpdateRequest(string organizationId, string memberId, string emailAddress)
@@ -774,16 +838,36 @@ namespace Stytch.net.Models.Consumer
             this.EmailAddress = emailAddress;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.StartEmailUpdate"/>..
+    /// </summary>
     public class B2BOrganizationsMembersStartEmailUpdateResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
+        /// </summary>
         [JsonProperty("member")]
         public Member Member { get; set; }
+        /// <summary>
+        /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        /// </summary>
         [JsonProperty("organization")]
         public Organization Organization { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
@@ -1070,7 +1154,7 @@ namespace Stytch.net.Models.Consumer
         FR,
     }
     // MANUAL(OrganizationsEntry)(TYPES)
-    // ADDIMPORT: using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Consumer.Organization>;
+    // ADDIMPORT: using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.B2B.Organization>;
     // ENDMANUAL(OrganizationsEntry)
 
 }

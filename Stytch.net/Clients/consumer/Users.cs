@@ -595,7 +595,12 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
-        /// 
+        /// User Get Connected Apps retrieves a list of Connected Apps with which the User has successfully
+        /// completed an
+        /// authorization flow.
+        /// If the User revokes a Connected App's access (e.g. via the Revoke Connected App endpoint) then the
+        /// Connected App will
+        /// no longer be returned in the response.
         /// </summary>
         public async Task<UsersConnectedAppsResponse> ConnectedApps(
             UsersConnectedAppsRequest request
@@ -627,7 +632,11 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
-        /// 
+        /// Revoke Connected App revokes a Connected App's access to a User and revokes all active tokens that have
+        /// been created
+        /// on the User's behalf. New tokens cannot be created until the User completes a new authorization flow
+        /// with the
+        /// Connected App.
         /// </summary>
         public async Task<UsersRevokeResponse> Revoke(
             UsersRevokeRequest request
