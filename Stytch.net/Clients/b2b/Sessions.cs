@@ -8,15 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
+using JsonException = Newtonsoft.Json.JsonException;
 
 
 
-
-namespace Stytch.net.Clients.Consumer
+namespace Stytch.net.Clients.B2B
 {
     public class Sessions
     {
@@ -432,7 +433,122 @@ namespace Stytch.net.Clients.Consumer
             }
         }
 
+        // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
+        // ADDIMPORT: using System.Text.Json;
+        // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
+
+        /// <summary>
+        /// Parse a JWT and verify the signature, preferring local verification to remote.
+        /// If an AuthorizationCheck param is passed in, RBAC authorization will be performed as well.
+        /// </summary>
+        public async Task<MemberSession> AuthenticateJwt(
+          B2BAuthenticateJwtRequest request)
+        {
+            try
+            {
+                return await AuthenticateJwtLocal(new B2BAuthenticateJwtLocalRequest(request.SessionJwt)
+                {
+                    AuthorizationCheck = request.AuthorizationCheck,
+                    ClockSkew = request.ClockSkew,
+                    LifetimeValidator = request.LifetimeValidator,
+                });
+            }
+            catch
+            {
+                var networkResponse = await Authenticate(new B2BSessionsAuthenticateRequest
+                {
+                    AuthorizationCheck = request.AuthorizationCheck,
+                    SessionJwt = request.SessionJwt,
+                });
+                return networkResponse.MemberSession;
+            }
+        }
+
+        private class OrganizationJWTModel
+        {
+            [JsonProperty("organization_id")] public string OrganizationId { get; set; }
+        }
+
+        private class MemberSessionJWTModel : MemberSession
+        {
+            [JsonProperty("id")] public new string MemberSessionId { get; set; }
+
+            public MemberSession ToMemberSession(string memberId, string organizationId)
+            {
+                return new MemberSession
+                {
+                    MemberSessionId = MemberSessionId,
+                    MemberId = memberId,
+                    StartedAt = StartedAt,
+                    LastAccessedAt = LastAccessedAt,
+                    ExpiresAt = ExpiresAt,
+                    AuthenticationFactors = AuthenticationFactors,
+                    OrganizationId = organizationId,
+                    Roles = Roles ?? new List<string>(),
+                    CustomClaims = CustomClaims,
+                };
+            }
+        }
+
+        // PolicyGetter is a shim class that forces the RBAC codegen'd class to implement IPolicyGetter
+        private class PolicyGetter : RBAC, Utility.IB2BPolicyGetter
+        {
+            public PolicyGetter(HttpClient client, ClientConfig config) : base(client, config)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Parse a JWT and verify the signature locally (without calling /authenticate in the API).
+        /// If an AuthorizationCheck param is passed in, RBAC authorization will be performed as well.
+        /// </summary>
+        /// <exception cref="StytchTenancyMismatchException">When the requested organization ID does not match the organization ID of the member in the JWT</exception>
+        /// <exception cref="StytchInvalidPermissionsException">When the member does not have permission to perform the desired action on the requested resource</exception>
+        public async Task<MemberSession> AuthenticateJwtLocal(
+          B2BAuthenticateJwtLocalRequest request)
+        {
+            var res = await Utility.AuthenticateJwtLocal(_httpClient, _config, new Utility.AuthenticateJwtParams
+            {
+                Jwt = request.SessionJwt,
+                ClockSkew = request.ClockSkew,
+                LifetimeValidator = request.LifetimeValidator
+            });
+
+            var memberSessionJsonEl = (JsonElement)res.CustomClaims[Utility.SessionClaimKey];
+            var organizationJsonEl = (JsonElement)res.CustomClaims[Utility.OrganizationClaimKey];
+
+            var organizationModel =
+                JsonConvert.DeserializeObject<OrganizationJWTModel>(organizationJsonEl.GetRawText());
+
+            var memberSession = JsonConvert.DeserializeObject<MemberSessionJWTModel>(memberSessionJsonEl.GetRawText())
+                .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId);
+
+            if (request.AuthorizationCheck != null)
+            {
+                if (request.AuthorizationCheck.OrganizationId != memberSession.OrganizationId)
+                {
+                    throw new StytchTenancyMismatchException(callerOrganizationId: memberSession.OrganizationId,
+                        targetOrganizationId: request.AuthorizationCheck.OrganizationId);
+                }
+
+                var isAuthorized = await Utility.AuthorizeRbacRoles(new PolicyGetter(_httpClient, _config),
+                    new AuthorizationParams
+                    {
+                        ResourceID = request.AuthorizationCheck.ResourceId,
+                        Action = request.AuthorizationCheck.Action,
+                        Roles = memberSession.Roles
+                    });
+                if (!isAuthorized)
+                {
+                    throw new StytchInvalidPermissionsException();
+                }
+            }
+
+            return memberSession;
+        }
+        // ENDMANUAL(AuthenticateJWT)
+
+
     }
 
 }
-

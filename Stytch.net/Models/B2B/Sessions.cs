@@ -3,6 +3,7 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -10,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class B2BSessionsAuthorizationCheck
     {
@@ -877,18 +878,18 @@ namespace Stytch.net.Models.Consumer
         /// permissions.
         ///   In addition, the `organization_id` passed in the authorization check must match the Member's
         /// Organization.
-        ///   
+        ///
         ///   The Roles on the Member Session may differ from the Roles you see on the Member object - Roles that
         /// are implicitly
         ///   assigned by SSO connection or SSO group will only be valid for a Member Session if there is at least
         /// one authentication
         ///   factor on the Member Session from the specified SSO connection.
-        ///   
+        ///
         ///   If the Member is not authorized to perform the specified action on the specified Resource, or if the
         ///   `organization_id` does not match the Member's Organization, a 403 error will be thrown.
         ///   Otherwise, the response will contain a list of Roles that satisfied the authorization check.
         /// </summary>
-        public AuthorizationCheck AuthorizationCheck { get; set; }
+        public B2BSessionsAuthorizationCheck AuthorizationCheck { get; set; }
 
         /// <summary>
         /// Configures the acceptable amount of clock skew when validating timestamps.
@@ -922,18 +923,18 @@ namespace Stytch.net.Models.Consumer
         /// permissions.
         ///   In addition, the `organization_id` passed in the authorization check must match the Member's
         /// Organization.
-        ///   
+        ///
         ///   The Roles on the Member Session may differ from the Roles you see on the Member object - Roles that
         /// are implicitly
         ///   assigned by SSO connection or SSO group will only be valid for a Member Session if there is at least
         /// one authentication
         ///   factor on the Member Session from the specified SSO connection.
-        ///   
+        ///
         ///   If the Member is not authorized to perform the specified action on the specified Resource, or if the
         ///   `organization_id` does not match the Member's Organization, a 403 error will be thrown.
         ///   Otherwise, the response will contain a list of Roles that satisfied the authorization check.
         /// </summary>
-        public AuthorizationCheck AuthorizationCheck { get; set; }
+        public B2BSessionsAuthorizationCheck AuthorizationCheck { get; set; }
 
         /// <summary>
         /// Configures the acceptable amount of clock skew when validating timestamps.

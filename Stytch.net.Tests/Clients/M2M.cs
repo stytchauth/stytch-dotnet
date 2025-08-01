@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 namespace Stytch.net.Tests.Clients;
 
@@ -11,8 +11,8 @@ public class M2M : ConsumerTestBase
     private readonly Task<M2MTokenResponse> tokenResTask;
     public M2M() : base()
     {
-        // A (temporary) hack - we do not support sandbox values for M2M so we provisioned a client 
-        // that reuses the Project ID and Project Secret values we already have saved in CI 
+        // A (temporary) hack - we do not support sandbox values for M2M so we provisioned a client
+        // that reuses the Project ID and Project Secret values we already have saved in CI
         tokenResTask = consumerClient.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
     }
 

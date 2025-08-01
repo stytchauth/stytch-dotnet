@@ -16,47 +16,39 @@ using Stytch.net.Models;
 
 
 
-namespace Stytch.net.Clients.B2B
+namespace Stytch.net.Clients.Consumer
 {
-    public class MagicLinksDiscovery
+    public class RBAC
     {
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public MagicLinksDiscovery(HttpClient client, ClientConfig config)
+        public RBAC(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
         }
 
         /// <summary>
-        /// Authenticates the Discovery Magic Link token and exchanges it for an Intermediate Session Token.
-        /// Intermediate Session Tokens can be used for various Discovery login flows and are valid for 10 minutes.
+        /// 
         /// </summary>
-        public async Task<B2BMagicLinksDiscoveryAuthenticateResponse> Authenticate(
-            B2BMagicLinksDiscoveryAuthenticateRequest request
+        public async Task<RBACPolicyResponse> Policy(
+            RBACPolicyRequest request
         )
         {
-            var method = HttpMethod.Post;
+            var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/magic_links/discovery/authenticate"
+                Path = $"/v1/rbac/policy"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
-            var jsonSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
-            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-            httpReq.Content = content;
 
             var response = await _httpClient.SendAsync(httpReq);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<B2BMagicLinksDiscoveryAuthenticateResponse>(responseBody);
+                return JsonConvert.DeserializeObject<RBACPolicyResponse>(responseBody);
             }
             try
             {

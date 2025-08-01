@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Stytch.net.Models.B2B;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 namespace Stytch.net
 {
@@ -45,7 +44,7 @@ namespace Stytch.net
         private const string Wildcard = "*";
 
         private readonly B2BRBACPolicy _policy;
-        public RbacPolicy(B2BRBACPolicy policyDocument)
+        public B2BRbacPolicy(B2BRBACPolicy policyDocument)
         {
             _policy = policyDocument;
         }

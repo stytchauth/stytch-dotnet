@@ -8,11 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
-
+using Stytch.net.Models;
+using JsonException = Newtonsoft.Json.JsonException;
 
 
 
@@ -335,7 +336,80 @@ namespace Stytch.net.Clients.Consumer
             }
         }
 
+        // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
+        // ADDIMPORT: using System.Text.Json;
+        // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
+        /// <summary>
+        /// Parse a JWT and verify the signature, preferring local verification to remote.
+        /// </summary>
+        public async Task<Session> AuthenticateJwt(
+            AuthenticateJwtRequest request)
+        {
+            try
+            {
+                return await AuthenticateJwtLocal(new AuthenticateJwtLocalRequest(request.SessionJwt)
+                {
+                    ClockSkew = request.ClockSkew,
+                    LifetimeValidator = request.LifetimeValidator,
+                });
+            }
+            catch
+            {
+                var networkResponse = await Authenticate(new SessionsAuthenticateRequest
+                {
+                    SessionJwt = request.SessionJwt,
+                });
+                return networkResponse.Session;
+            }
+        }
+
+        /// <summary>
+        /// The SessionJWTModel is an intermediate representation of the Session as stored in the JWT.
+        /// It differs from the typical JSON API Response session in the following ways:
+        /// - SessionId is stored as "id" instead of "session_id"
+        /// - No user ID is present - it is stored under the "sub" claim
+        /// </summary>
+        private class SessionJWTModel : Session
+        {
+            [JsonProperty("id")] public new string SessionId { get; set; }
+
+            public Session ToSession(string userId)
+            {
+                return new Session
+                {
+                    SessionId = SessionId,
+                    UserId = userId,
+                    AuthenticationFactors = AuthenticationFactors,
+                    StartedAt = StartedAt,
+                    LastAccessedAt = LastAccessedAt,
+                    ExpiresAt = ExpiresAt,
+                    Attributes = Attributes,
+                    CustomClaims = CustomClaims
+                };
+            }
+        }
+
+        /// <summary>
+        /// Parse a JWT and verify the signature locally (without calling /authenticate in the API).
+        /// </summary>
+        public async Task<Session> AuthenticateJwtLocal(
+            AuthenticateJwtLocalRequest request
+        )
+        {
+            var res = await Utility.AuthenticateJwtLocal(_httpClient, _config, new Utility.AuthenticateJwtParams
+            {
+                Jwt = request.SessionJwt,
+                ClockSkew = request.ClockSkew,
+                LifetimeValidator = request.LifetimeValidator
+            });
+
+            var sessionJsonEl = (JsonElement)res.CustomClaims[Utility.SessionClaimKey];
+            return JsonConvert.DeserializeObject<SessionJWTModel>(sessionJsonEl.GetRawText())
+                .ToSession(userId: res.Subject);
+        }
+        // ENDMANUAL(AuthenticateJWT)
+
+
     }
 
 }
-

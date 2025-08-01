@@ -11,12 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
 
-namespace Stytch.net.Clients.Consumer
+namespace Stytch.net.Clients.B2B
 {
     public class OTPsSms
     {
@@ -173,4 +173,3 @@ namespace Stytch.net.Clients.Consumer
     }
 
 }
-

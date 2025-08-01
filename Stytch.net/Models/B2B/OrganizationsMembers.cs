@@ -3,14 +3,15 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.B2B.Organization>;
+using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Organization>;
 
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
 
     public class B2BOrganizationsMembersCreateRequestOptions
@@ -1153,8 +1154,4 @@ namespace Stytch.net.Models.Consumer
         [EnumMember(Value = "fr")]
         FR,
     }
-    // MANUAL(OrganizationsEntry)(TYPES)
-    // ADDIMPORT: using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.B2B.Organization>;
-    // ENDMANUAL(OrganizationsEntry)
-
 }
