@@ -6,7 +6,11 @@ namespace Stytch.net.Clients
 
     public class ConsumerClient : BaseClient
     {
+        public readonly ConnectedApp ConnectedApp;
+        public readonly ConsumerRBAC ConsumerRBAC;
         public readonly CryptoWallets CryptoWallets;
+        public readonly Fraud Fraud;
+        public readonly Impersonation Impersonation;
         public readonly M2M M2M;
         public readonly MagicLinks MagicLinks;
         public readonly OAuth OAuth;
@@ -20,7 +24,11 @@ namespace Stytch.net.Clients
 
         public ConsumerClient(ClientConfig config) : base(config)
         {
+            ConnectedApp = new ConnectedApp(_httpClient, _config);
+            ConsumerRBAC = new ConsumerRBAC(_httpClient, _config);
             CryptoWallets = new CryptoWallets(_httpClient, _config);
+            Fraud = new Fraud(_fraudClient, _config);
+            Impersonation = new Impersonation(_httpClient, _config);
             M2M = new M2M(_httpClient, _config);
             MagicLinks = new MagicLinks(_httpClient, _config);
             OAuth = new OAuth(_httpClient, _config);

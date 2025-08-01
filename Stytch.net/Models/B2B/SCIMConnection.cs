@@ -99,7 +99,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -147,7 +148,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -192,7 +194,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -249,7 +252,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -275,6 +279,10 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        /// <summary>
+        /// A [SCIM Connection](https://stytch.com/docs/b2b/api/scim-connection-object) connection belonging to the
+        /// organization (currently limited to one).
+        /// </summary>
         [JsonProperty("connection")]
         public SCIMConnection Connection { get; set; }
     }
@@ -285,7 +293,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -332,7 +341,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -379,7 +389,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -426,7 +437,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }

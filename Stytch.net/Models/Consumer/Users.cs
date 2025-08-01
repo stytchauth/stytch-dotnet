@@ -101,7 +101,7 @@ namespace Stytch.net.Models.Consumer
         /// The action to perform on the operands. The accepted value are:
         /// 
         ///   `AND` – all the operand values provided must match.
-        ///   
+        /// 
         ///   `OR` – the operator will return any matches to at least one of the operand values you supply.
         /// </summary>
         [JsonProperty("operator")]
@@ -175,6 +175,8 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("biometric_registrations")]
         public List<BiometricRegistration> BiometricRegistrations { get; set; }
+        [JsonProperty("is_locked")]
+        public bool IsLocked { get; set; }
         /// <summary>
         /// The name of the User. Each field in the `name` object is optional.
         /// </summary>
@@ -205,6 +207,27 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+        [JsonProperty("lock_created_at")]
+        public DateTime? LockCreatedAt { get; set; }
+        [JsonProperty("lock_expires_at")]
+        public DateTime? LockExpiresAt { get; set; }
+    }
+    public class UserConnectedApp
+    {
+        [JsonProperty("connected_app_id")]
+        public string ConnectedAppId { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
+        [JsonProperty("client_type")]
+        public string ClientType { get; set; }
+        [JsonProperty("scopes_granted")]
+        public string ScopesGranted { get; set; }
+        [JsonProperty("logo_url")]
+        public string LogoURL { get; set; }
     }
     public class UsersEmail
     {
@@ -265,7 +288,8 @@ namespace Stytch.net.Models.Consumer
     public class UsersResultsMetadata
     {
         /// <summary>
-        /// The total number of results returned by your search query.
+        /// The total number of results returned by your search query. If totals have been disabled for your Stytch
+        /// Workspace to improve search performance, the value will always be -1.
         /// </summary>
         [JsonProperty("total")]
         public int Total { get; set; }
@@ -312,6 +336,24 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("name")]
         public string Name { get; set; }
     }
+    public class UsersConnectedAppsRequest
+    {
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        public UsersConnectedAppsRequest(string userId)
+        {
+            this.UserId = userId;
+        }
+    }
+    public class UsersConnectedAppsResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("connected_apps")]
+        public List<UserConnectedApp> ConnectedApps { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Users.Create"/>..
     /// </summary>
@@ -327,9 +369,6 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("name")]
         public UsersName Name { get; set; }
-        /// <summary>
-        /// Provided attributes help with fraud detection.
-        /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
         /// <summary>
@@ -363,6 +402,14 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        /// <summary>
+        /// An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting
+        /// of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs
+        /// must be unique within an organization, but may be reused across different organizations in the same
+        /// project.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
         public UsersCreateRequest()
         {
         }
@@ -681,7 +728,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersDeleteRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -807,7 +854,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersExchangePrimaryFactorRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -861,7 +908,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersGetRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -927,6 +974,8 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("biometric_registrations")]
         public List<BiometricRegistration> BiometricRegistrations { get; set; }
+        [JsonProperty("is_locked")]
+        public bool IsLocked { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
@@ -963,6 +1012,31 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+        [JsonProperty("lock_created_at")]
+        public DateTime? LockCreatedAt { get; set; }
+        [JsonProperty("lock_expires_at")]
+        public DateTime? LockExpiresAt { get; set; }
+    }
+    public class UsersRevokeRequest
+    {
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        [JsonProperty("connected_app_id")]
+        public string ConnectedAppId { get; set; }
+        public UsersRevokeRequest(string userId, string connectedAppId)
+        {
+            this.UserId = userId;
+            this.ConnectedAppId = connectedAppId;
+        }
+    }
+    public class UsersRevokeResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Users.Search"/>..
@@ -1031,7 +1105,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersUpdateRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -1059,6 +1133,14 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        /// <summary>
+        /// An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting
+        /// of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs
+        /// must be unique within an organization, but may be reused across different organizations in the same
+        /// project.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
         public UsersUpdateRequest(string userId)
         {
             this.UserId = userId;

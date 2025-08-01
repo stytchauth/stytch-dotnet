@@ -53,13 +53,42 @@ namespace Stytch.net.Models.Consumer
     }
     public class ConnectionImplicitRoleAssignment
     {
+        /// <summary>
+        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
+        /// 
+        ///   Reserved `role_id`s that are predefined by Stytch include:
+        /// 
+        ///   * `stytch_member`
+        ///   * `stytch_admin`
+        /// 
+        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
+        /// for a more detailed explanation.
+        /// 
+        ///   
+        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
     }
     public class GroupImplicitRoleAssignment
     {
+        /// <summary>
+        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
+        /// 
+        ///   Reserved `role_id`s that are predefined by Stytch include:
+        /// 
+        ///   * `stytch_member`
+        ///   * `stytch_admin`
+        /// 
+        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
+        /// for a more detailed explanation.
+        /// 
+        ///   
+        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
+        /// <summary>
+        /// The name of the group that grants the specified role assignment.
+        /// </summary>
         [JsonProperty("group")]
         public string Group { get; set; }
     }
@@ -126,19 +155,25 @@ namespace Stytch.net.Models.Consumer
         public string AlternativeAudienceUri { get; set; }
         [JsonProperty("identity_provider")]
         public string IdentityProvider { get; set; }
+        [JsonProperty("nameid_format")]
+        public string NameidFormat { get; set; }
+        [JsonProperty("alternative_acs_url")]
+        public string AlternativeAcsURL { get; set; }
+        [JsonProperty("idp_initiated_auth_disabled")]
+        public bool IdpInitiatedAuthDisabled { get; set; }
         [JsonProperty("attribute_mapping")]
         public object AttributeMapping { get; set; }
     }
     public class SAMLConnectionImplicitRoleAssignment
     {
         /// <summary>
-        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.  
-        ///   
-        ///   Reserved `role_id`s that are predefined by Stytch include: 
-        ///   
+        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
+        /// 
+        ///   Reserved `role_id`s that are predefined by Stytch include:
+        /// 
         ///   * `stytch_member`
         ///   * `stytch_admin`
-        ///   
+        /// 
         ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
         /// for a more detailed explanation.
         /// 
@@ -150,13 +185,13 @@ namespace Stytch.net.Models.Consumer
     public class SAMLGroupImplicitRoleAssignment
     {
         /// <summary>
-        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.  
-        ///   
-        ///   Reserved `role_id`s that are predefined by Stytch include: 
-        ///   
+        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
+        /// 
+        ///   Reserved `role_id`s that are predefined by Stytch include:
+        /// 
         ///   * `stytch_member`
         ///   * `stytch_admin`
-        ///   
+        /// 
         ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
         /// for a more detailed explanation.
         /// 
@@ -165,7 +200,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
         /// <summary>
-        /// The name of the SAML group that grants the specified role assignment.
+        /// The name of the group that grants the specified role assignment.
         /// </summary>
         [JsonProperty("group")]
         public string Group { get; set; }
@@ -182,6 +217,8 @@ namespace Stytch.net.Models.Consumer
         public DateTime? CreatedAt { get; set; }
         [JsonProperty("expires_at")]
         public DateTime? ExpiresAt { get; set; }
+        [JsonProperty("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.Authenticate"/>..
@@ -210,16 +247,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionJwt { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
         /// 60 minute duration. If you don't want
         ///   to use the Stytch session product, you can ignore the session fields in the response.
@@ -238,7 +275,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
+        /// If the needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
         /// used to determine which language to use when sending the passcode.
         /// 
@@ -305,10 +342,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_jwt")]
         public string SessionJwt { get; set; }
         /// <summary>
-        /// Indicates if all Sessions linked to the Member need to be reset. You should check this field if you
-        /// aren't using
-        ///     Stytch's Session product. If you are using Stytch's Session product, we revoke the Member’s other
-        /// Sessions for you.
+        /// This field is deprecated.
         /// </summary>
         [JsonProperty("reset_session")]
         public bool ResetSession { get; set; }
@@ -324,8 +358,9 @@ namespace Stytch.net.Models.Consumer
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. SSO factors are not transferable between Organizations, so the
-        /// intermediate session token is not valid for use with discovery endpoints.
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. SSO factors are
+        /// not transferable between Organizations, so the intermediate session token is not valid for use with
+        /// discovery endpoints.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -351,6 +386,8 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("mfa_required")]
         public MfaRequired MfaRequired { get; set; }
+        [JsonProperty("primary_required")]
+        public PrimaryRequired PrimaryRequired { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.DeleteConnection"/>..
@@ -358,12 +395,13 @@ namespace Stytch.net.Models.Consumer
     public class B2BSSODeleteConnectionRequest
     {
         /// <summary>
-        /// The organization ID that the SSO connection belongs to.
+        /// The organization ID that the SSO connection belongs to. You may also use the organization_slug here as a
+        /// convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
-        /// The ID of the SSO connection. Both SAML and OIDC connection IDs can be provided.
+        /// The ID of the SSO connection. SAML, OIDC, and External connection IDs can be provided.
         /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
@@ -403,7 +441,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -435,6 +474,10 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("oidc_connections")]
         public List<OIDCConnection> OIDCConnections { get; set; }
+        /// <summary>
+        /// The list of [External Connections](https://stytch.com/docs/b2b/api/external-connection-object) owned by
+        /// this organization.
+        /// </summary>
         [JsonProperty("external_connections")]
         public List<Connection> ExternalConnections { get; set; }
         /// <summary>
@@ -454,5 +497,15 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
+        [EnumMember(Value = "it")]
+        IT,
+        [EnumMember(Value = "de-DE")]
+        DEDE,
+        [EnumMember(Value = "zh-Hans")]
+        ZHHANS,
+        [EnumMember(Value = "ca-ES")]
+        CAES,
     }
 }

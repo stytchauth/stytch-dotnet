@@ -32,12 +32,12 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// The Magic Link `token` from the `?token=` query parameter in the URL.
-        ///       
+        /// 
         ///       The redirect URL will look like
         /// `https://example.com/authenticate?stytch_token_type=magic_links&token=rM_kw42CWBhsHLF62V75jELMbvJ87njMe3tFVj7Qupu7`
-        ///       
+        /// 
         ///       In the redirect URL, the `stytch_token_type` will be `magic_link`. See
-        /// [here](https://stytch.com/docs/guides/dashboard/redirect-urls) for more detail.
+        /// [here](https://stytch.com/docs/workspace-management/redirect-urls) for more detail.
         /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
@@ -58,16 +58,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
         /// </summary>
         [JsonProperty("session_duration_minutes")]
@@ -164,7 +164,7 @@ namespace Stytch.net.Models.Consumer
     public class MagicLinksCreateRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }

@@ -74,11 +74,17 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Send an invite email to a new Member to join an Organization. The Member will be created with an
-        /// `invited` status until they successfully authenticate. Sending invites to `pending` Members will update
-        /// their status to `invited`. Sending invites to already `active` Members will return an error.
+        /// Send an invite email to a new to join an. The Member will be created with an `invited` status until they
+        /// successfully authenticate. Sending invites to `pending` Members will update their status to `invited`.
+        /// Sending invites to already `active` Members will return an error.
         /// 
         /// The magic link invite will be valid for 1 week.
+        /// 
+        /// ## Revoke an invite
+        /// 
+        /// To revoke an existing invite, use the [Delete Member](https://stytch.com/docs/b2b/api/delete-member)
+        /// endpoint. This will both delete the invited Member from the target Organization and revoke all existing
+        /// invite emails.
         /// </summary>
         public async Task<B2BMagicLinksEmailInviteResponse> Invite(
             B2BMagicLinksEmailInviteRequest request

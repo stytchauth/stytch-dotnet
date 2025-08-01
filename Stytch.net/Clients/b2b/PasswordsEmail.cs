@@ -78,8 +78,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Reset the member's password and authenticate them. This endpoint checks that the password reset token is
-        /// valid, hasn’t expired, or already been used.
+        /// Reset the's password and authenticate them. This endpoint checks that the password reset token is valid,
+        /// hasn’t expired, or already been used.
         /// 
         /// The provided password needs to meet our password strength requirements, which can be checked in advance
         /// with the password strength endpoint. If the token and password are accepted, the password is securely
@@ -134,7 +134,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Require a password be reset by the associated email address. This endpoint is only functional for
+        /// cross-org password use cases.
         /// </summary>
         public async Task<B2BPasswordsEmailRequireResetResponse> RequireReset(
             B2BPasswordsEmailRequireResetRequest request

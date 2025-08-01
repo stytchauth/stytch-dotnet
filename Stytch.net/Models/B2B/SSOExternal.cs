@@ -32,14 +32,32 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("authorization")]
         public Authorization Authorization { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.External.CreateConnection"/>..
+    /// </summary>
     public class B2BSSOExternalCreateConnectionRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a different Organization within your Project.
+        /// </summary>
         [JsonProperty("external_organization_id")]
         public string ExternalOrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific SSO connection configured for a different Organization
+        /// in your Project.
+        /// </summary>
         [JsonProperty("external_connection_id")]
         public string ExternalConnectionId { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
         [JsonProperty("connection_implicit_role_assignments")]
@@ -53,25 +71,73 @@ namespace Stytch.net.Models.Consumer
             this.ExternalConnectionId = externalConnectionId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.SSO.External.CreateConnection"/>..
+    /// </summary>
     public class B2BSSOExternalCreateConnectionResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        /// <summary>
+        /// The `External Connection` object affected by this API call. See the
+        /// [External Connection Object](https://stytch.com/docs/b2b/api/external-connection-object) for complete
+        /// response field details.
+        /// </summary>
         [JsonProperty("connection")]
         public Connection Connection { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.SSO.External.UpdateConnection"/>..
+    /// </summary>
     public class B2BSSOExternalUpdateConnectionRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific External SSO Connection.
+        /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// All Members who log in with this External connection will implicitly receive the specified Roles. See
+        /// the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about
+        /// role assignment. Implicit role assignments are not supported for External connections if the underlying
+        /// SSO connection is an OIDC connection. 
+        /// </summary>
         [JsonProperty("external_connection_implicit_role_assignments")]
         public List<ConnectionImplicitRoleAssignment> ExternalConnectionImplicitRoleAssignments { get; set; }
+        /// <summary>
+        /// Defines the names of the groups
+        ///  that grant specific role assignments. For each group-Role pair, if a Member logs in with this external
+        /// connection and
+        ///  belongs to the specified group, they will be granted the associated Role. See the
+        ///  [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role
+        /// assignment. Before adding any group implicit role assignments to an external connection, you must add a
+        /// "groups" key to the underlying SAML connection's
+        ///          `attribute_mapping`. Make sure that the SAML connection IdP is configured to correctly send the
+        /// group information. Implicit role assignments are not supported
+        ///          for External connections if the underlying SSO connection is an OIDC connection.
+        /// </summary>
         [JsonProperty("external_group_implicit_role_assignments")]
         public List<GroupImplicitRoleAssignment> ExternalGroupImplicitRoleAssignments { get; set; }
         public B2BSSOExternalUpdateConnectionRequest(string organizationId, string connectionId)
@@ -80,12 +146,28 @@ namespace Stytch.net.Models.Consumer
             this.ConnectionId = connectionId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.SSO.External.UpdateConnection"/>..
+    /// </summary>
     public class B2BSSOExternalUpdateConnectionResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        /// <summary>
+        /// The `External Connection` object affected by this API call. See the
+        /// [External Connection Object](https://stytch.com/docs/b2b/api/external-connection-object) for complete
+        /// response field details.
+        /// </summary>
         [JsonProperty("connection")]
         public Connection Connection { get; set; }
     }

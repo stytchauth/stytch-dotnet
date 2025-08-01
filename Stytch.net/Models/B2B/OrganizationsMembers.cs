@@ -63,6 +63,16 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("authorization")]
         public Authorization Authorization { get; set; }
     }
+    public class B2BOrganizationsMembersGetConnectedAppsRequestOptions
+    {
+        /// <summary>
+        /// Optional authorization object.
+        /// Pass in an active Stytch Member session token or session JWT and the request
+        /// will be run using that member's permissions.
+        /// </summary>
+        [JsonProperty("authorization")]
+        public Authorization Authorization { get; set; }
+    }
     public class B2BOrganizationsMembersReactivateRequestOptions
     {
         /// <summary>
@@ -74,6 +84,16 @@ namespace Stytch.net.Models.Consumer
         public Authorization Authorization { get; set; }
     }
     public class B2BOrganizationsMembersSearchRequestOptions
+    {
+        /// <summary>
+        /// Optional authorization object.
+        /// Pass in an active Stytch Member session token or session JWT and the request
+        /// will be run using that member's permissions.
+        /// </summary>
+        [JsonProperty("authorization")]
+        public Authorization Authorization { get; set; }
+    }
+    public class B2BOrganizationsMembersStartEmailUpdateRequestOptions
     {
         /// <summary>
         /// Optional authorization object.
@@ -110,7 +130,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -173,6 +194,14 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("roles")]
         public List<string> Roles { get; set; }
+        /// <summary>
+        /// An identifier that can be used in API calls wherever a member_id is expected. This is a string
+        /// consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        /// External IDs must be unique within an organization, but may be reused across different organizations in
+        /// the same project.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
         public B2BOrganizationsMembersCreateRequest(string organizationId, string emailAddress)
         {
             this.OrganizationId = organizationId;
@@ -223,6 +252,9 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// Whether to include deleted Members in the response. Defaults to false.
+        /// </summary>
         [JsonProperty("include_deleted")]
         public bool? IncludeDeleted { get; set; }
         public B2BOrganizationsMembersDangerouslyGetRequest(string memberId)
@@ -237,13 +269,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -293,7 +327,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -348,13 +383,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -394,13 +431,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -443,6 +482,27 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    public class B2BOrganizationsMembersGetConnectedAppsRequest
+    {
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        public B2BOrganizationsMembersGetConnectedAppsRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
+    }
+    public class B2BOrganizationsMembersGetConnectedAppsResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("connected_apps")]
+        public List<MemberConnectedApp> ConnectedApps { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.Get"/>..
     /// </summary>
@@ -450,13 +510,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -504,12 +566,30 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OIDCProviders"/>..
+    /// </summary>
     public class B2BOrganizationsMembersOIDCProviderInformationRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// Whether to return the refresh token Stytch has stored for the OAuth Provider. Defaults to false.
+        /// **Important:** If your application exchanges the refresh token, Stytch may not be able to automatically
+        /// refresh access tokens in the future.
+        /// </summary>
         [JsonProperty("include_refresh_token")]
         public bool? IncludeRefreshToken { get; set; }
         public B2BOrganizationsMembersOIDCProviderInformationRequest(string organizationId, string memberId)
@@ -518,12 +598,26 @@ namespace Stytch.net.Models.Consumer
             this.MemberId = memberId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OIDCProviders"/>..
+    /// </summary>
     public class B2BOrganizationsMembersOIDCProvidersResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// A list of tokens the member is registered with.
+        /// </summary>
         [JsonProperty("registrations")]
         public List<OIDCProviderInfo> Registrations { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
@@ -534,13 +628,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -657,6 +753,40 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    public class B2BOrganizationsMembersStartEmailUpdateRequest
+    {
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        [JsonProperty("email_address")]
+        public string EmailAddress { get; set; }
+        [JsonProperty("login_redirect_url")]
+        public string LoginRedirectURL { get; set; }
+        [JsonProperty("locale")]
+        public StartEmailUpdateRequestLocale Locale { get; set; }
+        [JsonProperty("login_template_id")]
+        public string LoginTemplateId { get; set; }
+        public B2BOrganizationsMembersStartEmailUpdateRequest(string organizationId, string memberId, string emailAddress)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+            this.EmailAddress = emailAddress;
+        }
+    }
+    public class B2BOrganizationsMembersStartEmailUpdateResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        [JsonProperty("member")]
+        public Member Member { get; set; }
+        [JsonProperty("organization")]
+        public Organization Organization { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.UnlinkRetiredEmail"/>..
     /// </summary>
@@ -664,13 +794,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -736,13 +868,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -760,7 +894,7 @@ namespace Stytch.net.Models.Consumer
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         ///           If a session header is passed into the request, this field may **not** be passed into the
-        /// request. You cannot 
+        /// request. You cannot
         ///           update trusted metadata when acting as a Member.
         /// </summary>
         [JsonProperty("trusted_metadata")]
@@ -845,9 +979,9 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("preserve_existing_sessions")]
         public bool? PreserveExistingSessions { get; set; }
         /// <summary>
-        /// Sets whether the Member is enrolled in MFA. If true, the Member must complete an MFA step whenever they
-        /// wish to log in to their Organization. If false, the Member only needs to complete an MFA step if the
-        /// Organization's MFA policy is set to `REQUIRED_FOR_ALL`.
+        /// The Member's default MFA method. This value is used to determine which secondary MFA method to use in
+        /// the case of multiple methods registered for a Member. The current possible values are `sms_otp` and
+        /// `totp`.
         /// 
         /// If this field is provided and a session header is passed into the request, the Member Session must have
         /// permission to perform the `update.settings.default-mfa-method` action on the `stytch.member` Resource.
@@ -869,6 +1003,20 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
+        /// <summary>
+        /// An identifier that can be used in API calls wherever a member_id is expected. This is a string
+        /// consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        /// External IDs must be unique within an organization, but may be reused across different organizations in
+        /// the same project.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+        /// <summary>
+        /// If `unlink_email` is `true` and an `email_address` is provided, the Member's previous email will be
+        /// deleted instead of retired. Defaults to `false`.
+        /// </summary>
+        [JsonProperty("unlink_email")]
+        public bool? UnlinkEmail { get; set; }
         public B2BOrganizationsMembersUpdateRequest(string organizationId, string memberId)
         {
             this.OrganizationId = organizationId;
@@ -909,6 +1057,18 @@ namespace Stytch.net.Models.Consumer
         public int StatusCode { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StartEmailUpdateRequestLocale
+    {
+        [EnumMember(Value = "en")]
+        EN,
+        [EnumMember(Value = "es")]
+        ES,
+        [EnumMember(Value = "pt-br")]
+        PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
+    }
     // MANUAL(OrganizationsEntry)(TYPES)
     // ADDIMPORT: using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Consumer.Organization>;
     // ENDMANUAL(OrganizationsEntry)

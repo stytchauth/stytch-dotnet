@@ -267,6 +267,38 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+        /// <summary>
+        /// List the public key credentials of the WebAuthn Registrations or Passkeys registered to a specific User.
+        /// </summary>
+        public async Task<WebAuthnListCredentialsResponse> ListCredentials(
+            WebAuthnListCredentialsRequest request
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/webauthn/credentials/{request.UserId}/{request.Domain}"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<WebAuthnListCredentialsResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
 
     }
 

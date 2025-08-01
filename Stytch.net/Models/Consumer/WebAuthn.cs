@@ -12,6 +12,29 @@ using Newtonsoft.Json.Converters;
 
 namespace Stytch.net.Models.Consumer
 {
+    public class WebAuthnCredential
+    {
+        /// <summary>
+        /// The unique, public ID of the WebAuthn credential.
+        /// </summary>
+        [JsonProperty("credential_id")]
+        public string CredentialId { get; set; }
+        /// <summary>
+        /// The unique ID for the Passkey or WebAuthn registration.
+        /// </summary>
+        [JsonProperty("webauthn_registration_id")]
+        public string WebAuthnRegistrationId { get; set; }
+        /// <summary>
+        /// The type of the WebAuthn credential. Examples include `public-key`.
+        /// </summary>
+        [JsonProperty("type")]
+        public string Type { get; set; }
+        /// <summary>
+        /// The public key for the WebAuthn credential in base64 format.
+        /// </summary>
+        [JsonProperty("public_key")]
+        public string PublicKey { get; set; }
+    }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.WebAuthn.Authenticate"/>..
     /// </summary>
@@ -30,16 +53,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
         /// </summary>
         [JsonProperty("session_duration_minutes")]
@@ -129,7 +152,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("domain")]
         public string Domain { get; set; }
         /// <summary>
-        /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to.
+        /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to. You may use an
+        /// external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -174,12 +198,57 @@ namespace Stytch.net.Models.Consumer
         public int StatusCode { get; set; }
     }
     /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.WebAuthn.ListCredentials"/>..
+    /// </summary>
+    public class WebAuthnListCredentialsRequest
+    {
+        /// <summary>
+        /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        /// <summary>
+        /// The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`.
+        /// </summary>
+        [JsonProperty("domain")]
+        public string Domain { get; set; }
+        public WebAuthnListCredentialsRequest(string userId, string domain)
+        {
+            this.UserId = userId;
+            this.Domain = domain;
+        }
+    }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.WebAuthn.ListCredentials"/>..
+    /// </summary>
+    public class WebAuthnListCredentialsResponse
+    {
+        /// <summary>
+        /// A list of WebAuthn credential objects.
+        /// </summary>
+        [JsonProperty("credentials")]
+        public List<WebAuthnCredential> Credentials { get; set; }
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
+    /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.WebAuthn.Register"/>..
     /// </summary>
     public class WebAuthnRegisterRequest
     {
         /// <summary>
-        /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to.
+        /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to. You may use an
+        /// external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -196,16 +265,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
         /// </summary>
         [JsonProperty("session_duration_minutes")]
@@ -287,7 +356,8 @@ namespace Stytch.net.Models.Consumer
     public class WebAuthnRegisterStartRequest
     {
         /// <summary>
-        /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to.
+        /// The `user_id` of an active user the Passkey or WebAuthn registration should be tied to. You may use an
+        /// external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -320,6 +390,8 @@ namespace Stytch.net.Models.Consumer
         public string OverrideName { get; set; }
         [JsonProperty("override_display_name")]
         public string OverrideDisplayName { get; set; }
+        [JsonProperty("use_base64_url_encoding")]
+        public bool? UseBase64URLEncoding { get; set; }
         public WebAuthnRegisterStartRequest(string userId, string domain)
         {
             this.UserId = userId;

@@ -12,25 +12,26 @@ using Newtonsoft.Json.Converters;
 
 namespace Stytch.net.Models.Consumer
 {
-    public class AuthorizationCheck
+    public class B2BSessionsAuthorizationCheck
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
-        /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable. 
-        ///   
+        /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
+        /// 
         ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
-        /// default Resources with reserved  `resource_id`s. These include: 
-        ///   
+        /// default Resources with reserved  `resource_id`s. These include:
+        /// 
         ///   * `stytch.organization`
         ///   * `stytch.member`
         ///   * `stytch.sso`
         ///   * `stytch.self`
-        ///   
+        /// 
         ///   Check out the
         /// [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more
         /// detailed explanation.
@@ -45,7 +46,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("action")]
         public string Action { get; set; }
     }
-    public class AuthorizationVerdict
+    public class B2BSessionsAuthorizationVerdict
     {
         [JsonProperty("authorized")]
         public bool Authorized { get; set; }
@@ -105,6 +106,8 @@ namespace Stytch.net.Models.Consumer
         public string OrganizationId { get; set; }
         [JsonProperty("roles")]
         public List<string> Roles { get; set; }
+        [JsonProperty("organization_slug")]
+        public string OrganizationSlug { get; set; }
         /// <summary>
         /// The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate
         /// call.
@@ -115,14 +118,55 @@ namespace Stytch.net.Models.Consumer
     public class PrimaryRequired
     {
         /// <summary>
-        /// If non-empty, indicates that the Organization restricts the authentication methods it allows for login
-        /// (such as `sso` or `password`), and the end user must complete one of those authentication methods to log
-        /// in. If empty, indicates that the Organization does not restrict the authentication method it allows for
-        /// login, but the end user does not have any transferrable primary factors. Only email magic link and OAuth
-        /// factors can be transferred between Organizations.
+        /// Details the auth method that the member must also complete to fulfill the primary authentication
+        /// requirements of the Organization. For example, a value of `[magic_link]` indicates that the Member must
+        /// also complete a magic link authentication step. If you have an intermediate session token, you must pass
+        /// it into that primary authentication step.
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
         public List<string> AllowedAuthMethods { get; set; }
+    }
+    public class B2BSessionsAttestRequest
+    {
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
+        [JsonProperty("profile_id")]
+        public string ProfileId { get; set; }
+        [JsonProperty("token")]
+        public string Token { get; set; }
+        [JsonProperty("session_duration_minutes")]
+        public int? SessionDurationMinutes { get; set; }
+        [JsonProperty("session_custom_claims")]
+        public object SessionCustomClaims { get; set; }
+        [JsonProperty("session_token")]
+        public string SessionToken { get; set; }
+        [JsonProperty("session_jwt")]
+        public string SessionJwt { get; set; }
+        public B2BSessionsAttestRequest(string organizationId, string profileId, string token)
+        {
+            this.OrganizationId = organizationId;
+            this.ProfileId = profileId;
+            this.Token = token;
+        }
+    }
+    public class B2BSessionsAttestResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        [JsonProperty("member_session")]
+        public MemberSession MemberSession { get; set; }
+        [JsonProperty("session_token")]
+        public string SessionToken { get; set; }
+        [JsonProperty("session_jwt")]
+        public string SessionJwt { get; set; }
+        [JsonProperty("member")]
+        public Member Member { get; set; }
+        [JsonProperty("organization")]
+        public Organization Organization { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Sessions.Authenticate"/>..
@@ -136,16 +180,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
         /// 60 minute duration. If you don't want
         ///   to use the Stytch session product, you can ignore the session fields in the response.
@@ -177,19 +221,19 @@ namespace Stytch.net.Models.Consumer
         /// permissions.
         ///   In addition, the `organization_id` passed in the authorization check must match the Member's
         /// Organization.
-        ///   
+        /// 
         ///   The Roles on the Member Session may differ from the Roles you see on the Member object - Roles that
         /// are implicitly
         ///   assigned by SSO connection or SSO group will only be valid for a Member Session if there is at least
         /// one authentication
         ///   factor on the Member Session from the specified SSO connection.
-        ///   
+        /// 
         ///   If the Member is not authorized to perform the specified action on the specified Resource, or if the
         ///   `organization_id` does not match the Member's Organization, a 403 error will be thrown.
         ///   Otherwise, the response will contain a list of Roles that satisfied the authorization check.
         /// </summary>
         [JsonProperty("authorization_check")]
-        public AuthorizationCheck AuthorizationCheck { get; set; }
+        public B2BSessionsAuthorizationCheck AuthorizationCheck { get; set; }
         public B2BSessionsAuthenticateRequest()
         {
         }
@@ -242,7 +286,99 @@ namespace Stytch.net.Models.Consumer
         /// specified Resource.
         /// </summary>
         [JsonProperty("verdict")]
-        public AuthorizationVerdict Verdict { get; set; }
+        public B2BSessionsAuthorizationVerdict Verdict { get; set; }
+    }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Sessions.ExchangeAccessToken"/>..
+    /// </summary>
+    public class B2BSessionsExchangeAccessTokenRequest
+    {
+        /// <summary>
+        /// The access token to exchange for a Stytch Session. Must be granted the `full_access` scope.
+        /// </summary>
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
+        /// <summary>
+        /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
+        /// already exist,
+        ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
+        /// `session_jwt` will have a fixed lifetime of
+        ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
+        /// 
+        ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
+        /// 
+        ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
+        /// extend the session this many minutes.
+        /// 
+        ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
+        /// 60 minute duration. If you don't want
+        ///   to use the Stytch session product, you can ignore the session fields in the response.
+        /// </summary>
+        [JsonProperty("session_duration_minutes")]
+        public int? SessionDurationMinutes { get; set; }
+        /// <summary>
+        /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
+        /// initialized by providing a value in
+        ///   `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a
+        /// key in an existing Session, supply a new value. To
+        ///   delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`,
+        /// `exp`, `nbf`, `iat`, `jti`) will be ignored.
+        ///   Total custom claims size cannot exceed four kilobytes.
+        /// </summary>
+        [JsonProperty("session_custom_claims")]
+        public object SessionCustomClaims { get; set; }
+        public B2BSessionsExchangeAccessTokenRequest(string accessToken)
+        {
+            this.AccessToken = accessToken;
+        }
+    }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Sessions.ExchangeAccessToken"/>..
+    /// </summary>
+    public class B2BSessionsExchangeAccessTokenResponse
+    {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member.
+        /// </summary>
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        /// <summary>
+        /// A secret token for a given Stytch Session.
+        /// </summary>
+        [JsonProperty("session_token")]
+        public string SessionToken { get; set; }
+        /// <summary>
+        /// The JSON Web Token (JWT) for a given Stytch Session.
+        /// </summary>
+        [JsonProperty("session_jwt")]
+        public string SessionJwt { get; set; }
+        /// <summary>
+        /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
+        /// </summary>
+        [JsonProperty("member")]
+        public Member Member { get; set; }
+        /// <summary>
+        /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        /// </summary>
+        [JsonProperty("organization")]
+        public Organization Organization { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+        /// <summary>
+        /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
+        /// </summary>
+        [JsonProperty("member_session")]
+        public MemberSession MemberSession { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Sessions.Exchange"/>..
@@ -251,7 +387,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -267,16 +404,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionJwt { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
         /// 60 minute duration. If you don't want
         ///   to use the Stytch session product, you can ignore the session fields in the response.
@@ -295,7 +432,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will
+        /// If the needs to complete an MFA step, and the Member has a phone number, this endpoint will
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
         /// used to determine which language to use when sending the passcode.
         /// 
@@ -333,11 +470,6 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
         /// <summary>
-        /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
-        /// </summary>
-        [JsonProperty("member_session")]
-        public MemberSession MemberSession { get; set; }
-        /// <summary>
         /// A secret token for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_token")]
@@ -370,11 +502,12 @@ namespace Stytch.net.Models.Consumer
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. It can also be used with the
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be
+        /// used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// to join a specific Organization that allows the factors represented by the intermediate session token;
         /// or the
-        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -384,6 +517,11 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        /// <summary>
+        /// The [Session object](https://stytch.com/docs/b2b/api/session-object).
+        /// </summary>
+        [JsonProperty("member_session")]
+        public MemberSession MemberSession { get; set; }
         /// <summary>
         /// Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
         /// </summary>
@@ -415,7 +553,7 @@ namespace Stytch.net.Models.Consumer
     public class B2BSessionsGetJWKSResponse
     {
         /// <summary>
-        /// The JWK
+        /// The list of JWKs associated with the project.
         /// </summary>
         [JsonProperty("keys")]
         public List<JWK> Keys { get; set; }
@@ -439,13 +577,15 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -490,22 +630,23 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
         /// 60 minute duration. If you don't want
         ///   to use the Stytch session product, you can ignore the session fields in the response.
@@ -632,6 +773,16 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
+        [EnumMember(Value = "it")]
+        IT,
+        [EnumMember(Value = "de-DE")]
+        DEDE,
+        [EnumMember(Value = "zh-Hans")]
+        ZHHANS,
+        [EnumMember(Value = "ca-ES")]
+        CAES,
     }
     // MANUAL(AuthenticateJWT)(TYPES)
     // ADDIMPORT: using Microsoft.IdentityModel.Tokens;

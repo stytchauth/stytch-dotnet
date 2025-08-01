@@ -156,10 +156,10 @@ namespace Stytch.net.Clients.Consumer
         }
         /// <summary>
         /// Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo
-        /// endpoint defined in your Stytch Project settings in the [Dashboard](/dashboard), and then perform a
-        /// lookup using the `session_token`. If the response contains a valid email address, Stytch will attempt to
-        /// match that email address with an existing User and create a Stytch Session. You will need to create the
-        /// user before using this endpoint.
+        /// endpoint defined in your Stytch Project settings in the [Dashboard](https://stytch.com/docs/dashboard),
+        /// and then perform a lookup using the `session_token`. If the response contains a valid email address,
+        /// Stytch will attempt to match that email address with an existing User and create a Stytch Session. You
+        /// will need to create the user before using this endpoint.
         /// </summary>
         public async Task<SessionsMigrateResponse> Migrate(
             SessionsMigrateRequest request
@@ -198,17 +198,61 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
+        /// Use this endpoint to exchange a Connected Apps Access Token back into a Stytch Session for the
+        /// underlying User. 
+        /// This session can be used with the Stytch SDKs and APIs.
+        /// 
+        /// The Access Token must contain the `full_access` scope and must not be more than 5 minutes old. Access
+        /// Tokens may only be exchanged a single time.
+        /// </summary>
+        public async Task<SessionsExchangeAccessTokenResponse> ExchangeAccessToken(
+            SessionsExchangeAccessTokenRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/sessions/exchange_access_token"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<SessionsExchangeAccessTokenResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
         /// 
-        /// JWKS are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key set, and both
-        /// key sets will be returned by this endpoint for a period of 1 month. 
+        /// JWKS are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key, and both
+        /// keys will be returned by this endpoint for a period of 1 month. 
         /// 
         /// JWTs have a set lifetime of 5 minutes, so there will be a 5 minute period where some JWTs will be signed
         /// by the old JWKS, and some JWTs will be signed by the new JWKS. The correct JWKS to use for validation is
         /// determined by matching the `kid` value of the JWT and JWKS. 
         /// 
-        /// If you're using one of our [backend SDKs](https://stytch.com/docs/sdks), the JWKS roll will be handled
-        /// for you.
+        /// If you're using one of our [backend SDKs](https://stytch.com/docs/sdks), the JWKS rotation will be
+        /// handled for you.
         /// 
         /// If you're using your own JWT validation library, many have built-in support for JWKS rotation, and
         /// you'll just need to supply this API endpoint. If not, your application should decide which JWKS to use
@@ -235,6 +279,45 @@ namespace Stytch.net.Clients.Consumer
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<SessionsGetJWKSResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<SessionsAttestResponse> Attest(
+            SessionsAttestRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/sessions/attest"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<SessionsAttestResponse>(responseBody);
             }
             try
             {

@@ -29,7 +29,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// 
+        /// Create a new External SSO Connection.
         /// </summary>
         public async Task<B2BSSOExternalCreateConnectionResponse> CreateConnection(
             B2BSSOExternalCreateConnectionRequest request
@@ -77,7 +77,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Updates an existing External SSO connection.
         /// </summary>
         public async Task<B2BSSOExternalUpdateConnectionResponse> UpdateConnection(
             B2BSSOExternalUpdateConnectionRequest request

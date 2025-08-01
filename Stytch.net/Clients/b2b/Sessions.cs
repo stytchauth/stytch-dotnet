@@ -77,8 +77,8 @@ namespace Stytch.net.Clients.B2B
         /// for more information.
         /// 
         /// If an `authorization_check` object is passed in, this method will also check if the Member is authorized
-        /// to perform the given action on the given Resource in the specified Organization. A Member is authorized
-        /// if their Member Session contains a Role, assigned
+        /// to perform the given action on the given Resource in the specified. A is authorized if their Member
+        /// Session contains a Role, assigned
         /// [explicitly or implicitly](https://stytch.com/docs/b2b/guides/rbac/role-assignment), with adequate
         /// permissions.
         /// In addition, the `organization_id` passed in the authorization check must match the Member's
@@ -175,8 +175,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Use this endpoint to exchange a Member's existing session for another session in a different
-        /// Organization. This can be used to accept an invite, but not to create a new member via domain matching.
+        /// Use this endpoint to exchange a's existing session for another session in a different. This can be used
+        /// to accept an invite, but not to create a new member via domain matching.
         /// 
         /// To create a new member via domain matching, use the
         /// [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) flow
@@ -187,6 +187,8 @@ namespace Stytch.net.Clients.B2B
         /// Any OAuth Tokens owned by the Member will not be transferred to the new Organization.
         /// SMS OTP factors can be used to fulfill MFA requirements for the target Organization if both the original
         /// and target Member have the same phone number and the phone number is verified for both Members.
+        /// HubSpot and Slack OAuth registrations will not be transferred between sessions. Instead, you will
+        /// receive a corresponding factor with type `"oauth_exchange_slack"` or `"oauth_exchange_hubspot"`
         /// 
         /// If the Member is required to complete MFA to log in to the Organization, the returned value of
         /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
@@ -236,11 +238,98 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
+        /// Use this endpoint to exchange a Connected Apps Access Token back into a Member Session for the
+        /// underlying Member. 
+        /// This session can be used with the Stytch SDKs and APIs.
+        /// 
+        /// The Access Token must contain the `full_access` scope and must not be more than 5 minutes old. Access
+        /// Tokens may only be exchanged a single time. 
+        /// 
+        /// Because the Member previously completed MFA and satisfied all Organization authentication requirements
+        /// at the time of the original Access Token issuance, this endpoint will never return an
+        /// `intermediate_session_token` or require MFA.
+        /// </summary>
+        public async Task<B2BSessionsExchangeAccessTokenResponse> ExchangeAccessToken(
+            B2BSessionsExchangeAccessTokenRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/sessions/exchange_access_token"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BSessionsExchangeAccessTokenResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<B2BSessionsAttestResponse> Attest(
+            B2BSessionsAttestRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/sessions/attest"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BSessionsAttestResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
         /// Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo
-        /// endpoint defined in your Stytch Project settings in the [Dashboard](/dashboard), and then perform a
-        /// lookup using the `session_token`. If the response contains a valid email address, Stytch will attempt to
-        /// match that email address with an existing Member in your Organization and create a Stytch Session. You
-        /// will need to create the member before using this endpoint.
+        /// endpoint defined in your Stytch Project settings in the [Dashboard](https://stytch.com/docs/dashboard),
+        /// and then perform a lookup using the `session_token`. If the response contains a valid email address,
+        /// Stytch will attempt to match that email address with an existing in your and create a Stytch Session.
+        /// You will need to create the member before using this endpoint.
         /// </summary>
         public async Task<B2BSessionsMigrateResponse> Migrate(
             B2BSessionsMigrateRequest request
@@ -281,14 +370,14 @@ namespace Stytch.net.Clients.B2B
         /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
         /// 
-        /// JWKS are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key set, and both
-        /// key sets will be returned by this endpoint for a period of 1 month. 
+        /// JWKS are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key, and both
+        /// keys will be returned by this endpoint for a period of 1 month. 
         /// 
         /// JWTs have a set lifetime of 5 minutes, so there will be a 5 minute period where some JWTs will be signed
         /// by the old JWKS, and some JWTs will be signed by the new JWKS. The correct JWKS to use for validation is
         /// determined by matching the `kid` value of the JWT and JWKS.  
         /// 
-        /// If you're using one of our [backend SDKs](https://stytch.com/docs/b2b/sdks), the JWKS roll will be
+        /// If you're using one of our [backend SDKs](https://stytch.com/docs/b2b/sdks), the JWKS rotation will be
         /// handled for you.
         /// 
         /// If you're using your own JWT validation library, many have built-in support for JWKS rotation, and

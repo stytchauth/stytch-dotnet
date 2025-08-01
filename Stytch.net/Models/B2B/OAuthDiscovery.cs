@@ -57,11 +57,12 @@ namespace Stytch.net.Models.Consumer
         /// with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. It can also be used with the
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be
+        /// used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// to join a specific Organization that allows the factors represented by the intermediate session token;
         /// or the
-        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -90,12 +91,37 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("discovered_organizations")]
         public List<DiscoveredOrganization> DiscoveredOrganizations { get; set; }
+        /// <summary>
+        /// Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub
+        /// etc.
+        /// </summary>
         [JsonProperty("provider_type")]
         public string ProviderType { get; set; }
+        /// <summary>
+        /// The tenant ID returned by the OAuth provider. This is typically used to identify an organization or
+        /// group within the provider's domain. For example, in HubSpot this is a Hub ID, in Slack this is the
+        /// Workspace ID, and in GitHub this is an organization ID. This field will only be populated if exactly one
+        /// tenant ID is returned from a successful OAuth authentication and developers should prefer
+        /// `provider_tenant_ids` over this since it accounts for the possibility of an OAuth provider yielding
+        /// multiple tenant IDs.
+        /// </summary>
         [JsonProperty("provider_tenant_id")]
         public string ProviderTenantId { get; set; }
+        /// <summary>
+        /// All tenant IDs returned by the OAuth provider. These is typically used to identify organizations or
+        /// groups within the provider's domain. For example, in HubSpot this is a Hub ID, in Slack this is the
+        /// Workspace ID, and in GitHub this is an organization ID. Some OAuth providers do not return tenant IDs,
+        /// some providers are guaranteed to return one, and some may return multiple. This field will always be
+        /// populated if at least one tenant ID was returned from the OAuth provider and developers should prefer
+        /// this field over `provider_tenant_id`.
+        /// </summary>
         [JsonProperty("provider_tenant_ids")]
         public List<string> ProviderTenantIds { get; set; }
+        /// <summary>
+        /// The full name of the authenticated end user, if available.
+        /// </summary>
+        [JsonProperty("full_name")]
+        public string FullName { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.

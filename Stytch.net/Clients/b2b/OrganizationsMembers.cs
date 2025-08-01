@@ -23,15 +23,17 @@ namespace Stytch.net.Clients.B2B
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly OrganizationsMembersOAuthProviders OAuthProviders;
+        public readonly OrganizationsMembersConnectedApps ConnectedApps;
         public OrganizationsMembers(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
             OAuthProviders = new OrganizationsMembersOAuthProviders(_httpClient, _config);
+            ConnectedApps = new OrganizationsMembersConnectedApps(_httpClient, _config);
         }
 
         /// <summary>
-        /// Updates a Member specified by `organization_id` and `member_id`.
+        /// Updates a specified by `organization_id` and `member_id`.
         /// </summary>
         public async Task<B2BOrganizationsMembersUpdateResponse> Update(
             B2BOrganizationsMembersUpdateRequest request
@@ -79,7 +81,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Deletes a Member specified by `organization_id` and `member_id`.
+        /// Deletes a specified by `organization_id` and `member_id`.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeleteResponse> Delete(
             B2BOrganizationsMembersDeleteRequest request
@@ -127,8 +129,9 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Reactivates a deleted Member's status and its associated email status (if applicable) to active,
-        /// specified by `organization_id` and `member_id`.
+        /// Reactivates a deleted's status and its associated email status (if applicable) to active, specified by
+        /// `organization_id` and `member_id`. This endpoint will only work for Members with at least one verified
+        /// email where their `email_address_verified` is `true`.
         /// </summary>
         public async Task<B2BOrganizationsMembersReactivateResponse> Reactivate(
             B2BOrganizationsMembersReactivateRequest request
@@ -176,7 +179,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Delete a Member's MFA phone number. 
+        /// Delete a's MFA phone number. 
         /// 
         /// To change a Member's phone number, you must first call this endpoint to delete the existing phone number.
         /// 
@@ -338,7 +341,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Delete a Member's password.
+        /// Delete a's password.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeletePasswordResponse> DeletePassword(
             B2BOrganizationsMembersDeletePasswordRequest request
@@ -424,7 +427,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Retrieve the saved OIDC access tokens and ID tokens for a member. After a successful OIDC login, Stytch
+        /// will save the 
+        /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
+        /// will refresh the 
+        /// access token automatically.
         /// </summary>
         public async Task<B2BOrganizationsMembersOIDCProvidersResponse> OIDCProviders(
             B2BOrganizationsMembersOIDCProviderInformationRequest request
@@ -459,8 +466,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Unlinks a retired email address from a Member specified by their `organization_id` and `member_id`. The
-        /// email address
+        /// Unlinks a retired email address from a specified by their `organization_id` and `member_id`. The email
+        /// address
         /// to be retired can be identified in the request body by either its `email_id`, its `email_address`, or
         /// both. If using
         /// both identifiers they must refer to the same email.
@@ -525,7 +532,96 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Creates a Member. An `organization_id` and `email_address` are required.
+        /// 
+        /// </summary>
+        public async Task<B2BOrganizationsMembersStartEmailUpdateResponse> StartEmailUpdate(
+            B2BOrganizationsMembersStartEmailUpdateRequest request
+            , B2BOrganizationsMembersStartEmailUpdateRequestOptions options
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/start_email_update"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersStartEmailUpdateResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<B2BOrganizationsMembersGetConnectedAppsResponse> GetConnectedApps(
+            B2BOrganizationsMembersGetConnectedAppsRequest request
+            , B2BOrganizationsMembersGetConnectedAppsRequestOptions options
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/connected_apps"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersGetConnectedAppsResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Creates a. An `organization_id` and `email_address` are required.
         /// </summary>
         public async Task<B2BOrganizationsMembersCreateResponse> Create(
             B2BOrganizationsMembersCreateRequest request

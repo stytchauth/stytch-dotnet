@@ -114,7 +114,9 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Retrieve the saved Slack access token and ID token for a member. After a successful OAuth login, Stytch
+        /// will save the 
+        /// issued access token and ID token from the identity provider.
         /// </summary>
         public async Task<B2BOrganizationsMembersOAuthProvidersSlackResponse> Slack(
             B2BOrganizationsMembersOAuthProvidersSlackRequest request
@@ -146,7 +148,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Retrieve the saved Hubspot access token and ID token for a member. After a successful OAuth login,
+        /// Stytch will save the 
+        /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
+        /// will refresh the 
+        /// access token automatically.
         /// </summary>
         public async Task<B2BOrganizationsMembersOAuthProvidersHubspotResponse> Hubspot(
             B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request
@@ -181,7 +187,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Retrieve the saved GitHub access token for a Member. After a successful OAuth login, Stytch will save
+        /// the 
+        /// issued access token from the identity provider. GitHub does not issue refresh tokens, but will
+        /// invalidate access
+        /// tokens after very long periods of inactivity.
         /// </summary>
         public async Task<B2BOrganizationsMembersOAuthProvidersGithubResponse> Github(
             B2BOrganizationsMembersOAuthProvidersProviderInformationRequest request

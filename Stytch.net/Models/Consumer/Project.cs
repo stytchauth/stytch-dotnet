@@ -14,10 +14,10 @@ namespace Stytch.net.Models.Consumer
 {
     public class ProjectMetric
     {
-        [JsonProperty("count")]
-        public uint Count { get; set; }
         [JsonProperty("metric_type")]
         public ProjectMetricMetricType MetricType { get; set; }
+        [JsonProperty("count")]
+        public uint Count { get; set; }
     }
     public class ProjectMetricsRequest
     {

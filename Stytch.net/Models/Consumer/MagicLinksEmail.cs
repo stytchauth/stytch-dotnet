@@ -57,8 +57,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -66,6 +66,10 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("locale")]
         public MagicLinksEmailInviteRequestLocale Locale { get; set; }
+        [JsonProperty("trusted_metadata")]
+        public object TrustedMetadata { get; set; }
+        [JsonProperty("untrusted_metadata")]
+        public object UntrustedMetadata { get; set; }
         public MagicLinksEmailInviteRequest(string email)
         {
             this.Email = email;
@@ -176,8 +180,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -313,7 +317,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("code_challenge")]
         public string CodeChallenge { get; set; }
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an external_id here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -331,8 +335,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -390,6 +394,8 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MagicLinksEmailLoginOrCreateRequestLocale
@@ -400,6 +406,8 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MagicLinksEmailSendRequestLocale
@@ -410,5 +418,7 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
 }

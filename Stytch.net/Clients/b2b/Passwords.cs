@@ -101,7 +101,9 @@ namespace Stytch.net.Clients.B2B
         /// members from passwords stored with bcrypt, scrypt, argon2, MD-5, SHA-1, and PBKDF2. This endpoint has a
         /// rate limit of 100 requests per second.
         /// 
-        /// The member's email will be marked as verified when you use this endpoint.
+        /// The member's email will be marked as verified when you use this endpoint. If you are using
+        /// **cross-organization passwords**, call this method separately for each `organization_id` associated with
+        /// the given `email_address` to ensure the email is verified across all of their organizations.
         /// </summary>
         public async Task<B2BPasswordsMigrateResponse> Migrate(
             B2BPasswordsMigrateRequest request
@@ -150,8 +152,8 @@ namespace Stytch.net.Clients.B2B
         /// this case to ensure that the member is the legitimate owner of the email address and not a malicious
         /// actor abusing the compromised credentials.
         /// 
-        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+        /// If the is required to complete MFA to log in to the, the returned value of `member_authenticated` will
+        /// be `false`, and an `intermediate_session_token` will be returned.
         /// The `intermediate_session_token` can be passed into the
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
         /// MFA step and acquire a full member session.

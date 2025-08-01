@@ -31,7 +31,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Creates an Organization. An `organization_name` and a unique `organization_slug` are required.
+        /// Creates an. An `organization_name` and a unique `organization_slug` are required.
         /// 
         /// By default, `email_invites` and `sso_jit_provisioning` will be set to `ALL_ALLOWED`, and `mfa_policy`
         /// will be set to `OPTIONAL` if no Organization authentication settings are explicitly defined in the
@@ -78,7 +78,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Returns an Organization specified by `organization_id`.
+        /// Returns an specified by `organization_id`.
         /// </summary>
         public async Task<B2BOrganizationsGetResponse> Get(
             B2BOrganizationsGetRequest request
@@ -110,8 +110,8 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Updates an Organization specified by `organization_id`. An Organization must always have at least one
-        /// auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
+        /// Updates an specified by `organization_id`. An Organization must always have at least one auth setting
+        /// set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
         /// 
         /// *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings)
         /// resource to learn more about fields like `email_jit_provisioning`, `email_invites`,
@@ -163,8 +163,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Deletes an Organization specified by `organization_id`. All Members of the Organization will also be
-        /// deleted.
+        /// Deletes an specified by `organization_id`. All Members of the Organization will also be deleted.
         /// </summary>
         public async Task<B2BOrganizationsDeleteResponse> Delete(
             B2BOrganizationsDeleteRequest request
@@ -273,6 +272,88 @@ namespace Stytch.net.Clients.B2B
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<B2BOrganizationsMetricsResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<B2BOrganizationsConnectedAppsResponse> ConnectedApps(
+            B2BOrganizationsConnectedAppsRequest request
+            , B2BOrganizationsConnectedAppsRequestOptions options
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/connected_apps"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsConnectedAppsResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<B2BOrganizationsGetConnectedAppResponse> GetConnectedApp(
+            B2BOrganizationsGetConnectedAppRequest request
+            , B2BOrganizationsGetConnectedAppRequestOptions options
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/connected_apps/{request.ConnectedAppId}"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsGetConnectedAppResponse>(responseBody);
             }
             try
             {

@@ -23,14 +23,44 @@ namespace Stytch.net.Models.Consumer
         /// with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. It can also be used with the
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be
+        /// used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// to join a specific Organization that allows the factors represented by the intermediate session token;
         /// or the
-        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
+        /// <summary>
+        /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
+        /// already exist,
+        ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
+        /// `session_jwt` will have a fixed lifetime of
+        ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
+        /// 
+        ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
+        /// 
+        ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
+        /// extend the session this many minutes.
+        /// 
+        ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
+        /// 60 minute duration. If you don't want
+        ///   to use the Stytch session product, you can ignore the session fields in the response.
+        /// </summary>
+        [JsonProperty("session_duration_minutes")]
+        public int? SessionDurationMinutes { get; set; }
+        /// <summary>
+        /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
+        /// initialized by providing a value in
+        ///   `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a
+        /// key in an existing Session, supply a new value. To
+        ///   delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`,
+        /// `exp`, `nbf`, `iat`, `jti`) will be ignored.
+        ///   Total custom claims size cannot exceed four kilobytes.
+        /// </summary>
+        [JsonProperty("session_custom_claims")]
+        public object SessionCustomClaims { get; set; }
         /// <summary>
         /// The name of the Organization. If the name is not specified, a default name will be created based on the
         /// email used to initiate the discovery flow. If the email domain is a common email provider such as
@@ -49,35 +79,6 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("organization_slug")]
         public string OrganizationSlug { get; set; }
-        /// <summary>
-        /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
-        ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
-        /// `session_jwt` will have a fixed lifetime of
-        ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
-        /// 
-        ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
-        ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
-        /// extend the session this many minutes.
-        ///   
-        ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
-        /// 60 minute duration. If you don't want
-        ///   to use the Stytch session product, you can ignore the session fields in the response.
-        /// </summary>
-        [JsonProperty("session_duration_minutes")]
-        public int? SessionDurationMinutes { get; set; }
-        /// <summary>
-        /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
-        /// initialized by providing a value in
-        ///   `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a
-        /// key in an existing Session, supply a new value. To
-        ///   delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`,
-        /// `exp`, `nbf`, `iat`, `jti`) will be ignored.
-        ///   Total custom claims size cannot exceed four kilobytes.
-        /// </summary>
-        [JsonProperty("session_custom_claims")]
-        public object SessionCustomClaims { get; set; }
         /// <summary>
         /// The image URL of the Organization logo.
         /// </summary>
@@ -105,9 +106,9 @@ namespace Stytch.net.Models.Consumer
         public string SSOJITProvisioning { get; set; }
         /// <summary>
         /// An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced
-        /// when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`. 
-        ///     
-        ///     
+        /// when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`.
+        ///    
+        ///    
         ///     Common domains such as `gmail.com` are not allowed. See the
         /// [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list.
         /// </summary>
@@ -115,7 +116,7 @@ namespace Stytch.net.Models.Consumer
         public List<string> EmailAllowedDomains { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be provisioned by authenticating via Email
-        /// Magic Link or OAuth. The accepted values are: 
+        /// Magic Link or OAuth. The accepted values are:
         ///  
         ///   `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be
         /// provisioned upon authentication via Email Magic Link or OAuth.
@@ -127,9 +128,9 @@ namespace Stytch.net.Models.Consumer
         public string EmailJITProvisioning { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can be invited to an organization by email.
-        /// The accepted values are: 
+        /// The accepted values are:
         ///  
-        ///   `ALL_ALLOWED` – any new Member can be invited to join via email. 
+        ///   `ALL_ALLOWED` – any new Member can be invited to join via email.
         ///  
         ///   `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be
         /// invited via email.
@@ -153,8 +154,9 @@ namespace Stytch.net.Models.Consumer
         public string AuthMethods { get; set; }
         /// <summary>
         /// An array of allowed authentication methods. This list is enforced when `auth_methods` is set to
-        /// `RESTRICTED`. 
-        ///   The list's accepted values are: `sso`, `magic_link`, `password`, `google_oauth`, and `microsoft_oauth`.
+        /// `RESTRICTED`.
+        ///   The list's accepted values are: `sso`, `magic_link`, `email_otp`, `password`, `google_oauth`,
+        /// `microsoft_oauth`, `slack_oauth`, `github_oauth`, and `hubspot_oauth`.
         ///   
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
@@ -164,7 +166,7 @@ namespace Stytch.net.Models.Consumer
         ///  
         ///   `REQUIRED_FOR_ALL` – All Members within the Organization will be required to complete MFA every time
         /// they wish to log in. However, any active Session that existed prior to this setting change will remain
-        /// valid. 
+        /// valid.
         ///  
         ///   `OPTIONAL` – The default value. The Organization does not require MFA by default for all Members.
         /// Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.
@@ -173,7 +175,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("mfa_policy")]
         public string MfaPolicy { get; set; }
         /// <summary>
-        /// Implicit role assignments based off of email domains. 
+        /// Implicit role assignments based off of email domains.
         ///   For each domain-Role pair, all Members whose email addresses have the specified email domain will be
         /// granted the
         ///   associated Role, regardless of their login method. See the
@@ -204,7 +206,7 @@ namespace Stytch.net.Models.Consumer
         public List<string> AllowedMfaMethods { get; set; }
         /// <summary>
         /// The authentication setting that controls how a new Member can JIT provision into an organization by
-        /// tenant. The accepted values are: 
+        /// tenant. The accepted values are:
         ///  
         ///   `RESTRICTED` – only new Members with tenants in `allowed_oauth_tenants` can JIT provision via tenant.
         ///  
@@ -215,15 +217,21 @@ namespace Stytch.net.Models.Consumer
         public string OAuthTenantJITProvisioning { get; set; }
         /// <summary>
         /// A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT
-        /// provisioning by OAuth Tenant. Allowed keys are "slack" and "hubspot".
+        /// provisioning by OAuth Tenant. Allowed keys are "slack", "hubspot", and "github".
         /// </summary>
         [JsonProperty("allowed_oauth_tenants")]
         public object AllowedOAuthTenants { get; set; }
-        public B2BDiscoveryOrganizationsCreateRequest(string intermediateSessionToken, string organizationName, string organizationSlug)
+        [JsonProperty("first_party_connected_apps_allowed_type")]
+        public B2BDiscoveryOrganizationsCreateRequestFirstPartyConnectedAppsAllowedType FirstPartyConnectedAppsAllowedType { get; set; }
+        [JsonProperty("allowed_first_party_connected_apps")]
+        public List<string> AllowedFirstPartyConnectedApps { get; set; }
+        [JsonProperty("third_party_connected_apps_allowed_type")]
+        public B2BDiscoveryOrganizationsCreateRequestThirdPartyConnectedAppsAllowedType ThirdPartyConnectedAppsAllowedType { get; set; }
+        [JsonProperty("allowed_third_party_connected_apps")]
+        public List<string> AllowedThirdPartyConnectedApps { get; set; }
+        public B2BDiscoveryOrganizationsCreateRequest(string intermediateSessionToken)
         {
             this.IntermediateSessionToken = intermediateSessionToken;
-            this.OrganizationName = organizationName;
-            this.OrganizationSlug = organizationSlug;
         }
     }
     /// <summary>
@@ -270,11 +278,12 @@ namespace Stytch.net.Models.Consumer
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. It can also be used with the
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be
+        /// used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// to join a specific Organization that allows the factors represented by the intermediate session token;
         /// or the
-        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -299,6 +308,9 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("mfa_required")]
         public MfaRequired MfaRequired { get; set; }
+        /// <summary>
+        /// Information about the primary authentication requirements of the Organization.
+        /// </summary>
         [JsonProperty("primary_required")]
         public PrimaryRequired PrimaryRequired { get; set; }
     }
@@ -313,11 +325,12 @@ namespace Stytch.net.Models.Consumer
         /// with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. It can also be used with the
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be
+        /// used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// to join a specific Organization that allows the factors represented by the intermediate session token;
         /// or the
-        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -387,4 +400,24 @@ namespace Stytch.net.Models.Consumer
         public string OrganizationIdHint { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum B2BDiscoveryOrganizationsCreateRequestFirstPartyConnectedAppsAllowedType
+    {
+        [EnumMember(Value = "ALL_ALLOWED")]
+        ALL_ALLOWED,
+        [EnumMember(Value = "RESTRICTED")]
+        RESTRICTED,
+        [EnumMember(Value = "NOT_ALLOWED")]
+        NOT_ALLOWED,
+    }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum B2BDiscoveryOrganizationsCreateRequestThirdPartyConnectedAppsAllowedType
+    {
+        [EnumMember(Value = "ALL_ALLOWED")]
+        ALL_ALLOWED,
+        [EnumMember(Value = "RESTRICTED")]
+        RESTRICTED,
+        [EnumMember(Value = "NOT_ALLOWED")]
+        NOT_ALLOWED,
+    }
 }
