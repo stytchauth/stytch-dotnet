@@ -4,7 +4,8 @@ The Stytch .NET library makes it easy to use the Stytch user infrastructure API 
 
 ## Install
 
-### Using .NET CLI:
+### Using .NET CLI
+
 ```
 dotnet add package Stytch.net
 ```
@@ -44,8 +45,6 @@ This client library supports all of Stytch's live products:
 - [x] [Passwords](https://stytch.com/docs/b2b/api/passwords-authenticate)
 - [x] [SMS OTP (MFA)](https://stytch.com/docs/b2b/api/otp-sms-send)
 - [x] [M2M](https://stytch.com/docs/b2b/api/m2m-client)
-
-
 
 ### Example B2C usage
 
