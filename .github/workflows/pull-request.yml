@@ -2,20 +2,24 @@ name: Pull Request checks
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test-stytch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
       - name: Lint
         run: dotnet format --verify-no-changes
+
       - name: Build
         run: dotnet build
+
       - name: Test
         run: dotnet test
         env:
@@ -23,5 +27,6 @@ jobs:
           PROJECT_SECRET: ${{ secrets.PROJECT_SECRET }}
           B2B_PROJECT_ID: ${{ secrets.B2B_PROJECT_ID }}
           B2B_PROJECT_SECRET: ${{ secrets.B2B_PROJECT_SECRET }}
+
       - name: Pack
         run: dotnet pack
