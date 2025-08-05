@@ -5,22 +5,35 @@ using Stytch.net.Models;
 
 namespace Stytch.net.Tests.Clients;
 
-public class M2M : ConsumerTestBase
+public class M2M : ConsumerTestBase, IAsyncLifetime
 {
 
-    private readonly Task<M2MTokenResponse> tokenResTask;
+    private M2MClientsCreateResponse createRes = null!;
+    private M2MTokenResponse tokenRes = null!;
     public M2M() : base()
     {
-        // A (temporary) hack - we do not support sandbox values for M2M so we provisioned a client
-        // that reuses the Project ID and Project Secret values we already have saved in CI
-        tokenResTask = consumerClient.M2M.Token(new M2MTokenRequest(_clientConfig.ProjectId, _clientConfig.ProjectSecret));
+    }
+
+    public async Task InitializeAsync()
+    {
+        // Ensure the client is created before running tests
+        var req = new M2MClientsCreateRequest(new List<string> { "read:users", "write:members" });
+        createRes = await consumerClient.M2M.Clients.Create(req);
+        Assert.NotNull(createRes);
+        Assert.NotNull(createRes.M2MClient);
+        tokenRes = await consumerClient.M2M.Token(new M2MTokenRequest(createRes.M2MClient.ClientId, createRes.M2MClient.ClientSecret));
+    }
+
+    public async Task DisposeAsync()
+    {
+        await consumerClient.M2M.Clients.Delete(new M2MClientsDeleteRequest(createRes.M2MClient.ClientId));
     }
 
     [Fact]
-    public async Task M2MToken_Success()
+    public void M2MToken_Success()
     {
         // Arrange
-        var res = await tokenResTask;
+        var res = tokenRes;
 
         // Assert
         Assert.NotEmpty(res.AccessToken);
@@ -31,26 +44,18 @@ public class M2M : ConsumerTestBase
     [Fact]
     public async Task M2MAuthenticateToken_Success()
     {
-        // Arrange
-        var tokenRes = await tokenResTask;
-
         // Act
-
         var authRes = await consumerClient.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken));
 
         // Assert
         Assert.NotNull(authRes);
-        Assert.Equal(_clientConfig.ProjectId, authRes.ClientId);
+        Assert.Equal(createRes.M2MClient.ClientId, authRes.ClientId);
         Assert.Equal(new List<string> { "read:users", "write:members" }, authRes.Scopes);
-        Assert.Equivalent(JsonDocument.Parse("{\"set\":true}").RootElement, authRes.CustomClaims["custom_value"]);
     }
 
     [Fact]
     public async Task M2MAuthenticateToken_FailureInvalidSignature()
     {
-        // Arrange
-        var tokenRes = await tokenResTask;
-
         // Assert
         await Assert.ThrowsAsync<SecurityTokenInvalidSignatureException>(() =>
         {
@@ -61,9 +66,6 @@ public class M2M : ConsumerTestBase
     [Fact]
     public async Task M2MAuthenticateToken_SuccessWithRequiredScopes()
     {
-        // Arrange
-        var tokenRes = await tokenResTask;
-
         // Act
         var authRes = await consumerClient.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken)
         {
@@ -77,9 +79,6 @@ public class M2M : ConsumerTestBase
     [Fact]
     public async Task M2MAuthenticateToken_FailureOnMissingScopes()
     {
-        // Arrange
-        var tokenRes = await tokenResTask;
-
         // Act
         var exception = await Assert.ThrowsAsync<StytchMissingScopesException>(() =>
         {
@@ -91,15 +90,12 @@ public class M2M : ConsumerTestBase
 
         // Assert
         Assert.Equal("superadmin", exception.RequiredScope);
-        Assert.Equal(exception.ClientId, _clientConfig.ProjectId);
+        Assert.Equal(exception.ClientId, createRes.M2MClient.ClientId);
     }
 
     [Fact]
     public async Task M2MAuthenticateToken_SuccessWithLifetimeValidation()
     {
-        // Arrange
-        var tokenRes = await tokenResTask;
-
         // Act
         bool LifetimeValidator(DateTime? notbefore, DateTime? expires, SecurityToken securitytoken,
             TokenValidationParameters validationparameters)
@@ -120,9 +116,6 @@ public class M2M : ConsumerTestBase
     [Fact]
     public async Task M2MAuthenticateToken_FailureOnLifetimeValidation()
     {
-        // Arrange
-        var tokenRes = await tokenResTask;
-
         // Act
         var exception = await Assert.ThrowsAsync<SecurityTokenInvalidLifetimeException>(() =>
         {
