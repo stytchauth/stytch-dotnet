@@ -100,7 +100,7 @@ public class M2M : ConsumerTestBase, IAsyncLifetime
         bool LifetimeValidator(DateTime? notbefore, DateTime? expires, SecurityToken securitytoken,
             TokenValidationParameters validationparameters)
         {
-            return DateTime.UtcNow > notbefore && DateTime.UtcNow < expires;
+            return DateTime.UtcNow >= notbefore && DateTime.UtcNow <= expires;
         }
 
         var authRes = await consumerClient.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken)
