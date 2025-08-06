@@ -57,7 +57,7 @@ namespace Stytch.net.Models
         /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
-        public B2BSSOOIDCCreateConnectionRequestIdentityProvider IdentityProvider { get; set; }
+        public B2BSSOOIDCCreateConnectionRequestIdentityProvider? IdentityProvider { get; set; }
         public B2BSSOOIDCCreateConnectionRequest(string organizationId)
         {
             this.OrganizationId = organizationId;
@@ -158,7 +158,7 @@ namespace Stytch.net.Models
         /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
-        public B2BSSOOIDCUpdateConnectionRequestIdentityProvider IdentityProvider { get; set; }
+        public B2BSSOOIDCUpdateConnectionRequestIdentityProvider? IdentityProvider { get; set; }
         /// <summary>
         /// Include a space-separated list of custom scopes that you'd like to include. Note that this list must be
         /// URL encoded, e.g. the spaces must be expressed as %20.

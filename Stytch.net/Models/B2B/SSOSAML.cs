@@ -77,7 +77,7 @@ namespace Stytch.net.Models
         /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
-        public B2BSSOSAMLCreateConnectionRequestIdentityProvider IdentityProvider { get; set; }
+        public B2BSSOSAMLCreateConnectionRequestIdentityProvider? IdentityProvider { get; set; }
         public B2BSSOSAMLCreateConnectionRequest(string organizationId)
         {
             this.OrganizationId = organizationId;
@@ -295,7 +295,7 @@ namespace Stytch.net.Models
         /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
-        public B2BSSOSAMLUpdateConnectionRequestIdentityProvider IdentityProvider { get; set; }
+        public B2BSSOSAMLUpdateConnectionRequestIdentityProvider? IdentityProvider { get; set; }
         /// <summary>
         /// A PKCS1 format RSA private key used for signing SAML requests. Only PKCS1 format (starting with
         /// "-----BEGIN RSA PRIVATE KEY-----") is supported. When provided, Stytch will generate a new x509

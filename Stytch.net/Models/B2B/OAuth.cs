@@ -112,7 +112,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BOAuthAuthenticateRequestLocale Locale { get; set; }
+        public B2BOAuthAuthenticateRequestLocale? Locale { get; set; }
         /// <summary>
         /// Adds this primary authentication factor to the intermediate session token. If the resulting set of
         /// factors satisfies the organization's primary authentication requirements and MFA requirements, the

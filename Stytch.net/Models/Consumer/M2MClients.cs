@@ -241,7 +241,7 @@ namespace Stytch.net.Models
         /// The status of the client - either `active` or `inactive`.
         /// </summary>
         [JsonProperty("status")]
-        public UpdateRequestStatus Status { get; set; }
+        public UpdateRequestStatus? Status { get; set; }
         /// <summary>
         /// An array of scopes assigned to the client.
         /// </summary>

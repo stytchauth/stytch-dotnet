@@ -66,7 +66,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public MagicLinksEmailInviteRequestLocale Locale { get; set; }
+        public MagicLinksEmailInviteRequestLocale? Locale { get; set; }
         /// <summary>
         /// The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the
         /// [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
@@ -200,7 +200,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public MagicLinksEmailLoginOrCreateRequestLocale Locale { get; set; }
+        public MagicLinksEmailLoginOrCreateRequestLocale? Locale { get; set; }
         public MagicLinksEmailLoginOrCreateRequest(string email)
         {
             this.Email = email;
@@ -356,7 +356,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public MagicLinksEmailSendRequestLocale Locale { get; set; }
+        public MagicLinksEmailSendRequestLocale? Locale { get; set; }
         /// <summary>
         /// Use a custom template for sign-up emails. By default, it will use your default email template. The
         /// template must be a template using our built-in customizations or a custom HTML email for Magic links -

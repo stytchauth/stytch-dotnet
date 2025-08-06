@@ -520,7 +520,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BSessionsExchangeRequestLocale Locale { get; set; }
+        public B2BSessionsExchangeRequestLocale? Locale { get; set; }
         public B2BSessionsExchangeRequest(string organizationId)
         {
             this.OrganizationId = organizationId;

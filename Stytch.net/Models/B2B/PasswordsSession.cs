@@ -81,7 +81,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BPasswordsSessionResetRequestLocale Locale { get; set; }
+        public B2BPasswordsSessionResetRequestLocale? Locale { get; set; }
         public B2BPasswordsSessionResetRequest(string organizationId, string password)
         {
             this.OrganizationId = organizationId;

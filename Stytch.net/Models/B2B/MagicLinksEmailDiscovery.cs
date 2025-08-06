@@ -57,7 +57,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BMagicLinksEmailDiscoverySendRequestLocale Locale { get; set; }
+        public B2BMagicLinksEmailDiscoverySendRequestLocale? Locale { get; set; }
         /// <summary>
         /// The expiration time, in minutes, for an discovery magic link email. If not accepted within this time
         /// frame, the email will need to be resent. Defaults to 60 (1 hour) with a minimum of 5 and a maximum of

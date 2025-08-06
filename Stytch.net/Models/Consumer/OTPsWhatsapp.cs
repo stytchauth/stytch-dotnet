@@ -58,7 +58,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public OTPsWhatsappLoginOrCreateRequestLocale Locale { get; set; }
+        public OTPsWhatsappLoginOrCreateRequestLocale? Locale { get; set; }
         public OTPsWhatsappLoginOrCreateRequest(string phoneNumber)
         {
             this.PhoneNumber = phoneNumber;
@@ -133,7 +133,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public OTPsWhatsappSendRequestLocale Locale { get; set; }
+        public OTPsWhatsappSendRequestLocale? Locale { get; set; }
         /// <summary>
         /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>

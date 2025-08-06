@@ -91,7 +91,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BMagicLinksEmailInviteRequestLocale Locale { get; set; }
+        public B2BMagicLinksEmailInviteRequestLocale? Locale { get; set; }
         /// <summary>
         /// Roles to explicitly assign to this Member. See the
         /// [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)
@@ -213,7 +213,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BMagicLinksEmailLoginOrSignupRequestLocale Locale { get; set; }
+        public B2BMagicLinksEmailLoginOrSignupRequestLocale? Locale { get; set; }
         /// <summary>
         /// The expiration time, in minutes, for a login Email Magic Link. If not authenticated within this time
         /// frame, the email will need to be resent. Defaults to 60 (1 hour) with a minimum of 5 and a maximum of

@@ -110,7 +110,7 @@ namespace Stytch.net.Models
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
         [JsonProperty("identity_provider")]
-        public CreateRequestIdentityProvider IdentityProvider { get; set; }
+        public CreateRequestIdentityProvider? IdentityProvider { get; set; }
         public B2BSCIMConnectionCreateRequest(string organizationId)
         {
             this.OrganizationId = organizationId;
@@ -453,7 +453,7 @@ namespace Stytch.net.Models
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
         [JsonProperty("identity_provider")]
-        public UpdateRequestIdentityProvider IdentityProvider { get; set; }
+        public UpdateRequestIdentityProvider? IdentityProvider { get; set; }
         /// <summary>
         /// An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and
         /// a `role_id`.

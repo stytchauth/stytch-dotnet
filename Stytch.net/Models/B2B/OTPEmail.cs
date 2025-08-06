@@ -100,7 +100,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BOTPEmailAuthenticateRequestLocale Locale { get; set; }
+        public B2BOTPEmailAuthenticateRequestLocale? Locale { get; set; }
         public B2BOTPEmailAuthenticateRequest(string organizationId, string emailAddress, string code)
         {
             this.OrganizationId = organizationId;
@@ -236,7 +236,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BOTPEmailLoginOrSignupRequestLocale Locale { get; set; }
+        public B2BOTPEmailLoginOrSignupRequestLocale? Locale { get; set; }
         /// <summary>
         /// The expiration time, in minutes, for a login OTP email to a Member. If not authenticated within this
         /// time frame, the OTP will need to be resent. Defaults to 10 with a minimum of 2 and a maximum of 15.
