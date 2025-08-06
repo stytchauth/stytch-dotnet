@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Stytch.net.Models
+
+namespace Stytch.net.Models.Consumer
 {
     public class B2BPasswordsEmailRequireResetRequestOptions
     {
@@ -56,6 +56,10 @@ namespace Stytch.net.Models
     /// </summary>
     public class B2BPasswordsEmailRequireResetResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         /// <summary>

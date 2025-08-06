@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models;
+using Stytch.net.Models.Consumer;
 
 
 
@@ -144,3 +144,4 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
+

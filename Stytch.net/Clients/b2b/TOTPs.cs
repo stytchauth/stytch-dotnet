@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models;
+using Stytch.net.Models.Consumer;
 
 
 
@@ -32,8 +32,11 @@ namespace Stytch.net.Clients.B2B
         /// Create a new TOTP instance for a Member. The Member can use the authenticator application of their
         /// choice to scan the QR code or enter the secret. 
         /// 
-        /// Passing an intermediate session token, session token, or session JWT is not required, but if passed must
-        /// match the Member ID passed.
+        /// If the Member already has an active MFA factor, then passing an intermediate session token, session
+        /// token, or session JWT with the existing MFA factor on it is required to prevent bypassing MFA.  
+        /// 
+        /// Otherwise, passing an intermediate session token, session token, or session JWT is not required, but if
+        /// passed must match the `member_id` passed.
         /// </summary>
         public async Task<B2BTOTPsCreateResponse> Create(
             B2BTOTPsCreateRequest request
@@ -154,3 +157,4 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
+

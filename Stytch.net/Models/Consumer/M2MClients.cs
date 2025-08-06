@@ -3,7 +3,6 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -11,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Stytch.net.Models
+namespace Stytch.net.Models.Consumer
 {
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.M2M.Clients.Create"/>..

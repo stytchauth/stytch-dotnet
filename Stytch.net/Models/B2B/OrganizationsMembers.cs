@@ -3,15 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OrganizationsEntry = System.Collections.Generic.Dictionary<string, Stytch.net.Models.Organization>;
 
-namespace Stytch.net.Models
+
+namespace Stytch.net.Models.Consumer
 {
 
     public class B2BOrganizationsMembersCreateRequestOptions
@@ -798,7 +797,7 @@ namespace Stytch.net.Models
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
         /// <summary>
-        /// The email address of the Member.
+        /// The new email address for the Member.
         /// </summary>
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }

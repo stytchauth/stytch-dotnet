@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Stytch.net.Models
+
+namespace Stytch.net.Models.Consumer
 {
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Passwords.Email.Reset"/>..
@@ -185,7 +185,7 @@ namespace Stytch.net.Models
         /// login.
         /// 
         ///   The URL must be configured as a Login URL in the
-        /// [Redirect URL page](https://stytch.com/docs/dashboard/redirect-urls). If the field is not specified, the
+        /// [Redirect URL page](https://stytch.com/dashboard/redirect-urls). If the field is not specified, the
         /// default Login URL will be used.
         /// </summary>
         [JsonProperty("login_redirect_url")]
