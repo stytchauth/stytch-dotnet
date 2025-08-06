@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text.Json;
+using Newtonsoft.Json;
 using Stytch.net.Clients;
 using Stytch.net.Exceptions;
 using Stytch.net.Models;
@@ -166,5 +167,38 @@ public class ConsumerClient : ConsumerTestBase
         // Assert
         // All Sandbox Sessions started at the same time
         AssertEqualTimestamps(new DateTime(2021, 8, 28, 0, 41, 59), res.Session.StartedAt);
+    }
+
+    [Fact]
+    public void Deserializes_WithNullRuleMatchType_ShouldSucceed()
+    {
+        // Sample JSON with rule_match_type as null
+        var json = @"
+            {
+                ""request_id"": ""req_12345"",
+                ""telemetry_id"": ""telemetry_abc123"",
+                ""fingerprints"": {},
+                ""verdict"": {
+                    ""rule_match_type"": null
+                },
+                ""external_metadata"": {
+                    ""user_action"": ""login_attempt"",
+                    ""external_id"": ""user_001""
+                },
+                ""created_at"": ""2025-08-06T12:00:00Z"",
+                ""expires_at"": ""2025-08-07T12:00:00Z"",
+                ""status_code"": 200,
+                ""properties"": {}
+            }";
+
+        // Act
+        var response = JsonConvert.DeserializeObject<FraudFingerprintLookupResponse>(json);
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.NotNull(response.Verdict);
+        Assert.Null(response.Verdict.RuleMatchType); // Key assertion
+        Assert.Equal("telemetry_abc123", response.TelemetryId);
+        Assert.Equal(200, response.StatusCode);
     }
 }
