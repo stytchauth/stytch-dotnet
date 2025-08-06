@@ -202,7 +202,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public PasswordsEmailResetStartRequestLocale Locale { get; set; }
+        public PasswordsEmailResetStartRequestLocale? Locale { get; set; }
         /// <summary>
         /// Use a custom template for password reset emails. By default, it will use your default email template.
         ///   The template must be a template using our built-in customizations or a custom HTML email for Passwords

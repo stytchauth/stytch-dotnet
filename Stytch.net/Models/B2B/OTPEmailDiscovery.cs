@@ -119,7 +119,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BOTPEmailDiscoverySendRequestLocale Locale { get; set; }
+        public B2BOTPEmailDiscoverySendRequestLocale? Locale { get; set; }
         /// <summary>
         /// The expiration time, in minutes, for a discovery OTP email. If not accepted within this time frame, the
         /// OTP will need to be resent. Defaults to 10 with a minimum of 2 and a maximum of 15.

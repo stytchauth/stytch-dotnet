@@ -824,7 +824,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public StartEmailUpdateRequestLocale Locale { get; set; }
+        public StartEmailUpdateRequestLocale? Locale { get; set; }
         /// <summary>
         /// Use a custom template for login emails. By default, it will use your default email template. The
         /// template must be from Stytch's

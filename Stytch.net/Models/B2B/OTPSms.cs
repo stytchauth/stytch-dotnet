@@ -198,7 +198,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BOTPSmsSendRequestLocale Locale { get; set; }
+        public B2BOTPSmsSendRequestLocale? Locale { get; set; }
         /// <summary>
         /// The Intermediate Session Token. This token does not necessarily belong to a specific instance of a
         /// Member, but represents a bag of factors that may be converted to a member session. The token can be used

@@ -270,7 +270,7 @@ namespace Stytch.net.Models
         /// there is a `RULE_MATCH` reason in the list of verdict reasons.
         /// </summary>
         [JsonProperty("rule_match_type")]
-        public RuleType RuleMatchType { get; set; }
+        public RuleType? RuleMatchType { get; set; }
         /// <summary>
         /// The rule that was applied (e.g. a specific visitor ID value), if any. This field will only be present if
         /// there is a `RULE_MATCH` reason in the list of verdict reasons.
@@ -296,7 +296,7 @@ namespace Stytch.net.Models
         /// place of the default action.
         /// </summary>
         [JsonProperty("override_action")]
-        public VerdictReasonActionAction OverrideAction { get; set; }
+        public VerdictReasonActionAction? OverrideAction { get; set; }
         /// <summary>
         /// The time when the override was created, if one exists. Values conform to the RFC 3339 standard and are
         /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.

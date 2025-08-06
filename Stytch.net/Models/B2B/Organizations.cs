@@ -1156,7 +1156,7 @@ namespace Stytch.net.Models
         ///   
         /// </summary>
         [JsonProperty("first_party_connected_apps_allowed_type")]
-        public B2BOrganizationsCreateRequestFirstPartyConnectedAppsAllowedType FirstPartyConnectedAppsAllowedType { get; set; }
+        public B2BOrganizationsCreateRequestFirstPartyConnectedAppsAllowedType? FirstPartyConnectedAppsAllowedType { get; set; }
         /// <summary>
         /// An array of first party Connected App IDs that are allowed for the Organization. Only used when the
         /// Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
@@ -1176,7 +1176,7 @@ namespace Stytch.net.Models
         ///   
         /// </summary>
         [JsonProperty("third_party_connected_apps_allowed_type")]
-        public B2BOrganizationsCreateRequestThirdPartyConnectedAppsAllowedType ThirdPartyConnectedAppsAllowedType { get; set; }
+        public B2BOrganizationsCreateRequestThirdPartyConnectedAppsAllowedType? ThirdPartyConnectedAppsAllowedType { get; set; }
         /// <summary>
         /// An array of third party Connected App IDs that are allowed for the Organization. Only used when the
         /// Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
@@ -1692,7 +1692,7 @@ namespace Stytch.net.Models
         ///   
         /// </summary>
         [JsonProperty("first_party_connected_apps_allowed_type")]
-        public UpdateRequestFirstPartyConnectedAppsAllowedType FirstPartyConnectedAppsAllowedType { get; set; }
+        public UpdateRequestFirstPartyConnectedAppsAllowedType? FirstPartyConnectedAppsAllowedType { get; set; }
         /// <summary>
         /// An array of first party Connected App IDs that are allowed for the Organization. Only used when the
         /// Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
@@ -1712,7 +1712,7 @@ namespace Stytch.net.Models
         ///   
         /// </summary>
         [JsonProperty("third_party_connected_apps_allowed_type")]
-        public UpdateRequestThirdPartyConnectedAppsAllowedType ThirdPartyConnectedAppsAllowedType { get; set; }
+        public UpdateRequestThirdPartyConnectedAppsAllowedType? ThirdPartyConnectedAppsAllowedType { get; set; }
         /// <summary>
         /// An array of third party Connected App IDs that are allowed for the Organization. Only used when the
         /// Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.

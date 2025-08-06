@@ -57,7 +57,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public OTPsEmailLoginOrCreateRequestLocale Locale { get; set; }
+        public OTPsEmailLoginOrCreateRequestLocale? Locale { get; set; }
         /// <summary>
         /// Use a custom template for login emails. By default, it will use your default email template. The
         /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
@@ -145,7 +145,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public OTPsEmailSendRequestLocale Locale { get; set; }
+        public OTPsEmailSendRequestLocale? Locale { get; set; }
         /// <summary>
         /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>

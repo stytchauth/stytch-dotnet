@@ -94,7 +94,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BPasswordsExistingPasswordResetRequestLocale Locale { get; set; }
+        public B2BPasswordsExistingPasswordResetRequestLocale? Locale { get; set; }
         public B2BPasswordsExistingPasswordResetRequest(string emailAddress, string existingPassword, string newPassword, string organizationId)
         {
             this.EmailAddress = emailAddress;

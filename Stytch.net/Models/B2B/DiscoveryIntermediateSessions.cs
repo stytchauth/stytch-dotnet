@@ -84,7 +84,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public B2BDiscoveryIntermediateSessionsExchangeRequestLocale Locale { get; set; }
+        public B2BDiscoveryIntermediateSessionsExchangeRequestLocale? Locale { get; set; }
         public B2BDiscoveryIntermediateSessionsExchangeRequest(string intermediateSessionToken, string organizationId)
         {
             this.IntermediateSessionToken = intermediateSessionToken;
