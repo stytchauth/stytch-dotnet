@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Text.Json;
 using Stytch.net.Clients;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 using Stytch.net.Tests.Clients;
 
 public class ConsumerClient : ConsumerTestBase

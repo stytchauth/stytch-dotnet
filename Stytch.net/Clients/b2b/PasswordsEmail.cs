@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -38,8 +38,8 @@ namespace Stytch.net.Clients.B2B
         /// if the strength score is >= 3. If you're using
         /// [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are
         /// considered valid if they meet the requirements that you've set with Stytch.
-        /// You may update your password strength configuration in the
-        /// [stytch dashboard](https://stytch.com/dashboard/password-strength-config).
+        /// You may update your password strength configuration on the
+        /// [Passwords Policy page](https://stytch.com/dashboard/password-strength-config) in the Stytch Dashboard.
         /// </summary>
         public async Task<B2BPasswordsEmailResetStartResponse> ResetStart(
             B2BPasswordsEmailResetStartRequest request
@@ -78,7 +78,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Reset the member's password and authenticate them. This endpoint checks that the password reset token is
+        /// Reset the Member's password and authenticate them. This endpoint checks that the password reset token is
         /// valid, hasn’t expired, or already been used.
         /// 
         /// The provided password needs to meet our password strength requirements, which can be checked in advance
@@ -134,7 +134,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
+        /// Require a password be reset by the associated email address. This endpoint is only functional for
+        /// cross-org password use cases.
         /// 
+        /// If there are is only one active Member using the associated email address in the Project, the password
+        /// will be deleted.
         /// </summary>
         public async Task<B2BPasswordsEmailRequireResetResponse> RequireReset(
             B2BPasswordsEmailRequireResetRequest request
@@ -185,4 +189,3 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
-

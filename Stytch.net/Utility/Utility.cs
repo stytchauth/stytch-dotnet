@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Stytch.net.Clients;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 namespace Stytch.net
 {
@@ -111,13 +111,41 @@ namespace Stytch.net
             return _cachedJwks;
         }
 
+        private static B2BRbacPolicy _cachedB2BRbacPolicy;
+        private static DateTime _b2bRbacPolicyLastFetched;
+        private static TimeSpan _b2bRbacRefreshInterval = TimeSpan.FromMinutes(15);
+
+        public interface IB2BPolicyGetter
+        {
+            Task<B2BRBACPolicyResponse> Policy(B2BRBACPolicyRequest request);
+        }
+
+        public static async Task<bool> AuthorizeRbacRoles(IB2BPolicyGetter policyGetter,
+            AuthorizationParams authorizationParams)
+        {
+            var policy = await GetB2BRbacPolicy(policyGetter);
+            return policy.IsAuthorized(authorizationParams);
+        }
+
+        private static async Task<B2BRbacPolicy> GetB2BRbacPolicy(IB2BPolicyGetter policyGetter)
+        {
+            if (_cachedB2BRbacPolicy == null || DateTime.UtcNow - _b2bRbacPolicyLastFetched > _b2bRbacRefreshInterval)
+            {
+                var policyRes = await policyGetter.Policy(new B2BRBACPolicyRequest());
+                _cachedB2BRbacPolicy = new B2BRbacPolicy(policyRes.Policy);
+                _b2bRbacPolicyLastFetched = DateTime.UtcNow;
+            }
+
+            return _cachedB2BRbacPolicy;
+        }
+
         private static RbacPolicy _cachedRbacPolicy;
         private static DateTime _rbacPolicyLastFetched;
         private static TimeSpan _rbacRefreshInterval = TimeSpan.FromMinutes(15);
 
         public interface IPolicyGetter
         {
-            Task<B2BRBACPolicyResponse> Policy(B2BRBACPolicyRequest request);
+            Task<RBACPolicyResponse> Policy(RBACPolicyRequest request);
         }
 
         public static async Task<bool> AuthorizeRbacRoles(IPolicyGetter policyGetter,
@@ -131,14 +159,13 @@ namespace Stytch.net
         {
             if (_cachedRbacPolicy == null || DateTime.UtcNow - _rbacPolicyLastFetched > _rbacRefreshInterval)
             {
-                var policyRes = await policyGetter.Policy(new B2BRBACPolicyRequest());
+                var policyRes = await policyGetter.Policy(new RBACPolicyRequest());
                 _cachedRbacPolicy = new RbacPolicy(policyRes.Policy);
                 _rbacPolicyLastFetched = DateTime.UtcNow;
             }
 
             return _cachedRbacPolicy;
         }
-
 
     }
 }

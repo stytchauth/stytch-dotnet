@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -40,15 +40,16 @@ namespace Stytch.net.Clients.B2B
         /// This API allows you to check whether the user’s provided password is valid, and to provide feedback to
         /// the user on how to increase the strength of their password.
         /// 
-        /// This endpoint adapts to your Project's password strength configuration. If you're using
-        /// [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are
-        /// considered valid if the strength score is >= 3. If you're using
-        /// [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are considered valid if
-        /// they meet the requirements that you've set with Stytch. You may update your password strength
-        /// configuration in the [stytch dashboard](https://stytch.com/dashboard/password-strength-config).
+        /// This endpoint adapts to your Project's password strength configuration.
+        /// If you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your
+        /// passwords are considered valid if the strength score is >= 3.
+        /// If you're using [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are
+        /// considered valid if they meet the requirements that you've set with Stytch.
+        /// You may update your password strength configuration on the
+        /// [Passwords Policy page](https://stytch.com/dashboard/password-strength-config) in the Stytch Dashboard.
         /// 
         /// ## Password feedback
-        /// The zxcvbn_feedback and luds_feedback objects contains relevant fields for you to relay feedback to
+        /// The `zxcvbn_feedback` and `luds_feedback` objects contains relevant fields for you to relay feedback to
         /// users that failed to create a strong enough password.
         /// 
         /// If you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the feedback object
@@ -97,11 +98,16 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Adds an existing password to a member's email that doesn't have a password yet. We support migrating
-        /// members from passwords stored with bcrypt, scrypt, argon2, MD-5, SHA-1, and PBKDF2. This endpoint has a
-        /// rate limit of 100 requests per second.
+        /// Adds an existing password to a Member's email that doesn't have a password yet.
         /// 
-        /// The member's email will be marked as verified when you use this endpoint.
+        /// We support migrating members from passwords stored with bcrypt, scrypt, argon2, MD-5, SHA-1, and PBKDF2.
+        /// This endpoint has a rate limit of 100 requests per second.
+        /// 
+        /// The Member's email will be marked as verified when you use this endpoint.
+        /// 
+        /// If you are using **cross-organization passwords**, i.e. allowing an end user to share the same password
+        /// across all of their Organizations, call this method separately for each `organization_id` associated
+        /// with the given `email_address` to ensure the password is set across all of their Organizations.
         /// </summary>
         public async Task<B2BPasswordsMigrateResponse> Migrate(
             B2BPasswordsMigrateRequest request
@@ -200,4 +206,3 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
-

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -29,8 +29,9 @@ namespace Stytch.net.Clients.B2B
         }
 
         /// <summary>
-        /// Authenticates the Discovery OAuth token and exchanges it for an Intermediate Session Token. Intermediate
-        /// Session Tokens can be used for various Discovery login flows and are valid for 10 minutes.
+        /// Authenticates the Discovery OAuth token and exchanges it for an Intermediate
+        /// Session Token. Intermediate Session Tokens can be used for various Discovery login flows and are valid
+        /// for 10 minutes.
         /// </summary>
         public async Task<B2BOAuthDiscoveryAuthenticateResponse> Authenticate(
             B2BOAuthDiscoveryAuthenticateRequest request
@@ -72,4 +73,3 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
-

@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.OTPs.Email.LoginOrCreate"/>..
@@ -30,7 +30,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("expiration_minutes")]
         public int? ExpirationMinutes { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -48,8 +49,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -127,7 +128,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("expiration_minutes")]
         public int? ExpirationMinutes { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -135,8 +137,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -145,7 +147,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("locale")]
         public OTPsEmailSendRequestLocale Locale { get; set; }
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -161,15 +163,13 @@ namespace Stytch.net.Models.Consumer
         public string SessionJwt { get; set; }
         /// <summary>
         /// Use a custom template for login emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
-        /// Login.
+        /// template must be a template using our built-in customizations or a custom HTML email for OTP - Login.
         /// </summary>
         [JsonProperty("login_template_id")]
         public string LoginTemplateId { get; set; }
         /// <summary>
         /// Use a custom template for sign-up emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
-        /// Sign-up.
+        /// template must be a template using our built-in customizations or a custom HTML email for OTP - Sign-up.
         /// </summary>
         [JsonProperty("signup_template_id")]
         public string SignupTemplateId { get; set; }
@@ -216,6 +216,8 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OTPsEmailSendRequestLocale
@@ -226,5 +228,7 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
 }

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -79,6 +79,12 @@ namespace Stytch.net.Clients.B2B
         /// their status to `invited`. Sending invites to already `active` Members will return an error.
         /// 
         /// The magic link invite will be valid for 1 week.
+        /// 
+        /// ## Revoke an invite
+        /// 
+        /// To revoke an existing invite, use the [Delete Member](https://stytch.com/docs/b2b/api/delete-member)
+        /// endpoint. This will both delete the invited Member from the target Organization and revoke all existing
+        /// invite emails.
         /// </summary>
         public async Task<B2BMagicLinksEmailInviteResponse> Invite(
             B2BMagicLinksEmailInviteRequest request
@@ -129,4 +135,3 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
-

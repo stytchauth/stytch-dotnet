@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class B2BPasswordsEmailRequireResetRequestOptions
     {
@@ -22,12 +22,28 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("authorization")]
         public Authorization Authorization { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Email.RequireReset"/>..
+    /// </summary>
     public class B2BPasswordsEmailRequireResetRequest
     {
+        /// <summary>
+        /// The email address of the Member to start the email reset process for.
+        /// </summary>
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
         public B2BPasswordsEmailRequireResetRequest(string emailAddress)
@@ -35,16 +51,34 @@ namespace Stytch.net.Models.Consumer
             this.EmailAddress = emailAddress;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Passwords.Email.RequireReset"/>..
+    /// </summary>
     public class B2BPasswordsEmailRequireResetResponse
     {
-        [JsonProperty("member")]
-        public Member Member { get; set; }
-        [JsonProperty("organization")]
-        public Organization Organization { get; set; }
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
+        /// <summary>
+        /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
+        /// </summary>
+        [JsonProperty("member")]
+        public Member Member { get; set; }
+        /// <summary>
+        /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        /// </summary>
+        [JsonProperty("organization")]
+        public Organization Organization { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Email.Reset"/>..
@@ -58,7 +92,7 @@ namespace Stytch.net.Models.Consumer
         public string PasswordResetToken { get; set; }
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
-        /// spaces, emojis, non-English characers, etc.
+        /// spaces, emojis, non-English characters, etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
@@ -73,16 +107,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
         /// 60 minute duration. If you don't want
         ///   to use the Stytch session product, you can ignore the session fields in the response.
@@ -199,8 +233,9 @@ namespace Stytch.net.Models.Consumer
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. Password factors are not transferable between Organizations, so
-        /// the intermediate session token is not valid for use with discovery endpoints.
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. Password factors
+        /// are not transferable between Organizations, so the intermediate session token is not valid for use with
+        /// discovery endpoints.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -226,6 +261,11 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("mfa_required")]
         public MfaRequired MfaRequired { get; set; }
+        /// <summary>
+        /// Information about the primary authentication requirements of the Organization.
+        /// </summary>
+        [JsonProperty("primary_required")]
+        public PrimaryRequired PrimaryRequired { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Email.ResetStart"/>..
@@ -234,7 +274,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -245,15 +286,17 @@ namespace Stytch.net.Models.Consumer
         public string EmailAddress { get; set; }
         /// <summary>
         /// The URL that the Member clicks from the reset password link. This URL should be an endpoint in the
-        /// backend server that verifies the request by querying 
+        /// backend server that verifies the request by querying
         ///   Stytch's authenticate endpoint and finishes the reset password flow. If this value is not passed, the
-        /// default `reset_password_redirect_url` that you set in your Dashboard is used. 
+        /// default `reset_password_redirect_url` that you set in your Dashboard is used.
         ///   If you have not set a default `reset_password_redirect_url`, an error is returned.
         /// </summary>
         [JsonProperty("reset_password_redirect_url")]
         public string ResetPasswordRedirectURL { get; set; }
         /// <summary>
-        /// Sets a time limit after which the email link to reset the member's password will no longer be valid.
+        /// Sets a time limit after which the email link to reset the member's password will no longer be valid. The
+        /// minimum allowed expiration is 5 minutes and the maximum is 10080 minutes (7 days). By default, the
+        /// expiration is 30 minutes.
         /// </summary>
         [JsonProperty("reset_password_expiration_minutes")]
         public int? ResetPasswordExpirationMinutes { get; set; }
@@ -265,11 +308,11 @@ namespace Stytch.net.Models.Consumer
         public string CodeChallenge { get; set; }
         /// <summary>
         /// The URL that the member clicks from the reset without password link. This URL should be an endpoint in
-        /// the backend server 
+        /// the backend server
         ///       that verifies the request by querying Stytch's authenticate endpoint and finishes the magic link
-        /// flow. If this value is not passed, the 
+        /// flow. If this value is not passed, the
         ///       default `login_redirect_url` that you set in your Dashboard is used. This value is only used if
-        /// magic links are enabled for the member. If 
+        /// magic links are enabled for the member. If
         ///       you have not set a default `login_redirect_url` and magic links are not enabled for the member, an
         /// error is returned.
         /// </summary>
@@ -279,8 +322,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -290,11 +333,20 @@ namespace Stytch.net.Models.Consumer
         public B2BPasswordsEmailResetStartRequestLocale Locale { get; set; }
         /// <summary>
         /// Use a custom template for reset password emails. By default, it will use your default email template.
-        /// The template must be a template using our built-in customizations or a custom HTML email for Magic Links
-        /// - Reset Password.
+        /// The template must be a template using our built-in customizations or a custom HTML email for Passwords -
+        /// Reset Password.
         /// </summary>
         [JsonProperty("reset_password_template_id")]
         public string ResetPasswordTemplateId { get; set; }
+        /// <summary>
+        /// Use a custom template for verification emails sent during password reset flows. When cross-organization
+        /// passwords are enabled for your Project, this template will be used the first time a user sets a password
+        /// via a
+        ///   password reset flow. By default, it will use your default email template. The template must be a
+        /// template using our built-in customizations or a custom HTML email for Passwords - Email Verification.
+        /// </summary>
+        [JsonProperty("verify_email_template_id")]
+        public string VerifyEmailTemplateId { get; set; }
         public B2BPasswordsEmailResetStartRequest(string organizationId, string emailAddress)
         {
             this.OrganizationId = organizationId;
@@ -344,6 +396,8 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BPasswordsEmailResetStartRequestLocale
@@ -354,5 +408,7 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
 }

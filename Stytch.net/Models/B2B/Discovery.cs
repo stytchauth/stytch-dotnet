@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class DiscoveredOrganization
     {
@@ -45,7 +45,8 @@ namespace Stytch.net.Models.Consumer
     public class Membership
     {
         /// <summary>
-        /// Either `active_member`, `pending_member`, `invited_member`, or `eligible_to_join_by_email_domain`
+        /// Either `active_member`, `pending_member`, `invited_member`, `eligible_to_join_by_email_domain`, or
+        /// `eligible_to_join_by_oauth_tenant`
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }

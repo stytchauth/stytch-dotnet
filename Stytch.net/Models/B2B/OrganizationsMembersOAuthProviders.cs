@@ -3,23 +3,41 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Github"/>..
+    /// </summary>
     public class B2BOrganizationsMembersOAuthProvidersGithubResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub
+        /// etc.
+        /// </summary>
         [JsonProperty("provider_type")]
         public string ProviderType { get; set; }
+        /// <summary>
+        /// A list of tokens the member is registered with.
+        /// </summary>
         [JsonProperty("registrations")]
         public List<GithubProviderInfo> Registrations { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
@@ -83,14 +101,32 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("refresh_token")]
         public string RefreshToken { get; set; }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Hubspot"/>..
+    /// </summary>
     public class B2BOrganizationsMembersOAuthProvidersHubspotResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub
+        /// etc.
+        /// </summary>
         [JsonProperty("provider_type")]
         public string ProviderType { get; set; }
+        /// <summary>
+        /// A list of tokens the member is registered with.
+        /// </summary>
         [JsonProperty("registrations")]
-        public List<HubspOTPRoviderInfo> Registrations { get; set; }
+        public List<HubspotProviderInfo> Registrations { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
@@ -155,20 +191,24 @@ namespace Stytch.net.Models.Consumer
         public string RefreshToken { get; set; }
     }
     /// <summary>
-    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Google"/>., <see
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Github"/>., <see
+    /// cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Google"/>., <see
+    /// cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Hubspot"/>., <see
     /// cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Microsoft"/>..
     /// </summary>
     public class B2BOrganizationsMembersOAuthProvidersProviderInformationRequest
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value.
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -185,10 +225,23 @@ namespace Stytch.net.Models.Consumer
             this.MemberId = memberId;
         }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Slack"/>..
+    /// </summary>
     public class B2BOrganizationsMembersOAuthProvidersSlackRequest
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
+        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
+        /// for the member.
+        /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
         public B2BOrganizationsMembersOAuthProvidersSlackRequest(string organizationId, string memberId)
@@ -197,14 +250,32 @@ namespace Stytch.net.Models.Consumer
             this.MemberId = memberId;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.OAuthProviders.Slack"/>..
+    /// </summary>
     public class B2BOrganizationsMembersOAuthProvidersSlackResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub
+        /// etc.
+        /// </summary>
         [JsonProperty("provider_type")]
         public string ProviderType { get; set; }
+        /// <summary>
+        /// A list of tokens the member is registered with.
+        /// </summary>
         [JsonProperty("registrations")]
         public List<SlackProviderInfo> Registrations { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -49,6 +49,12 @@ namespace Stytch.net.Clients.B2B
         /// 
         /// If a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an
         /// MFA step.
+        /// 
+        /// If the Member is logging in via an OAuth provider that does not fully verify the email, the returned
+        /// value of `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
+        /// The `primary_required` field details the authentication flow the Member must perform in order to
+        /// [complete a step-up authentication](https://stytch.com/docs/b2b/guides/oauth/auth-flows) into the
+        /// organization. The `intermediate_session_token` must be passed into that authentication flow.
         /// 
         /// We’re actively accepting requests for new OAuth providers! Please [email us](mailto:support@stytch.com)
         /// or [post in our community](https://stytch.com/docs/b2b/resources) if you are looking for an OAuth
@@ -94,4 +100,3 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
-

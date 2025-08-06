@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -23,15 +23,16 @@ namespace Stytch.net.Clients.B2B
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly OTPsSms Sms;
+        public readonly OTPsEmail Email;
         public OTPs(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
             Sms = new OTPsSms(_httpClient, _config);
+            Email = new OTPsEmail(_httpClient, _config);
         }
 
 
     }
 
 }
-

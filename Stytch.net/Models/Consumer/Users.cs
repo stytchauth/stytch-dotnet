@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class BiometricRegistration
     {
@@ -101,7 +101,7 @@ namespace Stytch.net.Models.Consumer
         /// The action to perform on the operands. The accepted value are:
         /// 
         ///   `AND` – all the operand values provided must match.
-        ///   
+        /// 
         ///   `OR` – the operator will return any matches to at least one of the operand values you supply.
         /// </summary>
         [JsonProperty("operator")]
@@ -175,6 +175,8 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("biometric_registrations")]
         public List<BiometricRegistration> BiometricRegistrations { get; set; }
+        [JsonProperty("is_locked")]
+        public bool IsLocked { get; set; }
         /// <summary>
         /// The name of the User. Each field in the `name` object is optional.
         /// </summary>
@@ -205,6 +207,46 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+        [JsonProperty("lock_created_at")]
+        public DateTime? LockCreatedAt { get; set; }
+        [JsonProperty("lock_expires_at")]
+        public DateTime? LockExpiresAt { get; set; }
+    }
+    public class UserConnectedApp
+    {
+        /// <summary>
+        /// The ID of the Connected App.
+        /// </summary>
+        [JsonProperty("connected_app_id")]
+        public string ConnectedAppId { get; set; }
+        /// <summary>
+        /// The name of the Connected App.
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        /// <summary>
+        /// A description of the Connected App.
+        /// </summary>
+        [JsonProperty("description")]
+        public string Description { get; set; }
+        /// <summary>
+        /// The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and
+        /// `third_party_public`.
+        /// </summary>
+        [JsonProperty("client_type")]
+        public string ClientType { get; set; }
+        /// <summary>
+        /// The scopes granted to the Connected App at the completion of the last authorization flow.
+        /// </summary>
+        [JsonProperty("scopes_granted")]
+        public string ScopesGranted { get; set; }
+        /// <summary>
+        /// The logo URL of the Connected App, if any.
+        /// </summary>
+        [JsonProperty("logo_url")]
+        public string LogoURL { get; set; }
     }
     public class UsersEmail
     {
@@ -265,7 +307,8 @@ namespace Stytch.net.Models.Consumer
     public class UsersResultsMetadata
     {
         /// <summary>
-        /// The total number of results returned by your search query.
+        /// The total number of results returned by your search query. If totals have been disabled for your Stytch
+        /// Workspace to improve search performance, the value will always be -1.
         /// </summary>
         [JsonProperty("total")]
         public int Total { get; set; }
@@ -313,6 +356,40 @@ namespace Stytch.net.Models.Consumer
         public string Name { get; set; }
     }
     /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.Users.ConnectedApps"/>..
+    /// </summary>
+    public class UsersConnectedAppsRequest
+    {
+        /// <summary>
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        public UsersConnectedAppsRequest(string userId)
+        {
+            this.UserId = userId;
+        }
+    }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.Users.ConnectedApps"/>..
+    /// </summary>
+    public class UsersConnectedAppsResponse
+    {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        /// <summary>
+        /// An array of Connected Apps with which the User has successfully completed an authorization flow.
+        /// </summary>
+        [JsonProperty("connected_apps")]
+        public List<UserConnectedApp> ConnectedApps { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
+    /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Users.Create"/>..
     /// </summary>
     public class UsersCreateRequest
@@ -327,9 +404,6 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("name")]
         public UsersName Name { get; set; }
-        /// <summary>
-        /// Provided attributes help with fraud detection.
-        /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
         /// <summary>
@@ -363,6 +437,12 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        /// <summary>
+        /// An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting
+        /// of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
         public UsersCreateRequest()
         {
         }
@@ -681,7 +761,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersDeleteRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -807,7 +887,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersExchangePrimaryFactorRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -861,7 +941,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersGetRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -927,6 +1007,8 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("biometric_registrations")]
         public List<BiometricRegistration> BiometricRegistrations { get; set; }
+        [JsonProperty("is_locked")]
+        public bool IsLocked { get; set; }
         /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
@@ -963,6 +1045,47 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+        [JsonProperty("lock_created_at")]
+        public DateTime? LockCreatedAt { get; set; }
+        [JsonProperty("lock_expires_at")]
+        public DateTime? LockExpiresAt { get; set; }
+    }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.Users.Revoke"/>..
+    /// </summary>
+    public class UsersRevokeRequest
+    {
+        /// <summary>
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        /// </summary>
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        /// <summary>
+        /// The ID of the Connected App.
+        /// </summary>
+        [JsonProperty("connected_app_id")]
+        public string ConnectedAppId { get; set; }
+        public UsersRevokeRequest(string userId, string connectedAppId)
+        {
+            this.UserId = userId;
+            this.ConnectedAppId = connectedAppId;
+        }
+    }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.Users.Revoke"/>..
+    /// </summary>
+    public class UsersRevokeResponse
+    {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Users.Search"/>..
@@ -1031,7 +1154,7 @@ namespace Stytch.net.Models.Consumer
     public class UsersUpdateRequest
     {
         /// <summary>
-        /// The unique ID of a specific User.
+        /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; set; }
@@ -1041,7 +1164,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("name")]
         public UsersName Name { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -1059,6 +1183,12 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        /// <summary>
+        /// An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting
+        /// of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
         public UsersUpdateRequest(string userId)
         {
             this.UserId = userId;

@@ -1,4 +1,4 @@
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 namespace Stytch.net.Tests.Clients;
 

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -284,8 +284,99 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+        /// <summary>
+        /// Retrieves a list of Connected Apps for the Organization that have been installed by Members.
+        /// Installation comprises
+        /// successful completion of an authorization flow with a Connected App that has not been revoked.
+        /// 
+        /// Connected Apps may be uninstalled if an Organization changes its
+        /// `first_party_connected_apps_allowed_type`
+        /// or `third_party_connected_apps_allowed_type` policies.
+        /// </summary>
+        public async Task<B2BOrganizationsConnectedAppsResponse> ConnectedApps(
+            B2BOrganizationsConnectedAppsRequest request
+            , B2BOrganizationsConnectedAppsRequestOptions options
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/connected_apps"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsConnectedAppsResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Get Connected App for Organization retrieves information about the specified Connected App as well as a
+        /// list of the
+        /// Organization's Members who have the App installed along with the scopes they requested at completion of
+        /// their last
+        /// authorization with the App.
+        /// </summary>
+        public async Task<B2BOrganizationsGetConnectedAppResponse> GetConnectedApp(
+            B2BOrganizationsGetConnectedAppRequest request
+            , B2BOrganizationsGetConnectedAppRequestOptions options
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/connected_apps/{request.ConnectedAppId}"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsGetConnectedAppResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
 
     }
 
 }
-

@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class M2MClient
     {
@@ -159,7 +159,8 @@ namespace Stytch.net.Models.Consumer
     public class M2MResultsMetadata
     {
         /// <summary>
-        /// The total number of results returned by your search query.
+        /// The total number of results returned by your search query. If totals have been disabled for your Stytch
+        /// Workspace to improve search performance, the value will always be -1.
         /// </summary>
         [JsonProperty("total")]
         public int Total { get; set; }

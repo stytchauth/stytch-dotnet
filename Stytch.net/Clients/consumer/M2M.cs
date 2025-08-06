@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -36,7 +36,7 @@ namespace Stytch.net.Clients.Consumer
         /// Retrieve an access token for the given M2M Client.
         /// Access tokens are JWTs signed with the project's JWKS, and are valid for one hour after issuance.
         /// M2M Access tokens contain a standard set of claims as well as any custom claims generated from templates.
-        /// 
+        ///
         /// M2M Access tokens can be validated locally using the Authenticate Access Token method in the Stytch Backend SDKs,
         /// or with any library that supports JWT signature validation.
         /// </summary>
@@ -133,4 +133,3 @@ namespace Stytch.net.Clients.Consumer
     }
 
 }
-

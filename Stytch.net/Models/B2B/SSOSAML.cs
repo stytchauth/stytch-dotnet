@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class B2BSSOSAMLCreateConnectionRequestOptions
     {
@@ -59,7 +59,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -69,9 +70,11 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
         /// <summary>
-        /// The identity provider of this connection. For OIDC, the accepted values are `generic`, `okta`, and
-        /// `microsoft-entra`. For SAML, the accepted values are `generic`, `okta`, `microsoft-entra`, and
-        /// `google-workspace`.
+        /// Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`,
+        /// `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`,
+        /// `rippling`, `salesforce`, `shibboleth`, or `generic`.
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
         public B2BSSOSAMLCreateConnectionRequestIdentityProvider IdentityProvider { get; set; }
@@ -111,7 +114,8 @@ namespace Stytch.net.Models.Consumer
     public class B2BSSOSAMLDeleteVerificationCertificateRequest
     {
         /// <summary>
-        /// The organization ID that the SAML connection belongs to.
+        /// The organization ID that the SAML connection belongs to. You may also use the organization_slug here as
+        /// a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -162,7 +166,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -215,7 +220,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -266,8 +272,7 @@ namespace Stytch.net.Models.Consumer
         /// connection and
         ///  belongs to the specified SAML group, they will be granted the associated Role. See the
         ///  [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role
-        /// assignment.
-        ///          Before adding any group implicit role assignments, you must add a "groups" key to your SAML
+        /// assignment. Before adding any group implicit role assignments, you must add a "groups" key to your SAML
         /// connection's
         ///          `attribute_mapping`. Make sure that your IdP is configured to correctly send the group
         /// information.
@@ -276,17 +281,50 @@ namespace Stytch.net.Models.Consumer
         public List<SAMLGroupImplicitRoleAssignment> SAMLGroupImplicitRoleAssignments { get; set; }
         /// <summary>
         /// An alternative URL to use for the Audience Restriction. This value can be used when you wish to migrate
-        /// an existing SAML integration to Stytch with zero downtime.
+        /// an existing SAML integration to Stytch with zero downtime. Read our
+        /// [SSO migration guide](https://stytch.com/docs/b2b/guides/migrations/additional-migration-considerations)
+        /// for more info.
         /// </summary>
         [JsonProperty("alternative_audience_uri")]
         public string AlternativeAudienceUri { get; set; }
         /// <summary>
-        /// The identity provider of this connection. For OIDC, the accepted values are `generic`, `okta`, and
-        /// `microsoft-entra`. For SAML, the accepted values are `generic`, `okta`, `microsoft-entra`, and
-        /// `google-workspace`.
+        /// Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`,
+        /// `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`,
+        /// `rippling`, `salesforce`, `shibboleth`, or `generic`.
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
         public B2BSSOSAMLUpdateConnectionRequestIdentityProvider IdentityProvider { get; set; }
+        /// <summary>
+        /// A PKCS1 format RSA private key used for signing SAML requests. Only PKCS1 format (starting with
+        /// "-----BEGIN RSA PRIVATE KEY-----") is supported. When provided, Stytch will generate a new x509
+        /// certificate from this key and return it in the signing_certificates array.
+        /// </summary>
+        [JsonProperty("signing_private_key")]
+        public string SigningPrivateKey { get; set; }
+        /// <summary>
+        /// The NameID format the SAML Connection expects to use. Defaults to
+        /// `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`.
+        /// </summary>
+        [JsonProperty("nameid_format")]
+        public string NameidFormat { get; set; }
+        /// <summary>
+        /// An alternative URL to use for the `AssertionConsumerServiceURL` in SP initiated SAML AuthNRequests. This
+        /// value can be used when you wish to migrate an existing SAML integration to Stytch with zero downtime.
+        /// Note that you will be responsible for proxying requests sent to the Alternative ACS URL to Stytch. Read
+        /// our
+        /// [SSO migration guide](https://stytch.com/docs/b2b/guides/migrations/additional-migration-considerations)
+        /// for more info.
+        /// </summary>
+        [JsonProperty("alternative_acs_url")]
+        public string AlternativeAcsURL { get; set; }
+        /// <summary>
+        /// Determines whether IDP initiated auth is allowed for a given SAML connection. Defaults to false (IDP
+        /// Initiated Auth is enabled).
+        /// </summary>
+        [JsonProperty("idp_initiated_auth_disabled")]
+        public bool? IdpInitiatedAuthDisabled { get; set; }
         public B2BSSOSAMLUpdateConnectionRequest(string organizationId, string connectionId)
         {
             this.OrganizationId = organizationId;
@@ -322,25 +360,69 @@ namespace Stytch.net.Models.Consumer
     [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BSSOSAMLCreateConnectionRequestIdentityProvider
     {
+        [EnumMember(Value = "classlink")]
+        CLASSLINK,
+        [EnumMember(Value = "cyberark")]
+        CYBERARK,
+        [EnumMember(Value = "duo")]
+        DUO,
         [EnumMember(Value = "generic")]
         GENERIC,
-        [EnumMember(Value = "okta")]
-        OKTA,
-        [EnumMember(Value = "microsoft-entra")]
-        MICROSOFTENTRA,
         [EnumMember(Value = "google-workspace")]
         GOOGLEWORKSPACE,
+        [EnumMember(Value = "jumpcloud")]
+        JUMPCLOUD,
+        [EnumMember(Value = "keycloak")]
+        KEYCLOAK,
+        [EnumMember(Value = "miniorange")]
+        MINIORANGE,
+        [EnumMember(Value = "microsoft-entra")]
+        MICROSOFTENTRA,
+        [EnumMember(Value = "okta")]
+        OKTA,
+        [EnumMember(Value = "onelogin")]
+        ONELOGIN,
+        [EnumMember(Value = "pingfederate")]
+        PINGFEDERATE,
+        [EnumMember(Value = "rippling")]
+        RIPPLING,
+        [EnumMember(Value = "salesforce")]
+        SALESFORCE,
+        [EnumMember(Value = "shibboleth")]
+        SHIBBOLETH,
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BSSOSAMLUpdateConnectionRequestIdentityProvider
     {
+        [EnumMember(Value = "classlink")]
+        CLASSLINK,
+        [EnumMember(Value = "cyberark")]
+        CYBERARK,
+        [EnumMember(Value = "duo")]
+        DUO,
         [EnumMember(Value = "generic")]
         GENERIC,
-        [EnumMember(Value = "okta")]
-        OKTA,
-        [EnumMember(Value = "microsoft-entra")]
-        MICROSOFTENTRA,
         [EnumMember(Value = "google-workspace")]
         GOOGLEWORKSPACE,
+        [EnumMember(Value = "jumpcloud")]
+        JUMPCLOUD,
+        [EnumMember(Value = "keycloak")]
+        KEYCLOAK,
+        [EnumMember(Value = "miniorange")]
+        MINIORANGE,
+        [EnumMember(Value = "microsoft-entra")]
+        MICROSOFTENTRA,
+        [EnumMember(Value = "okta")]
+        OKTA,
+        [EnumMember(Value = "onelogin")]
+        ONELOGIN,
+        [EnumMember(Value = "pingfederate")]
+        PINGFEDERATE,
+        [EnumMember(Value = "rippling")]
+        RIPPLING,
+        [EnumMember(Value = "salesforce")]
+        SALESFORCE,
+        [EnumMember(Value = "shibboleth")]
+        SHIBBOLETH,
     }
 }

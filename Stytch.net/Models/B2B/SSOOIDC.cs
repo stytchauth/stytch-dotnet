@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class B2BSSOOIDCCreateConnectionRequestOptions
     {
@@ -39,7 +39,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -49,9 +50,11 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
         /// <summary>
-        /// The identity provider of this connection. For OIDC, the accepted values are `generic`, `okta`, and
-        /// `microsoft-entra`. For SAML, the accepted values are `generic`, `okta`, `microsoft-entra`, and
-        /// `google-workspace`.
+        /// Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`,
+        /// `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`,
+        /// `rippling`, `salesforce`, `shibboleth`, or `generic`.
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
         public B2BSSOOIDCCreateConnectionRequestIdentityProvider IdentityProvider { get; set; }
@@ -92,7 +95,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -147,14 +151,24 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("jwks_url")]
         public string JWKSURL { get; set; }
         /// <summary>
-        /// The identity provider of this connection. For OIDC, the accepted values are `generic`, `okta`, and
-        /// `microsoft-entra`. For SAML, the accepted values are `generic`, `okta`, `microsoft-entra`, and
-        /// `google-workspace`.
+        /// Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`,
+        /// `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`,
+        /// `rippling`, `salesforce`, `shibboleth`, or `generic`.
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic.
         /// </summary>
         [JsonProperty("identity_provider")]
         public B2BSSOOIDCUpdateConnectionRequestIdentityProvider IdentityProvider { get; set; }
+        /// <summary>
+        /// Include a space-separated list of custom scopes that you'd like to include. Note that this list must be
+        /// URL encoded, e.g. the spaces must be expressed as %20.
+        /// </summary>
         [JsonProperty("custom_scopes")]
         public string CustomScopes { get; set; }
+        /// <summary>
+        /// An object that represents the attributes used to identify a Member. This object will map the IdP-defined
+        /// User attributes to Stytch-specific values, which will appear on the member's Trusted Metadata.
+        /// </summary>
         [JsonProperty("attribute_mapping")]
         public object AttributeMapping { get; set; }
         public B2BSSOOIDCUpdateConnectionRequest(string organizationId, string connectionId)
@@ -199,25 +213,69 @@ namespace Stytch.net.Models.Consumer
     [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BSSOOIDCCreateConnectionRequestIdentityProvider
     {
+        [EnumMember(Value = "classlink")]
+        CLASSLINK,
+        [EnumMember(Value = "cyberark")]
+        CYBERARK,
+        [EnumMember(Value = "duo")]
+        DUO,
         [EnumMember(Value = "generic")]
         GENERIC,
-        [EnumMember(Value = "okta")]
-        OKTA,
-        [EnumMember(Value = "microsoft-entra")]
-        MICROSOFTENTRA,
         [EnumMember(Value = "google-workspace")]
         GOOGLEWORKSPACE,
+        [EnumMember(Value = "jumpcloud")]
+        JUMPCLOUD,
+        [EnumMember(Value = "keycloak")]
+        KEYCLOAK,
+        [EnumMember(Value = "miniorange")]
+        MINIORANGE,
+        [EnumMember(Value = "microsoft-entra")]
+        MICROSOFTENTRA,
+        [EnumMember(Value = "okta")]
+        OKTA,
+        [EnumMember(Value = "onelogin")]
+        ONELOGIN,
+        [EnumMember(Value = "pingfederate")]
+        PINGFEDERATE,
+        [EnumMember(Value = "rippling")]
+        RIPPLING,
+        [EnumMember(Value = "salesforce")]
+        SALESFORCE,
+        [EnumMember(Value = "shibboleth")]
+        SHIBBOLETH,
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BSSOOIDCUpdateConnectionRequestIdentityProvider
     {
+        [EnumMember(Value = "classlink")]
+        CLASSLINK,
+        [EnumMember(Value = "cyberark")]
+        CYBERARK,
+        [EnumMember(Value = "duo")]
+        DUO,
         [EnumMember(Value = "generic")]
         GENERIC,
-        [EnumMember(Value = "okta")]
-        OKTA,
-        [EnumMember(Value = "microsoft-entra")]
-        MICROSOFTENTRA,
         [EnumMember(Value = "google-workspace")]
         GOOGLEWORKSPACE,
+        [EnumMember(Value = "jumpcloud")]
+        JUMPCLOUD,
+        [EnumMember(Value = "keycloak")]
+        KEYCLOAK,
+        [EnumMember(Value = "miniorange")]
+        MINIORANGE,
+        [EnumMember(Value = "microsoft-entra")]
+        MICROSOFTENTRA,
+        [EnumMember(Value = "okta")]
+        OKTA,
+        [EnumMember(Value = "onelogin")]
+        ONELOGIN,
+        [EnumMember(Value = "pingfederate")]
+        PINGFEDERATE,
+        [EnumMember(Value = "rippling")]
+        RIPPLING,
+        [EnumMember(Value = "salesforce")]
+        SALESFORCE,
+        [EnumMember(Value = "shibboleth")]
+        SHIBBOLETH,
     }
 }

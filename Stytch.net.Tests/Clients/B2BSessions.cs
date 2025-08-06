@@ -1,6 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 namespace Stytch.net.Tests.Clients;
 
@@ -81,7 +81,7 @@ public class B2BSessions : B2BTestBase
         var magicLinkRes = await authenticateResponseTask;
         var request = new B2BAuthenticateJwtLocalRequest(magicLinkRes.SessionJwt)
         {
-            AuthorizationCheck = new AuthorizationCheck
+            AuthorizationCheck = new B2BSessionsAuthorizationCheck
             {
                 OrganizationId = null,
                 ResourceId = null,
@@ -100,7 +100,7 @@ public class B2BSessions : B2BTestBase
         var magicLinkRes = await authenticateResponseTask;
         var request = new B2BAuthenticateJwtLocalRequest(magicLinkRes.SessionJwt)
         {
-            AuthorizationCheck = new AuthorizationCheck
+            AuthorizationCheck = new B2BSessionsAuthorizationCheck
             {
                 OrganizationId = "some-other-organization-id",
                 ResourceId = "stytch.self",
@@ -119,7 +119,7 @@ public class B2BSessions : B2BTestBase
         var magicLinkRes = await authenticateResponseTask;
         var request = new B2BAuthenticateJwtLocalRequest(magicLinkRes.SessionJwt)
         {
-            AuthorizationCheck = new AuthorizationCheck
+            AuthorizationCheck = new B2BSessionsAuthorizationCheck
             {
                 OrganizationId = "organization-test-007d9d4a-deac-4a87-ba0a-e6e8afba4d4b",
                 ResourceId = "stytch.self",

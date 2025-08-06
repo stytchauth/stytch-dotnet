@@ -3,21 +3,21 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class ProjectMetric
     {
-        [JsonProperty("count")]
-        public uint Count { get; set; }
         [JsonProperty("metric_type")]
         public ProjectMetricMetricType MetricType { get; set; }
+        [JsonProperty("count")]
+        public uint Count { get; set; }
     }
     public class ProjectMetricsRequest
     {

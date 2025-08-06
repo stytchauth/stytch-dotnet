@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class Argon2Config
     {
@@ -128,6 +128,12 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("key_length")]
         public int KeyLength { get; set; }
+        /// <summary>
+        /// The algorithm that was used to generate the HMAC hash. Accepted values are "sha512" and sha256".
+        /// Defaults to sha256.
+        /// </summary>
+        [JsonProperty("algorithm")]
+        public string Algorithm { get; set; }
     }
     public class SHA1Config
     {
@@ -151,7 +157,7 @@ namespace Stytch.net.Models.Consumer
         public string Salt { get; set; }
         /// <summary>
         /// The N value, also known as the iterations count. It must be a power of two greater than 1 and less than
-        /// 262,145. 
+        /// 262,145.
         ///       If your application's N parameter is larger than 262,144, please reach out to
         /// [support@stytch.com](mailto:support@stytch.com)
         /// </summary>
@@ -184,7 +190,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("email")]
         public string Email { get; set; }
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
@@ -196,16 +202,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
         /// </summary>
         [JsonProperty("session_duration_minutes")]
@@ -274,7 +280,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -291,23 +297,23 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("email")]
         public string Email { get; set; }
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
         /// </summary>
         [JsonProperty("session_duration_minutes")]
@@ -395,7 +401,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -463,12 +469,11 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
         /// <summary>
-        /// Whether to set the user's email as verified. This is a dangerous field. Incorrect use may lead to users
-        /// getting erroneously 
-        ///                 deduplicated into one user object. This flag should only be set if you can attest that
+        /// Whether to set the user's email as verified. This is a dangerous field, incorrect use may lead to users
+        /// getting erroneously
+        ///                 deduplicated into one User object. This flag should only be set if you can attest that
         /// the user owns the email address in question.
-        ///                 Access to this field is restricted. To enable it, please send us a note at
-        /// support@stytch.com.
+        ///                 
         /// </summary>
         [JsonProperty("set_email_verified")]
         public bool? SetEmailVerified { get; set; }
@@ -477,6 +482,27 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("name")]
         public UsersName Name { get; set; }
+        /// <summary>
+        /// The phone number of the user. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX).
+        /// </summary>
+        [JsonProperty("phone_number")]
+        public string PhoneNumber { get; set; }
+        /// <summary>
+        /// Whether to set the user's phone number as verified. This is a dangerous field, this flag should only be
+        /// set if you can attest that
+        ///    the user owns the phone number in question.
+        /// </summary>
+        [JsonProperty("set_phone_number_verified")]
+        public bool? SetPhoneNumberVerified { get; set; }
+        /// <summary>
+        /// If a new user is created, this will set an identifier that can be used in API calls wherever a user_id
+        /// is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a
+        /// maximum length of 128 characters.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+        [JsonProperty("roles")]
+        public List<string> Roles { get; set; }
         public PasswordsMigrateRequest(string email, string hash, PasswordsMigrateRequestHashType hashType)
         {
             this.Email = email;
@@ -529,7 +555,7 @@ namespace Stytch.net.Models.Consumer
     public class PasswordsStrengthCheckRequest
     {
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]

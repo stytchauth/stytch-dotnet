@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -23,11 +23,13 @@ namespace Stytch.net.Clients.B2B
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly OrganizationsMembersOAuthProviders OAuthProviders;
+        public readonly OrganizationsMembersConnectedApps ConnectedApps;
         public OrganizationsMembers(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
             OAuthProviders = new OrganizationsMembersOAuthProviders(_httpClient, _config);
+            ConnectedApps = new OrganizationsMembersConnectedApps(_httpClient, _config);
         }
 
         /// <summary>
@@ -128,7 +130,8 @@ namespace Stytch.net.Clients.B2B
         }
         /// <summary>
         /// Reactivates a deleted Member's status and its associated email status (if applicable) to active,
-        /// specified by `organization_id` and `member_id`.
+        /// specified by `organization_id` and `member_id`. This endpoint will only work for Members with at least
+        /// one verified email where their `email_address_verified` is `true`.
         /// </summary>
         public async Task<B2BOrganizationsMembersReactivateResponse> Reactivate(
             B2BOrganizationsMembersReactivateRequest request
@@ -338,7 +341,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Delete a Member's password.
+        /// Delete a Member's password. 
+        /// 
+        /// This endpoint only works for Organization-scoped passwords. For cross-org password Projects, use
+        /// [Require Password Reset By Email](https://stytch.com/docs/b2b/api/passwords-require-reset-by-email)
+        /// instead.
         /// </summary>
         public async Task<B2BOrganizationsMembersDeletePasswordResponse> DeletePassword(
             B2BOrganizationsMembersDeletePasswordRequest request
@@ -424,7 +431,11 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// 
+        /// Retrieve the saved OIDC access tokens and ID tokens for a member. After a successful OIDC login, Stytch
+        /// will save the 
+        /// issued access token and ID token from the identity provider. If a refresh token has been issued, Stytch
+        /// will refresh the 
+        /// access token automatically.
         /// </summary>
         public async Task<B2BOrganizationsMembersOIDCProvidersResponse> OIDCProviders(
             B2BOrganizationsMembersOIDCProviderInformationRequest request
@@ -477,7 +488,6 @@ namespace Stytch.net.Clients.B2B
         /// addresses allows them to be subsequently re-used by other Organization Members. Retired email addresses
         /// can be viewed
         /// on the [Member object](https://stytch.com/docs/b2b/api/member-object).
-        ///  %}
         /// </summary>
         public async Task<B2BOrganizationsMembersUnlinkRetiredEmailResponse> UnlinkRetiredEmail(
             B2BOrganizationsMembersUnlinkRetiredEmailRequest request
@@ -513,6 +523,114 @@ namespace Stytch.net.Clients.B2B
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<B2BOrganizationsMembersUnlinkRetiredEmailResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Starts a self-serve email update for a Member specified by their `organization_id` and `member_id`.
+        /// To perform a self-serve update, members must be active and have an active, verified email address.
+        /// 
+        /// The new email address must meet the following requirements:
+        /// 
+        /// - Must not be in use by another member (retired emails count as used until they are
+        /// [unlinked](https://stytch.com/docs/b2b/api/unlink-retired-member-email))
+        /// - Must not be updating for another member (i.e. two members cannot attempt to update to the same email
+        /// at once)
+        /// 
+        /// The member will receive an Email Magic Link that expires in 5 minutes. If they do not verify their new
+        /// email address in that timeframe, the email
+        /// will be freed up for other members to use.
+        /// </summary>
+        public async Task<B2BOrganizationsMembersStartEmailUpdateResponse> StartEmailUpdate(
+            B2BOrganizationsMembersStartEmailUpdateRequest request
+            , B2BOrganizationsMembersStartEmailUpdateRequestOptions options
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/start_email_update"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersStartEmailUpdateResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Member Get Connected Apps retrieves a list of Connected Apps with which the Member has successfully
+        /// completed an
+        /// authorization flow.
+        /// If the Member revokes a Connected App's access (e.g. via the Revoke Connected App endpoint) then the
+        /// Connected App will
+        /// no longer be returned in the response. A Connected App's access may also be revoked if the
+        /// Organization's allowed Connected
+        /// App policy changes.
+        /// </summary>
+        public async Task<B2BOrganizationsMembersGetConnectedAppsResponse> GetConnectedApps(
+            B2BOrganizationsMembersGetConnectedAppsRequest request
+            , B2BOrganizationsMembersGetConnectedAppsRequestOptions options
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/connected_apps"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersGetConnectedAppsResponse>(responseBody);
             }
             try
             {
@@ -612,4 +730,3 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
-

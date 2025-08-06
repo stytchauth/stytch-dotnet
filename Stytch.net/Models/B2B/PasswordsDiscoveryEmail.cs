@@ -3,69 +3,182 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Discovery.Email.Reset"/>..
+    /// </summary>
     public class B2BPasswordsDiscoveryEmailResetRequest
     {
+        /// <summary>
+        /// The password reset token to authenticate.
+        /// </summary>
         [JsonProperty("password_reset_token")]
         public string PasswordResetToken { get; set; }
+        /// <summary>
+        /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
+        /// spaces, emojis, non-English characters, etc.
+        /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
         [JsonProperty("pkce_code_verifier")]
         public string PkceCodeVerifier { get; set; }
-        [JsonProperty("locale")]
-        public string Locale { get; set; }
         public B2BPasswordsDiscoveryEmailResetRequest(string passwordResetToken, string password)
         {
             this.PasswordResetToken = passwordResetToken;
             this.Password = password;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Passwords.Discovery.Email.Reset"/>..
+    /// </summary>
     public class B2BPasswordsDiscoveryEmailResetResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The returned Intermediate Session Token contains a password factor associated with the Member. If this
+        /// value is non-empty, the member must complete an MFA step to finish logging in to the Organization. The
+        /// token can be used with the
+        /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
+        /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
+        /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. Password factors
+        /// are not transferable between Organizations, so the intermediate session token is not valid for use with
+        /// discovery endpoints.
+        /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
+        /// <summary>
+        /// The email address.
+        /// </summary>
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
+        /// <summary>
+        /// An array of `discovered_organization` objects tied to the `intermediate_session_token`, `session_token`,
+        /// or `session_jwt`. See the
+        /// [Discovered Organization Object](https://stytch.com/docs/b2b/api/discovered-organization-object) for
+        /// complete details.
+        ///       
+        ///   Note that Organizations will only appear here under any of the following conditions:
+        ///   1. The end user is already a Member of the Organization.
+        ///   2. The end user is invited to the Organization. 
+        ///   3. The end user can join the Organization because: 
+        ///   
+        ///       a) The Organization allows JIT provisioning.
+        ///       
+        ///       b) The Organizations' allowed domains list contains the Member's email domain.
+        ///       
+        ///       c) The Organization has at least one other Member with a verified email address with the same
+        /// domain as the end user (to prevent phishing attacks).
+        /// </summary>
         [JsonProperty("discovered_organizations")]
         public List<DiscoveredOrganization> DiscoveredOrganizations { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Discovery.Email.ResetStart"/>..
+    /// </summary>
     public class B2BPasswordsDiscoveryEmailResetStartRequest
     {
+        /// <summary>
+        /// The email address of the Member to start the email reset process for.
+        /// </summary>
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
+        /// <summary>
+        /// The URL that the Member clicks from the reset password link. This URL should be an endpoint in the
+        /// backend server that verifies the request by querying
+        ///   Stytch's authenticate endpoint and finishes the reset password flow. If this value is not passed, the
+        /// default `reset_password_redirect_url` that you set in your Dashboard is used.
+        ///   If you have not set a default `reset_password_redirect_url`, an error is returned.
+        /// </summary>
         [JsonProperty("reset_password_redirect_url")]
         public string ResetPasswordRedirectURL { get; set; }
+        /// <summary>
+        /// The URL that the end user clicks from the discovery Magic Link. This URL should be an endpoint in the
+        /// backend server that
+        ///   verifies the request by querying Stytch's discovery authenticate endpoint and continues the flow. If
+        /// this value is not passed, the default
+        ///   discovery redirect URL that you set in your Dashboard is used. If you have not set a default discovery
+        /// redirect URL, an error is returned.
+        /// </summary>
         [JsonProperty("discovery_redirect_url")]
         public string DiscoveryRedirectURL { get; set; }
+        /// <summary>
+        /// Use a custom template for reset password emails. By default, it will use your default email template.
+        /// The template must be a template using our built-in customizations or a custom HTML email for Passwords -
+        /// Reset Password.
+        /// </summary>
         [JsonProperty("reset_password_template_id")]
         public string ResetPasswordTemplateId { get; set; }
+        /// <summary>
+        /// Sets a time limit after which the email link to reset the member's password will no longer be valid. The
+        /// minimum allowed expiration is 5 minutes and the maximum is 10080 minutes (7 days). By default, the
+        /// expiration is 30 minutes.
+        /// </summary>
         [JsonProperty("reset_password_expiration_minutes")]
         public int? ResetPasswordExpirationMinutes { get; set; }
         [JsonProperty("pkce_code_challenge")]
         public string PkceCodeChallenge { get; set; }
+        /// <summary>
+        /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+        /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
+        /// 
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// 
+        /// Request support for additional languages
+        /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+        /// 
+        /// </summary>
         [JsonProperty("locale")]
         public string Locale { get; set; }
+        /// <summary>
+        /// Use a custom template for verification emails sent during password reset flows. When cross-organization
+        /// passwords are enabled for your Project, this template will be used the first time a user sets a password
+        /// via a
+        ///   password reset flow. By default, it will use your default email template. The template must be a
+        /// template using our built-in customizations or a custom HTML email for Passwords - Email Verification.
+        /// </summary>
+        [JsonProperty("verify_email_template_id")]
+        public string VerifyEmailTemplateId { get; set; }
         public B2BPasswordsDiscoveryEmailResetStartRequest(string emailAddress)
         {
             this.EmailAddress = emailAddress;
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.B2B.Passwords.Discovery.Email.ResetStart"/>..
+    /// </summary>
     public class B2BPasswordsDiscoveryEmailResetStartResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }

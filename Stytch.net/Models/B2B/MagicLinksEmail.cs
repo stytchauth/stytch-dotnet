@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class B2BMagicLinksEmailInviteRequestOptions
     {
@@ -29,7 +29,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -82,8 +83,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -98,6 +99,12 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("roles")]
         public List<string> Roles { get; set; }
+        /// <summary>
+        /// The expiration time, in minutes, for an invite email. If not accepted within this time frame, the invite
+        /// will need to be resent. Defaults to 10080 (1 week) with a minimum of 5 and a maximum of 10080.
+        /// </summary>
+        [JsonProperty("invite_expiration_minutes")]
+        public uint? InviteExpirationMinutes { get; set; }
         public B2BMagicLinksEmailInviteRequest(string organizationId, string emailAddress)
         {
             this.OrganizationId = organizationId;
@@ -144,7 +151,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -197,15 +205,29 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public LoginOrSignupRequestLocale Locale { get; set; }
+        public B2BMagicLinksEmailLoginOrSignupRequestLocale Locale { get; set; }
+        /// <summary>
+        /// The expiration time, in minutes, for a login Email Magic Link. If not authenticated within this time
+        /// frame, the email will need to be resent. Defaults to 60 (1 hour) with a minimum of 5 and a maximum of
+        /// 10080 (1 week).
+        /// </summary>
+        [JsonProperty("login_expiration_minutes")]
+        public uint? LoginExpirationMinutes { get; set; }
+        /// <summary>
+        /// The expiration time, in minutes, for a signup Email Magic Link. If not authenticated within this time
+        /// frame, the email will need to be resent. Defaults to 60 (1 hour) with a minimum of 5 and a maximum of
+        /// 10080 (1 week).
+        /// </summary>
+        [JsonProperty("signup_expiration_minutes")]
+        public uint? SignupExpirationMinutes { get; set; }
         public B2BMagicLinksEmailLoginOrSignupRequest(string organizationId, string emailAddress)
         {
             this.OrganizationId = organizationId;
@@ -261,9 +283,11 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum LoginOrSignupRequestLocale
+    public enum B2BMagicLinksEmailLoginOrSignupRequestLocale
     {
         [EnumMember(Value = "en")]
         EN,
@@ -271,5 +295,7 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
 }

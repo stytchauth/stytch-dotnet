@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 
 
@@ -101,7 +101,17 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
-        /// Search for Users within your Stytch Project. Submit an empty `query` in the request to return all Users.
+        /// Search for Users within your Stytch Project.
+        /// 
+        /// Use the `query` object to filter by different fields. See the `query.operands.filter_value`
+        /// documentation below for a list of available filters.
+        /// 
+        /// ### Export all User data
+        /// 
+        /// Submit an empty `query` in your Search Users request to return all of your Stytch Project's Users.
+        /// 
+        /// [This Github repository](https://github.com/stytchauth/stytch-node-export-users) contains a utility that
+        /// leverages the Search Users endpoint to export all of your User data to a CSV or JSON file.
         /// </summary>
         public async Task<UsersSearchResponse> Search(
             UsersSearchRequest request
@@ -584,8 +594,87 @@ namespace Stytch.net.Clients.Consumer
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+        /// <summary>
+        /// User Get Connected Apps retrieves a list of Connected Apps with which the User has successfully
+        /// completed an
+        /// authorization flow.
+        /// If the User revokes a Connected App's access (e.g. via the Revoke Connected App endpoint) then the
+        /// Connected App will
+        /// no longer be returned in the response.
+        /// </summary>
+        public async Task<UsersConnectedAppsResponse> ConnectedApps(
+            UsersConnectedAppsRequest request
+        )
+        {
+            var method = HttpMethod.Get;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/users/{request.UserId}/connected_apps"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<UsersConnectedAppsResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Revoke Connected App revokes a Connected App's access to a User and revokes all active tokens that have
+        /// been created
+        /// on the User's behalf. New tokens cannot be created until the User completes a new authorization flow
+        /// with the
+        /// Connected App.
+        /// </summary>
+        public async Task<UsersRevokeResponse> Revoke(
+            UsersRevokeRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/users/{request.UserId}/connected_apps/{request.ConnectedAppId}/revoke"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<UsersRevokeResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
 
     }
 
 }
-

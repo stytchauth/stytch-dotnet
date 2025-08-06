@@ -1,14 +1,14 @@
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 
 namespace Stytch.net.Tests.Utility;
 
 public class RbacPolicy
 {
-    private class MockPolicyGetter : net.Utility.IPolicyGetter
+    private class MockPolicyGetter : net.Utility.IB2BPolicyGetter
     {
-        public Policy MockPolicy { get; set; }
+        public B2BRBACPolicy MockPolicy { get; set; }
 
-        public MockPolicyGetter(Policy policy)
+        public MockPolicyGetter(B2BRBACPolicy policy)
         {
             MockPolicy = policy;
         }
@@ -22,73 +22,73 @@ public class RbacPolicy
         }
     }
 
-    private Policy MockPolicy = new Policy()
+    private B2BRBACPolicy MockPolicy = new B2BRBACPolicy()
     {
-        Resources = new List<PolicyResource>()
+        Resources = new List<B2BRBACPolicyResource>()
         {
-            new PolicyResource()
+            new B2BRBACPolicyResource()
             {
                 ResourceId = "documents",
                 Actions = new List<string>() { "create", "read", "write", "delete" }
             },
-            new PolicyResource()
+            new B2BRBACPolicyResource()
             {
                 ResourceId = "images",
                 Actions = new List<string>() { "create", "read", "delete" }
             }
         },
-        Roles = new List<PolicyRole>()
+        Roles = new List<B2BRBACPolicyRole>()
         {
-            new PolicyRole
+            new B2BRBACPolicyRole
             {
                 RoleId = "default",
-                Permissions = new List<PolicyRolePermission>() { },
+                Permissions = new List<B2BRBACPolicyRolePermission>() { },
             },
-            new PolicyRole
+            new B2BRBACPolicyRole
             {
                 RoleId = "organization_admin",
-                Permissions = new List<PolicyRolePermission>()
+                Permissions = new List<B2BRBACPolicyRolePermission>()
                 {
-                    new PolicyRolePermission()
+                    new B2BRBACPolicyRolePermission()
                     {
                         Actions = new List<string>() { "*" },
                         ResourceId = "documents",
                     },
-                    new PolicyRolePermission()
+                    new B2BRBACPolicyRolePermission()
                     {
                         Actions = new List<string>() { "*" },
                         ResourceId = "images",
                     }
                 }
             },
-            new PolicyRole
+            new B2BRBACPolicyRole
             {
                 RoleId = "editor",
-                Permissions = new List<PolicyRolePermission>()
+                Permissions = new List<B2BRBACPolicyRolePermission>()
                 {
-                    new PolicyRolePermission()
+                    new B2BRBACPolicyRolePermission()
                     {
                         Actions = new List<string>() { "read", "write" },
                         ResourceId = "documents",
                     },
-                    new PolicyRolePermission()
+                    new B2BRBACPolicyRolePermission()
                     {
                         Actions = new List<string>() { "create", "read", "delete" },
                         ResourceId = "images",
                     }
                 }
             },
-            new PolicyRole
+            new B2BRBACPolicyRole
             {
                 RoleId = "reader",
-                Permissions = new List<PolicyRolePermission>()
+                Permissions = new List<B2BRBACPolicyRolePermission>()
                 {
-                    new PolicyRolePermission()
+                    new B2BRBACPolicyRolePermission()
                     {
                         Actions = new List<string>() { "read", },
                         ResourceId = "documents",
                     },
-                    new PolicyRolePermission()
+                    new B2BRBACPolicyRolePermission()
                     {
                         Actions = new List<string>() { "read" },
                         ResourceId = "images",

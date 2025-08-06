@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class B2BOAuthProviderValues
     {
@@ -59,16 +59,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
         /// 60 minute duration. If you don't want
         ///   to use the Stytch session product, you can ignore the session fields in the response.
@@ -180,6 +180,9 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("organization")]
         public Organization Organization { get; set; }
+        /// <summary>
+        /// This field is deprecated.
+        /// </summary>
         [JsonProperty("reset_sessions")]
         public bool ResetSessions { get; set; }
         /// <summary>
@@ -195,11 +198,12 @@ namespace Stytch.net.Models.Consumer
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. It can also be used with the
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be
+        /// used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// to join a specific Organization that allows the factors represented by the intermediate session token;
         /// or the
-        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member.
+        /// [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -229,6 +233,9 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("mfa_required")]
         public MfaRequired MfaRequired { get; set; }
+        /// <summary>
+        /// Information about the primary authentication requirements of the Organization.
+        /// </summary>
         [JsonProperty("primary_required")]
         public PrimaryRequired PrimaryRequired { get; set; }
     }
@@ -242,5 +249,15 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
+        [EnumMember(Value = "it")]
+        IT,
+        [EnumMember(Value = "de-DE")]
+        DEDE,
+        [EnumMember(Value = "zh-Hans")]
+        ZHHANS,
+        [EnumMember(Value = "ca-ES")]
+        CAES,
     }
 }

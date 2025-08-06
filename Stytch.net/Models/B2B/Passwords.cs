@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     public class LudsFeedback
     {
@@ -71,7 +71,8 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -82,7 +83,7 @@ namespace Stytch.net.Models.Consumer
         public string EmailAddress { get; set; }
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
-        /// spaces, emojis, non-English characers, etc.
+        /// spaces, emojis, non-English characters, etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
@@ -93,16 +94,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a
         /// 60 minute duration. If you don't want
         ///   to use the Stytch session product, you can ignore the session fields in the response.
@@ -206,8 +207,9 @@ namespace Stytch.net.Models.Consumer
         /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms),
         /// [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or
         /// [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an
-        /// MFA flow and log in to the Organization. Password factors are not transferable between Organizations, so
-        /// the intermediate session token is not valid for use with discovery endpoints.
+        /// MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. Password factors
+        /// are not transferable between Organizations, so the intermediate session token is not valid for use with
+        /// discovery endpoints.
         /// </summary>
         [JsonProperty("intermediate_session_token")]
         public string IntermediateSessionToken { get; set; }
@@ -233,6 +235,11 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("mfa_required")]
         public MfaRequired MfaRequired { get; set; }
+        /// <summary>
+        /// Information about the primary authentication requirements of the Organization.
+        /// </summary>
+        [JsonProperty("primary_required")]
+        public PrimaryRequired PrimaryRequired { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Passwords.Migrate"/>..
@@ -250,14 +257,15 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("hash")]
         public string Hash { get; set; }
         /// <summary>
-        /// The password hash used. Currently `bcrypt`, `scrypt`, `argon2i`, `argon2id`, `md_5`, `sha_1`, and
+        /// The password hash used. Currently `bcrypt`, `scrypt`, `argon_2i`, `argon_2id`, `md_5`, `sha_1`, and
         /// `pbkdf_2` are supported.
         /// </summary>
         [JsonProperty("hash_type")]
         public B2BPasswordsMigrateRequestHashType HashType { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value.
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -328,6 +336,28 @@ namespace Stytch.net.Models.Consumer
         /// </summary>
         [JsonProperty("preserve_existing_sessions")]
         public bool? PreserveExistingSessions { get; set; }
+        /// <summary>
+        /// The Member's phone number. A Member may only have one phone number. The phone number should be in E.164
+        /// format (i.e. +1XXXXXXXXXX).
+        /// </summary>
+        [JsonProperty("mfa_phone_number")]
+        public string MfaPhoneNumber { get; set; }
+        /// <summary>
+        /// Whether to set the user's phone number as verified. This is a dangerous field. This flag should only be
+        /// set if you can attest that
+        ///    the user owns the phone number in question.
+        /// </summary>
+        [JsonProperty("set_phone_number_verified")]
+        public bool? SetPhoneNumberVerified { get; set; }
+        /// <summary>
+        /// If a new member is created, this will set an identifier that can be used in API calls wherever a
+        /// member_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters
+        /// with a maximum length of 128 characters. External IDs must be unique within an organization, but may be
+        /// reused across different organizations in the same project. Note that if a member already exists, this
+        /// field will be ignored.
+        /// </summary>
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
         public B2BPasswordsMigrateRequest(string emailAddress, string hash, B2BPasswordsMigrateRequestHashType hashType, string organizationId)
         {
             this.EmailAddress = emailAddress;
@@ -382,7 +412,7 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g.
-        /// spaces, emojis, non-English characers, etc.
+        /// spaces, emojis, non-English characters, etc.
         /// </summary>
         [JsonProperty("password")]
         public string Password { get; set; }
@@ -472,6 +502,8 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum B2BPasswordsMigrateRequestHashType

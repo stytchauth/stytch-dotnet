@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stytch.net.Exceptions;
-using Stytch.net.Models.Consumer;
+using Stytch.net.Models;
 using JsonException = Newtonsoft.Json.JsonException;
 
 
@@ -178,21 +178,30 @@ namespace Stytch.net.Clients.B2B
         /// Use this endpoint to exchange a Member's existing session for another session in a different
         /// Organization. This can be used to accept an invite, but not to create a new member via domain matching.
         /// 
-        /// To create a new member via domain matching, use the
+        /// To create a new member via email domain JIT Provisioning, use the
         /// [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) flow
         /// instead.
         /// 
-        /// Only Email Magic Link, OAuth, and SMS OTP factors can be transferred between sessions. Other
-        /// authentication factors, such as password factors, will not be transferred to the new session.
-        /// Any OAuth Tokens owned by the Member will not be transferred to the new Organization.
-        /// SMS OTP factors can be used to fulfill MFA requirements for the target Organization if both the original
-        /// and target Member have the same phone number and the phone number is verified for both Members.
+        /// If the user **has** already satisfied the authentication requirements of the Organization they are
+        /// trying to switch into, this API will return `member_authenticated: true` and a `session_token` and
+        /// `session_jwt`.
         /// 
-        /// If the Member is required to complete MFA to log in to the Organization, the returned value of
-        /// `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.
-        /// The `intermediate_session_token` can be passed into the
-        /// [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms) to complete the
-        /// MFA step and acquire a full member session.
+        /// If the user **has not** satisfied the primary or secondary authentication requirements of the
+        /// Organization they are attempting to switch into, this API will return `member_authenticated: false` and
+        /// an `intermediate_session_token`.
+        /// 
+        /// If `primary_required` is set, prompt the user to fulfill the Organization's auth requirements using the
+        /// options returned in `primary_required.allowed_auth_methods`.
+        /// 
+        /// If `primary_required` is null and `mfa_required` is set, check `mfa_required.member_options` to
+        /// determine if the Member has SMS OTP or TOTP set up for MFA and prompt accordingly. If the Member has SMS
+        /// OTP, check `mfa_required.secondary_auth_initiated` to see if the OTP has already been sent.
+        /// 
+        /// Include the `intermediate_session_token` returned above when calling the `authenticate()` method that
+        /// the user needed to perform. Once the user has completed the authentication requirements they were
+        /// missing, they will be granted a full `session_token` and `session_jwt` to indicate they have
+        /// successfully logged into the Organization.
+        /// 
         /// The `intermediate_session_token` can also be used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// or the
@@ -236,11 +245,106 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
-        /// Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo
-        /// endpoint defined in your Stytch Project settings in the [Dashboard](/dashboard), and then perform a
-        /// lookup using the `session_token`. If the response contains a valid email address, Stytch will attempt to
-        /// match that email address with an existing Member in your Organization and create a Stytch Session. You
-        /// will need to create the member before using this endpoint.
+        /// Use this endpoint to exchange a Connected Apps Access Token back into a Member Session for the
+        /// underlying Member. 
+        /// This session can be used with the Stytch SDKs and APIs.
+        /// 
+        /// The Access Token must contain the `full_access` scope (only available to First Party clients) and must
+        /// not be more than 5 minutes old. Access Tokens may only be exchanged a single time. 
+        /// 
+        /// The Member Session returned will be the same Member Session that was active in your application (the
+        /// authorizing party) during the initial authorization flow.
+        /// 
+        /// Because the Member previously completed MFA and satisfied all Organization authentication requirements
+        /// at the time of the original Access Token issuance, this endpoint will never return an
+        /// `intermediate_session_token` or require MFA.
+        /// </summary>
+        public async Task<B2BSessionsExchangeAccessTokenResponse> ExchangeAccessToken(
+            B2BSessionsExchangeAccessTokenRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/sessions/exchange_access_token"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BSessionsExchangeAccessTokenResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Exchange an auth token issued by a trusted identity provider for a Stytch session. You must first
+        /// register a Trusted Auth Token profile in the Stytch dashboard
+        /// [here](https://stytch.com/docs/dashboard/trusted-auth-tokens).  If a session token or session JWT is
+        /// provided, it will add the trusted auth token as an authentication factor to the existing session.
+        /// </summary>
+        public async Task<B2BSessionsAttestResponse> Attest(
+            B2BSessionsAttestRequest request
+        )
+        {
+            var method = HttpMethod.Post;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/sessions/attest"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BSessionsAttestResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
+        /// Migrate a session from an external OIDC compliant endpoint.
+        /// Stytch will call the external UserInfo endpoint defined in your Stytch Project settings in the
+        /// [Dashboard](https://stytch.com/docs/dashboard), and then perform a lookup using the `session_token`.
+        /// <!-- FIXME more specific dashboard link-->
+        /// If the response contains a valid email address, Stytch will attempt to match that email address with an
+        /// existing Member in your Organization and create a Stytch Session.
+        /// You will need to create the member before using this endpoint.
         /// </summary>
         public async Task<B2BSessionsMigrateResponse> Migrate(
             B2BSessionsMigrateRequest request
@@ -281,19 +385,19 @@ namespace Stytch.net.Clients.B2B
         /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
         /// 
-        /// JWKS are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key set, and both
-        /// key sets will be returned by this endpoint for a period of 1 month. 
+        /// Within the JWKS, the JSON Web Keys are rotated every ~6 months. Upon rotation, new JWTs will be signed
+        /// using the new key, and both keys will be returned by this endpoint for a period of 1 month.
         /// 
         /// JWTs have a set lifetime of 5 minutes, so there will be a 5 minute period where some JWTs will be signed
-        /// by the old JWKS, and some JWTs will be signed by the new JWKS. The correct JWKS to use for validation is
-        /// determined by matching the `kid` value of the JWT and JWKS.  
+        /// by the old keys, and some JWTs will be signed by the new keys. The correct key to use for validation is
+        /// determined by matching the `kid` value of the JWT and key.
         /// 
-        /// If you're using one of our [backend SDKs](https://stytch.com/docs/b2b/sdks), the JWKS roll will be
-        /// handled for you.
+        /// If you're using one of our [backend SDKs](https://stytch.com/docs/b2b/sdks), the JSON Web Key (JWK)
+        /// rotation will be handled for you.
         /// 
-        /// If you're using your own JWT validation library, many have built-in support for JWKS rotation, and
-        /// you'll just need to supply this API endpoint. If not, your application should decide which JWKS to use
-        /// for validation by inspecting the `kid` value.
+        /// If you're using your own JWT validation library, many have built-in support for JWK rotation, and you'll
+        /// just need to supply this API endpoint. If not, your application should decide which JWK to use for
+        /// validation by inspecting the `kid` value.
         /// 
         /// See our
         /// [How to use Stytch Session JWTs](https://stytch.com/docs/b2b/guides/sessions/resources/using-jwts) guide
@@ -338,7 +442,7 @@ namespace Stytch.net.Clients.B2B
         /// If an AuthorizationCheck param is passed in, RBAC authorization will be performed as well.
         /// </summary>
         public async Task<MemberSession> AuthenticateJwt(
-            B2BAuthenticateJwtRequest request)
+          B2BAuthenticateJwtRequest request)
         {
             try
             {
@@ -387,7 +491,7 @@ namespace Stytch.net.Clients.B2B
         }
 
         // PolicyGetter is a shim class that forces the RBAC codegen'd class to implement IPolicyGetter
-        private class PolicyGetter : RBAC, Utility.IPolicyGetter
+        private class PolicyGetter : RBAC, Utility.IB2BPolicyGetter
         {
             public PolicyGetter(HttpClient client, ClientConfig config) : base(client, config)
             {
@@ -401,7 +505,7 @@ namespace Stytch.net.Clients.B2B
         /// <exception cref="StytchTenancyMismatchException">When the requested organization ID does not match the organization ID of the member in the JWT</exception>
         /// <exception cref="StytchInvalidPermissionsException">When the member does not have permission to perform the desired action on the requested resource</exception>
         public async Task<MemberSession> AuthenticateJwtLocal(
-            B2BAuthenticateJwtLocalRequest request)
+          B2BAuthenticateJwtLocalRequest request)
         {
             var res = await Utility.AuthenticateJwtLocal(_httpClient, _config, new Utility.AuthenticateJwtParams
             {
@@ -448,4 +552,3 @@ namespace Stytch.net.Clients.B2B
     }
 
 }
-

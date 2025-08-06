@@ -3,14 +3,14 @@
 // Only modify code within MANUAL() sections
 // or your changes may be overwritten later!
 // !!!
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
-namespace Stytch.net.Models.Consumer
+namespace Stytch.net.Models
 {
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Passwords.Email.Reset"/>..
@@ -19,16 +19,16 @@ namespace Stytch.net.Models.Consumer
     {
         /// <summary>
         /// The Passwords `token` from the `?token=` query parameter in the URL.
-        ///       
+        /// 
         ///       In the redirect URL, the `stytch_token_type` will be `login` or `reset_password`.
         /// 
         ///       See examples and read more about redirect URLs
-        /// [here](https://stytch.com/docs/guides/dashboard/redirect-urls).
+        /// [here](https://stytch.com/docs/workspace-management/redirect-urls).
         /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
         /// <summary>
-        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characers,
+        /// The password for the user. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters,
         /// etc.
         /// </summary>
         [JsonProperty("password")]
@@ -40,16 +40,16 @@ namespace Stytch.net.Models.Consumer
         public string SessionToken { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
-        /// already exist, 
+        /// already exist,
         ///   returning both an opaque `session_token` and `session_jwt` for this session. Remember that the
         /// `session_jwt` will have a fixed lifetime of
         ///   five minutes regardless of the underlying session duration, and will need to be refreshed over time.
         /// 
         ///   This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).
-        ///   
+        /// 
         ///   If a `session_token` or `session_jwt` is provided then a successful authentication will continue to
         /// extend the session this many minutes.
-        ///   
+        /// 
         ///   If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created.
         /// </summary>
         [JsonProperty("session_duration_minutes")]
@@ -76,7 +76,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -133,7 +134,7 @@ namespace Stytch.net.Models.Consumer
         /// If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll
         /// receive a full Session object in the response.
         /// 
-        ///   See [GET sessions](https://stytch.com/docs/api/session-get) for complete response fields.
+        ///   See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.
         ///   
         /// </summary>
         [JsonProperty("session")]
@@ -150,18 +151,18 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("email")]
         public string Email { get; set; }
         /// <summary>
-        /// The url that the user clicks from the password reset email to finish the reset password flow. 
-        ///   This should be a url that your app receives and parses before showing your app's reset password page. 
+        /// The url that the user clicks from the password reset email to finish the reset password flow.
+        ///   This should be a url that your app receives and parses before showing your app's reset password page.
         ///   After the user submits a new password to your app, it should send an API request to complete the
-        /// password reset process. 
+        /// password reset process.
         ///   If this value is not passed, the default reset password redirect URL that you set in your Dashboard is
-        /// used. 
+        /// used.
         ///   If you have not set a default reset password redirect URL, an error is returned.
         /// </summary>
         [JsonProperty("reset_password_redirect_url")]
         public string ResetPasswordRedirectURL { get; set; }
         /// <summary>
-        /// Set the expiration for the password reset, in minutes. By default, it expires in 30 minutes. 
+        /// Set the expiration for the password reset, in minutes. By default, it expires in 30 minutes.
         ///   The minimum expiration is 5 minutes and the maximum is 7 days (10080 mins).
         /// </summary>
         [JsonProperty("reset_password_expiration_minutes")]
@@ -173,7 +174,8 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("code_challenge")]
         public string CodeChallenge { get; set; }
         /// <summary>
-        /// Provided attributes help with fraud detection.
+        /// Provided attributes to help with fraud detection. These values are pulled and passed into Stytch
+        /// endpoints by your application.
         /// </summary>
         [JsonProperty("attributes")]
         public Attributes Attributes { get; set; }
@@ -182,8 +184,9 @@ namespace Stytch.net.Models.Consumer
         /// should be a route in your application which will run `oauth.authenticate` (see below) and finish the
         /// login.
         /// 
-        ///   The URL must be configured as a Login URL in the [Redirect URL page](/dashboard/redirect-urls). If the
-        /// field is not specified, the default Login URL will be used.
+        ///   The URL must be configured as a Login URL in the
+        /// [Redirect URL page](https://stytch.com/docs/dashboard/redirect-urls). If the field is not specified, the
+        /// default Login URL will be used.
         /// </summary>
         [JsonProperty("login_redirect_url")]
         public string LoginRedirectURL { get; set; }
@@ -191,8 +194,8 @@ namespace Stytch.net.Models.Consumer
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
-        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese
-        /// (`"pt-br"`); if no value is provided, the copy defaults to English.
+        /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
+        /// Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
         /// 
         /// Request support for additional languages
         /// [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
@@ -201,7 +204,7 @@ namespace Stytch.net.Models.Consumer
         [JsonProperty("locale")]
         public PasswordsEmailResetStartRequestLocale Locale { get; set; }
         /// <summary>
-        /// Use a custom template for password reset emails. By default, it will use your default email template. 
+        /// Use a custom template for password reset emails. By default, it will use your default email template.
         ///   The template must be a template using our built-in customizations or a custom HTML email for Passwords
         /// - Password reset.
         /// </summary>
@@ -250,5 +253,7 @@ namespace Stytch.net.Models.Consumer
         ES,
         [EnumMember(Value = "pt-br")]
         PTBR,
+        [EnumMember(Value = "fr")]
+        FR,
     }
 }
