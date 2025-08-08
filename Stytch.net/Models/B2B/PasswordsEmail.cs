@@ -35,7 +35,7 @@ namespace Stytch.net.Models
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug here as a convenience.
+        /// organization_slug or organization_external_id here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -56,6 +56,10 @@ namespace Stytch.net.Models
     /// </summary>
     public class B2BPasswordsEmailRequireResetResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         /// <summary>
@@ -275,7 +279,7 @@ namespace Stytch.net.Models
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug here as a convenience.
+        /// organization_slug or organization_external_id here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }

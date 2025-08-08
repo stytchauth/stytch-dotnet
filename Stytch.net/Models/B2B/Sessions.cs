@@ -16,9 +16,8 @@ namespace Stytch.net.Models
     public class B2BSessionsAuthorizationCheck
     {
         /// <summary>
-        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug here as a convenience.
+        /// Globally unique UUID that identifies a specific Organization. The Organization's ID must match the
+        /// Member's Organization
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -26,7 +25,7 @@ namespace Stytch.net.Models
         /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
         /// 
         ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
-        /// default Resources with reserved  `resource_id`s. These include:
+        /// default Resources with reserved `resource_id`s. These include:
         /// 
         ///   * `stytch.organization`
         ///   * `stytch.member`
@@ -49,8 +48,16 @@ namespace Stytch.net.Models
     }
     public class B2BSessionsAuthorizationVerdict
     {
+        /// <summary>
+        /// Whether the Member was authorized to perform the specified action on the specified Resource. Always true
+        /// if the request succeeds.
+        /// </summary>
         [JsonProperty("authorized")]
         public bool Authorized { get; set; }
+        /// <summary>
+        /// The complete list of Roles that gave the Member permission to perform the specified action on the
+        /// specified Resource.
+        /// </summary>
         [JsonProperty("granting_roles")]
         public List<string> GrantingRoles { get; set; }
     }
@@ -107,6 +114,12 @@ namespace Stytch.net.Models
         public string OrganizationId { get; set; }
         [JsonProperty("roles")]
         public List<string> Roles { get; set; }
+        /// <summary>
+        /// The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following
+        /// reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an
+        /// organization_id is expected in a path or request parameter, you may also use the organization_slug as a
+        /// convenience.
+        /// </summary>
         [JsonProperty("organization_slug")]
         public string OrganizationSlug { get; set; }
         /// <summary>
@@ -355,8 +368,7 @@ namespace Stytch.net.Models
         public int StatusCode { get; set; }
         /// <summary>
         /// If an `authorization_check` is provided in the request and the check succeeds, this field will return
-        ///   the complete list of Roles that gave the Member permission to perform the specified action on the
-        /// specified Resource.
+        ///   information about why the Member was granted permission.
         /// </summary>
         [JsonProperty("verdict")]
         public B2BSessionsAuthorizationVerdict Verdict { get; set; }
@@ -461,7 +473,7 @@ namespace Stytch.net.Models
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug here as a convenience.
+        /// organization_slug or organization_external_id here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -654,7 +666,7 @@ namespace Stytch.net.Models
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug here as a convenience.
+        /// organization_slug or organization_external_id here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -707,7 +719,7 @@ namespace Stytch.net.Models
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug here as a convenience.
+        /// organization_slug or organization_external_id here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }

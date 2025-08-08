@@ -34,23 +34,49 @@ namespace Stytch.net.Models
     public class AuthenticationFactor
     {
         /// <summary>
-        /// The type of authentication factor. The possible values are: `magic_link`, `otp`,
-        ///        `oauth`, `password`, `email_otp`, or `sso` .
+        /// The type of authentication factor. The possible values are: `email_otp`, `impersonated`, `imported`,
+        ///        `magic_link`, `oauth`, `otp`, `password`, `recovery_codes`, `sso`, `trusted_auth_token`, or
+        /// `totp`.
         /// </summary>
         [JsonProperty("type")]
         public AuthenticationFactorType Type { get; set; }
         /// <summary>
         /// The method that was used to deliver the authentication factor. The possible values depend on the `type`:
         ///      
+        ///       `email_otp` – Only `email`.
+        ///      
+        ///       `impersonated` – Only `impersonation`.
+        ///       
+        ///       `imported` – Only `imported_auth0`.
+        ///      
         ///       `magic_link` – Only `email`.
         ///      
-        ///       `otp` –  Either `sms` or `email` .
+        ///       `oauth` – The delivery method is determined by the specific OAuth provider used. The possible
+        /// values are `oauth_google`, `oauth_microsoft`, `oauth_hubspot`, `oauth_slack`, or `oauth_github`.
+        ///       
+        ///         In addition, you may see an 'exchange' delivery method when a non-email-verifying OAuth factor
+        /// originally authenticated in one organization is exchanged for a factor in another organization.
+        ///         This can happen during authentication flows such as
+        /// [session exchange](https://stytch.com/docs/b2b/api/exchange-session).
+        ///         The non-email-verifying OAuth providers are Hubspot, Slack, and Github.
+        ///         Google is also considered non-email-verifying when the HD claim is empty.
+        ///         The possible exchange values are `oauth_exchange_google`, `oauth_exchange_hubspot`,
+        /// `oauth_exchange_slack`, or `oauth_exchange_github`.
+        ///        
+        ///         The final possible value is `oauth_access_token_exchange`, if this factor came from an
+        /// [access token exchange flow](https://stytch.com/docs/b2b/api/connected-app-access-token-exchange).
         ///      
-        ///       `oauth` – Either `oauth_google` or `oauth_microsoft`.
+        ///       `otp` –  Only `sms`.
         ///      
         ///       `password` – Only `knowledge`.
         ///      
+        ///       `recovery_codes` – Only `recovery_code`.
+        ///      
         ///       `sso` – Either `sso_saml` or `sso_oidc`.
+        ///      
+        ///       `trusted_auth_token` – Only `trusted_token_exchange`.
+        ///      
+        ///       `totp` – Only `authenticator_app`.
         ///       
         /// </summary>
         [JsonProperty("delivery_method")]
@@ -99,6 +125,9 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("authenticator_app_factor")]
         public AuthenticatorAppFactor AuthenticatorAppFactor { get; set; }
+        /// <summary>
+        /// Information about the Github OAuth factor, if one is present.
+        /// </summary>
         [JsonProperty("github_oauth_factor")]
         public GithubOAuthFactor GithubOAuthFactor { get; set; }
         [JsonProperty("recovery_code_factor")]
@@ -125,6 +154,9 @@ namespace Stytch.net.Models
         public LinkedInOAuthFactor LinkedInOAuthFactor { get; set; }
         [JsonProperty("shopify_oauth_factor")]
         public ShopifyOAuthFactor ShopifyOAuthFactor { get; set; }
+        /// <summary>
+        /// Information about the Slack OAuth factor, if one is present.
+        /// </summary>
         [JsonProperty("slack_oauth_factor")]
         public SlackOAuthFactor SlackOAuthFactor { get; set; }
         [JsonProperty("snapchat_oauth_factor")]
@@ -157,14 +189,29 @@ namespace Stytch.net.Models
         public SalesforceOAuthFactor SalesforceOAuthFactor { get; set; }
         [JsonProperty("yahoo_oauth_factor")]
         public YahooOAuthFactor YahooOAuthFactor { get; set; }
+        /// <summary>
+        /// Information about the Hubspot OAuth factor, if one is present.
+        /// </summary>
         [JsonProperty("hubspot_oauth_factor")]
         public HubspotOAuthFactor HubspotOAuthFactor { get; set; }
+        /// <summary>
+        /// Information about the Slack OAuth Exchange factor, if one is present.
+        /// </summary>
         [JsonProperty("slack_oauth_exchange_factor")]
         public SlackOAuthExchangeFactor SlackOAuthExchangeFactor { get; set; }
+        /// <summary>
+        /// Information about the Hubspot OAuth Exchange factor, if one is present.
+        /// </summary>
         [JsonProperty("hubspot_oauth_exchange_factor")]
         public HubspotOAuthExchangeFactor HubspotOAuthExchangeFactor { get; set; }
+        /// <summary>
+        /// Information about the Github OAuth Exchange factor, if one is present.
+        /// </summary>
         [JsonProperty("github_oauth_exchange_factor")]
         public GithubOAuthExchangeFactor GithubOAuthExchangeFactor { get; set; }
+        /// <summary>
+        /// Information about the Google OAuth Exchange factor, if one is present.
+        /// </summary>
         [JsonProperty("google_oauth_exchange_factor")]
         public GoogleOAuthExchangeFactor GoogleOAuthExchangeFactor { get; set; }
         /// <summary>
@@ -172,8 +219,14 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("impersonated_factor")]
         public ImpersonatedFactor ImpersonatedFactor { get; set; }
+        /// <summary>
+        /// Information about the access token exchange factor, if one is present.
+        /// </summary>
         [JsonProperty("oauth_access_token_exchange_factor")]
         public OAuthAccessTokenExchangeFactor OAuthAccessTokenExchangeFactor { get; set; }
+        /// <summary>
+        /// Information about the trusted auth token factor, if one is present.
+        /// </summary>
         [JsonProperty("trusted_auth_token_factor")]
         public TrustedAuthTokenFactor TrustedAuthTokenFactor { get; set; }
     }
@@ -273,20 +326,36 @@ namespace Stytch.net.Models
     }
     public class GithubOAuthExchangeFactor
     {
+        /// <summary>
+        /// The globally unique UUID of the Member's email.
+        /// </summary>
         [JsonProperty("email_id")]
         public string EmailId { get; set; }
     }
     public class GithubOAuthFactor
     {
+        /// <summary>
+        /// The unique ID of an OAuth registration.
+        /// </summary>
         [JsonProperty("id")]
         public string Id { get; set; }
+        /// <summary>
+        /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
+        /// "Subject field" in OAuth protocols.
+        /// </summary>
         [JsonProperty("provider_subject")]
         public string ProviderSubject { get; set; }
+        /// <summary>
+        /// The globally unique UUID of the Member's email.
+        /// </summary>
         [JsonProperty("email_id")]
         public string EmailId { get; set; }
     }
     public class GoogleOAuthExchangeFactor
     {
+        /// <summary>
+        /// The globally unique UUID of the Member's email.
+        /// </summary>
         [JsonProperty("email_id")]
         public string EmailId { get; set; }
     }
@@ -311,15 +380,28 @@ namespace Stytch.net.Models
     }
     public class HubspotOAuthExchangeFactor
     {
+        /// <summary>
+        /// The globally unique UUID of the Member's email.
+        /// </summary>
         [JsonProperty("email_id")]
         public string EmailId { get; set; }
     }
     public class HubspotOAuthFactor
     {
+        /// <summary>
+        /// The unique ID of an OAuth registration.
+        /// </summary>
         [JsonProperty("id")]
         public string Id { get; set; }
+        /// <summary>
+        /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
+        /// "Subject field" in OAuth protocols.
+        /// </summary>
         [JsonProperty("provider_subject")]
         public string ProviderSubject { get; set; }
+        /// <summary>
+        /// The globally unique UUID of the Member's email.
+        /// </summary>
         [JsonProperty("email_id")]
         public string EmailId { get; set; }
     }
@@ -397,6 +479,9 @@ namespace Stytch.net.Models
     }
     public class OAuthAccessTokenExchangeFactor
     {
+        /// <summary>
+        /// The ID of the Connected App client.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
     }
@@ -512,15 +597,33 @@ namespace Stytch.net.Models
     }
     public class SessionsAuthorizationCheck
     {
+        /// <summary>
+        /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
+        /// 
+        ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
+        /// default Resources with reserved `resource_id`s.
+        ///   
+        /// </summary>
         [JsonProperty("resource_id")]
         public string ResourceId { get; set; }
+        /// <summary>
+        /// An action to take on a Resource.
+        /// </summary>
         [JsonProperty("action")]
         public string Action { get; set; }
     }
     public class SessionsAuthorizationVerdict
     {
+        /// <summary>
+        /// Whether the User was authorized to perform the specified action on the specified Resource. Always true
+        /// if the request succeeds.
+        /// </summary>
         [JsonProperty("authorized")]
         public bool Authorized { get; set; }
+        /// <summary>
+        /// The complete list of Roles that gave the User permission to perform the specified action on the
+        /// specified Resource.
+        /// </summary>
         [JsonProperty("granting_roles")]
         public List<string> GrantingRoles { get; set; }
     }
@@ -535,15 +638,28 @@ namespace Stytch.net.Models
     }
     public class SlackOAuthExchangeFactor
     {
+        /// <summary>
+        /// The globally unique UUID of the Member's email.
+        /// </summary>
         [JsonProperty("email_id")]
         public string EmailId { get; set; }
     }
     public class SlackOAuthFactor
     {
+        /// <summary>
+        /// The unique ID of an OAuth registration.
+        /// </summary>
         [JsonProperty("id")]
         public string Id { get; set; }
+        /// <summary>
+        /// The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or
+        /// "Subject field" in OAuth protocols.
+        /// </summary>
         [JsonProperty("provider_subject")]
         public string ProviderSubject { get; set; }
+        /// <summary>
+        /// The globally unique UUID of the Member's email.
+        /// </summary>
         [JsonProperty("email_id")]
         public string EmailId { get; set; }
     }
@@ -585,6 +701,9 @@ namespace Stytch.net.Models
     }
     public class TrustedAuthTokenFactor
     {
+        /// <summary>
+        /// The ID of the trusted auth token.
+        /// </summary>
         [JsonProperty("token_id")]
         public string TokenId { get; set; }
     }
@@ -764,6 +883,15 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
+        /// <summary>
+        /// If an `authorization_check` object is passed in, this endpoint will also check if the User is
+        ///   authorized to perform the given action on the given Resource. A User is authorized if they are
+        /// assigned a Role with adequate permissions.
+        /// 
+        ///   If the User is not authorized to perform the specified action on the specified Resource, a 403 error
+        /// will be thrown.
+        ///   Otherwise, the response will contain a list of Roles that satisfied the authorization check.
+        /// </summary>
         [JsonProperty("authorization_check")]
         public SessionsAuthorizationCheck AuthorizationCheck { get; set; }
         public SessionsAuthenticateRequest()
@@ -812,6 +940,10 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        /// <summary>
+        /// If an `authorization_check` is provided in the request and the check succeeds, this field will return
+        ///   information about why the User was granted permission.
+        /// </summary>
         [JsonProperty("verdict")]
         public SessionsAuthorizationVerdict Verdict { get; set; }
     }
