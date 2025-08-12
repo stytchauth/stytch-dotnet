@@ -298,7 +298,7 @@ namespace Stytch.net.Clients.B2B
         /// <summary>
         /// Exchange an auth token issued by a trusted identity provider for a Stytch session. You must first
         /// register a Trusted Auth Token profile in the Stytch dashboard
-        /// [here](https://stytch.com/docs/dashboard/trusted-auth-tokens).  If a session token or session JWT is
+        /// [here](https://stytch.com/dashboard/trusted-auth-tokens).  If a session token or session JWT is
         /// provided, it will add the trusted auth token as an authentication factor to the existing session.
         /// </summary>
         public async Task<B2BSessionsAttestResponse> Attest(
@@ -340,8 +340,8 @@ namespace Stytch.net.Clients.B2B
         /// <summary>
         /// Migrate a session from an external OIDC compliant endpoint.
         /// Stytch will call the external UserInfo endpoint defined in your Stytch Project settings in the
-        /// [Dashboard](https://stytch.com/docs/dashboard), and then perform a lookup using the `session_token`.
-        /// <!-- FIXME more specific dashboard link-->
+        /// [Dashboard](https://stytch.com/dashboard/migrations), and then perform a lookup using the
+        /// `session_token`.
         /// If the response contains a valid email address, Stytch will attempt to match that email address with an
         /// existing Member in your Organization and create a Stytch Session.
         /// You will need to create the member before using this endpoint.
@@ -467,13 +467,14 @@ namespace Stytch.net.Clients.B2B
         private class OrganizationJWTModel
         {
             [JsonProperty("organization_id")] public string OrganizationId { get; set; }
+            [JsonProperty("organization_slug")] public string OrganizationSlug { get; set; }
         }
 
         private class MemberSessionJWTModel : MemberSession
         {
             [JsonProperty("id")] public new string MemberSessionId { get; set; }
 
-            public MemberSession ToMemberSession(string memberId, string organizationId)
+            public MemberSession ToMemberSession(string memberId, string organizationId, string organizationSlug)
             {
                 return new MemberSession
                 {
@@ -484,6 +485,7 @@ namespace Stytch.net.Clients.B2B
                     ExpiresAt = ExpiresAt,
                     AuthenticationFactors = AuthenticationFactors,
                     OrganizationId = organizationId,
+                    OrganizationSlug = organizationSlug,
                     Roles = Roles ?? new List<string>(),
                     CustomClaims = CustomClaims,
                 };
@@ -521,7 +523,7 @@ namespace Stytch.net.Clients.B2B
                 JsonConvert.DeserializeObject<OrganizationJWTModel>(organizationJsonEl.GetRawText());
 
             var memberSession = JsonConvert.DeserializeObject<MemberSessionJWTModel>(memberSessionJsonEl.GetRawText())
-                .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId);
+                .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId, organizationSlug: organizationModel.OrganizationSlug);
 
             if (request.AuthorizationCheck != null)
             {
