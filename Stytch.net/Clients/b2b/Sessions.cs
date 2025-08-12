@@ -467,13 +467,14 @@ namespace Stytch.net.Clients.B2B
         private class OrganizationJWTModel
         {
             [JsonProperty("organization_id")] public string OrganizationId { get; set; }
+            [JsonProperty("organization_slug")] public string OrganizationSlug { get; set; }
         }
 
         private class MemberSessionJWTModel : MemberSession
         {
             [JsonProperty("id")] public new string MemberSessionId { get; set; }
 
-            public MemberSession ToMemberSession(string memberId, string organizationId)
+            public MemberSession ToMemberSession(string memberId, string organizationId, string organizationSlug)
             {
                 return new MemberSession
                 {
@@ -484,6 +485,7 @@ namespace Stytch.net.Clients.B2B
                     ExpiresAt = ExpiresAt,
                     AuthenticationFactors = AuthenticationFactors,
                     OrganizationId = organizationId,
+                    OrganizationSlug = organizationSlug,
                     Roles = Roles ?? new List<string>(),
                     CustomClaims = CustomClaims,
                 };
@@ -521,7 +523,7 @@ namespace Stytch.net.Clients.B2B
                 JsonConvert.DeserializeObject<OrganizationJWTModel>(organizationJsonEl.GetRawText());
 
             var memberSession = JsonConvert.DeserializeObject<MemberSessionJWTModel>(memberSessionJsonEl.GetRawText())
-                .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId);
+                .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId, organizationSlug: organizationModel.OrganizationSlug);
 
             if (request.AuthorizationCheck != null)
             {
