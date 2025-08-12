@@ -35,7 +35,7 @@ namespace Stytch.net.Models
         /// <summary>
         /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
         /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug here as a convenience.
+        /// organization_slug or organization_external_id here as a convenience.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
@@ -179,6 +179,13 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("primary_required")]
         public PrimaryRequired PrimaryRequired { get; set; }
+        /// <summary>
+        /// If a valid `telemetry_id` was passed in the request and the
+        /// [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) returned results, the
+        /// `member_device` response field will contain information about the member's device attributes.
+        /// </summary>
+        [JsonProperty("member_device")]
+        public DeviceInfo MemberDevice { get; set; }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
