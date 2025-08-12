@@ -290,10 +290,15 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
+        /// 
+        /// **Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as
+        /// search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate
+        /// limits are set to 100 requests/second.
+        /// 
         /// Search for Members within specified Organizations. An array with at least one `organization_id` is
         /// required. Submitting an empty `query` returns all non-deleted Members within the specified Organizations.
         /// 
-        /// *All fuzzy search filters require a minimum of three characters.
+        /// All fuzzy search filters require a minimum of three characters.
         /// </summary>
         public async Task<B2BOrganizationsMembersSearchResponse> Search(
             B2BOrganizationsMembersSearchRequest request
@@ -548,6 +553,11 @@ namespace Stytch.net.Clients.B2B
         /// The member will receive an Email Magic Link that expires in 5 minutes. If they do not verify their new
         /// email address in that timeframe, the email
         /// will be freed up for other members to use.
+        /// 
+        /// The Magic Link will redirect to your `login_redirect_url` (or the configured default if one isn't
+        /// provided), and you should invoke the
+        /// [Authenticate Magic Link](https://stytch.com/docs/b2b/api/authenticate-magic-link) endpoint as normal to
+        /// complete the flow.
         /// </summary>
         public async Task<B2BOrganizationsMembersStartEmailUpdateResponse> StartEmailUpdate(
             B2BOrganizationsMembersStartEmailUpdateRequest request

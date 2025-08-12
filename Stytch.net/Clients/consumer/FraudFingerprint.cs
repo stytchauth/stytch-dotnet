@@ -33,7 +33,7 @@ namespace Stytch.net.Clients.Consumer
         /// Learn more about the different fingerprint types and verdicts in our
         /// [DFP guide](https://stytch.com/docs/fraud/guides/device-fingerprinting/overview).
         /// 
-        /// Make a decision based on the returned `verdict`:
+        /// You can make a decision based on the recommended `verdict` in the response:
         /// * `ALLOW` - This is a known valid device grouping or device profile that is part of the default `ALLOW`
         /// listed set of known devices by Stytch. This grouping is made up of  verified device profiles that match
         /// the characteristics of known/authentic traffic origins.
@@ -43,10 +43,12 @@ namespace Stytch.net.Clients.Consumer
         /// friction such as 2FA or other forms of extended user verification before allowing the privileged action
         /// to proceed.
         /// 
-        /// If the `telemetry_id` is not found, we will return a 404 `telemetry_id_not_found`
-        /// [error](https://stytch.com/docs/fraud/api/errors/404#telemetry_id_not_found). We recommend treating 404
-        /// errors as a `BLOCK`, since it could be a sign of an attacker trying to bypass DFP protections by
-        /// generating fake telemetry IDs.
+        /// If the `telemetry_id` is expired or not found, this endpoint returns a 404 `telemetry_id_not_found`
+        /// [error](https://stytch.com/docs/fraud/api/errors/404#telemetry_id_not_found).
+        /// We recommend treating 404 errors as a `BLOCK`, since it could be a sign of an attacker trying to bypass
+        /// DFP protections.
+        /// See
+        /// [Attacker-controlled telemetry IDs](https://stytch.com/docs/fraud/guides/device-fingerprinting/integration-steps/test-your-integration#attacker-controlled-telemetry-ids) for more information.
         /// </summary>
         public async Task<FraudFingerprintLookupResponse> Lookup(
             FraudFingerprintLookupRequest request

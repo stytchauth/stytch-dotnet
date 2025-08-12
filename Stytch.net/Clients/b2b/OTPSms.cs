@@ -49,8 +49,11 @@ namespace Stytch.net.Clients.B2B
         /// subsequent authentication events, such as prompting a Member for an OTP again after a period of
         /// inactivity.
         /// 
-        /// Passing an intermediate session token, session token, or session JWT is not required, but if passed must
-        /// match the Member ID passed.
+        /// If the Member already has an active MFA factor, then passing an intermediate session token, session
+        /// token, or session JWT with the existing MFA factor on it is required to prevent bypassing MFA.  
+        /// 
+        /// Otherwise, passing an intermediate session token, session token, or session JWT is not required, but if
+        /// passed must match the `member_id` passed.
         /// 
         /// ### Cost to send SMS OTP
         /// Before configuring SMS or WhatsApp OTPs, please review how Stytch
@@ -62,9 +65,9 @@ namespace Stytch.net.Clients.B2B
         /// 
         /// __Note:__ SMS to phone numbers outside of the US and Canada is disabled by default for customers who did
         /// not use SMS prior to October 2023. If you're interested in sending international SMS, please add those
-        /// countries to your Project's allowlist via
-        /// [the API](https://stytch.com/docs/workspace-management/pwa/country-code-allowlist-object), and
-        /// [add credit card details](https://stytch.com/docs/dashboard/settings/billing) to your account.
+        /// countries to your Project's allowlist via the
+        /// [Dashboard](https://stytch.com/dashboard/country-code-allowlists) or
+        /// [Programmatic Workspace Actions](https://stytch.com/docs/workspace-management/pwa/set-allowed-country-codes), and [add credit card details](https://stytch.com/dashboard/settings/billing) to your account.
         /// </summary>
         public async Task<B2BOTPSmsSendResponse> Send(
             B2BOTPSmsSendRequest request
