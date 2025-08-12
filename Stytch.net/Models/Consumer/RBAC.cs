@@ -14,8 +14,14 @@ namespace Stytch.net.Models
 {
     public class RBACPolicy
     {
+        /// <summary>
+        /// An array of [Role objects](https://stytch.com/docs/api/rbac-role-object).
+        /// </summary>
         [JsonProperty("roles")]
         public List<RBACPolicyRole> Roles { get; set; }
+        /// <summary>
+        /// An array of [Resource objects](https://stytch.com/docs/api/rbac-resource-object).
+        /// </summary>
         [JsonProperty("resources")]
         public List<RBACPolicyResource> Resources { get; set; }
         [JsonProperty("scopes")]
@@ -23,26 +29,65 @@ namespace Stytch.net.Models
     }
     public class RBACPolicyResource
     {
+        /// <summary>
+        /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
+        /// 
+        ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
+        /// default Resources with reserved `resource_id`s.
+        ///   
+        /// </summary>
         [JsonProperty("resource_id")]
         public string ResourceId { get; set; }
+        /// <summary>
+        /// The description of the RBAC Resource.
+        /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
+        /// <summary>
+        /// A list of all possible actions for a provided Resource.
+        /// </summary>
         [JsonProperty("actions")]
         public List<string> Actions { get; set; }
     }
     public class RBACPolicyRole
     {
+        /// <summary>
+        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
+        /// 
+        ///   The `stytch_user` `role_id` is predefined by Stytch.
+        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/guides/rbac/stytch-default) for
+        /// a more detailed explanation.
+        ///   
+        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
+        /// <summary>
+        /// The description of the RBAC Role.
+        /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
+        /// <summary>
+        /// A list of permissions that link a [Resource](https://stytch.com/docs/api/rbac-resource-object) to a list
+        /// of actions.
+        /// </summary>
         [JsonProperty("permissions")]
         public List<RBACPolicyRolePermission> Permissions { get; set; }
     }
     public class RBACPolicyRolePermission
     {
+        /// <summary>
+        /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
+        /// 
+        ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
+        /// default Resources with reserved `resource_id`s.
+        ///   
+        /// </summary>
         [JsonProperty("resource_id")]
         public string ResourceId { get; set; }
+        /// <summary>
+        /// A list of permitted actions the Role is authorized to take with the provided Resource. You can use `*`
+        /// as a wildcard to grant a Role permission to use all possible actions related to the Resource. 
+        /// </summary>
         [JsonProperty("actions")]
         public List<string> Actions { get; set; }
     }
@@ -62,18 +107,37 @@ namespace Stytch.net.Models
         [JsonProperty("actions")]
         public List<string> Actions { get; set; }
     }
+    /// <summary>
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.RBAC.Policy"/>..
+    /// </summary>
     public class RBACPolicyRequest
     {
         public RBACPolicyRequest()
         {
         }
     }
+    /// <summary>
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.RBAC.Policy"/>..
+    /// </summary>
     public class RBACPolicyResponse
     {
+        /// <summary>
+        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
+        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
+        /// <summary>
+        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
+        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        /// <summary>
+        /// The RBAC Policy document that contains all defined Roles and Resources – which are managed in the
+        /// [Dashboard](https://stytch.com/dashboard/rbac). Read more about these entities and how they work in our
+        /// [RBAC overview](https://stytch.com/docs/guides/rbac/overview).
+        /// </summary>
         [JsonProperty("policy")]
         public RBACPolicy Policy { get; set; }
     }

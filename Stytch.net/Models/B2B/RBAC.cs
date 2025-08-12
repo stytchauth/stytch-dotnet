@@ -33,7 +33,7 @@ namespace Stytch.net.Models
         /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
         /// 
         ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
-        /// default Resources with reserved  `resource_id`s. These include:
+        /// default Resources with reserved `resource_id`s. These include:
         /// 
         ///   * `stytch.organization`
         ///   * `stytch.member`
@@ -135,7 +135,7 @@ namespace Stytch.net.Models
         /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
         /// 
         ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
-        /// default Resources with reserved  `resource_id`s. These include:
+        /// default Resources with reserved `resource_id`s. These include:
         /// 
         ///   * `stytch.organization`
         ///   * `stytch.member`
@@ -143,8 +143,8 @@ namespace Stytch.net.Models
         ///   * `stytch.self`
         /// 
         ///   Check out the
-        /// [guide on Stytch default Resources](https://stytch.com/docs/docs/b2b/guides/rbac/stytch-default) for a
-        /// more detailed explanation.
+        /// [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more
+        /// detailed explanation.
         /// 
         ///   
         /// </summary>
@@ -201,8 +201,8 @@ namespace Stytch.net.Models
         public int StatusCode { get; set; }
         /// <summary>
         /// The RBAC Policy document that contains all defined Roles and Resources – which are managed in the
-        /// [Dashboard](https://stytch.com/docs/dashboard/rbac). Read more about these entities and how they work in
-        /// our [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview).
+        /// [Dashboard](https://stytch.com/dashboard/rbac). Read more about these entities and how they work in our
+        /// [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview).
         /// </summary>
         [JsonProperty("policy")]
         public B2BRBACPolicy Policy { get; set; }
