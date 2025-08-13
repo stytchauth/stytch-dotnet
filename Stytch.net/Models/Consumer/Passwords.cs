@@ -531,6 +531,11 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
+        /// <summary>
+        /// Roles to explicitly assign to this User.
+        ///    See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about
+        /// role assignment.
+        /// </summary>
         [JsonProperty("roles")]
         public List<string> Roles { get; set; }
         public PasswordsMigrateRequest(string email, string hash, PasswordsMigrateRequestHashType hashType)

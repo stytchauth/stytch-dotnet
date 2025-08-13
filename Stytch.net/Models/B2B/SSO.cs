@@ -134,11 +134,11 @@ namespace Stytch.net.Models
         [JsonProperty("status")]
         public string Status { get; set; }
         [JsonProperty("idp_entity_id")]
-        public string IdpEntityId { get; set; }
+        public string IDPEntityId { get; set; }
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
         [JsonProperty("idp_sso_url")]
-        public string IdpSSOURL { get; set; }
+        public string IDPSSOURL { get; set; }
         [JsonProperty("acs_url")]
         public string AcsURL { get; set; }
         [JsonProperty("audience_uri")]
@@ -160,7 +160,7 @@ namespace Stytch.net.Models
         [JsonProperty("alternative_acs_url")]
         public string AlternativeAcsURL { get; set; }
         [JsonProperty("idp_initiated_auth_disabled")]
-        public bool IdpInitiatedAuthDisabled { get; set; }
+        public bool IDPInitiatedAuthDisabled { get; set; }
         [JsonProperty("attribute_mapping")]
         public object AttributeMapping { get; set; }
     }

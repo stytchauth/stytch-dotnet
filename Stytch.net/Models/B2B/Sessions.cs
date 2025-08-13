@@ -146,11 +146,6 @@ namespace Stytch.net.Models
     public class B2BSessionsAttestRequest
     {
         /// <summary>
-        /// The organization ID that the session should be authenticated in.
-        /// </summary>
-        [JsonProperty("organization_id")]
-        public string OrganizationId { get; set; }
-        /// <summary>
         /// The ID of the trusted auth token profile to use for attestation.
         /// </summary>
         [JsonProperty("profile_id")]
@@ -160,6 +155,11 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
+        /// <summary>
+        /// The organization ID that the session should be authenticated in.
+        /// </summary>
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist,
@@ -207,9 +207,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("telemetry_id")]
         public string TelemetryId { get; set; }
-        public B2BSessionsAttestRequest(string organizationId, string profileId, string token)
+        public B2BSessionsAttestRequest(string profileId, string token)
         {
-            this.OrganizationId = organizationId;
             this.ProfileId = profileId;
             this.Token = token;
         }
