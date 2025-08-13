@@ -234,7 +234,7 @@ namespace Stytch.net.Models
         /// A globally unique name for the IdP. This will be provided by the IdP.
         /// </summary>
         [JsonProperty("idp_entity_id")]
-        public string IdpEntityId { get; set; }
+        public string IDPEntityId { get; set; }
         /// <summary>
         /// A human-readable display name for the connection.
         /// </summary>
@@ -258,7 +258,7 @@ namespace Stytch.net.Models
         /// The URL for which assertions for login requests will be sent. This will be provided by the IdP.
         /// </summary>
         [JsonProperty("idp_sso_url")]
-        public string IdpSSOURL { get; set; }
+        public string IDPSSOURL { get; set; }
         /// <summary>
         /// All Members who log in with this SAML connection will implicitly receive the specified Roles. See the
         /// [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role
@@ -324,7 +324,7 @@ namespace Stytch.net.Models
         /// Initiated Auth is enabled).
         /// </summary>
         [JsonProperty("idp_initiated_auth_disabled")]
-        public bool? IdpInitiatedAuthDisabled { get; set; }
+        public bool? IDPInitiatedAuthDisabled { get; set; }
         public B2BSSOSAMLUpdateConnectionRequest(string organizationId, string connectionId)
         {
             this.OrganizationId = organizationId;

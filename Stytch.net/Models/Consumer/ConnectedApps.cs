@@ -81,6 +81,19 @@ namespace Stytch.net.Models
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
     }
+    public class ConnectedAppPublic
+    {
+        [JsonProperty("client_id")]
+        public string ClientId { get; set; }
+        [JsonProperty("client_name")]
+        public string ClientName { get; set; }
+        [JsonProperty("client_description")]
+        public string ClientDescription { get; set; }
+        [JsonProperty("client_type")]
+        public string ClientType { get; set; }
+        [JsonProperty("logo_url")]
+        public string LogoURL { get; set; }
+    }
     public class ConnectedAppWithClientSecret
     {
         /// <summary>
