@@ -19,6 +19,7 @@ namespace Stytch.net.Clients
         public readonly ConnectedApp ConnectedApp;
         public readonly Discovery Discovery;
         public readonly Fraud Fraud;
+        public readonly IDP IDP;
         public readonly Impersonation Impersonation;
         public readonly M2M M2M;
         public readonly MagicLinks MagicLinks;
@@ -39,6 +40,7 @@ namespace Stytch.net.Clients
             ConnectedApp = new ConnectedApp(_httpClient, _config);
             Discovery = new Discovery(_httpClient, _config);
             Fraud = new Fraud(_fraudClient, _config);
+            IDP = new IDP(_httpClient, _config);
             Impersonation = new Impersonation(_httpClient, _config);
             M2M = new M2M(_httpClient, _config);
             MagicLinks = new MagicLinks(_httpClient, _config);
