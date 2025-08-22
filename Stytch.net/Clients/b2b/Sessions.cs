@@ -467,7 +467,7 @@ namespace Stytch.net.Clients.B2B
         private class OrganizationJWTModel
         {
             [JsonProperty("organization_id")] public string OrganizationId { get; set; }
-            [JsonProperty("organization_slug")] public string OrganizationSlug { get; set; }
+            [JsonProperty("slug")] public string OrganizationSlug { get; set; }
         }
 
         private class MemberSessionJWTModel : MemberSession
