@@ -77,7 +77,7 @@ namespace Stytch.net
                 LifetimeValidator = requestParams.LifetimeValidator
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler { MapInboundClaims = false };
+            var tokenHandler = new JwtSecurityTokenHandler();
             var result = await tokenHandler.ValidateTokenAsync(requestParams.Jwt, validationParameters);
             if (!result.IsValid)
             {
