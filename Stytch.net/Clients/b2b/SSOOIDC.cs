@@ -33,7 +33,7 @@ namespace Stytch.net.Clients.B2B
         /// </summary>
         public async Task<B2BSSOOIDCCreateConnectionResponse> CreateConnection(
             B2BSSOOIDCCreateConnectionRequest request
-            , B2BSSOOIDCCreateConnectionRequestOptions options
+            , B2BSSOOIDCCreateConnectionRequestOptions options = null
         )
         {
             var method = HttpMethod.Post;
@@ -50,11 +50,11 @@ namespace Stytch.net.Clients.B2B
             var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
-            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionToken))
             {
                 httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
             }
-            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionJwt))
             {
                 httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
             }
@@ -106,7 +106,7 @@ namespace Stytch.net.Clients.B2B
         /// </summary>
         public async Task<B2BSSOOIDCUpdateConnectionResponse> UpdateConnection(
             B2BSSOOIDCUpdateConnectionRequest request
-            , B2BSSOOIDCUpdateConnectionRequestOptions options
+            , B2BSSOOIDCUpdateConnectionRequestOptions options = null
         )
         {
             var method = HttpMethod.Put;
@@ -123,11 +123,11 @@ namespace Stytch.net.Clients.B2B
             var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
-            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionToken))
             {
                 httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
             }
-            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionJwt))
             {
                 httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
             }

@@ -37,7 +37,7 @@ namespace Stytch.net.Clients.B2B
         /// </summary>
         public async Task<B2BOrganizationsMembersConnectedAppsRevokeResponse> Revoke(
             B2BOrganizationsMembersConnectedAppsRevokeRequest request
-            , B2BOrganizationsMembersConnectedAppsRevokeRequestOptions options
+            , B2BOrganizationsMembersConnectedAppsRevokeRequestOptions options = null
         )
         {
             var method = HttpMethod.Post;
@@ -54,11 +54,11 @@ namespace Stytch.net.Clients.B2B
             var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
             httpReq.Content = content;
-            if (!string.IsNullOrEmpty(options.Authorization.SessionToken))
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionToken))
             {
                 httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
             }
-            if (!string.IsNullOrEmpty(options.Authorization.SessionJwt))
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionJwt))
             {
                 httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
             }
