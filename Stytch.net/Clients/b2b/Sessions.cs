@@ -437,6 +437,7 @@ namespace Stytch.net.Clients.B2B
         // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
         // ADDIMPORT: using System.Text.Json;
         // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
+        // ADDIMPORT: using Newtonsoft.Json.Linq;
 
         /// <summary>
         /// Parse a JWT and verify the signature, preferring local verification to remote.
