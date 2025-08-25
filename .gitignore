@@ -94,7 +94,7 @@ coverage.opencover.xml
 coverage.*.json
 
 # Docker Ignore
-**/docker-compose* 
+**/docker-compose*
 
 # Ignore the .NET Core user secrets folder
 secrets.json
@@ -146,3 +146,6 @@ aspnet_client/
 
 # Linux-specific files
 *~
+
+# AI tooling
+.claude/
