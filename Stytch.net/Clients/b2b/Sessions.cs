@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Stytch.net.Exceptions;
 using Stytch.net.Models;
 using JsonException = Newtonsoft.Json.JsonException;
@@ -70,12 +71,12 @@ namespace Stytch.net.Clients.B2B
         /// `session_duration_minutes` is not specified, a Session will not be extended. This endpoint requires
         /// either a `session_jwt` or `session_token` be included in the request. It will return an error if both
         /// are present.
-        /// 
+        ///
         /// You may provide a JWT that needs to be refreshed and is expired according to its `exp` claim. A new JWT
         /// will be returned if both the signature and the underlying Session are still valid. See our
         /// [How to use Stytch Session JWTs](https://stytch.com/docs/b2b/guides/sessions/resources/using-jwts) guide
         /// for more information.
-        /// 
+        ///
         /// If an `authorization_check` object is passed in, this method will also check if the Member is authorized
         /// to perform the given action on the given Resource in the specified Organization. A Member is authorized
         /// if their Member Session contains a Role, assigned
@@ -83,7 +84,7 @@ namespace Stytch.net.Clients.B2B
         /// permissions.
         /// In addition, the `organization_id` passed in the authorization check must match the Member's
         /// Organization.
-        /// 
+        ///
         /// If the Member is not authorized to perform the specified action on the specified Resource, or if the
         /// `organization_id` does not match the Member's Organization, a 403 error will be thrown.
         /// Otherwise, the response will contain a list of Roles that satisfied the authorization check.
@@ -177,31 +178,31 @@ namespace Stytch.net.Clients.B2B
         /// <summary>
         /// Use this endpoint to exchange a Member's existing session for another session in a different
         /// Organization. This can be used to accept an invite, but not to create a new member via domain matching.
-        /// 
+        ///
         /// To create a new member via email domain JIT Provisioning, use the
         /// [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) flow
         /// instead.
-        /// 
+        ///
         /// If the user **has** already satisfied the authentication requirements of the Organization they are
         /// trying to switch into, this API will return `member_authenticated: true` and a `session_token` and
         /// `session_jwt`.
-        /// 
+        ///
         /// If the user **has not** satisfied the primary or secondary authentication requirements of the
         /// Organization they are attempting to switch into, this API will return `member_authenticated: false` and
         /// an `intermediate_session_token`.
-        /// 
+        ///
         /// If `primary_required` is set, prompt the user to fulfill the Organization's auth requirements using the
         /// options returned in `primary_required.allowed_auth_methods`.
-        /// 
+        ///
         /// If `primary_required` is null and `mfa_required` is set, check `mfa_required.member_options` to
         /// determine if the Member has SMS OTP or TOTP set up for MFA and prompt accordingly. If the Member has SMS
         /// OTP, check `mfa_required.secondary_auth_initiated` to see if the OTP has already been sent.
-        /// 
+        ///
         /// Include the `intermediate_session_token` returned above when calling the `authenticate()` method that
         /// the user needed to perform. Once the user has completed the authentication requirements they were
         /// missing, they will be granted a full `session_token` and `session_jwt` to indicate they have
         /// successfully logged into the Organization.
-        /// 
+        ///
         /// The `intermediate_session_token` can also be used with the
         /// [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session)
         /// or the
@@ -246,15 +247,15 @@ namespace Stytch.net.Clients.B2B
         }
         /// <summary>
         /// Use this endpoint to exchange a Connected Apps Access Token back into a Member Session for the
-        /// underlying Member. 
+        /// underlying Member.
         /// This session can be used with the Stytch SDKs and APIs.
-        /// 
+        ///
         /// The Access Token must contain the `full_access` scope (only available to First Party clients) and must
-        /// not be more than 5 minutes old. Access Tokens may only be exchanged a single time. 
-        /// 
+        /// not be more than 5 minutes old. Access Tokens may only be exchanged a single time.
+        ///
         /// The Member Session returned will be the same Member Session that was active in your application (the
         /// authorizing party) during the initial authorization flow.
-        /// 
+        ///
         /// Because the Member previously completed MFA and satisfied all Organization authentication requirements
         /// at the time of the original Access Token issuance, this endpoint will never return an
         /// `intermediate_session_token` or require MFA.
@@ -384,21 +385,21 @@ namespace Stytch.net.Clients.B2B
         }
         /// <summary>
         /// Get the JSON Web Key Set (JWKS) for a project.
-        /// 
+        ///
         /// Within the JWKS, the JSON Web Keys are rotated every ~6 months. Upon rotation, new JWTs will be signed
         /// using the new key, and both keys will be returned by this endpoint for a period of 1 month.
-        /// 
+        ///
         /// JWTs have a set lifetime of 5 minutes, so there will be a 5 minute period where some JWTs will be signed
         /// by the old keys, and some JWTs will be signed by the new keys. The correct key to use for validation is
         /// determined by matching the `kid` value of the JWT and key.
-        /// 
+        ///
         /// If you're using one of our [backend SDKs](https://stytch.com/docs/b2b/sdks), the JSON Web Key (JWK)
         /// rotation will be handled for you.
-        /// 
+        ///
         /// If you're using your own JWT validation library, many have built-in support for JWK rotation, and you'll
         /// just need to supply this API endpoint. If not, your application should decide which JWK to use for
         /// validation by inspecting the `kid` value.
-        /// 
+        ///
         /// See our
         /// [How to use Stytch Session JWTs](https://stytch.com/docs/b2b/guides/sessions/resources/using-jwts) guide
         /// for more information.
@@ -436,6 +437,7 @@ namespace Stytch.net.Clients.B2B
         // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
         // ADDIMPORT: using System.Text.Json;
         // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
+        // ADDIMPORT: using Newtonsoft.Json.Linq;
 
         /// <summary>
         /// Parse a JWT and verify the signature, preferring local verification to remote.
@@ -524,6 +526,18 @@ namespace Stytch.net.Clients.B2B
 
             var memberSession = JsonConvert.DeserializeObject<MemberSessionJWTModel>(memberSessionJsonEl.GetRawText())
                 .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId, organizationSlug: organizationModel.OrganizationSlug);
+
+            var customClaims = new JObject();
+            foreach (var claim in res.CustomClaims)
+            {
+                if (claim.Key != Utility.SessionClaimKey && claim.Key != Utility.OrganizationClaimKey)
+                {
+                    customClaims[claim.Key] = JToken.FromObject(claim.Value);
+                }
+            }
+
+            if (customClaims.HasValues)
+                memberSession.CustomClaims = customClaims;
 
             if (request.AuthorizationCheck != null)
             {

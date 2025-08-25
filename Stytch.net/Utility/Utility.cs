@@ -77,7 +77,7 @@ namespace Stytch.net
                 LifetimeValidator = requestParams.LifetimeValidator
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenHandler = new JwtSecurityTokenHandler { MapInboundClaims = false };
             var result = await tokenHandler.ValidateTokenAsync(requestParams.Jwt, validationParameters);
             if (!result.IsValid)
             {
@@ -91,9 +91,19 @@ namespace Stytch.net
                 customClaims.Remove(claim);
             }
 
+            string subject = null;
+            if (result.Claims.TryGetValue(ClaimTypes.NameIdentifier, out object subjectClaim))
+            {
+                subject = subjectClaim.ToString();
+            }
+            else if (result.Claims.TryGetValue("name", out object subClaim))
+            {
+                subject = subClaim.ToString();
+            }
+
             return new AuthenticateJwtResult()
             {
-                Subject = (string)result.Claims[ClaimTypes.NameIdentifier],
+                Subject = subject,
                 CustomClaims = customClaims
             };
         }
