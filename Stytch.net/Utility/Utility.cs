@@ -123,7 +123,7 @@ namespace Stytch.net
 
         private static B2BRbacPolicy _cachedB2BRbacPolicy;
         private static DateTime _b2bRbacPolicyLastFetched;
-        private static TimeSpan _b2bRbacRefreshInterval = TimeSpan.FromMinutes(15);
+        private static TimeSpan _b2bRbacRefreshInterval = TimeSpan.FromMinutes(5);
 
         public interface IB2BPolicyGetter
         {
@@ -151,7 +151,7 @@ namespace Stytch.net
 
         private static RbacPolicy _cachedRbacPolicy;
         private static DateTime _rbacPolicyLastFetched;
-        private static TimeSpan _rbacRefreshInterval = TimeSpan.FromMinutes(15);
+        private static TimeSpan _rbacRefreshInterval = TimeSpan.FromMinutes(5);
 
         public interface IPolicyGetter
         {
