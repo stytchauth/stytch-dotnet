@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Stytch.net.Clients;
@@ -124,6 +125,9 @@ namespace Stytch.net
         private static B2BRbacPolicy _cachedB2BRbacPolicy;
         private static DateTime _b2bRbacPolicyLastFetched;
         private static TimeSpan _b2bRbacRefreshInterval = TimeSpan.FromMinutes(5);
+        private static Timer _b2bRbacRefreshTimer;
+        private static IB2BPolicyGetter _b2bPolicyGetter;
+        private static readonly object _b2bRbacLock = new object();
 
         public interface IB2BPolicyGetter
         {
@@ -137,21 +141,59 @@ namespace Stytch.net
             return policy.IsAuthorized(authorizationParams);
         }
 
-        private static async Task<B2BRbacPolicy> GetB2BRbacPolicy(IB2BPolicyGetter policyGetter)
+        private static Task<B2BRbacPolicy> GetB2BRbacPolicy(IB2BPolicyGetter policyGetter)
         {
-            if (_cachedB2BRbacPolicy == null || DateTime.UtcNow - _b2bRbacPolicyLastFetched > _b2bRbacRefreshInterval)
+            if (_cachedB2BRbacPolicy == null)
             {
-                var policyRes = await policyGetter.Policy(new B2BRBACPolicyRequest());
-                _cachedB2BRbacPolicy = new B2BRbacPolicy(policyRes.Policy);
-                _b2bRbacPolicyLastFetched = DateTime.UtcNow;
+                lock (_b2bRbacLock)
+                {
+                    if (_cachedB2BRbacPolicy == null)
+                    {
+                        var policyRes = policyGetter.Policy(new B2BRBACPolicyRequest()).Result;
+                        _cachedB2BRbacPolicy = new B2BRbacPolicy(policyRes.Policy);
+                        _b2bRbacPolicyLastFetched = DateTime.UtcNow;
+                        _b2bPolicyGetter = policyGetter;
+                        StartB2BRbacBackgroundRefresh();
+                    }
+                }
             }
 
-            return _cachedB2BRbacPolicy;
+            return Task.FromResult(_cachedB2BRbacPolicy);
+        }
+
+        private static void StartB2BRbacBackgroundRefresh()
+        {
+            if (_b2bRbacRefreshTimer == null)
+            {
+                _b2bRbacRefreshTimer = new Timer(async _ => await RefreshB2BRbacPolicyBackground(),
+                    null, _b2bRbacRefreshInterval, _b2bRbacRefreshInterval);
+            }
+        }
+
+        private static async Task RefreshB2BRbacPolicyBackground()
+        {
+            if (_b2bPolicyGetter == null) return;
+
+            try
+            {
+                var policyRes = await _b2bPolicyGetter.Policy(new B2BRBACPolicyRequest());
+                lock (_b2bRbacLock)
+                {
+                    _cachedB2BRbacPolicy = new B2BRbacPolicy(policyRes.Policy);
+                    _b2bRbacPolicyLastFetched = DateTime.UtcNow;
+                }
+            }
+            catch
+            {
+            }
         }
 
         private static RbacPolicy _cachedRbacPolicy;
         private static DateTime _rbacPolicyLastFetched;
         private static TimeSpan _rbacRefreshInterval = TimeSpan.FromMinutes(5);
+        private static Timer _rbacRefreshTimer;
+        private static IPolicyGetter _policyGetter;
+        private static readonly object _rbacLock = new object();
 
         public interface IPolicyGetter
         {
@@ -165,16 +207,51 @@ namespace Stytch.net
             return policy.IsAuthorized(authorizationParams);
         }
 
-        private static async Task<RbacPolicy> GetRbacPolicy(IPolicyGetter policyGetter)
+        private static Task<RbacPolicy> GetRbacPolicy(IPolicyGetter policyGetter)
         {
-            if (_cachedRbacPolicy == null || DateTime.UtcNow - _rbacPolicyLastFetched > _rbacRefreshInterval)
+            if (_cachedRbacPolicy == null)
             {
-                var policyRes = await policyGetter.Policy(new RBACPolicyRequest());
-                _cachedRbacPolicy = new RbacPolicy(policyRes.Policy);
-                _rbacPolicyLastFetched = DateTime.UtcNow;
+                lock (_rbacLock)
+                {
+                    if (_cachedRbacPolicy == null)
+                    {
+                        var policyRes = policyGetter.Policy(new RBACPolicyRequest()).Result;
+                        _cachedRbacPolicy = new RbacPolicy(policyRes.Policy);
+                        _rbacPolicyLastFetched = DateTime.UtcNow;
+                        _policyGetter = policyGetter;
+                        StartRbacBackgroundRefresh();
+                    }
+                }
             }
 
-            return _cachedRbacPolicy;
+            return Task.FromResult(_cachedRbacPolicy);
+        }
+
+        private static void StartRbacBackgroundRefresh()
+        {
+            if (_rbacRefreshTimer == null)
+            {
+                _rbacRefreshTimer = new Timer(async _ => await RefreshRbacPolicyBackground(),
+                    null, _rbacRefreshInterval, _rbacRefreshInterval);
+            }
+        }
+
+        private static async Task RefreshRbacPolicyBackground()
+        {
+            if (_policyGetter == null) return;
+
+            try
+            {
+                var policyRes = await _policyGetter.Policy(new RBACPolicyRequest());
+                lock (_rbacLock)
+                {
+                    _cachedRbacPolicy = new RbacPolicy(policyRes.Policy);
+                    _rbacPolicyLastFetched = DateTime.UtcNow;
+                }
+            }
+            catch
+            {
+            }
         }
 
     }
