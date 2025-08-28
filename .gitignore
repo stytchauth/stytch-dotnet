@@ -149,3 +149,6 @@ aspnet_client/
 
 # AI tooling
 .claude/
+
+# Environment files
+.envrc
