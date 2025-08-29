@@ -24,22 +24,6 @@ namespace Stytch.net.Models
         [JsonProperty("client_type")]
         public CreateRequestClientType ClientType { get; set; }
         /// <summary>
-        /// Array of redirect URI values for use in OAuth Authorization flows.
-        /// </summary>
-        [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
-        /// <summary>
-        /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
-        /// exchanged for a full Stytch session.
-        /// </summary>
-        [JsonProperty("full_access_allowed")]
-        public bool FullAccessAllowed { get; set; }
-        /// <summary>
-        /// Array of redirect URI values for use in OIDC Logout flows.
-        /// </summary>
-        [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
-        /// <summary>
         /// A human-readable name for the client.
         /// </summary>
         [JsonProperty("client_name")]
@@ -49,6 +33,17 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("client_description")]
         public string ClientDescription { get; set; }
+        /// <summary>
+        /// Array of redirect URI values for use in OAuth Authorization flows.
+        /// </summary>
+        [JsonProperty("redirect_urls")]
+        public List<string> RedirectURLS { get; set; }
+        /// <summary>
+        /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
+        /// exchanged for a full Stytch session.
+        /// </summary>
+        [JsonProperty("full_access_allowed")]
+        public bool? FullAccessAllowed { get; set; }
         /// <summary>
         /// The number of minutes before the access token expires. The default is 60 minutes.
         /// </summary>
@@ -65,6 +60,11 @@ namespace Stytch.net.Models
         [JsonProperty("access_token_template_content")]
         public string AccessTokenTemplateContent { get; set; }
         /// <summary>
+        /// Array of redirect URI values for use in OIDC Logout flows.
+        /// </summary>
+        [JsonProperty("post_logout_redirect_urls")]
+        public List<string> PostLogoutRedirectURLS { get; set; }
+        /// <summary>
         /// The logo URL of the Connected App, if any.
         /// </summary>
         [JsonProperty("logo_url")]
@@ -75,12 +75,9 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool? BypassConsentForOfflineAccess { get; set; }
-        public ConnectedAppsClientsCreateRequest(CreateRequestClientType clientType, List<string> redirectURLS, bool fullAccessAllowed, List<string> postLogoutRedirectURLS)
+        public ConnectedAppsClientsCreateRequest(CreateRequestClientType clientType)
         {
             this.ClientType = clientType;
-            this.RedirectURLS = redirectURLS;
-            this.FullAccessAllowed = fullAccessAllowed;
-            this.PostLogoutRedirectURLS = postLogoutRedirectURLS;
         }
     }
     /// <summary>

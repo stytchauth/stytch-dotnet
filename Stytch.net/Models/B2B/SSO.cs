@@ -69,6 +69,15 @@ namespace Stytch.net.Models
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
     }
+    public class EncryptionPrivateKey
+    {
+        [JsonProperty("private_key_id")]
+        public string PrivateKeyId { get; set; }
+        [JsonProperty("private_key")]
+        public string PrivateKey { get; set; }
+        [JsonProperty("created_at")]
+        public DateTime? CreatedAt { get; set; }
+    }
     public class GroupImplicitRoleAssignment
     {
         /// <summary>
@@ -147,6 +156,8 @@ namespace Stytch.net.Models
         public List<X509Certificate> SigningCertificates { get; set; }
         [JsonProperty("verification_certificates")]
         public List<X509Certificate> VerificationCertificates { get; set; }
+        [JsonProperty("encryption_private_keys")]
+        public List<EncryptionPrivateKey> EncryptionPrivateKeys { get; set; }
         [JsonProperty("saml_connection_implicit_role_assignments")]
         public List<SAMLConnectionImplicitRoleAssignment> SAMLConnectionImplicitRoleAssignments { get; set; }
         [JsonProperty("saml_group_implicit_role_assignments")]

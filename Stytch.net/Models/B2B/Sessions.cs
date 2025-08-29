@@ -151,12 +151,14 @@ namespace Stytch.net.Models
         [JsonProperty("profile_id")]
         public string ProfileId { get; set; }
         /// <summary>
-        /// The trusted auth token to authenticate.
+        /// The trusted auth token to authenticate. The token must have an organization ID claim if JIT provisioning
+        /// is enabled.
         /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
         /// <summary>
-        /// The organization ID that the session should be authenticated in.
+        /// The organization ID that the session should be authenticated in. Must be provided if the trusted auth
+        /// token does not have an organization ID claim.
         /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }

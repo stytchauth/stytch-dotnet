@@ -36,14 +36,14 @@ namespace Stytch.net.Models
         [JsonProperty("has_symbol")]
         public bool HasSymbol { get; set; }
         /// <summary>
-        /// For LUDS validation, the number of complexity requirements that are missing from the password. 
+        /// For LUDS validation, the number of complexity requirements that are missing from the password.
         ///       Check the complexity fields to see which requirements are missing.
         /// </summary>
         [JsonProperty("missing_complexity")]
         public int MissingComplexity { get; set; }
         /// <summary>
         /// For LUDS validation, this is the required length of the password that you've set minus the length of the
-        /// password being checked. 
+        /// password being checked.
         ///       The user will need to add this many characters to the password to make it valid.
         /// </summary>
         [JsonProperty("missing_characters")]
@@ -365,8 +365,8 @@ namespace Stytch.net.Models
         [JsonProperty("set_phone_number_verified")]
         public bool? SetPhoneNumberVerified { get; set; }
         /// <summary>
-        /// If a new member is created, this will set an identifier that can be used in API calls wherever a
-        /// member_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters
+        /// If a new member is created, this will set an identifier that can be used in most API calls where a
+        /// `member_id` is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters
         /// with a maximum length of 128 characters. External IDs must be unique within an organization, but may be
         /// reused across different organizations in the same project. Note that if a member already exists, this
         /// field will be ignored.
@@ -453,11 +453,11 @@ namespace Stytch.net.Models
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         /// <summary>
-        /// Returns `true` if the password passes our password validation. We offer two validation options, 
-        ///   [zxcvbn](https://stytch.com/docs/passwords#strength-requirements) is the default option which offers a
-        /// high level of sophistication. 
-        ///   We also offer [LUDS](https://stytch.com/docs/passwords#strength-requirements). If an email address is
-        /// included in the call we also 
+        /// Returns `true` if the password passes our password validation. We offer two validation options,
+        ///   [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy) is the default option which offers
+        /// a high level of sophistication.
+        ///   We also offer [LUDS](https://stytch.com/docs/b2b/guides/passwords/strength-policy). If an email
+        /// address is included in the call we also
         ///   require that the password hasn't been compromised using built-in breach detection powered by
         /// [HaveIBeenPwned](https://haveibeenpwned.com/)
         /// </summary>
@@ -481,9 +481,9 @@ namespace Stytch.net.Models
         [JsonProperty("strength_policy")]
         public string StrengthPolicy { get; set; }
         /// <summary>
-        /// Will return `true` if breach detection will be evaluated. By default this option is enabled. 
+        /// Will return `true` if breach detection will be evaluated. By default this option is enabled.
         ///   This option can be disabled by contacting
-        /// [support@stytch.com](mailto:support@stytch.com?subject=Password%20strength%20configuration). 
+        /// [support@stytch.com](mailto:support@stytch.com?subject=Password%20strength%20configuration).
         ///   If this value is false then `breached_password` will always be `false` as well.
         /// </summary>
         [JsonProperty("breach_detection_on_create")]
@@ -496,13 +496,13 @@ namespace Stytch.net.Models
         public int StatusCode { get; set; }
         /// <summary>
         /// Feedback for how to improve the password's strength using
-        /// [luds](https://stytch.com/docs/passwords#strength-requirements).
+        /// [luds](https://stytch.com/docs/guides/passwords/strength-policy).
         /// </summary>
         [JsonProperty("luds_feedback")]
         public LudsFeedback LudsFeedback { get; set; }
         /// <summary>
         /// Feedback for how to improve the password's strength using
-        /// [zxcvbn](https://stytch.com/docs/passwords#strength-requirements).
+        /// [zxcvbn](https://stytch.com/docs/b2b/guides/passwords/strength-policy).
         /// </summary>
         [JsonProperty("zxcvbn_feedback")]
         public ZxcvbnFeedback ZxcvbnFeedback { get; set; }
