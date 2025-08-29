@@ -225,8 +225,9 @@ namespace Stytch.net.Models
         [JsonProperty("name")]
         public string Name { get; set; }
         /// <summary>
-        /// An array of registered [SAML Connection](saml-connection-object) or
-        /// [OIDC Connection](oidc-connection-object) objects the Member has authenticated with.
+        /// An array of registered [SAML Connection](https://stytch.com/docs/b2b/api/saml-connection-object) or
+        /// [OIDC Connection](https://stytch.com/docs/b2b/api/oidc-connection-object) objects the Member has
+        /// authenticated with.
         /// </summary>
         [JsonProperty("sso_registrations")]
         public List<SSORegistration> SSORegistrations { get; set; }
@@ -234,8 +235,8 @@ namespace Stytch.net.Models
         /// Identifies the Member as a break glass user - someone who has permissions to authenticate into an
         /// Organization by bypassing the Organization's settings. A break glass account is typically used for
         /// emergency purposes to gain access outside of normal authentication procedures. Refer to the
-        /// [Organization object](organization-object) and its `auth_methods` and `allowed_auth_methods` fields for
-        /// more details.
+        /// [Organization object](https://stytch.com/docs/b2b/api/organization-object) and its `auth_methods` and
+        /// `allowed_auth_methods` fields for more details.
         /// </summary>
         [JsonProperty("is_breakglass")]
         public bool IsBreakglass { get; set; }
@@ -337,8 +338,9 @@ namespace Stytch.net.Models
         [JsonProperty("updated_at")]
         public DateTime? UpdatedAt { get; set; }
         /// <summary>
-        /// A scim member registration, referencing a [SCIM Connection](scim-connection-object) object in use for
-        /// the Member creation.
+        /// A scim member registration, referencing a
+        /// [SCIM Connection](https://stytch.com/docs/b2b/api/scim-connection-object) object in use for the Member
+        /// creation.
         /// </summary>
         [JsonProperty("scim_registration")]
         public SCIMRegistration SCIMRegistration { get; set; }
@@ -897,11 +899,13 @@ namespace Stytch.net.Models
     public class SearchQuery
     {
         /// <summary>
-        /// The action to perform on the operands. The accepted value are:
+        /// The action to perform on the operands. The accepted values are:
         /// 
         ///   `AND` – all the operand values provided must match.
         /// 
-        ///   `OR` – the operator will return any matches to at least one of the operand values you supply.
+        ///   `OR` – **[DEPRECATED]** the operator will return any matches to at least one of the operand values you
+        /// supply. This parameter is retained for legacy use cases only and is no longer supported. We strongly
+        /// recommend breaking down complex queries into multiple search queries instead.
         /// </summary>
         [JsonProperty("operator")]
         public SearchQueryOperator Operator { get; set; }

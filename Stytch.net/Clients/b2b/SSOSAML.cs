@@ -235,6 +235,54 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+        /// <summary>
+        /// Delete a SAML encryption private key.
+        /// </summary>
+        public async Task<B2BSSOSAMLDeleteEncryptionPrivateKeyResponse> DeleteEncryptionPrivateKey(
+            B2BSSOSAMLDeleteEncryptionPrivateKeyRequest request
+            , B2BSSOSAMLDeleteEncryptionPrivateKeyRequestOptions options = null
+        )
+        {
+            var method = HttpMethod.Delete;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/sso/saml/{request.OrganizationId}/connections/{request.ConnectionId}/encryption_private_keys/{request.PrivateKeyId}"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BSSOSAMLDeleteEncryptionPrivateKeyResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
 
     }
 

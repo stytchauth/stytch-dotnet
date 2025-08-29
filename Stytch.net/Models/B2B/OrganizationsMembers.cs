@@ -171,8 +171,8 @@ namespace Stytch.net.Models
         /// Identifies the Member as a break glass user - someone who has permissions to authenticate into an
         /// Organization by bypassing the Organization's settings. A break glass account is typically used for
         /// emergency purposes to gain access outside of normal authentication procedures. Refer to the
-        /// [Organization object](organization-object) and its `auth_methods` and `allowed_auth_methods` fields for
-        /// more details.
+        /// [Organization object](https://stytch.com/docs/b2b/api/organization-object) and its `auth_methods` and
+        /// `allowed_auth_methods` fields for more details.
         /// </summary>
         [JsonProperty("is_breakglass")]
         public bool? IsBreakglass { get; set; }
@@ -197,7 +197,7 @@ namespace Stytch.net.Models
         [JsonProperty("roles")]
         public List<string> Roles { get; set; }
         /// <summary>
-        /// An identifier that can be used in API calls wherever a member_id is expected. This is a string
+        /// An identifier that can be used in most API calls where a `member_id` is expected. This is a string
         /// consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
         /// External IDs must be unique within an organization, but may be reused across different organizations in
         /// the same project.
@@ -660,8 +660,7 @@ namespace Stytch.net.Models
         public string OrganizationId { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
-        /// operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set
-        /// for the member.
+        /// operations on a Member, so be sure to preserve this value.
         /// </summary>
         [JsonProperty("member_id")]
         public string MemberId { get; set; }
@@ -754,7 +753,7 @@ namespace Stytch.net.Models
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         /// <summary>
-        /// An array of [Member objects](member-object).
+        /// An array of [Member objects](https://stytch.com/docs/b2b/api/member-object).
         /// </summary>
         [JsonProperty("members")]
         public List<Member> Members { get; set; }
@@ -1002,8 +1001,8 @@ namespace Stytch.net.Models
         /// Identifies the Member as a break glass user - someone who has permissions to authenticate into an
         /// Organization by bypassing the Organization's settings. A break glass account is typically used for
         /// emergency purposes to gain access outside of normal authentication procedures. Refer to the
-        /// [Organization object](organization-object) and its `auth_methods` and `allowed_auth_methods` fields for
-        /// more details.
+        /// [Organization object](https://stytch.com/docs/b2b/api/organization-object) and its `auth_methods` and
+        /// `allowed_auth_methods` fields for more details.
         /// 
         /// If this field is provided and a session header is passed into the request, the Member Session must have
         /// permission to perform the `update.settings.is-breakglass` action on the `stytch.member` Resource.
@@ -1090,7 +1089,7 @@ namespace Stytch.net.Models
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
         /// <summary>
-        /// An identifier that can be used in API calls wherever a member_id is expected. This is a string
+        /// An identifier that can be used in most API calls where a `member_id` is expected. This is a string
         /// consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
         /// External IDs must be unique within an organization, but may be reused across different organizations in
         /// the same project.
