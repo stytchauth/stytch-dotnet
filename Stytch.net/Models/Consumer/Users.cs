@@ -180,6 +180,13 @@ namespace Stytch.net.Models
         [JsonProperty("is_locked")]
         public bool IsLocked { get; set; }
         /// <summary>
+        /// Roles assigned to this User.
+        ///    See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about
+        /// role assignment.
+        /// </summary>
+        [JsonProperty("roles")]
+        public List<string> Roles { get; set; }
+        /// <summary>
         /// The name of the User. Each field in the `name` object is optional.
         /// </summary>
         [JsonProperty("name")]
@@ -397,6 +404,13 @@ namespace Stytch.net.Models
     public class UsersCreateRequest
     {
         /// <summary>
+        /// Roles to explicitly assign to this User.
+        ///    See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about
+        /// role assignment.
+        /// </summary>
+        [JsonProperty("roles")]
+        public List<string> Roles { get; set; }
+        /// <summary>
         /// The email address of the end user.
         /// </summary>
         [JsonProperty("email")]
@@ -445,8 +459,9 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
-        public UsersCreateRequest()
+        public UsersCreateRequest(List<string> roles)
         {
+            this.Roles = roles;
         }
     }
     /// <summary>
@@ -1012,6 +1027,13 @@ namespace Stytch.net.Models
         [JsonProperty("is_locked")]
         public bool IsLocked { get; set; }
         /// <summary>
+        /// Roles assigned to this User.
+        ///    See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about
+        /// role assignment.
+        /// </summary>
+        [JsonProperty("roles")]
+        public List<string> Roles { get; set; }
+        /// <summary>
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
@@ -1191,6 +1213,13 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
+        /// <summary>
+        /// Roles to explicitly assign to this User.
+        ///    See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about
+        /// role assignment.
+        /// </summary>
+        [JsonProperty("roles")]
+        public List<string> Roles { get; set; }
         public UsersUpdateRequest(string userId)
         {
             this.UserId = userId;

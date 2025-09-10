@@ -172,6 +172,8 @@ namespace Stytch.net.Models
         public string AlternativeAcsURL { get; set; }
         [JsonProperty("idp_initiated_auth_disabled")]
         public bool IDPInitiatedAuthDisabled { get; set; }
+        [JsonProperty("allow_gateway_callback")]
+        public bool AllowGatewayCallback { get; set; }
         [JsonProperty("attribute_mapping")]
         public object AttributeMapping { get; set; }
     }
