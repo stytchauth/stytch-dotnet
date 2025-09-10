@@ -393,6 +393,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("saml_encryption_private_key")]
         public string SAMLEncryptionPrivateKey { get; set; }
+        [JsonProperty("allow_gateway_callback")]
+        public bool? AllowGatewayCallback { get; set; }
         public B2BSSOSAMLUpdateConnectionRequest(string organizationId, string connectionId)
         {
             this.OrganizationId = organizationId;
