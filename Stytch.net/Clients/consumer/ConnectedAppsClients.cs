@@ -40,7 +40,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/connected_apps/clients/{request.ClientId}"
+                Path = $"/v1/connected_apps/clients/{Uri.EscapeDataString(request.ClientId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -72,7 +72,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/connected_apps/clients/{request.ClientId}"
+                Path = $"/v1/connected_apps/clients/{Uri.EscapeDataString(request.ClientId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -111,7 +111,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/connected_apps/clients/{request.ClientId}"
+                Path = $"/v1/connected_apps/clients/{Uri.EscapeDataString(request.ClientId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

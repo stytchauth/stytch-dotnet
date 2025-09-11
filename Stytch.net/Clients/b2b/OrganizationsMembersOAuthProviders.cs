@@ -49,7 +49,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/oauth_providers/google"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/members/{Uri.EscapeDataString(request.MemberId)}/oauth_providers/google"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"include_refresh_token", (request.IncludeRefreshToken).ToString().ToLower()},
@@ -88,7 +88,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/oauth_providers/microsoft"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/members/{Uri.EscapeDataString(request.MemberId)}/oauth_providers/microsoft"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"include_refresh_token", (request.IncludeRefreshToken).ToString().ToLower()},
@@ -125,7 +125,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/oauth_providers/slack"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/members/{Uri.EscapeDataString(request.MemberId)}/oauth_providers/slack"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -161,7 +161,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/oauth_providers/hubspot"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/members/{Uri.EscapeDataString(request.MemberId)}/oauth_providers/hubspot"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"include_refresh_token", (request.IncludeRefreshToken).ToString().ToLower()},
@@ -200,7 +200,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/oauth_providers/github"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/members/{Uri.EscapeDataString(request.MemberId)}/oauth_providers/github"
             };
             uriBuilder.Query = Utility.BuildQueryString(new Dictionary<string, string> {
             {"include_refresh_token", (request.IncludeRefreshToken).ToString().ToLower()},

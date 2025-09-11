@@ -238,7 +238,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/webauthn/{request.WebAuthnRegistrationId}"
+                Path = $"/v1/webauthn/{Uri.EscapeDataString(request.WebAuthnRegistrationId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -277,7 +277,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/webauthn/credentials/{request.UserId}/{request.Domain}"
+                Path = $"/v1/webauthn/credentials/{Uri.EscapeDataString(request.UserId)}/{Uri.EscapeDataString(request.Domain)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
