@@ -7,6 +7,7 @@
 using System;
 using Stytch.net.Clients.B2B;
 using ConnectedApp = Stytch.net.Clients.Consumer.ConnectedApp;
+using Debug = Stytch.net.Clients.Consumer.Debug;
 using Fraud = Stytch.net.Clients.Consumer.Fraud;
 using M2M = Stytch.net.Clients.Consumer.M2M;
 using Project = Stytch.net.Clients.Consumer.Project;
@@ -17,6 +18,7 @@ namespace Stytch.net.Clients
     public class B2BClient : BaseClient
     {
         public readonly ConnectedApp ConnectedApp;
+        public readonly Debug Debug;
         public readonly Discovery Discovery;
         public readonly Fraud Fraud;
         public readonly IDP IDP;
@@ -38,6 +40,7 @@ namespace Stytch.net.Clients
         public B2BClient(ClientConfig config) : base(config)
         {
             ConnectedApp = new ConnectedApp(_httpClient, _config);
+            Debug = new Debug(_httpClient, _config);
             Discovery = new Discovery(_httpClient, _config);
             Fraud = new Fraud(_fraudClient, _config);
             IDP = new IDP(_httpClient, _config);
