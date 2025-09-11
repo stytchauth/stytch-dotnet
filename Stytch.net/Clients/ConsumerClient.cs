@@ -14,6 +14,7 @@ namespace Stytch.net.Clients
     {
         public readonly ConnectedApp ConnectedApp;
         public readonly CryptoWallets CryptoWallets;
+        public readonly Debug Debug;
         public readonly Fraud Fraud;
         public readonly IDP IDP;
         public readonly Impersonation Impersonation;
@@ -33,6 +34,7 @@ namespace Stytch.net.Clients
         {
             ConnectedApp = new ConnectedApp(_httpClient, _config);
             CryptoWallets = new CryptoWallets(_httpClient, _config);
+            Debug = new Debug(_httpClient, _config);
             Fraud = new Fraud(_fraudClient, _config);
             IDP = new IDP(_httpClient, _config);
             Impersonation = new Impersonation(_httpClient, _config);
