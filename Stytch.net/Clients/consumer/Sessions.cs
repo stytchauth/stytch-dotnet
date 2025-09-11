@@ -271,7 +271,7 @@ namespace Stytch.net.Clients.Consumer
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/sessions/jwks/{request.ProjectId}"
+                Path = $"/v1/sessions/jwks/{Uri.EscapeDataString(request.ProjectId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

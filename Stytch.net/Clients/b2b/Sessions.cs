@@ -411,7 +411,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/sessions/jwks/{request.ProjectId}"
+                Path = $"/v1/b2b/sessions/jwks/{Uri.EscapeDataString(request.ProjectId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

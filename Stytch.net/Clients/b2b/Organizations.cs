@@ -87,7 +87,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -125,7 +125,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Put;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -174,7 +174,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Delete;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -265,7 +265,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/metrics"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/metrics"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -304,7 +304,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/connected_apps"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/connected_apps"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
@@ -349,7 +349,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Get;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/connected_apps/{request.ConnectedAppId}"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/connected_apps/{Uri.EscapeDataString(request.ConnectedAppId)}"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());

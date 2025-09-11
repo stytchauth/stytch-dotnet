@@ -43,7 +43,7 @@ namespace Stytch.net.Clients.B2B
             var method = HttpMethod.Post;
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
             {
-                Path = $"/v1/b2b/organizations/{request.OrganizationId}/members/{request.MemberId}/connected_apps/{request.ConnectedAppId}/revoke"
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/members/{Uri.EscapeDataString(request.MemberId)}/connected_apps/{Uri.EscapeDataString(request.ConnectedAppId)}/revoke"
             };
 
             var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
