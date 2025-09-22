@@ -404,13 +404,6 @@ namespace Stytch.net.Models
     public class UsersCreateRequest
     {
         /// <summary>
-        /// Roles to explicitly assign to this User.
-        ///    See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about
-        /// role assignment.
-        /// </summary>
-        [JsonProperty("roles")]
-        public List<string> Roles { get; set; }
-        /// <summary>
         /// The email address of the end user.
         /// </summary>
         [JsonProperty("email")]
@@ -459,9 +452,15 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
-        public UsersCreateRequest(List<string> roles)
+        /// <summary>
+        /// Roles to explicitly assign to this User.
+        ///    See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about
+        /// role assignment.
+        /// </summary>
+        [JsonProperty("roles")]
+        public List<string> Roles { get; set; }
+        public UsersCreateRequest()
         {
-            this.Roles = roles;
         }
     }
     /// <summary>
