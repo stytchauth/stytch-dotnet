@@ -80,6 +80,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
+        [JsonProperty("client_id_metadata_url")]
+        public string ClientIdMetadataURL { get; set; }
     }
     public class ConnectedAppPublic
     {
@@ -167,6 +169,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
+        [JsonProperty("client_id_metadata_url")]
+        public string ClientIdMetadataURL { get; set; }
     }
     public class ConnectedAppWithNextClientSecret
     {
@@ -238,6 +242,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
+        [JsonProperty("client_id_metadata_url")]
+        public string ClientIdMetadataURL { get; set; }
     }
     public class ConnectedAppsResultsMetadata
     {
