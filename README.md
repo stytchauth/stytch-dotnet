@@ -109,6 +109,9 @@ client.MagicLinks.Email.LoginOrSignup(new B2BMagicLinksEmailLoginOrSignupRequest
 }));
 ```
 
+## JSON dependencies
+This SDK has a dependency on `Newtonsoft.Json`. You may see some issues with JSON deserialization if your project is using `System.Text.Json`.
+
 ## Support
 
 If you've found a bug, [open an issue](https://github.com/stytchauth/stytch-dotnet/issues/new)!
