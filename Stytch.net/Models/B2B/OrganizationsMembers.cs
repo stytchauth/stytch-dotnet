@@ -831,6 +831,13 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("login_template_id")]
         public string LoginTemplateId { get; set; }
+        /// <summary>
+        /// The method that should be used to verify a member's new email address. The options are
+        /// `EMAIL_MAGIC_LINK` or `EMAIL_OTP`. This field is optional, if no value is provided, `EMAIL_MAGIC_LINK`
+        /// will be used.
+        /// </summary>
+        [JsonProperty("delivery_method")]
+        public StartEmailUpdateRequestDeliveryMethod? DeliveryMethod { get; set; }
         public B2BOrganizationsMembersStartEmailUpdateRequest(string organizationId, string memberId, string emailAddress)
         {
             this.OrganizationId = organizationId;
@@ -1142,6 +1149,14 @@ namespace Stytch.net.Models
         public int StatusCode { get; set; }
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StartEmailUpdateRequestDeliveryMethod
+    {
+        [EnumMember(Value = "EMAIL_MAGIC_LINK")]
+        EMAIL_MAGIC_LINK,
+        [EnumMember(Value = "EMAIL_OTP")]
+        EMAIL_OTP,
+    }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum StartEmailUpdateRequestLocale
     {
