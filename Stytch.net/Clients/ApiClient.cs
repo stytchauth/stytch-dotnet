@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
@@ -16,15 +17,20 @@ namespace Stytch.net.Clients
         public string CustomBaseUrl { get; set; }
         public string FraudBaseUrl { get; set; } = "https://telemetry.stytch.com";
         public int Timeout { get; set; } = 10 * 60 * 1000; // Default timeout (10 minutes)
+        public HttpClient HttpClient { get; set; }
+        public HttpClient FraudHttpClient { get; set; }
         internal string JwksUri { get; set; }
     }
 
-    public class BaseClient
+    public class BaseClient : IDisposable
     {
         protected readonly HttpClient _httpClient;
         protected readonly HttpClient _fraudClient;
         protected readonly ClientConfig _config;
         protected static readonly string SdkVersion = GetSdkVersion();
+        private readonly bool _shouldDisposeHttpClient;
+        private readonly bool _shouldDisposeFraudClient;
+        private bool _disposed = false;
 
         public BaseClient(ClientConfig config)
         {
@@ -49,17 +55,65 @@ namespace Stytch.net.Clients
                 }
             }
 
-            _httpClient = new HttpClient { BaseAddress = new Uri(config.Environment) };
-            _fraudClient = new HttpClient { BaseAddress = new Uri(config.FraudBaseUrl) };
+            // Use provided HttpClient or create new one
+            if (config.HttpClient != null)
+            {
+                _httpClient = config.HttpClient;
+                _shouldDisposeHttpClient = false;
+
+                // Only set BaseAddress if not already set
+                if (_httpClient.BaseAddress == null)
+                {
+                    _httpClient.BaseAddress = new Uri(config.Environment);
+                }
+            }
+            else
+            {
+                _httpClient = new HttpClient { BaseAddress = new Uri(config.Environment) };
+                _shouldDisposeHttpClient = true;
+            }
+
+            // Use provided FraudHttpClient or create new one
+            if (config.FraudHttpClient != null)
+            {
+                _fraudClient = config.FraudHttpClient;
+                _shouldDisposeFraudClient = false;
+
+                // Only set BaseAddress if not already set
+                if (_fraudClient.BaseAddress == null)
+                {
+                    _fraudClient.BaseAddress = new Uri(config.FraudBaseUrl);
+                }
+            }
+            else
+            {
+                _fraudClient = new HttpClient { BaseAddress = new Uri(config.FraudBaseUrl) };
+                _shouldDisposeFraudClient = true;
+            }
 
             var authValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{config.ProjectId}:{config.ProjectSecret}"));
 
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authValue);
-            _fraudClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authValue);
+            // Only set authorization header if not already set (to avoid overriding custom configuration)
+            if (_httpClient.DefaultRequestHeaders.Authorization == null)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authValue);
+            }
 
-            // Set User-Agent header
-            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"stytch-dotnet/{SdkVersion}");
-            _fraudClient.DefaultRequestHeaders.UserAgent.ParseAdd($"stytch-dotnet/{SdkVersion}");
+            if (_fraudClient.DefaultRequestHeaders.Authorization == null)
+            {
+                _fraudClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authValue);
+            }
+
+            // Only set User-Agent header if not already set
+            if (!_httpClient.DefaultRequestHeaders.UserAgent.Any())
+            {
+                _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"stytch-dotnet/{SdkVersion}");
+            }
+
+            if (!_fraudClient.DefaultRequestHeaders.UserAgent.Any())
+            {
+                _fraudClient.DefaultRequestHeaders.UserAgent.ParseAdd($"stytch-dotnet/{SdkVersion}");
+            }
         }
 
         private static string GetSdkVersion()
@@ -67,6 +121,34 @@ namespace Stytch.net.Clients
             // Retrieve the SDK version from the assembly
             var version = Assembly.GetExecutingAssembly().GetName().Version;
             return version?.ToString() ?? "1.0.0";
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed resources only if we created them
+                    if (_shouldDisposeHttpClient)
+                    {
+                        _httpClient?.Dispose();
+                    }
+
+                    if (_shouldDisposeFraudClient)
+                    {
+                        _fraudClient?.Dispose();
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
