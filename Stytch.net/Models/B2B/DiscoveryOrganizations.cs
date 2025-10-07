@@ -80,6 +80,14 @@ namespace Stytch.net.Models
         [JsonProperty("organization_slug")]
         public string OrganizationSlug { get; set; }
         /// <summary>
+        /// An identifier that can be used in API calls wherever a organization_id is expected. This is a string
+        /// consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        /// External IDs must be unique within a project, but may be reused across different projects in the same
+        /// workspace.
+        /// </summary>
+        [JsonProperty("organization_external_id")]
+        public string OrganizationExternalId { get; set; }
+        /// <summary>
         /// The image URL of the Organization logo.
         /// </summary>
         [JsonProperty("organization_logo_url")]
