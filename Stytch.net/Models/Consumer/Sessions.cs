@@ -565,6 +565,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("authentication_factors")]
         public List<AuthenticationFactor> AuthenticationFactors { get; set; }
+        [JsonProperty("roles")]
+        public List<string> Roles { get; set; }
         /// <summary>
         /// The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in
         /// UTC, e.g. `2021-12-29T12:33:09Z`.
