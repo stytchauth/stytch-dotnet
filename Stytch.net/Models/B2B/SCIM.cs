@@ -288,14 +288,8 @@ namespace Stytch.net.Models
     }
     public class SCIMGroupImplicitRoleAssignments
     {
-        /// <summary>
-        /// The ID of the role.
-        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
-        /// <summary>
-        /// The ID of the group.
-        /// </summary>
         [JsonProperty("group_id")]
         public string GroupId { get; set; }
         [JsonProperty("group_name")]

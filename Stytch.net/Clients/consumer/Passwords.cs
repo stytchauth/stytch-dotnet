@@ -208,8 +208,8 @@ namespace Stytch.net.Clients.Consumer
         }
         /// <summary>
         /// Adds an existing password to a User's email that doesn't have a password yet. We support migrating users
-        /// from passwords stored with `bcrypt`, `scrypt`, `argon2`, `MD-5`, `SHA-1`, or `PBKDF2`. This endpoint has
-        /// a rate limit of 100 requests per second.
+        /// from passwords stored with `bcrypt`, `scrypt`, `argon2`, `MD-5`, `SHA-1`, `SHA-512`, or `PBKDF2`. This
+        /// endpoint has a rate limit of 100 requests per second.
         /// </summary>
         public async Task<PasswordsMigrateResponse> Migrate(
             PasswordsMigrateRequest request
