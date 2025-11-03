@@ -53,19 +53,6 @@ namespace Stytch.net.Models
     }
     public class ConnectionImplicitRoleAssignment
     {
-        /// <summary>
-        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
-        /// 
-        ///   Reserved `role_id`s that are predefined by Stytch include:
-        /// 
-        ///   * `stytch_member`
-        ///   * `stytch_admin`
-        /// 
-        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
-        /// for a more detailed explanation.
-        /// 
-        ///   
-        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
     }
@@ -80,24 +67,8 @@ namespace Stytch.net.Models
     }
     public class GroupImplicitRoleAssignment
     {
-        /// <summary>
-        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
-        /// 
-        ///   Reserved `role_id`s that are predefined by Stytch include:
-        /// 
-        ///   * `stytch_member`
-        ///   * `stytch_admin`
-        /// 
-        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
-        /// for a more detailed explanation.
-        /// 
-        ///   
-        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
-        /// <summary>
-        /// The name of the group that grants the specified role assignment.
-        /// </summary>
         [JsonProperty("group")]
         public string Group { get; set; }
     }
@@ -179,42 +150,13 @@ namespace Stytch.net.Models
     }
     public class SAMLConnectionImplicitRoleAssignment
     {
-        /// <summary>
-        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
-        /// 
-        ///   Reserved `role_id`s that are predefined by Stytch include:
-        /// 
-        ///   * `stytch_member`
-        ///   * `stytch_admin`
-        /// 
-        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
-        /// for a more detailed explanation.
-        /// 
-        ///   
-        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
     }
     public class SAMLGroupImplicitRoleAssignment
     {
-        /// <summary>
-        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
-        /// 
-        ///   Reserved `role_id`s that are predefined by Stytch include:
-        /// 
-        ///   * `stytch_member`
-        ///   * `stytch_admin`
-        /// 
-        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
-        /// for a more detailed explanation.
-        /// 
-        ///   
-        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
-        /// <summary>
-        /// The name of the group that grants the specified role assignment.
-        /// </summary>
         [JsonProperty("group")]
         public string Group { get; set; }
     }

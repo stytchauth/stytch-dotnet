@@ -79,6 +79,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("code_challenge")]
         public string CodeChallenge { get; set; }
+        [JsonProperty("resources")]
+        public List<string> Resources { get; set; }
         public IDPOAuthAuthorizeRequest(bool consentGranted, List<string> scopes, string clientId, string redirectUri, string responseType)
         {
             this.ConsentGranted = consentGranted;

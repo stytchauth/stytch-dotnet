@@ -272,8 +272,8 @@ namespace Stytch.net.Models
         [JsonProperty("hash")]
         public string Hash { get; set; }
         /// <summary>
-        /// The password hash used. Currently `bcrypt`, `scrypt`, `argon_2i`, `argon_2id`, `md_5`, `sha_1`, and
-        /// `pbkdf_2` are supported.
+        /// The password hash used. Currently `bcrypt`, `scrypt`, `argon_2i`, `argon_2id`, `md_5`, `sha_1`,
+        /// `sha_512`, and `pbkdf_2` are supported.
         /// </summary>
         [JsonProperty("hash_type")]
         public B2BPasswordsMigrateRequestHashType HashType { get; set; }
@@ -299,6 +299,11 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("sha_1_config")]
         public SHA1Config Sha1Config { get; set; }
+        /// <summary>
+        /// Optional parameters for SHA-512 hash types.
+        /// </summary>
+        [JsonProperty("sha_512_config")]
+        public SHA512Config Sha512Config { get; set; }
         /// <summary>
         /// Required parameters if the scrypt is not provided in a **PHC encoded form**.
         /// </summary>
@@ -533,6 +538,8 @@ namespace Stytch.net.Models
         ARGON_2ID,
         [EnumMember(Value = "sha_1")]
         SHA_1,
+        [EnumMember(Value = "sha_512")]
+        SHA_512,
         [EnumMember(Value = "scrypt")]
         SCRYPT,
         [EnumMember(Value = "phpass")]
