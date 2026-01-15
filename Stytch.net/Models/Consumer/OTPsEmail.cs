@@ -160,7 +160,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Use a custom template for login emails. By default, it will use your default email template. The
         /// template must be a template using our built-in customizations or a custom HTML email for OTP - Login.

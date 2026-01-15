@@ -37,7 +37,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
         /// exchanged for a full Stytch session.
@@ -63,7 +63,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// The logo URL of the Connected App, if any.
         /// </summary>
@@ -192,6 +192,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("limit")]
         public uint? Limit { get; set; }
+        [JsonProperty("query")]
+        public SearchConnectedAppsQuery Query { get; set; }
         public ConnectedAppsClientsSearchRequest()
         {
         }
@@ -246,7 +248,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If `true`, an authorization token granted to this Client can be
         /// exchanged for a full Stytch session.
@@ -272,7 +274,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// The logo URL of the Connected App, if any.
         /// </summary>

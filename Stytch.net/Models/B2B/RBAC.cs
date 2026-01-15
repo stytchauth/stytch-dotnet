@@ -173,6 +173,14 @@ namespace Stytch.net.Models
         [JsonProperty("actions")]
         public List<string> Actions { get; set; }
     }
+    public class OrgPolicy
+    {
+        /// <summary>
+        /// An array of [Role objects](https://stytch.com/docs/b2b/api/rbac-role-object).
+        /// </summary>
+        [JsonProperty("roles")]
+        public List<B2BRBACPolicyRole> Roles { get; set; }
+    }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.RBAC.Policy"/>..
     /// </summary>

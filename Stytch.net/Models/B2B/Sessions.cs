@@ -200,7 +200,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` for the session that you wish to add the trusted auth token authentication factor to.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// If the `telemetry_id` is passed, as part of this request, Stytch will call the
         /// [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) and store the associated
@@ -245,7 +245,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
@@ -302,7 +302,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in
@@ -365,7 +365,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
@@ -466,7 +466,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
@@ -517,7 +517,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` belonging to the member that you wish to associate the email with.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist,
@@ -602,7 +602,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
@@ -829,7 +829,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The [Member object](https://stytch.com/docs/b2b/api/member-object)
         /// </summary>
@@ -868,7 +868,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform
         /// operations on a Member, so be sure to preserve this value.

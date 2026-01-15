@@ -114,7 +114,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in
@@ -202,7 +202,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>

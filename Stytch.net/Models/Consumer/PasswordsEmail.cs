@@ -58,7 +58,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// A base64url encoded one time secret used to validate that the request starts and ends on the same device.
         /// </summary>
@@ -125,7 +125,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.

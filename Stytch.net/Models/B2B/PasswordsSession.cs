@@ -39,7 +39,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist,
@@ -131,7 +131,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The Intermediate Session Token. This token does not necessarily belong to a specific instance of a
         /// Member, but represents a bag of factors that may be converted to a member session. The token can be used

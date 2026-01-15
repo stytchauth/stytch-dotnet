@@ -47,7 +47,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
         public int AccessTokenExpiryMinutes { get; set; }
         [JsonProperty("access_token_template_content")]
@@ -56,7 +56,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If true, the client does not need to request explicit user consent
         /// for the `offline_access` scope.
@@ -82,6 +82,8 @@ namespace Stytch.net.Models
         public string LogoURL { get; set; }
         [JsonProperty("client_id_metadata_url")]
         public string ClientIdMetadataURL { get; set; }
+        [JsonProperty("creation_method")]
+        public string CreationMethod { get; set; }
     }
     public class ConnectedAppPublic
     {
@@ -131,7 +133,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
         public int AccessTokenExpiryMinutes { get; set; }
         [JsonProperty("access_token_template_content")]
@@ -140,7 +142,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If true, the client does not need to request explicit user consent
         /// for the `offline_access` scope.
@@ -212,7 +214,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         [JsonProperty("next_client_secret")]
         public string NextClientSecret { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
@@ -223,7 +225,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If true, the client does not need to request explicit user consent
         /// for the `offline_access` scope.
@@ -260,5 +262,62 @@ namespace Stytch.net.Models
         [JsonProperty("next_cursor")]
         public string NextCursor { get; set; }
     }
+    public class SearchConnectedAppsOperandFilterType
+    {
+    }
+    public class SearchConnectedAppsQuery
+    {
+        [JsonProperty("operands")]
+        public List<SearchConnectedAppsQueryOperand> Operands { get; set; }
+    }
+    public class SearchConnectedAppsQueryOperand
+    {
+        [JsonProperty("client_ids")]
+        public List<string> ClientIds { get; set; }
+        [JsonProperty("client_types")]
+        public List<SearchConnectedAppsOperandClientTypes> ClientTypes { get; set; }
+        [JsonProperty("creation_methods")]
+        public List<SearchConnectedAppsOperandCreationMethods> CreationMethods { get; set; }
+        [JsonProperty("filter")]
+        public SearchConnectedAppsOperandFilterTypeSearchConnectedAppsOperandFilterType? Filter { get; set; }
+        [JsonProperty("client_name_prefix")]
+        public string ClientNamePrefix { get; set; }
+    }
 
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SearchConnectedAppsOperandClientTypes
+    {
+        [EnumMember(Value = "first_party")]
+        FIRST_PARTY,
+        [EnumMember(Value = "first_party_public")]
+        FIRST_PARTY_PUBLIC,
+        [EnumMember(Value = "third_party")]
+        THIRD_PARTY,
+        [EnumMember(Value = "third_party_public")]
+        THIRD_PARTY_PUBLIC,
+    }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SearchConnectedAppsOperandCreationMethods
+    {
+        [EnumMember(Value = "dcr")]
+        DCR,
+        [EnumMember(Value = "cimd")]
+        CIMD,
+        [EnumMember(Value = "manual")]
+        MANUAL,
+    }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SearchConnectedAppsOperandFilterTypeSearchConnectedAppsOperandFilterType
+    {
+        [EnumMember(Value = "UNKNOWN_OPERAND")]
+        UNKNOWN_OPERAND,
+        [EnumMember(Value = "client_ids")]
+        CLIENT_IDS,
+        [EnumMember(Value = "client_name_prefix")]
+        CLIENT_NAME_PREFIX,
+        [EnumMember(Value = "client_types")]
+        CLIENT_TYPES,
+        [EnumMember(Value = "creation_methods")]
+        CREATION_METHODS,
+    }
 }
