@@ -71,7 +71,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
@@ -126,7 +126,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// The `user` object affected by this API call. See the
         /// [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
@@ -179,6 +179,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("return_passkey_credential_options")]
         public bool? ReturnPasskeyCredentialOptions { get; set; }
+        [JsonProperty("use_base64_url_encoding")]
+        public bool? UseBase64URLEncoding { get; set; }
         public WebAuthnAuthenticateStartRequest(string domain)
         {
             this.Domain = domain;
@@ -298,7 +300,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
@@ -354,7 +356,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         [JsonProperty("user")]
         public User User { get; set; }
         /// <summary>

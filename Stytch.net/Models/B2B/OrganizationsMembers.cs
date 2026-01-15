@@ -24,6 +24,16 @@ namespace Stytch.net.Models
         [JsonProperty("authorization")]
         public Authorization Authorization { get; set; }
     }
+    public class B2BOrganizationsMembersDeleteExternalIdRequestOptions
+    {
+        /// <summary>
+        /// Optional authorization object.
+        /// Pass in an active Stytch Member session token or session JWT and the request
+        /// will be run using that member's permissions.
+        /// </summary>
+        [JsonProperty("authorization")]
+        public Authorization Authorization { get; set; }
+    }
     public class B2BOrganizationsMembersDeleteMFAPhoneNumberRequestOptions
     {
         /// <summary>
@@ -263,6 +273,31 @@ namespace Stytch.net.Models
         {
             this.MemberId = memberId;
         }
+    }
+    public class B2BOrganizationsMembersDeleteExternalIdRequest
+    {
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        public B2BOrganizationsMembersDeleteExternalIdRequest(string organizationId, string memberId)
+        {
+            this.OrganizationId = organizationId;
+            this.MemberId = memberId;
+        }
+    }
+    public class B2BOrganizationsMembersDeleteExternalIdResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("member_id")]
+        public string MemberId { get; set; }
+        [JsonProperty("member")]
+        public Member Member { get; set; }
+        [JsonProperty("organization")]
+        public Organization Organization { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
     }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.B2B.Organizations.Members.DeleteMFAPhoneNumber"/>..

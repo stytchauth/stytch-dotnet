@@ -66,7 +66,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Space separated list that specifies how the Authorization Server should prompt the user for
         /// reauthentication and consent. Only `consent` is supported today.
@@ -173,7 +173,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         /// <summary>
         /// Space separated list that specifies how the Authorization Server should prompt the user for
         /// reauthentication and consent. Only `consent` is supported today.

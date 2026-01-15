@@ -27,7 +27,7 @@ namespace Stytch.net.Models
         [JsonProperty("session_duration_minutes")]
         public int? SessionDurationMinutes { get; set; }
         [JsonProperty("session_jwt")]
-        public string SessionJwt { get; set; }
+        public string SessionJWT { get; set; }
         [JsonProperty("session_custom_claims")]
         public object SessionCustomClaims { get; set; }
         /// <summary>
