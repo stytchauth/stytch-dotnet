@@ -44,7 +44,7 @@ namespace Stytch.net.Models
         ///       are provided.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't
         /// already exist,
@@ -158,7 +158,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>

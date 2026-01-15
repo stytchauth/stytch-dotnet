@@ -135,7 +135,7 @@ namespace Stytch.net.Models
         ///       are provided.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// A base64url encoded one time secret used to validate that the request starts and ends on the same device.
         /// </summary>
@@ -232,7 +232,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
         /// </summary>

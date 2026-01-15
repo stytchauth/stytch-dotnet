@@ -70,7 +70,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         public OAuthAttachRequest(string provider)
         {
             this.Provider = provider;
@@ -147,7 +147,7 @@ namespace Stytch.net.Models
         /// both `session_token` and `session_jwt` are provided.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Add a custom claims map to the Session being authenticated. Claims are only created if a Session is
         /// initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session
@@ -214,7 +214,7 @@ namespace Stytch.net.Models
         /// The JSON Web Token (JWT) for a given Stytch Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// The `provider_values` object lists relevant identifiers, values, and scopes for a given OAuth provider.
         /// For example this object will include a provider's `access_token` that you can use to access the

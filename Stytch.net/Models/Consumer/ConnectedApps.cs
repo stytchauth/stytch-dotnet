@@ -262,5 +262,62 @@ namespace Stytch.net.Models
         [JsonProperty("next_cursor")]
         public string NextCursor { get; set; }
     }
+    public class SearchConnectedAppsOperandFilterType
+    {
+    }
+    public class SearchConnectedAppsQuery
+    {
+        [JsonProperty("operands")]
+        public List<SearchConnectedAppsQueryOperand> Operands { get; set; }
+    }
+    public class SearchConnectedAppsQueryOperand
+    {
+        [JsonProperty("client_ids")]
+        public List<string> ClientIds { get; set; }
+        [JsonProperty("client_types")]
+        public List<SearchConnectedAppsOperandClientTypes> ClientTypes { get; set; }
+        [JsonProperty("creation_methods")]
+        public List<SearchConnectedAppsOperandCreationMethods> CreationMethods { get; set; }
+        [JsonProperty("filter")]
+        public SearchConnectedAppsOperandFilterTypeSearchConnectedAppsOperandFilterType? Filter { get; set; }
+        [JsonProperty("client_name_prefix")]
+        public string ClientNamePrefix { get; set; }
+    }
 
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SearchConnectedAppsOperandClientTypes
+    {
+        [EnumMember(Value = "first_party")]
+        FIRST_PARTY,
+        [EnumMember(Value = "first_party_public")]
+        FIRST_PARTY_PUBLIC,
+        [EnumMember(Value = "third_party")]
+        THIRD_PARTY,
+        [EnumMember(Value = "third_party_public")]
+        THIRD_PARTY_PUBLIC,
+    }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SearchConnectedAppsOperandCreationMethods
+    {
+        [EnumMember(Value = "dcr")]
+        DCR,
+        [EnumMember(Value = "cimd")]
+        CIMD,
+        [EnumMember(Value = "manual")]
+        MANUAL,
+    }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SearchConnectedAppsOperandFilterTypeSearchConnectedAppsOperandFilterType
+    {
+        [EnumMember(Value = "UNKNOWN_OPERAND")]
+        UNKNOWN_OPERAND,
+        [EnumMember(Value = "client_ids")]
+        CLIENT_IDS,
+        [EnumMember(Value = "client_name_prefix")]
+        CLIENT_NAME_PREFIX,
+        [EnumMember(Value = "client_types")]
+        CLIENT_TYPES,
+        [EnumMember(Value = "creation_methods")]
+        CREATION_METHODS,
+    }
 }

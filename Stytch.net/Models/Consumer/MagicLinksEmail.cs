@@ -343,7 +343,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` of the user to associate the email with.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         /// <summary>
         /// Used to determine which language to use when sending the user this delivery method. Parameter is a
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.

@@ -434,7 +434,7 @@ namespace Stytch.net.Clients.B2B
             }
         }
 
-        // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
+        // MANUAL(AuthenticateJwt)(SERVICE_METHOD)
         // ADDIMPORT: using System.Text.Json;
         // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
         // ADDIMPORT: using Newtonsoft.Json.Linq;
@@ -466,13 +466,13 @@ namespace Stytch.net.Clients.B2B
             }
         }
 
-        private class OrganizationJWTModel
+        private class OrganizationJwtModel
         {
             [JsonProperty("organization_id")] public string OrganizationId { get; set; }
             [JsonProperty("slug")] public string OrganizationSlug { get; set; }
         }
 
-        private class MemberSessionJWTModel : MemberSession
+        private class MemberSessionJwtModel : MemberSession
         {
             [JsonProperty("id")] public new string MemberSessionId { get; set; }
 
@@ -522,9 +522,9 @@ namespace Stytch.net.Clients.B2B
             var organizationJsonEl = (JsonElement)res.CustomClaims[Utility.OrganizationClaimKey];
 
             var organizationModel =
-                JsonConvert.DeserializeObject<OrganizationJWTModel>(organizationJsonEl.GetRawText());
+                JsonConvert.DeserializeObject<OrganizationJwtModel>(organizationJsonEl.GetRawText());
 
-            var memberSession = JsonConvert.DeserializeObject<MemberSessionJWTModel>(memberSessionJsonEl.GetRawText())
+            var memberSession = JsonConvert.DeserializeObject<MemberSessionJwtModel>(memberSessionJsonEl.GetRawText())
                 .ToMemberSession(memberId: res.Subject, organizationId: organizationModel.OrganizationId, organizationSlug: organizationModel.OrganizationSlug);
 
             var customClaims = new JObject();
@@ -562,7 +562,7 @@ namespace Stytch.net.Clients.B2B
 
             return memberSession;
         }
-        // ENDMANUAL(AuthenticateJWT)
+        // ENDMANUAL(AuthenticateJwt)
 
 
     }

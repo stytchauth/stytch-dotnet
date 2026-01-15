@@ -148,7 +148,7 @@ namespace Stytch.net.Models
         /// The `session_jwt` associated with a User's existing Session.
         /// </summary>
         [JsonProperty("session_jwt")]
-        public string SessionJWT { get; set; }
+        public string SessionJwt { get; set; }
         public OTPsSmsSendRequest(string phoneNumber)
         {
             this.PhoneNumber = phoneNumber;

@@ -54,23 +54,10 @@ namespace Stytch.net.Models
         [JsonProperty("org_policy")]
         public OrgPolicy OrgPolicy { get; set; }
     }
-    /// <summary>
-    /// Request type for <see cref="Stytch.net.Clients.B2B.RBAC.Organizations.SetOrgPolicy"/>..
-    /// </summary>
     public class B2BRBACOrganizationsSetOrgPolicyRequest
     {
-        /// <summary>
-        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
-        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
-        /// organization_slug or organization_external_id here as a convenience.
-        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
-        /// <summary>
-        /// The organization-specific RBAC Policy that contains roles defined for this organization. Organization
-        /// policies supplement the project-level RBAC policy with additional roles that are specific to the
-        /// organization.
-        /// </summary>
         [JsonProperty("org_policy")]
         public OrgPolicy OrgPolicy { get; set; }
         public B2BRBACOrganizationsSetOrgPolicyRequest(string organizationId)
@@ -78,28 +65,12 @@ namespace Stytch.net.Models
             this.OrganizationId = organizationId;
         }
     }
-    /// <summary>
-    /// Response type for <see cref="Stytch.net.Clients.B2B.RBAC.Organizations.SetOrgPolicy"/>..
-    /// </summary>
     public class B2BRBACOrganizationsSetOrgPolicyResponse
     {
-        /// <summary>
-        /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
-        /// purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        /// </summary>
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
-        /// <summary>
-        /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
-        /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
-        /// <summary>
-        /// The organization-specific RBAC Policy that contains roles defined for this organization. Organization
-        /// policies supplement the project-level RBAC policy with additional roles that are specific to the
-        /// organization.
-        /// </summary>
         [JsonProperty("org_policy")]
         public OrgPolicy OrgPolicy { get; set; }
     }

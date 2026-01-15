@@ -336,7 +336,7 @@ namespace Stytch.net.Clients.Consumer
             }
         }
 
-        // MANUAL(AuthenticateJWT)(SERVICE_METHOD)
+        // MANUAL(AuthenticateJwt)(SERVICE_METHOD)
         // ADDIMPORT: using System.Text.Json;
         // ADDIMPORT: using JsonException = Newtonsoft.Json.JsonException;
         /// <summary>
@@ -364,12 +364,12 @@ namespace Stytch.net.Clients.Consumer
         }
 
         /// <summary>
-        /// The SessionJWTModel is an intermediate representation of the Session as stored in the JWT.
+        /// The SessionJwtModel is an intermediate representation of the Session as stored in the JWT.
         /// It differs from the typical JSON API Response session in the following ways:
         /// - SessionId is stored as "id" instead of "session_id"
         /// - No user ID is present - it is stored under the "sub" claim
         /// </summary>
-        private class SessionJWTModel : Session
+        private class SessionJwtModel : Session
         {
             [JsonProperty("id")] public new string SessionId { get; set; }
 
@@ -404,10 +404,10 @@ namespace Stytch.net.Clients.Consumer
             });
 
             var sessionJsonEl = (JsonElement)res.CustomClaims[Utility.SessionClaimKey];
-            return JsonConvert.DeserializeObject<SessionJWTModel>(sessionJsonEl.GetRawText())
+            return JsonConvert.DeserializeObject<SessionJwtModel>(sessionJsonEl.GetRawText())
                 .ToSession(userId: res.Subject);
         }
-        // ENDMANUAL(AuthenticateJWT)
+        // ENDMANUAL(AuthenticateJwt)
 
 
     }

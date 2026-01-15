@@ -192,6 +192,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("limit")]
         public uint? Limit { get; set; }
+        [JsonProperty("query")]
+        public SearchConnectedAppsQuery Query { get; set; }
         public ConnectedAppsClientsSearchRequest()
         {
         }
