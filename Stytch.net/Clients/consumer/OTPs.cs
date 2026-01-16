@@ -23,14 +23,14 @@ namespace Stytch.net.Clients.Consumer
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
         public readonly OTPsSms Sms;
-        public readonly OTPsWhatsapp Whatsapp;
+        public readonly OTPsWhatsApp WhatsApp;
         public readonly OTPsEmail Email;
         public OTPs(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
             Sms = new OTPsSms(_httpClient, _config);
-            Whatsapp = new OTPsWhatsapp(_httpClient, _config);
+            WhatsApp = new OTPsWhatsApp(_httpClient, _config);
             Email = new OTPsEmail(_httpClient, _config);
         }
 

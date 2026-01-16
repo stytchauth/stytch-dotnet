@@ -639,6 +639,26 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }
+    public class UsersDeleteExternalIdRequest
+    {
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        public UsersDeleteExternalIdRequest(string userId)
+        {
+            this.UserId = userId;
+        }
+    }
+    public class UsersDeleteExternalIdResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        [JsonProperty("user")]
+        public User User { get; set; }
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
     /// <summary>
     /// Request type for <see cref="Stytch.net.Clients.Consumer.Users.DeleteOAuthRegistration"/>..
     /// </summary>

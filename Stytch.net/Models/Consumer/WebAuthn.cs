@@ -179,6 +179,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("return_passkey_credential_options")]
         public bool? ReturnPasskeyCredentialOptions { get; set; }
+        [JsonProperty("use_base64_url_encoding")]
+        public bool? UseBase64URLEncoding { get; set; }
         public WebAuthnAuthenticateStartRequest(string domain)
         {
             this.Domain = domain;

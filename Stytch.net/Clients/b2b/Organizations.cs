@@ -379,6 +379,54 @@ namespace Stytch.net.Clients.B2B
                 throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<B2BOrganizationsDeleteExternalIdResponse> DeleteExternalId(
+            B2BOrganizationsDeleteExternalIdRequest request
+            , B2BOrganizationsDeleteExternalIdRequestOptions options = null
+        )
+        {
+            var method = HttpMethod.Delete;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/external_id"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsDeleteExternalIdResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
 
     }
 

@@ -54,6 +54,16 @@ namespace Stytch.net.Models
         [JsonProperty("authorization")]
         public Authorization Authorization { get; set; }
     }
+    public class B2BOrganizationsDeleteExternalIdRequestOptions
+    {
+        /// <summary>
+        /// Optional authorization object.
+        /// Pass in an active Stytch Member session token or session JWT and the request
+        /// will be run using that member's permissions.
+        /// </summary>
+        [JsonProperty("authorization")]
+        public Authorization Authorization { get; set; }
+    }
     public class B2BOrganizationsDeleteRequestOptions
     {
         /// <summary>
@@ -98,6 +108,22 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("authorization")]
         public Authorization Authorization { get; set; }
+    }
+    public class CustomRole
+    {
+        [JsonProperty("role_id")]
+        public string RoleId { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
+        [JsonProperty("permissions")]
+        public List<CustomRolePermission> Permissions { get; set; }
+    }
+    public class CustomRolePermission
+    {
+        [JsonProperty("resource_id")]
+        public string ResourceId { get; set; }
+        [JsonProperty("actions")]
+        public List<string> Actions { get; set; }
     }
     public class EmailImplicitRoleAssignment
     {
@@ -772,6 +798,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("allowed_third_party_connected_apps")]
         public List<string> AllowedThirdPartyConnectedApps { get; set; }
+        [JsonProperty("custom_roles")]
+        public List<CustomRole> CustomRoles { get; set; }
         /// <summary>
         /// An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
         /// </summary>
@@ -1229,6 +1257,24 @@ namespace Stytch.net.Models
         /// The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g.
         /// 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         /// </summary>
+        [JsonProperty("status_code")]
+        public int StatusCode { get; set; }
+    }
+    public class B2BOrganizationsDeleteExternalIdRequest
+    {
+        [JsonProperty("organization_id")]
+        public string OrganizationId { get; set; }
+        public B2BOrganizationsDeleteExternalIdRequest(string organizationId)
+        {
+            this.OrganizationId = organizationId;
+        }
+    }
+    public class B2BOrganizationsDeleteExternalIdResponse
+    {
+        [JsonProperty("request_id")]
+        public string RequestId { get; set; }
+        [JsonProperty("organization")]
+        public Organization Organization { get; set; }
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
     }

@@ -47,7 +47,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
         public int AccessTokenExpiryMinutes { get; set; }
         [JsonProperty("access_token_template_content")]
@@ -56,13 +56,15 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If true, the client does not need to request explicit user consent
         /// for the `offline_access` scope.
         /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool BypassConsentForOfflineAccess { get; set; }
+        [JsonProperty("creation_method")]
+        public string CreationMethod { get; set; }
         /// <summary>
         /// The last four characters of the client secret.
         /// </summary>
@@ -131,7 +133,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
         public int AccessTokenExpiryMinutes { get; set; }
         [JsonProperty("access_token_template_content")]
@@ -140,7 +142,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If true, the client does not need to request explicit user consent
         /// for the `offline_access` scope.
@@ -212,7 +214,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OAuth Authorization flows.
         /// </summary>
         [JsonProperty("redirect_urls")]
-        public List<string> RedirectURLS { get; set; }
+        public List<string> RedirectURLs { get; set; }
         [JsonProperty("next_client_secret")]
         public string NextClientSecret { get; set; }
         [JsonProperty("access_token_expiry_minutes")]
@@ -223,7 +225,7 @@ namespace Stytch.net.Models
         /// Array of redirect URI values for use in OIDC Logout flows.
         /// </summary>
         [JsonProperty("post_logout_redirect_urls")]
-        public List<string> PostLogoutRedirectURLS { get; set; }
+        public List<string> PostLogoutRedirectURLs { get; set; }
         /// <summary>
         /// Valid for first party clients only. If true, the client does not need to request explicit user consent
         /// for the `offline_access` scope.
