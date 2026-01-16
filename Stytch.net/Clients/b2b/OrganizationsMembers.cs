@@ -660,6 +660,54 @@ namespace Stytch.net.Clients.B2B
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        public async Task<B2BOrganizationsMembersDeleteExternalIdResponse> DeleteExternalId(
+            B2BOrganizationsMembersDeleteExternalIdRequest request
+            , B2BOrganizationsMembersDeleteExternalIdRequestOptions options = null
+        )
+        {
+            var method = HttpMethod.Delete;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/b2b/organizations/{Uri.EscapeDataString(request.OrganizationId)}/members/{Uri.EscapeDataString(request.MemberId)}/external_id"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionToken))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-Session", options.Authorization.SessionToken);
+            }
+            if (!string.IsNullOrEmpty(options?.Authorization?.SessionJwt))
+            {
+                httpReq.Headers.Add("X-Stytch-Member-SessionJWT", options.Authorization.SessionJwt);
+            }
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<B2BOrganizationsMembersDeleteExternalIdResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
         /// Creates a Member. An `organization_id` and `email_address` are required.
         /// </summary>
         public async Task<B2BOrganizationsMembersCreateResponse> Create(

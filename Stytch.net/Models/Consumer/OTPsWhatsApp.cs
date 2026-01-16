@@ -13,9 +13,9 @@ using Newtonsoft.Json.Converters;
 namespace Stytch.net.Models
 {
     /// <summary>
-    /// Request type for <see cref="Stytch.net.Clients.Consumer.OTPs.Whatsapp.LoginOrCreate"/>..
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.OTPs.WhatsApp.LoginOrCreate"/>..
     /// </summary>
-    public class OTPsWhatsappLoginOrCreateRequest
+    public class OTPsWhatsAppLoginOrCreateRequest
     {
         /// <summary>
         /// The phone number to use for one-time passcodes. The phone number should be in E.164 format (i.e.
@@ -58,16 +58,16 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public OTPsWhatsappLoginOrCreateRequestLocale? Locale { get; set; }
-        public OTPsWhatsappLoginOrCreateRequest(string phoneNumber)
+        public OTPsWhatsAppLoginOrCreateRequestLocale? Locale { get; set; }
+        public OTPsWhatsAppLoginOrCreateRequest(string phoneNumber)
         {
             this.PhoneNumber = phoneNumber;
         }
     }
     /// <summary>
-    /// Response type for <see cref="Stytch.net.Clients.Consumer.OTPs.Whatsapp.LoginOrCreate"/>..
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.OTPs.WhatsApp.LoginOrCreate"/>..
     /// </summary>
-    public class OTPsWhatsappLoginOrCreateResponse
+    public class OTPsWhatsAppLoginOrCreateResponse
     {
         /// <summary>
         /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
@@ -98,9 +98,9 @@ namespace Stytch.net.Models
         public int StatusCode { get; set; }
     }
     /// <summary>
-    /// Request type for <see cref="Stytch.net.Clients.Consumer.OTPs.Whatsapp.Send"/>..
+    /// Request type for <see cref="Stytch.net.Clients.Consumer.OTPs.WhatsApp.Send"/>..
     /// </summary>
-    public class OTPsWhatsappSendRequest
+    public class OTPsWhatsAppSendRequest
     {
         /// <summary>
         /// The phone number to use for one-time passcodes. The phone number should be in E.164 format (i.e.
@@ -133,7 +133,7 @@ namespace Stytch.net.Models
         /// 
         /// </summary>
         [JsonProperty("locale")]
-        public OTPsWhatsappSendRequestLocale? Locale { get; set; }
+        public OTPsWhatsAppSendRequestLocale? Locale { get; set; }
         /// <summary>
         /// The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
         /// </summary>
@@ -149,15 +149,15 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("session_jwt")]
         public string SessionJwt { get; set; }
-        public OTPsWhatsappSendRequest(string phoneNumber)
+        public OTPsWhatsAppSendRequest(string phoneNumber)
         {
             this.PhoneNumber = phoneNumber;
         }
     }
     /// <summary>
-    /// Response type for <see cref="Stytch.net.Clients.Consumer.OTPs.Whatsapp.Send"/>..
+    /// Response type for <see cref="Stytch.net.Clients.Consumer.OTPs.WhatsApp.Send"/>..
     /// </summary>
-    public class OTPsWhatsappSendResponse
+    public class OTPsWhatsAppSendResponse
     {
         /// <summary>
         /// Globally unique UUID that is returned with every API call. This value is important to log for debugging
@@ -184,7 +184,7 @@ namespace Stytch.net.Models
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum OTPsWhatsappLoginOrCreateRequestLocale
+    public enum OTPsWhatsAppLoginOrCreateRequestLocale
     {
         [EnumMember(Value = "en")]
         EN,
@@ -204,7 +204,7 @@ namespace Stytch.net.Models
         CAES,
     }
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum OTPsWhatsappSendRequestLocale
+    public enum OTPsWhatsAppSendRequestLocale
     {
         [EnumMember(Value = "en")]
         EN,

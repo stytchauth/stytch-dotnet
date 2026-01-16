@@ -22,10 +22,12 @@ namespace Stytch.net.Clients.B2B
     {
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
+        public readonly RBACOrganizations Organizations;
         public RBAC(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
+            Organizations = new RBACOrganizations(_httpClient, _config);
         }
 
         /// <summary>

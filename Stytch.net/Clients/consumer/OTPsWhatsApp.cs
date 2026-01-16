@@ -18,11 +18,11 @@ using Stytch.net.Models;
 
 namespace Stytch.net.Clients.Consumer
 {
-    public class OTPsWhatsapp
+    public class OTPsWhatsApp
     {
         private readonly ClientConfig _config;
         private readonly HttpClient _httpClient;
-        public OTPsWhatsapp(HttpClient client, ClientConfig config)
+        public OTPsWhatsApp(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
             _config = config;
@@ -55,8 +55,8 @@ namespace Stytch.net.Clients.Consumer
         /// [Authenticate OTP](https://stytch.com/docs/api/authenticate-otp) using the OTP `code` along with the
         /// `phone_id` found in the response as the `method_id`.
         /// </summary>
-        public async Task<OTPsWhatsappSendResponse> Send(
-            OTPsWhatsappSendRequest request
+        public async Task<OTPsWhatsAppSendResponse> Send(
+            OTPsWhatsAppSendRequest request
         )
         {
             var method = HttpMethod.Post;
@@ -79,7 +79,7 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<OTPsWhatsappSendResponse>(responseBody);
+                return JsonConvert.DeserializeObject<OTPsWhatsAppSendResponse>(responseBody);
             }
             try
             {
@@ -106,8 +106,8 @@ namespace Stytch.net.Clients.Consumer
         /// [Authenticate OTP](https://stytch.com/docs/api/authenticate-otp) using the OTP `code` along with the
         /// `phone_id` found in the response as the `method_id`.
         /// </summary>
-        public async Task<OTPsWhatsappLoginOrCreateResponse> LoginOrCreate(
-            OTPsWhatsappLoginOrCreateRequest request
+        public async Task<OTPsWhatsAppLoginOrCreateResponse> LoginOrCreate(
+            OTPsWhatsAppLoginOrCreateRequest request
         )
         {
             var method = HttpMethod.Post;
@@ -130,7 +130,7 @@ namespace Stytch.net.Clients.Consumer
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<OTPsWhatsappLoginOrCreateResponse>(responseBody);
+                return JsonConvert.DeserializeObject<OTPsWhatsAppLoginOrCreateResponse>(responseBody);
             }
             try
             {

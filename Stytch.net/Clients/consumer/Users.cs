@@ -600,6 +600,45 @@ namespace Stytch.net.Clients.Consumer
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        public async Task<UsersDeleteExternalIdResponse> DeleteExternalId(
+            UsersDeleteExternalIdRequest request
+        )
+        {
+            var method = HttpMethod.Delete;
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress)
+            {
+                Path = $"/v1/users/{Uri.EscapeDataString(request.UserId)}/external_id"
+            };
+
+            var httpReq = new HttpRequestMessage(method, uriBuilder.ToString());
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var jsonBody = JsonConvert.SerializeObject(request, jsonSettings);
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            httpReq.Content = content;
+
+            var response = await _httpClient.SendAsync(httpReq);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<UsersDeleteExternalIdResponse>(responseBody);
+            }
+            try
+            {
+                var apiException = JsonConvert.DeserializeObject<StytchApiException>(responseBody);
+                throw apiException;
+            }
+            catch (JsonException)
+            {
+                throw new StytchNetworkException($"Unexpected error occurred: {responseBody}", response);
+            }
+        }
+        /// <summary>
         /// User Get Connected Apps retrieves a list of Connected Apps with which the User has successfully
         /// completed an
         /// authorization flow.
