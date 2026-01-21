@@ -30,6 +30,35 @@ namespace Stytch.net.Models
         [JsonProperty("network")]
         public string Network { get; set; }
     }
+    public class AddressInformation
+    {
+        /// <summary>
+        /// Whether email sent to this address is known to have bounced previously.
+        /// </summary>
+        [JsonProperty("has_known_bounces")]
+        public bool HasKnownBounces { get; set; }
+        /// <summary>
+        /// Whether this email address is valid.
+        /// </summary>
+        [JsonProperty("has_valid_syntax")]
+        public bool HasValidSyntax { get; set; }
+        /// <summary>
+        /// Whether the local part of the email appears to be a role or group, rather than an individual end user.
+        /// </summary>
+        [JsonProperty("is_suspected_role_address")]
+        public bool IsSuspectedRoleAddress { get; set; }
+        /// <summary>
+        /// The normalized email address after removing '.' characters and any characters after a '+'.
+        /// </summary>
+        [JsonProperty("normalized_email")]
+        public string NormalizedEmail { get; set; }
+        /// <summary>
+        /// The number of '.' and '+' characters in the email address. A higher tumbling count indicates a higher
+        /// potential for fraud.
+        /// </summary>
+        [JsonProperty("tumbling_character_count")]
+        public int TumblingCharacterCount { get; set; }
+    }
     public class BrowserProperties
     {
         /// <summary>
@@ -37,6 +66,19 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("user_agent")]
         public string UserAgent { get; set; }
+    }
+    public class DomainInformation
+    {
+        /// <summary>
+        /// Whether the email has appropriate DNS records to deliver a message.
+        /// </summary>
+        [JsonProperty("has_mx_or_a_record")]
+        public bool HasMXOrARecord { get; set; }
+        /// <summary>
+        /// Whether the email domain is known to be disposable.
+        /// </summary>
+        [JsonProperty("is_disposable_domain")]
+        public bool IsDisposableDomain { get; set; }
     }
     public class Fingerprints
     {
