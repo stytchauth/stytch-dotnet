@@ -25,6 +25,7 @@ namespace Stytch.net.Clients.Consumer
         public readonly FraudFingerprint Fingerprint;
         public readonly FraudRules Rules;
         public readonly FraudVerdictReasons VerdictReasons;
+        public readonly FraudEmail Email;
         public Fraud(HttpClient client, ClientConfig config)
         {
             _httpClient = client;
@@ -32,6 +33,7 @@ namespace Stytch.net.Clients.Consumer
             Fingerprint = new FraudFingerprint(_httpClient, _config);
             Rules = new FraudRules(_httpClient, _config);
             VerdictReasons = new FraudVerdictReasons(_httpClient, _config);
+            Email = new FraudEmail(_httpClient, _config);
         }
 
 
