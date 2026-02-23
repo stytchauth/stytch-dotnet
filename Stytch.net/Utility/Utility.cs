@@ -64,11 +64,20 @@ namespace Stytch.net
             AuthenticateJwtParams requestParams)
         {
             var jwks = await GetJwksFromUrl(client, config.JwksUri);
+
+            // Build list of allowed issuers: default issuer and custom base URL (if provided)
+            var allowedIssuers = new List<string> { $"stytch.com/{config.ProjectId}" };
+            if (!string.IsNullOrEmpty(config.CustomBaseUrl))
+            {
+                // Remove trailing slash - our issuers will never have a trailing slash
+                allowedIssuers.Add(config.CustomBaseUrl.TrimEnd('/'));
+            }
+
             var validationParameters = new TokenValidationParameters
             {
                 IssuerSigningKeys = jwks.Keys,
                 ValidateIssuer = true,
-                ValidIssuer = $"stytch.com/{config.ProjectId}",
+                ValidIssuers = allowedIssuers,
                 ValidateAudience = true,
                 ValidAudience = config.ProjectId,
                 ValidateLifetime = true,
