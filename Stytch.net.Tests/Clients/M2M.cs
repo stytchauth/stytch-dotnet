@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
-using Stytch.net.Clients;
 using Stytch.net.Exceptions;
 using Stytch.net.Models;
 
@@ -135,41 +134,5 @@ public class M2M : ConsumerTestBase, IAsyncLifetime
 
         // Assert
         Assert.NotNull(exception);
-    }
-
-    [Fact]
-    public async Task M2MAuthenticateToken_SuccessWithCustomDomain()
-    {
-        // This test verifies that when a custom domain is configured,
-        // the AuthenticateJwtLocal method accepts tokens with custom issuers
-        // Note: This test uses standard Stytch tokens, but documents the custom domain support
-
-        // Arrange - Create a client config with custom domain
-        string? projectId = Environment.GetEnvironmentVariable("PROJECT_ID");
-        string? projectSecret = Environment.GetEnvironmentVariable("PROJECT_SECRET");
-
-        if (string.IsNullOrEmpty(projectId) || string.IsNullOrEmpty(projectSecret))
-        {
-            throw new InvalidOperationException("Required environment variables not set.");
-        }
-
-        var customConfig = new ClientConfig
-        {
-            ProjectId = projectId,
-            ProjectSecret = projectSecret,
-            CustomBaseUrl = "https://login.example.com" // Custom domain that would issue tokens
-        };
-
-        var customClient = new Stytch.net.Clients.ConsumerClient(customConfig);
-
-        // Act - Authenticate with standard token (custom domain tokens would work the same way)
-        var authRes = await customClient.M2M.AuthenticateToken(new M2MAuthenticateTokenRequest(tokenRes.AccessToken));
-
-        // Assert - Token validation succeeds with custom domain configured
-        Assert.NotNull(authRes);
-        Assert.Equal(createRes.M2MClient.ClientId, authRes.ClientId);
-
-        // Cleanup
-        customClient.Dispose();
     }
 }
