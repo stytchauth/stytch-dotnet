@@ -294,6 +294,9 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("is_admin")]
         public bool IsAdmin { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a TOTP instance.
+        /// </summary>
         [JsonProperty("totp_registration_id")]
         public string TOTPRegistrationId { get; set; }
         /// <summary>
@@ -314,6 +317,10 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("retired_email_addresses")]
         public List<RetiredEmail> RetiredEmailAddresses { get; set; }
+        /// <summary>
+        /// Whether the Member is temporarily locked due to too many failed authentication attempts. See the
+        /// [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information.
+        /// </summary>
         [JsonProperty("is_locked")]
         public bool IsLocked { get; set; }
         /// <summary>
@@ -329,6 +336,11 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("mfa_phone_number")]
         public string MfaPhoneNumber { get; set; }
+        /// <summary>
+        /// The Member's default MFA method. This value is used to determine which secondary MFA method to use in
+        /// the case of multiple methods registered for a Member. The current possible values are `sms_otp` and
+        /// `totp`.
+        /// </summary>
         [JsonProperty("default_mfa_method")]
         public string DefaultMfaMethod { get; set; }
         /// <summary>
@@ -375,8 +387,16 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
+        /// <summary>
+        /// When the member lock was created, if there is one. Values conform to the RFC 3339 standard and are
+        /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        /// </summary>
         [JsonProperty("lock_created_at")]
         public DateTime? LockCreatedAt { get; set; }
+        /// <summary>
+        /// When the member lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed
+        /// in UTC, e.g. `2021-12-29T12:33:09Z`.
+        /// </summary>
         [JsonProperty("lock_expires_at")]
         public DateTime? LockExpiresAt { get; set; }
     }
@@ -711,6 +731,17 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("allowed_auth_methods")]
         public List<string> AllowedAuthMethods { get; set; }
+        /// <summary>
+        /// The setting that controls the MFA policy for all Members in the Organization. The accepted values are:
+        ///  
+        ///   `REQUIRED_FOR_ALL` – All Members within the Organization will be required to complete MFA every time
+        /// they wish to log in. However, any active Session that existed prior to this setting change will remain
+        /// valid.
+        ///  
+        ///   `OPTIONAL` – The default value. The Organization does not require MFA by default for all Members.
+        /// Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.
+        ///   
+        /// </summary>
         [JsonProperty("mfa_policy")]
         public string MfaPolicy { get; set; }
         /// <summary>
@@ -754,6 +785,9 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("oauth_tenant_jit_provisioning")]
         public string OAuthTenantJITProvisioning { get; set; }
+        /// <summary>
+        /// A list of email domains that are claimed by the Organization.
+        /// </summary>
         [JsonProperty("claimed_email_domains")]
         public List<string> ClaimedEmailDomains { get; set; }
         /// <summary>

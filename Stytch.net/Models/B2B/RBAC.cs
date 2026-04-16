@@ -24,6 +24,9 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("resources")]
         public List<B2BRBACPolicyResource> Resources { get; set; }
+        /// <summary>
+        /// An array of [Scope objects](https://stytch.com/docs/b2b/api/rbac-scope-object).
+        /// </summary>
         [JsonProperty("scopes")]
         public List<B2BRBACPolicyScope> Scopes { get; set; }
     }
@@ -159,17 +162,48 @@ namespace Stytch.net.Models
     }
     public class B2BRBACPolicyScope
     {
+        /// <summary>
+        /// The unique identifier of the RBAC Scope, provided by the developer and intended to be human-readable.
+        /// </summary>
         [JsonProperty("scope")]
         public string Scope { get; set; }
+        /// <summary>
+        /// The description of the RBAC Scope.
+        /// </summary>
         [JsonProperty("description")]
         public string Description { get; set; }
+        /// <summary>
+        /// A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a
+        /// list of actions.
+        /// </summary>
         [JsonProperty("permissions")]
         public List<B2BRBACPolicyScopePermission> Permissions { get; set; }
     }
     public class B2BRBACPolicyScopePermission
     {
+        /// <summary>
+        /// A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.
+        /// 
+        ///   A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch
+        /// default Resources with reserved `resource_id`s. These include:
+        /// 
+        ///   * `stytch.organization`
+        ///   * `stytch.member`
+        ///   * `stytch.sso`
+        ///   * `stytch.self`
+        /// 
+        ///   Check out the
+        /// [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more
+        /// detailed explanation.
+        /// 
+        ///   
+        /// </summary>
         [JsonProperty("resource_id")]
         public string ResourceId { get; set; }
+        /// <summary>
+        /// A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as
+        /// a wildcard to require a Scope permission to use all possible actions related to the Resource. 
+        /// </summary>
         [JsonProperty("actions")]
         public List<string> Actions { get; set; }
     }

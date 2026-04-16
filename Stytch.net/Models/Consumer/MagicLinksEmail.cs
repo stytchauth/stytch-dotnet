@@ -23,9 +23,9 @@ namespace Stytch.net.Models
         [JsonProperty("email")]
         public string Email { get; set; }
         /// <summary>
-        /// Use a custom template for invite emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
-        /// Invite.
+        /// Use a custom template for invite emails. By default, it will use your default email template. Templates
+        /// can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in
+        /// customization options or custom HTML templates with type “Magic links - Invite”.
         /// </summary>
         [JsonProperty("invite_template_id")]
         public string InviteTemplateId { get; set; }
@@ -55,7 +55,7 @@ namespace Stytch.net.Models
         [JsonProperty("invite_expiration_minutes")]
         public int? InviteExpirationMinutes { get; set; }
         /// <summary>
-        /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+        /// Used to determine which language to use when sending the user this delivery method. Parameter is an
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
         /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
@@ -153,16 +153,16 @@ namespace Stytch.net.Models
         [JsonProperty("signup_expiration_minutes")]
         public int? SignupExpirationMinutes { get; set; }
         /// <summary>
-        /// Use a custom template for login emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
-        /// Login.
+        /// Use a custom template for login emails. By default, it will use your default email template. Templates
+        /// can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in
+        /// customization options or custom HTML templates with type “Magic links - Login”.
         /// </summary>
         [JsonProperty("login_template_id")]
         public string LoginTemplateId { get; set; }
         /// <summary>
-        /// Use a custom template for sign-up emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
-        /// Sign-up.
+        /// Use a custom template for sign-up emails. By default, it will use your default email template. Templates
+        /// can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in
+        /// customization options or custom HTML templates with type “Magic links - Sign-up”.
         /// </summary>
         [JsonProperty("signup_template_id")]
         public string SignupTemplateId { get; set; }
@@ -189,7 +189,7 @@ namespace Stytch.net.Models
         [JsonProperty("code_challenge")]
         public string CodeChallenge { get; set; }
         /// <summary>
-        /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+        /// Used to determine which language to use when sending the user this delivery method. Parameter is an
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
         /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
@@ -283,9 +283,9 @@ namespace Stytch.net.Models
         [JsonProperty("email")]
         public string Email { get; set; }
         /// <summary>
-        /// Use a custom template for login emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
-        /// Login.
+        /// Use a custom template for login emails. By default, it will use your default email template. Templates
+        /// can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in
+        /// customization options or custom HTML templates with type “Magic links - Login”.
         /// </summary>
         [JsonProperty("login_template_id")]
         public string LoginTemplateId { get; set; }
@@ -345,7 +345,7 @@ namespace Stytch.net.Models
         [JsonProperty("session_jwt")]
         public string SessionJwt { get; set; }
         /// <summary>
-        /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+        /// Used to determine which language to use when sending the user this delivery method. Parameter is an
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
         /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian
@@ -358,9 +358,9 @@ namespace Stytch.net.Models
         [JsonProperty("locale")]
         public MagicLinksEmailSendRequestLocale? Locale { get; set; }
         /// <summary>
-        /// Use a custom template for sign-up emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for Magic links -
-        /// Sign-up.
+        /// Use a custom template for sign-up emails. By default, it will use your default email template. Templates
+        /// can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in
+        /// customization options or custom HTML templates with type “Magic links - Sign-up”.
         /// </summary>
         [JsonProperty("signup_template_id")]
         public string SignupTemplateId { get; set; }

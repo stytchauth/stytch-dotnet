@@ -179,6 +179,11 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("return_passkey_credential_options")]
         public bool? ReturnPasskeyCredentialOptions { get; set; }
+        /// <summary>
+        /// If true, values in the `public_key_credential_creation_options` will be base64 URL encoded. Set this
+        /// option to true when using built-in browser methods like `navigator.credentials.create` and
+        /// `navigator.credentials.get`.
+        /// </summary>
         [JsonProperty("use_base64_url_encoding")]
         public bool? UseBase64URLEncoding { get; set; }
         public WebAuthnAuthenticateStartRequest(string domain)
@@ -422,6 +427,11 @@ namespace Stytch.net.Models
         public string OverrideName { get; set; }
         [JsonProperty("override_display_name")]
         public string OverrideDisplayName { get; set; }
+        /// <summary>
+        /// If true, values in the `public_key_credential_creation_options` will be base64 URL encoded. Set this
+        /// option to true when using built-in browser methods like `navigator.credentials.create` and
+        /// `navigator.credentials.get`.
+        /// </summary>
         [JsonProperty("use_base64_url_encoding")]
         public bool? UseBase64URLEncoding { get; set; }
         public WebAuthnRegisterStartRequest(string userId, string domain)

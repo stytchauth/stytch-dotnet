@@ -34,25 +34,73 @@ namespace Stytch.net.Models
     }
     public class Connection
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug or organization_external_id here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific External SSO Connection.
+        /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a different Organization within your Project.
+        /// </summary>
         [JsonProperty("external_organization_id")]
         public string ExternalOrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific SSO connection configured for a different Organization
+        /// in your Project.
+        /// </summary>
         [JsonProperty("external_connection_id")]
         public string ExternalConnectionId { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// The status of the connection. External connections are always active.
+        /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// All Members who log in with this External connection will implicitly receive the specified Roles. See
+        /// the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about
+        /// role assignment. Implicit role assignments are not supported for External connections if the underlying
+        /// SSO connection is an OIDC connection. 
+        /// </summary>
         [JsonProperty("external_connection_implicit_role_assignments")]
         public List<ConnectionImplicitRoleAssignment> ExternalConnectionImplicitRoleAssignments { get; set; }
+        /// <summary>
+        /// Defines the names of the groups
+        ///  that grant specific role assignments. For each group-Role pair, if a Member logs in with this external
+        /// connection and
+        ///  belongs to the specified group, they will be granted the associated Role. See the
+        ///  [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role
+        /// assignment.
+        /// </summary>
         [JsonProperty("external_group_implicit_role_assignments")]
         public List<GroupImplicitRoleAssignment> ExternalGroupImplicitRoleAssignments { get; set; }
     }
     public class ConnectionImplicitRoleAssignment
     {
+        /// <summary>
+        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
+        /// 
+        ///   Reserved `role_id`s that are predefined by Stytch include:
+        /// 
+        ///   * `stytch_member`
+        ///   * `stytch_admin`
+        /// 
+        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
+        /// for a more detailed explanation.
+        /// 
+        ///   
+        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
     }
@@ -74,82 +122,243 @@ namespace Stytch.net.Models
     }
     public class OIDCConnection
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug or organization_external_id here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific OIDC Connection.
+        /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
+        /// <summary>
+        /// The status of the connection. The possible values are pending or active. See the
+        /// [Update OIDC Connection endpoint](https://stytch.com/docs/b2b/api/update-oidc-connection) for more
+        /// details.
+        /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// The callback URL for this OIDC connection. This value will be passed to the IdP to redirect the Member
+        /// back to Stytch after a sign-in attempt.
+        /// </summary>
         [JsonProperty("redirect_url")]
         public string RedirectURL { get; set; }
+        /// <summary>
+        /// The OAuth2.0 client ID used to authenticate login attempts. This will be provided by the IdP.
+        /// </summary>
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
+        /// <summary>
+        /// The secret belonging to the OAuth2.0 client used to authenticate login attempts. This will be provided
+        /// by the IdP.
+        /// </summary>
         [JsonProperty("client_secret")]
         public string ClientSecret { get; set; }
+        /// <summary>
+        /// A case-sensitive `https://` URL that uniquely identifies the IdP. This will be provided by the IdP.
+        /// </summary>
         [JsonProperty("issuer")]
         public string Issuer { get; set; }
+        /// <summary>
+        /// The location of the URL that starts an OAuth login at the IdP. This will be provided by the IdP.
+        /// </summary>
         [JsonProperty("authorization_url")]
         public string AuthorizationURL { get; set; }
+        /// <summary>
+        /// The location of the URL that issues OAuth2.0 access tokens and OIDC ID tokens. This will be provided by
+        /// the IdP.
+        /// </summary>
         [JsonProperty("token_url")]
         public string TokenURL { get; set; }
+        /// <summary>
+        /// The location of the IDP's
+        /// [UserInfo Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo). This will be
+        /// provided by the IdP.
+        /// </summary>
         [JsonProperty("userinfo_url")]
         public string UserinfoURL { get; set; }
+        /// <summary>
+        /// The location of the IdP's JSON Web Key Set, used to verify credentials issued by the IdP. This will be
+        /// provided by the IdP.
+        /// </summary>
         [JsonProperty("jwks_url")]
         public string JWKSURL { get; set; }
+        /// <summary>
+        /// Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`,
+        /// `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`,
+        /// `rippling`, `salesforce`, `shibboleth`, or `generic`.
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic.
+        /// </summary>
         [JsonProperty("identity_provider")]
         public string IdentityProvider { get; set; }
+        /// <summary>
+        /// A space-separated list of custom scopes that will be requested on every SSOStart call. If set, this
+        /// value will replace the default set of OIDC scopes requested: `openid email profile`. Additional scopes
+        /// can be requested using the `custom_scopes` query parameter on individual SSOStart calls.
+        /// </summary>
         [JsonProperty("custom_scopes")]
         public string CustomScopes { get; set; }
+        /// <summary>
+        /// An object that represents the attributes used to identify a Member. This object will map the IdP-defined
+        /// User attributes to Stytch-specific values, which will appear on the member's Trusted Metadata.
+        /// </summary>
         [JsonProperty("attribute_mapping")]
         public object AttributeMapping { get; set; }
     }
     public class SAMLConnection
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug or organization_external_id here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// Globally unique UUID that identifies a specific SAML Connection.
+        /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
+        /// <summary>
+        /// The status of the connection. The possible values are pending or active. See the
+        /// [Update SAML Connection endpoint](https://stytch.com/docs/b2b/api/update-saml-connection) for more
+        /// details.
+        /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// A globally unique name for the IdP. This will be provided by the IdP.
+        /// </summary>
         [JsonProperty("idp_entity_id")]
         public string IDPEntityId { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// The URL for which assertions for login requests will be sent. This will be provided by the IdP.
+        /// </summary>
         [JsonProperty("idp_sso_url")]
         public string IDPSSOURL { get; set; }
+        /// <summary>
+        /// The URL of the Assertion Consumer Service. This value will be passed to the IdP to redirect the Member
+        /// back to Stytch after a sign-in attempt. Read our
+        /// [SAML Overview](https://stytch.com/docs/b2b/api/saml-overview) for more info.
+        /// </summary>
         [JsonProperty("acs_url")]
         public string AcsURL { get; set; }
+        /// <summary>
+        /// The URL of the Audience Restriction. This value will indicate that Stytch is the intended audience of an
+        /// assertion. Read our [SAML Overview](https://stytch.com/docs/b2b/api/saml-overview) for more info.
+        /// </summary>
         [JsonProperty("audience_uri")]
         public string AudienceUri { get; set; }
+        /// <summary>
+        /// A list of X.509 certificates Stytch will use to sign its assertion requests. Certificates should be
+        /// uploaded to the IdP.
+        /// </summary>
         [JsonProperty("signing_certificates")]
         public List<X509Certificate> SigningCertificates { get; set; }
+        /// <summary>
+        /// A list of X.509 certificates Stytch will use to validate an assertion callback. Certificates should be
+        /// populated from the IdP.
+        /// </summary>
         [JsonProperty("verification_certificates")]
         public List<X509Certificate> VerificationCertificates { get; set; }
         [JsonProperty("encryption_private_keys")]
         public List<EncryptionPrivateKey> EncryptionPrivateKeys { get; set; }
+        /// <summary>
+        /// All Members who log in with this SAML connection will implicitly receive the specified Roles. See the
+        /// [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role
+        /// assignment.
+        /// </summary>
         [JsonProperty("saml_connection_implicit_role_assignments")]
         public List<SAMLConnectionImplicitRoleAssignment> SAMLConnectionImplicitRoleAssignments { get; set; }
+        /// <summary>
+        /// Defines the names of the SAML groups
+        ///  that grant specific role assignments. For each group-Role pair, if a Member logs in with this SAML
+        /// connection and
+        ///  belongs to the specified SAML group, they will be granted the associated Role. See the
+        ///  [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role
+        /// assignment.
+        /// </summary>
         [JsonProperty("saml_group_implicit_role_assignments")]
         public List<SAMLGroupImplicitRoleAssignment> SAMLGroupImplicitRoleAssignments { get; set; }
+        /// <summary>
+        /// An alternative URL to use for the Audience Restriction. This value can be used when you wish to migrate
+        /// an existing SAML integration to Stytch with zero downtime. Read our
+        /// [SSO migration guide](https://stytch.com/docs/b2b/guides/migrations/additional-migration-considerations)
+        /// for more info.
+        /// </summary>
         [JsonProperty("alternative_audience_uri")]
         public string AlternativeAudienceUri { get; set; }
+        /// <summary>
+        /// Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`,
+        /// `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`,
+        /// `rippling`, `salesforce`, `shibboleth`, or `generic`.
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic.
+        /// </summary>
         [JsonProperty("identity_provider")]
         public string IdentityProvider { get; set; }
+        /// <summary>
+        /// The NameID format the SAML Connection expects to use. Defaults to
+        /// `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`.
+        /// </summary>
         [JsonProperty("nameid_format")]
         public string NameidFormat { get; set; }
+        /// <summary>
+        /// An alternative URL to use for the `AssertionConsumerServiceURL` in SP initiated SAML AuthNRequests. This
+        /// value can be used when you wish to migrate an existing SAML integration to Stytch with zero downtime.
+        /// Note that you will be responsible for proxying requests sent to the Alternative ACS URL to Stytch. Read
+        /// our
+        /// [SSO migration guide](https://stytch.com/docs/b2b/guides/migrations/additional-migration-considerations)
+        /// for more info.
+        /// </summary>
         [JsonProperty("alternative_acs_url")]
         public string AlternativeAcsURL { get; set; }
+        /// <summary>
+        /// Determines whether IDP initiated auth is allowed for a given SAML connection. Defaults to false (IDP
+        /// Initiated Auth is enabled).
+        /// </summary>
         [JsonProperty("idp_initiated_auth_disabled")]
         public bool IDPInitiatedAuthDisabled { get; set; }
         [JsonProperty("allow_gateway_callback")]
         public bool AllowGatewayCallback { get; set; }
+        /// <summary>
+        /// An object that represents the attributes used to identify a Member. This object will map the IdP-defined
+        /// User attributes to Stytch-specific values. Required attributes: `email` and one of `full_name` or
+        /// `first_name` and `last_name`.
+        /// </summary>
         [JsonProperty("attribute_mapping")]
         public object AttributeMapping { get; set; }
     }
     public class SAMLConnectionImplicitRoleAssignment
     {
+        /// <summary>
+        /// The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.
+        /// 
+        ///   Reserved `role_id`s that are predefined by Stytch include:
+        /// 
+        ///   * `stytch_member`
+        ///   * `stytch_admin`
+        /// 
+        ///   Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default)
+        /// for a more detailed explanation.
+        /// 
+        ///   
+        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
     }
@@ -162,16 +371,34 @@ namespace Stytch.net.Models
     }
     public class X509Certificate
     {
+        /// <summary>
+        /// The ID of the certificate.
+        /// </summary>
         [JsonProperty("certificate_id")]
         public string CertificateId { get; set; }
+        /// <summary>
+        /// The certificate, in [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
+        /// </summary>
         [JsonProperty("certificate")]
         public string Certificate { get; set; }
+        /// <summary>
+        /// The issuer of the certificate. For signing certificates, this value will be "Stytch".
+        /// </summary>
         [JsonProperty("issuer")]
         public string Issuer { get; set; }
+        /// <summary>
+        /// A timestamp that indicates when the certificate was created.
+        /// </summary>
         [JsonProperty("created_at")]
         public DateTime? CreatedAt { get; set; }
+        /// <summary>
+        /// A timestamp that indicates when the certificate will expire.
+        /// </summary>
         [JsonProperty("expires_at")]
         public DateTime? ExpiresAt { get; set; }
+        /// <summary>
+        /// A timestamp that indicates when the certificate was updated.
+        /// </summary>
         [JsonProperty("updated_at")]
         public DateTime? UpdatedAt { get; set; }
     }
@@ -234,7 +461,7 @@ namespace Stytch.net.Models
         /// pre-emptively send a one-time passcode (OTP) to the Member's phone number. The locale argument will be
         /// used to determine which language to use when sending the passcode.
         /// 
-        /// Parameter is a [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/),
+        /// Parameter is an [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/),
         /// e.g. `"en"`.
         /// 
         /// Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese

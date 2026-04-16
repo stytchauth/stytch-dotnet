@@ -111,9 +111,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SAML Connection` object affected by this API call. See the
-        /// [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object) for complete response
-        /// field details.
+        /// The [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object)
         /// </summary>
         [JsonProperty("connection")]
         public SAMLConnection Connection { get; set; }
@@ -268,9 +266,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SAML Connection` object affected by this API call. See the
-        /// [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object) for complete response
-        /// field details.
+        /// The [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object)
         /// </summary>
         [JsonProperty("connection")]
         public SAMLConnection Connection { get; set; }
@@ -419,9 +415,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SAML Connection` object affected by this API call. See the
-        /// [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object) for complete response
-        /// field details.
+        /// The [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object)
         /// </summary>
         [JsonProperty("connection")]
         public SAMLConnection Connection { get; set; }

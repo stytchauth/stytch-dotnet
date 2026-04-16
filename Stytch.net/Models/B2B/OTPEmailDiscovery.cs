@@ -102,13 +102,14 @@ namespace Stytch.net.Models
         [JsonProperty("email_address")]
         public string EmailAddress { get; set; }
         /// <summary>
-        /// Use a custom template for login emails. By default, it will use your default email template. The
-        /// template must be a template using our built-in customizations or a custom HTML email for OTP - Login.
+        /// Use a custom template for login emails. By default, it will use your default email template. Templates
+        /// can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in
+        /// customization options or custom HTML templates with type “OTP - Login”.
         /// </summary>
         [JsonProperty("login_template_id")]
         public string LoginTemplateId { get; set; }
         /// <summary>
-        /// Used to determine which language to use when sending the user this delivery method. Parameter is a
+        /// Used to determine which language to use when sending the user this delivery method. Parameter is an
         /// [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
         /// 
         /// Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian

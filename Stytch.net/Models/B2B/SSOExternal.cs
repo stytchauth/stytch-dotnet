@@ -89,9 +89,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `External Connection` object affected by this API call. See the
-        /// [External Connection Object](https://stytch.com/docs/b2b/api/external-connection-object) for complete
-        /// response field details.
+        /// The [External Connection Object](https://stytch.com/docs/b2b/api/external-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public Connection Connection { get; set; }
@@ -164,9 +162,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `External Connection` object affected by this API call. See the
-        /// [External Connection Object](https://stytch.com/docs/b2b/api/external-connection-object) for complete
-        /// response field details.
+        /// The [External Connection Object](https://stytch.com/docs/b2b/api/external-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public Connection Connection { get; set; }
