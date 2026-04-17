@@ -191,72 +191,202 @@ namespace Stytch.net.Models
     }
     public class SCIMConnection
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug or organization_external_id here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// The ID of the SCIM connection.
+        /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
+        /// <summary>
+        /// The status of the connection. The possible values are deleted or active.
+        /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`,
+        /// `onelogin`, `pingfederate`, `rippling` or `generic`. 
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic, such as automatically
+        /// appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to
+        /// [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status).
+        /// </summary>
         [JsonProperty("identity_provider")]
         public string IdentityProvider { get; set; }
+        /// <summary>
+        /// The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's
+        /// SCIM API endpoints
+        /// </summary>
         [JsonProperty("base_url")]
         public string BaseURL { get; set; }
+        /// <summary>
+        /// The last four digits of the bearer token. If you've lost access to your `bearer_token` and need to
+        /// generate a new one, use the
+        /// [SCIM rotate token start endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-start).
+        /// </summary>
         [JsonProperty("bearer_token_last_four")]
         public string BearerTokenLastFour { get; set; }
+        /// <summary>
+        /// An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and
+        /// a `role_id`.
+        /// </summary>
         [JsonProperty("scim_group_implicit_role_assignments")]
         public List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
         [JsonProperty("next_bearer_token_last_four")]
         public string NextBearerTokenLastFour { get; set; }
+        /// <summary>
+        /// The bearer token expiry time.
+        /// </summary>
         [JsonProperty("bearer_token_expires_at")]
         public DateTime? BearerTokenExpiresAt { get; set; }
+        /// <summary>
+        /// This field is supplied only during
+        /// [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). The next bearer token expiry
+        /// time.
+        /// </summary>
         [JsonProperty("next_bearer_token_expires_at")]
         public DateTime? NextBearerTokenExpiresAt { get; set; }
     }
     public class SCIMConnectionWithNextToken
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug or organization_external_id here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// The ID of the SCIM connection.
+        /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
+        /// <summary>
+        /// The status of the connection. The possible values are deleted or active.
+        /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's
+        /// SCIM API endpoints
+        /// </summary>
         [JsonProperty("base_url")]
         public string BaseURL { get; set; }
+        /// <summary>
+        /// Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`,
+        /// `onelogin`, `pingfederate`, `rippling` or `generic`. 
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic, such as automatically
+        /// appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to
+        /// [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status).
+        /// </summary>
         [JsonProperty("identity_provider")]
         public string IdentityProvider { get; set; }
+        /// <summary>
+        /// The last four digits of the bearer token. If you've lost access to your `bearer_token` and need to
+        /// generate a new one, use the
+        /// [SCIM rotate token start endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-start).
+        /// </summary>
         [JsonProperty("bearer_token_last_four")]
         public string BearerTokenLastFour { get; set; }
+        /// <summary>
+        /// This field is supplied only during
+        /// [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). This token should be used as
+        /// the new bearer token for the SCIM connection after token rotation has been completed using the
+        /// [SCIM rotate token complete endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-complete).
+        /// </summary>
         [JsonProperty("next_bearer_token")]
         public string NextBearerToken { get; set; }
+        /// <summary>
+        /// An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and
+        /// a `role_id`.
+        /// </summary>
         [JsonProperty("scim_group_implicit_role_assignments")]
         public List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
+        /// <summary>
+        /// The bearer token expiry time.
+        /// </summary>
         [JsonProperty("bearer_token_expires_at")]
         public DateTime? BearerTokenExpiresAt { get; set; }
+        /// <summary>
+        /// This field is supplied only during
+        /// [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). The next bearer token expiry
+        /// time.
+        /// </summary>
         [JsonProperty("next_bearer_token_expires_at")]
         public DateTime? NextBearerTokenExpiresAt { get; set; }
     }
     public class SCIMConnectionWithToken
     {
+        /// <summary>
+        /// Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to
+        /// perform operations on an Organization, so be sure to preserve this value. You may also use the
+        /// organization_slug or organization_external_id here as a convenience.
+        /// </summary>
         [JsonProperty("organization_id")]
         public string OrganizationId { get; set; }
+        /// <summary>
+        /// The ID of the SCIM connection.
+        /// </summary>
         [JsonProperty("connection_id")]
         public string ConnectionId { get; set; }
+        /// <summary>
+        /// The status of the connection. The possible values are deleted or active.
+        /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
+        /// <summary>
+        /// A human-readable display name for the connection.
+        /// </summary>
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`,
+        /// `onelogin`, `pingfederate`, `rippling` or `generic`. 
+        /// 
+        /// Specifying a known provider allows Stytch to handle any provider-specific logic, such as automatically
+        /// appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to
+        /// [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status).
+        /// </summary>
         [JsonProperty("identity_provider")]
         public string IdentityProvider { get; set; }
+        /// <summary>
+        /// The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's
+        /// SCIM API endpoints
+        /// </summary>
         [JsonProperty("base_url")]
         public string BaseURL { get; set; }
+        /// <summary>
+        /// The token supplied to the Identity Provider (IdP) alongside the base URL that grants access to Stytch's
+        /// SCIM API endpoints. It should be included in HTTP authorization headers. This field is supplied only on
+        /// creation of the SCIM connection.
+        /// </summary>
         [JsonProperty("bearer_token")]
         public string BearerToken { get; set; }
+        /// <summary>
+        /// An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and
+        /// a `role_id`.
+        /// </summary>
         [JsonProperty("scim_group_implicit_role_assignments")]
         public List<SCIMGroupImplicitRoleAssignments> SCIMGroupImplicitRoleAssignments { get; set; }
+        /// <summary>
+        /// The bearer token expiry time.
+        /// </summary>
         [JsonProperty("bearer_token_expires_at")]
         public DateTime? BearerTokenExpiresAt { get; set; }
     }
@@ -288,8 +418,14 @@ namespace Stytch.net.Models
     }
     public class SCIMGroupImplicitRoleAssignments
     {
+        /// <summary>
+        /// The ID of the role.
+        /// </summary>
         [JsonProperty("role_id")]
         public string RoleId { get; set; }
+        /// <summary>
+        /// The ID of the group.
+        /// </summary>
         [JsonProperty("group_id")]
         public string GroupId { get; set; }
         [JsonProperty("group_name")]

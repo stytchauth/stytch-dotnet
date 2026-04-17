@@ -134,9 +134,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SCIM Connection` object affected by this API call. See the
-        /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-        /// field details.
+        /// The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public SCIMConnectionWithToken Connection { get; set; }
@@ -280,8 +278,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// A [SCIM Connection](https://stytch.com/docs/b2b/api/scim-connection-object) connection belonging to the
-        /// organization (currently limited to one).
+        /// The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public SCIMConnection Connection { get; set; }
@@ -327,9 +324,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SCIM Connection` object affected by this API call. See the
-        /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-        /// field details.
+        /// The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public SCIMConnection Connection { get; set; }
@@ -375,9 +370,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SCIM Connection` object affected by this API call. See the
-        /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-        /// field details.
+        /// The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public SCIMConnection Connection { get; set; }
@@ -423,9 +416,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SCIM Connection` object affected by this API call. See the
-        /// [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object) for complete response
-        /// field details.
+        /// The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public SCIMConnectionWithNextToken Connection { get; set; }
@@ -484,9 +475,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `SAML Connection` object affected by this API call. See the
-        /// [SAML Connection Object](https://stytch.com/docs/b2b/api/saml-connection-object) for complete response
-        /// field details.
+        /// The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public SCIMConnection Connection { get; set; }

@@ -81,9 +81,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `OIDC Connection` object affected by this API call. See the
-        /// [OIDC Connection Object](https://stytch.com/docs/b2b/api/oidc-connection-object) for complete response
-        /// field details.
+        /// The [OIDC Connection Object](https://stytch.com/docs/b2b/api/oidc-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public OIDCConnection Connection { get; set; }
@@ -195,9 +193,7 @@ namespace Stytch.net.Models
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
         /// <summary>
-        /// The `OIDC Connection` object affected by this API call. See the
-        /// [OIDC Connection Object](https://stytch.com/docs/b2b/api/oidc-connection-object) for complete response
-        /// field details.
+        /// The [OIDC Connection Object](https://stytch.com/docs/b2b/api/oidc-connection-object).
         /// </summary>
         [JsonProperty("connection")]
         public OIDCConnection Connection { get; set; }

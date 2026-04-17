@@ -401,6 +401,11 @@ namespace Stytch.net.Models
         [JsonProperty("member")]
         public Member Member { get; set; }
         /// <summary>
+        /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        /// </summary>
+        [JsonProperty("organization")]
+        public Organization Organization { get; set; }
+        /// <summary>
         /// Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step
         /// to log in to the Organization.
         /// </summary>
@@ -433,11 +438,6 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("member_session")]
         public MemberSession MemberSession { get; set; }
-        /// <summary>
-        /// The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
-        /// </summary>
-        [JsonProperty("organization")]
-        public Organization Organization { get; set; }
         /// <summary>
         /// Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
         /// </summary>

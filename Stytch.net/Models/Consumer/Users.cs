@@ -177,6 +177,10 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("biometric_registrations")]
         public List<BiometricRegistration> BiometricRegistrations { get; set; }
+        /// <summary>
+        /// Whether the User is temporarily locked due to too many failed authentication attempts. See the
+        /// [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information.
+        /// </summary>
         [JsonProperty("is_locked")]
         public bool IsLocked { get; set; }
         /// <summary>
@@ -216,10 +220,23 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("untrusted_metadata")]
         public object UntrustedMetadata { get; set; }
+        /// <summary>
+        /// An identifier that can be used in most API calls where a `member_id` is expected. This is a string
+        /// consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        /// External IDs must be unique within the project.
+        /// </summary>
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
+        /// <summary>
+        /// When the user lock was created, if there is one. Values conform to the RFC 3339 standard and are
+        /// expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        /// </summary>
         [JsonProperty("lock_created_at")]
         public DateTime? LockCreatedAt { get; set; }
+        /// <summary>
+        /// When the user lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed
+        /// in UTC, e.g. `2021-12-29T12:33:09Z`.
+        /// </summary>
         [JsonProperty("lock_expires_at")]
         public DateTime? LockExpiresAt { get; set; }
     }

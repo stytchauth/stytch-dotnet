@@ -202,9 +202,6 @@ namespace Stytch.net.Clients.Consumer
         /// underlying User. 
         /// This session can be used with the Stytch SDKs and APIs.
         /// 
-        /// The Session returned will be the same Session that was active in your application (the authorizing
-        /// party) during the initial authorization flow.
-        /// 
         /// The Access Token must contain the `full_access` scope (only available to First Party clients) and must
         /// not be more than 5 minutes old. Access Tokens may only be exchanged a single time.
         /// </summary>
