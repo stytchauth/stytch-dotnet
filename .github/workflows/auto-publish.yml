@@ -20,20 +20,18 @@ jobs:
           VERSION=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Stytch.net/Stytch.net.csproj)
           echo "release_tag=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Get changed files
-        id: files
-        uses: jitterbit/get-changed-files@v1
-
       - name: Check for Stytch.net.csproj diff
         id: diff
+        env:
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
         run: |
-          FOUND=0
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            if [[ $changed_file == "Stytch.net/Stytch.net.csproj" ]]; then
-              FOUND=1
-            fi
-          done
-          echo "diff=$FOUND" >> $GITHUB_OUTPUT
+          git fetch --depth=1 origin "$BASE_SHA"
+          if git diff --quiet "$BASE_SHA" "$HEAD_SHA" -- Stytch.net/Stytch.net.csproj; then
+            echo "diff=0" >> $GITHUB_OUTPUT
+          else
+            echo "diff=1" >> $GITHUB_OUTPUT
+          fi
 
       - name: Publish to NuGet
         env:
