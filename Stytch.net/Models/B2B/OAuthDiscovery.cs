@@ -128,6 +128,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("status_code")]
         public int StatusCode { get; set; }
+        [JsonProperty("intermediate_session_token_expires_at")]
+        public DateTime? IntermediateSessionTokenExpiresAt { get; set; }
     }
 
 }

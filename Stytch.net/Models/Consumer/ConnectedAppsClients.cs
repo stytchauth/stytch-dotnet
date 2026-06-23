@@ -75,6 +75,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool? BypassConsentForOfflineAccess { get; set; }
+        [JsonProperty("id_token_template_content")]
+        public string IdTokenTemplateContent { get; set; }
         public ConnectedAppsClientsCreateRequest(CreateRequestClientType clientType)
         {
             this.ClientType = clientType;
@@ -284,6 +286,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool? BypassConsentForOfflineAccess { get; set; }
+        [JsonProperty("id_token_template_content")]
+        public string IdTokenTemplateContent { get; set; }
         public ConnectedAppsClientsUpdateRequest(string clientId)
         {
             this.ClientId = clientId;

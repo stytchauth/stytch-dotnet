@@ -211,6 +211,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("member_device")]
         public DeviceInfo MemberDevice { get; set; }
+        [JsonProperty("intermediate_session_token_expires_at")]
+        public DateTime? IntermediateSessionTokenExpiresAt { get; set; }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]

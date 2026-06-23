@@ -298,5 +298,21 @@ namespace Stytch.net.Models
         ZHHANS,
         [EnumMember(Value = "ca-ES")]
         CAES,
+        [EnumMember(Value = "ja")]
+        JA,
+        [EnumMember(Value = "ru")]
+        RU,
+        [EnumMember(Value = "nl")]
+        NL,
+        [EnumMember(Value = "pl")]
+        PL,
+        [EnumMember(Value = "tr")]
+        TR,
+        [EnumMember(Value = "fa")]
+        FA,
+        [EnumMember(Value = "vi")]
+        VI,
+        [EnumMember(Value = "cs")]
+        CS,
     }
 }
