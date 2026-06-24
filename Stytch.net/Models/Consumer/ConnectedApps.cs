@@ -65,6 +65,8 @@ namespace Stytch.net.Models
         public bool BypassConsentForOfflineAccess { get; set; }
         [JsonProperty("creation_method")]
         public string CreationMethod { get; set; }
+        [JsonProperty("id_token_template_content")]
+        public string IdTokenTemplateContent { get; set; }
         /// <summary>
         /// The last four characters of the client secret.
         /// </summary>
@@ -149,6 +151,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool BypassConsentForOfflineAccess { get; set; }
+        [JsonProperty("id_token_template_content")]
+        public string IdTokenTemplateContent { get; set; }
         /// <summary>
         /// The last four characters of the client secret.
         /// </summary>
@@ -232,6 +236,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("bypass_consent_for_offline_access")]
         public bool BypassConsentForOfflineAccess { get; set; }
+        [JsonProperty("id_token_template_content")]
+        public string IdTokenTemplateContent { get; set; }
         /// <summary>
         /// The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
         /// </summary>

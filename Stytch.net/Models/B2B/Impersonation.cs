@@ -96,6 +96,8 @@ namespace Stytch.net.Models
         /// </summary>
         [JsonProperty("mfa_required")]
         public MfaRequired MfaRequired { get; set; }
+        [JsonProperty("intermediate_session_token_expires_at")]
+        public DateTime? IntermediateSessionTokenExpiresAt { get; set; }
     }
 
 }
